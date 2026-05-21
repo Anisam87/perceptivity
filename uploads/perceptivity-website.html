@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Perceptivity helps brands win when buyers ask AI. Track, predict, and improve how ChatGPT, Perplexity, Gemini, and Claude describe your brand." />
+<title>Perceptivity — Be the answer AI gives.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #ffffff;
+  --on-primary: #000000;
+  --accent-blue: #0099ff;
+  --ink: #ffffff;
+  --ink-muted: #999999;
+  --ink-faint: #666666;
+  --canvas: #090909;
+  --surface-1: #141414;
+  --surface-2: #1c1c1c;
+  --surface-3: #242424;
+  --hairline: #262626;
+  --hairline-soft: #1a1a1a;
+  --gradient-magenta: #d44df0;
+  --gradient-violet: #6a4cf5;
+  --gradient-orange: #ff7a3d;
+  --gradient-coral: #ff5577;
+  --semantic-success: #22c55e;
+  --semantic-warn: #f59e0b;
+  --r-xs: 4px; --r-sm: 6px; --r-md: 10px; --r-lg: 15px; --r-xl: 20px; --r-xxl: 30px; --r-pill: 100px;
+  --font-display: 'Inter Tight', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* RESET */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.3;
+  letter-spacing: -0.15px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+ul, ol { list-style: none; }
+img, svg { display: block; max-width: 100%; }
+::selection { background: rgba(0,153,255,0.3); color: var(--ink); }
+
+/* AMBIENT GRAIN */
+body::before {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 1;
+  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.012) 1px, transparent 0);
+  background-size: 3px 3px; opacity: 0.6;
+}
+
+/* TYPOGRAPHY */
+.display-xxl { font-family: var(--font-display); font-size: clamp(48px, 8vw, 96px); font-weight: 500; line-height: 0.92; letter-spacing: -0.05em; }
+.display-xl  { font-family: var(--font-display); font-size: clamp(40px, 6vw, 72px); font-weight: 500; line-height: 0.96; letter-spacing: -0.045em; }
+.display-lg  { font-family: var(--font-display); font-size: clamp(34px, 5vw, 56px); font-weight: 500; line-height: 1.0; letter-spacing: -0.04em; }
+.body-lg     { font-size: 17px; line-height: 1.5; letter-spacing: -0.01em; color: var(--ink-muted); }
+.caption     { font-size: 13px; font-weight: 500; letter-spacing: -0.01em; color: var(--ink-muted); }
+.micro       { font-size: 12px; letter-spacing: -0.01em; color: var(--ink-muted); }
+.eyebrow {
+  font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-muted);
+}
+
+/* LAYOUT */
+.container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 30px; }
+.section { padding: clamp(64px, 10vw, 128px) 0; }
+
+/* BUTTONS */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  height: 40px; padding: 0 18px; font-size: 14px; font-weight: 500;
+  letter-spacing: -0.01em; border-radius: var(--r-pill);
+  transition: transform 160ms ease, background 160ms ease, color 160ms ease;
+  white-space: nowrap; user-select: none;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: var(--primary); color: var(--on-primary); }
+.btn-primary:hover { background: #f0f0f0; }
+.btn-secondary { background: var(--surface-1); color: var(--ink); }
+.btn-secondary:hover { background: var(--surface-2); }
+.btn-lg { height: 48px; padding: 0 24px; font-size: 15px; }
+.btn-arrow svg { transition: transform 200ms ease; }
+.btn:hover .btn-arrow svg { transform: translateX(3px); }
+
+/* NAV */
+.nav-wrap {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(9, 9, 9, 0.72); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--hairline-soft); transition: background 200ms ease;
+}
+.nav-wrap.scrolled { background: rgba(9, 9, 9, 0.92); }
+.nav {
+  height: 60px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 30px; max-width: 1280px; margin: 0 auto;
+}
+.nav-brand {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--font-display); font-weight: 600; font-size: 16px; letter-spacing: -0.035em;
+}
+.nav-mark {
+  width: 20px; height: 20px; border-radius: 50%; position: relative;
+  background: radial-gradient(circle at 30% 30%, #fff, #888);
+}
+.nav-mark::after { content: ""; position: absolute; inset: 30%; background: var(--canvas); border-radius: 50%; }
+.nav-links { display: flex; align-items: center; gap: 2px; }
+.nav-link {
+  font-size: 14px; font-weight: 500; letter-spacing: -0.01em;
+  color: var(--ink-muted); padding: 8px 14px; border-radius: var(--r-md);
+  transition: color 160ms ease, background 160ms ease;
+}
+.nav-link:hover { color: var(--ink); }
+.nav-link.active { color: var(--ink); background: var(--surface-1); }
+.nav-actions { display: flex; align-items: center; gap: 8px; }
+@media (max-width: 920px) { .nav-links { display: none; } .nav { padding: 0 20px; } }
+
+/* HERO */
+.hero { padding-top: 140px; padding-bottom: 80px; position: relative; }
+.hero-glow {
+  position: absolute; top: -120px; left: 50%; transform: translateX(-50%);
+  width: 800px; height: 800px;
+  background: radial-gradient(circle, rgba(0,153,255,0.10) 0%, transparent 50%);
+  pointer-events: none; z-index: 0;
+}
+.hero > .container { position: relative; z-index: 1; }
+.hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 24px; }
+.hero-pulse {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent-blue); box-shadow: 0 0 12px var(--accent-blue);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.7); } }
+.hero h1 { margin-bottom: 28px; max-width: 980px; }
+.hero-subhead {
+  max-width: 640px; margin-bottom: 36px;
+  font-size: 19px; line-height: 1.45; color: var(--ink-muted);
+}
+.hero-cta { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* SCROLL REVEAL */
+[data-reveal] {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 800ms cubic-bezier(0.22, 1, 0.36, 1), transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-reveal].in { opacity: 1; transform: none; }
+[data-reveal][data-delay="1"] { transition-delay: 80ms; }
+[data-reveal][data-delay="2"] { transition-delay: 160ms; }
+[data-reveal][data-delay="3"] { transition-delay: 240ms; }
+[data-reveal][data-delay="4"] { transition-delay: 320ms; }
+[data-reveal][data-delay="5"] { transition-delay: 400ms; }
+
+/* HERO PRODUCT PREVIEW */
+.product-preview {
+  background: var(--surface-1); border-radius: var(--r-xl); padding: 15px;
+  box-shadow: 0 0 0 0.5px rgba(255,255,255,0.08), 0 30px 80px -20px rgba(0,0,0,0.5);
+  max-width: 1080px; margin: 80px auto 0;
+}
+.preview-chrome { display: flex; align-items: center; gap: 6px; padding: 4px 8px 12px; }
+.preview-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--hairline); }
+.preview-url {
+  margin-left: 16px; font-family: var(--font-mono); font-size: 11px; color: var(--ink-muted);
+  padding: 4px 12px; background: var(--surface-2); border-radius: var(--r-pill);
+}
+.preview-body {
+  background: var(--surface-2); border-radius: var(--r-md); padding: 28px;
+  display: grid; grid-template-columns: 1fr 1.4fr; gap: 28px;
+}
+@media (max-width: 760px) { .preview-body { grid-template-columns: 1fr; } }
+.preview-score-block { display: flex; flex-direction: column; gap: 4px; }
+.score-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-muted); }
+.score-value {
+  font-family: var(--font-display); font-size: 82px; font-weight: 500;
+  line-height: 1; letter-spacing: -0.06em; display: flex; align-items: baseline; gap: 8px;
+}
+.score-out-of { font-size: 22px; color: var(--ink-muted); letter-spacing: -0.02em; }
+.score-delta {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 13px; color: var(--semantic-success);
+  padding: 3px 10px; background: rgba(34, 197, 94, 0.1); border-radius: var(--r-pill);
+  width: fit-content; font-family: var(--font-mono); margin-top: 12px;
+}
+.preview-meta { margin-top: 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.preview-meta-item { padding: 10px 0; border-top: 1px solid var(--hairline); }
+.preview-meta-label { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-muted); }
+.preview-meta-val { font-size: 14px; font-weight: 500; margin-top: 4px; }
+.preview-bars { display: flex; flex-direction: column; gap: 12px; }
+.preview-bars-head {
+  display: flex; justify-content: space-between;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--ink-muted); padding-bottom: 6px; border-bottom: 1px solid var(--hairline-soft);
+}
+.bar-row { display: grid; grid-template-columns: 84px 1fr 36px; gap: 12px; align-items: center; font-size: 12px; }
+.bar-name { font-family: var(--font-mono); color: var(--ink-muted); }
+.bar-track { height: 6px; background: var(--hairline); border-radius: var(--r-pill); overflow: hidden; }
+.bar-fill {
+  height: 100%; background: var(--ink); border-radius: var(--r-pill);
+  transform-origin: left; animation: barGrow 2.4s cubic-bezier(0.22, 1, 0.36, 1) forwards; transform: scaleX(0);
+}
+@keyframes barGrow { from { transform: scaleX(0); } to { transform: scaleX(var(--w, 0.5)); } }
+.bar-value { font-family: var(--font-mono); font-size: 11px; color: var(--ink); text-align: right; }
+
+/* SECTION HEAD */
+.section-head { margin-bottom: 64px; max-width: 900px; }
+.section-head .eyebrow { display: block; margin-bottom: 16px; }
+.section-head h2 { margin-bottom: 20px; }
+.section-head p { font-size: 18px; color: var(--ink-muted); line-height: 1.5; max-width: 680px; }
+
+/* FEATURE GRID */
+.feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 880px) { .feature-grid { grid-template-columns: 1fr; } }
+.feature-card {
+  background: var(--surface-1); border-radius: var(--r-xl); padding: 36px 32px;
+  transition: background 200ms ease, transform 200ms ease;
+  min-height: 280px; display: flex; flex-direction: column; position: relative; overflow: hidden;
+}
+.feature-card:hover { background: var(--surface-2); transform: translateY(-2px); }
+.feature-icon {
+  width: 44px; height: 44px; background: var(--surface-2); border-radius: var(--r-md);
+  display: flex; align-items: center; justify-content: center; margin-bottom: 24px; color: var(--ink);
+}
+.feature-card:hover .feature-icon { background: var(--surface-3); }
+.feature-icon svg { width: 22px; height: 22px; }
+.feature-title { font-family: var(--font-display); font-size: 22px; font-weight: 500; letter-spacing: -0.03em; margin-bottom: 12px; }
+.feature-body { font-size: 14px; color: var(--ink-muted); line-height: 1.55; }
+
+@keyframes spin-slow { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+@keyframes draw-line { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+@keyframes blink { 0%, 90%, 100% { opacity: 1; transform: scale(1); } 95% { opacity: 0.3; transform: scale(0.95); } }
+@keyframes pulse-soft { 0%, 100% { opacity: 0.8; } 50% { opacity: 1; } }
+.icon-blink { animation: blink 4s ease-in-out infinite; transform-origin: center; }
+.icon-pulse { animation: pulse-soft 2.5s ease-in-out infinite; }
+.icon-draw path { stroke-dasharray: 100; animation: draw-line 2.5s cubic-bezier(0.22, 1, 0.36, 1) infinite; }
+.icon-spin { animation: spin-slow 12s linear infinite; transform-origin: center; }
+.icon-flash { animation: pulse-soft 1.6s ease-in-out infinite; }
+
+/* STAGES GRID */
+.stages-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+@media (max-width: 1080px) { .stages-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .stages-grid { grid-template-columns: 1fr; } }
+.stage-card {
+  background: var(--surface-1); border-radius: var(--r-xl); padding: 28px;
+  min-height: 280px; display: flex; flex-direction: column;
+  transition: background 200ms ease, transform 200ms ease;
+}
+.stage-card:hover { background: var(--surface-2); transform: translateY(-2px); }
+.stage-card.featured {
+  background: linear-gradient(155deg, #2b1a7a 0%, #1a0f4a 100%);
+  position: relative; overflow: hidden;
+}
+.stage-card.featured::before {
+  content: ""; position: absolute; top: -50px; right: -50px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(212,77,240,0.4), transparent 60%); pointer-events: none;
+}
+.stage-icon {
+  width: 40px; height: 40px; background: var(--surface-2); border-radius: var(--r-md);
+  display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: var(--ink);
+}
+.stage-card.featured .stage-icon { background: rgba(255,255,255,0.12); }
+.stage-icon svg { width: 20px; height: 20px; }
+.stage-num { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; color: var(--ink-muted); margin-bottom: 10px; }
+.stage-card.featured .stage-num { color: rgba(255,255,255,0.7); }
+.stage-name { font-family: var(--font-display); font-size: 28px; font-weight: 500; letter-spacing: -0.04em; margin-bottom: 12px; }
+.stage-desc { font-size: 14px; color: var(--ink-muted); line-height: 1.5; flex-grow: 1; margin-bottom: 20px; }
+.stage-card.featured .stage-desc { color: rgba(255,255,255,0.82); }
+.stage-tag {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--ink-muted); padding-top: 14px; border-top: 1px solid var(--hairline);
+}
+.stage-card.featured .stage-tag { color: rgba(255,255,255,0.8); border-top-color: rgba(255,255,255,0.15); }
+
+/* DEEP DIVE */
+.deep-dive { padding: clamp(64px, 9vw, 112px) 0; border-top: 1px solid var(--hairline-soft); }
+.deep-dive:last-of-type { border-bottom: 1px solid var(--hairline-soft); }
+.deep-dive-grid {
+  display: grid; grid-template-columns: 1fr 1.1fr; gap: 80px; align-items: center;
+}
+.deep-dive-grid.reverse { direction: rtl; }
+.deep-dive-grid.reverse > * { direction: ltr; }
+@media (max-width: 880px) { .deep-dive-grid { grid-template-columns: 1fr; gap: 48px; direction: ltr; } }
+.dd-eyebrow {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--ink-muted); margin-bottom: 20px; display: inline-flex; align-items: center; gap: 8px;
+}
+.dd-eyebrow-dot { width: 6px; height: 6px; background: var(--accent-blue); border-radius: 50%; }
+.dd-headline { margin-bottom: 24px; letter-spacing: -0.045em; }
+.dd-body { font-size: 17px; color: var(--ink-muted); line-height: 1.5; margin-bottom: 32px; max-width: 480px; }
+.dd-features { list-style: none; margin-bottom: 28px; }
+.dd-features li {
+  position: relative; padding: 14px 0 14px 30px; border-top: 1px solid var(--hairline-soft);
+  font-size: 14px; color: var(--ink); letter-spacing: -0.005em;
+}
+.dd-features li:last-child { border-bottom: 1px solid var(--hairline-soft); }
+.dd-features li::before {
+  content: ""; position: absolute; left: 0; top: 50%;
+  width: 16px; height: 1px; background: var(--ink-muted); transform: translateY(-50%);
+}
+.dd-visual {
+  background: var(--surface-1); border-radius: var(--r-xl); padding: 28px;
+  min-height: 440px; display: flex; flex-direction: column; gap: 20px; position: relative; overflow: hidden;
+}
+.dd-visual-head {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-bottom: 14px; border-bottom: 1px solid var(--hairline);
+}
+.dd-visual-title { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-muted); }
+.dd-visual-tag { font-family: var(--font-mono); font-size: 11px; color: var(--ink-muted); }
+
+/* HEATMAP (Sense) */
+.heatmap-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; }
+.heat-cell { aspect-ratio: 1; background: var(--canvas); border-radius: var(--r-xs); position: relative; overflow: hidden; }
+.heat-cell-fill { position: absolute; inset: 3px; background: var(--ink); border-radius: 2px; opacity: var(--o, 0.2); }
+
+/* SIM ROWS (Simulate) */
+.sim-row {
+  background: var(--canvas); border-radius: var(--r-md); padding: 14px 18px;
+  display: grid; grid-template-columns: 1fr auto auto; gap: 16px; align-items: center;
+  border: 1px solid var(--hairline-soft);
+}
+.sim-engine { font-family: var(--font-mono); font-size: 13px; color: var(--ink); }
+.sim-pred { font-family: var(--font-mono); font-size: 12px; font-weight: 500; padding: 4px 10px; border-radius: var(--r-pill); }
+.sim-pred.pos { background: rgba(34,197,94,0.12); color: var(--semantic-success); }
+.sim-pred.neg { background: rgba(255,85,119,0.12); color: var(--gradient-coral); }
+.sim-conf { font-family: var(--font-mono); font-size: 11px; color: var(--ink-muted); }
+.sim-net {
+  margin-top: 12px; padding: 18px; background: var(--canvas); border: 1px solid var(--hairline); border-radius: var(--r-md);
+  display: flex; justify-content: space-between; align-items: baseline;
+}
+.sim-net-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-muted); }
+.sim-net-val { font-family: var(--font-display); font-size: 28px; letter-spacing: -0.04em; color: var(--semantic-success); }
+
+/* STRIKE ROWS */
+.strike-row {
+  background: var(--canvas); border-radius: var(--r-md); padding: 14px 18px;
+  display: grid; grid-template-columns: 40px 1fr auto auto; gap: 14px; align-items: center;
+  border: 1px solid var(--hairline-soft);
+}
+.strike-id { font-family: var(--font-mono); font-size: 11px; color: var(--ink-muted); }
+.strike-action { font-size: 13px; font-weight: 500; }
+.strike-route { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; padding: 4px 9px; border-radius: var(--r-pill); }
+.strike-route.sw { background: rgba(0,153,255,0.12); color: var(--accent-blue); }
+.strike-route.partner { background: rgba(212,77,240,0.12); color: var(--gradient-magenta); }
+.strike-route.team { background: rgba(255,122,61,0.12); color: var(--gradient-orange); }
+.strike-cost { font-family: var(--font-mono); font-size: 12px; color: var(--ink-muted); text-align: right; }
+
+/* LEARN CARDS */
+.learn-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.learn-card { background: var(--canvas); border-radius: var(--r-md); padding: 18px; border: 1px solid var(--hairline-soft); }
+.learn-card.full { grid-column: 1 / -1; }
+.learn-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 10px; }
+.learn-val { font-family: var(--font-display); font-size: 32px; font-weight: 500; letter-spacing: -0.04em; line-height: 1; }
+.learn-ctx { font-size: 12px; color: var(--ink-muted); margin-top: 6px; }
+.learn-spark { display: flex; align-items: flex-end; gap: 3px; height: 36px; margin-top: 10px; }
+.learn-spark-bar { flex: 1; background: var(--ink); border-radius: 1px; opacity: 0.55; }
+
+/* INDUSTRY ROW */
+.industry-row {
+  display: grid; grid-template-columns: 1fr 1.1fr; gap: 80px; align-items: start;
+  padding: clamp(48px, 7vw, 96px) 0; border-top: 1px solid var(--hairline-soft);
+}
+.industry-row:first-of-type { border-top: none; }
+.industry-row.reverse { direction: rtl; }
+.industry-row.reverse > * { direction: ltr; }
+@media (max-width: 880px) { .industry-row { grid-template-columns: 1fr; gap: 40px; direction: ltr; } }
+.ind-icon-wrap {
+  width: 56px; height: 56px; background: var(--surface-1); border-radius: var(--r-md);
+  display: flex; align-items: center; justify-content: center; margin-bottom: 24px;
+}
+.ind-icon-wrap svg { width: 28px; height: 28px; color: var(--ink); }
+.ind-name { font-family: var(--font-display); font-size: clamp(34px, 4.5vw, 50px); font-weight: 500; letter-spacing: -0.04em; line-height: 1; margin-bottom: 20px; }
+.ind-body { font-size: 17px; color: var(--ink-muted); line-height: 1.5; margin-bottom: 28px; max-width: 460px; }
+.ind-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+.ind-stat { padding: 16px 20px; background: var(--surface-2); border-radius: var(--r-md); }
+.ind-stat-num { font-family: var(--font-display); font-size: 28px; font-weight: 500; letter-spacing: -0.04em; line-height: 1; margin-bottom: 6px; }
+.ind-stat-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-muted); }
+.ind-features { list-style: none; margin-bottom: 0; }
+.ind-features li {
+  padding: 10px 0; font-size: 14px; display: flex; gap: 10px;
+  align-items: flex-start; color: var(--ink-muted);
+}
+.ind-features li::before { content: "→"; color: var(--ink); flex-shrink: 0; }
+
+/* Industry visual */
+.ind-visual {
+  background: var(--surface-1); border-radius: var(--r-xl); padding: 32px;
+  min-height: 380px; position: relative; overflow: hidden;
+  display: flex; flex-direction: column; gap: 18px;
+}
+.ind-visual-query-list { display: flex; flex-direction: column; gap: 8px; }
+.ind-query {
+  padding: 14px 16px; background: var(--canvas); border-radius: var(--r-md);
+  font-size: 14px; display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  font-family: var(--font-mono); border: 1px solid var(--hairline-soft);
+}
+.ind-query-text { color: var(--ink); flex: 1; font-size: 13px; }
+.ind-query-score {
+  font-size: 12px; font-weight: 500; padding: 3px 8px; border-radius: var(--r-pill);
+  background: rgba(34,197,94,0.12); color: var(--semantic-success); white-space: nowrap;
+}
+.ind-query-score.warn { background: rgba(245,158,11,0.12); color: var(--semantic-warn); }
+
+/* ENGINE CARDS */
+.engine-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+@media (max-width: 600px) { .engine-cards { grid-template-columns: 1fr 1fr; } }
+.engine-card { background: var(--canvas); border: 1px solid var(--hairline-soft); border-radius: var(--r-md); padding: 14px; }
+.engine-card-head { display: flex; align-items: center; gap: 6px; margin-bottom: 12px; }
+.engine-dot { width: 6px; height: 6px; background: var(--semantic-success); border-radius: 50%; animation: pulse-soft 2s ease-in-out infinite; }
+.engine-name { font-family: var(--font-mono); font-size: 11px; color: var(--ink); }
+.engine-stat { font-family: var(--font-display); font-size: 24px; font-weight: 500; letter-spacing: -0.04em; line-height: 1; }
+.engine-trend { margin-top: 8px; font-size: 11px; font-family: var(--font-mono); color: var(--ink-muted); }
+.engine-trend.up { color: var(--semantic-success); }
+
+/* STATS BANNER */
+.stats-banner { padding: clamp(72px, 11vw, 120px) 0; border-top: 1px solid var(--hairline-soft); border-bottom: 1px solid var(--hairline-soft); }
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+@media (max-width: 880px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .stats-grid { grid-template-columns: 1fr; } }
+.stat-big-num { font-family: var(--font-display); font-size: clamp(44px, 6vw, 80px); font-weight: 500; line-height: 1; letter-spacing: -0.06em; margin-bottom: 14px; }
+.stat-big-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 8px; }
+.stat-big-ctx { font-size: 14px; color: var(--ink); opacity: 0.85; line-height: 1.5; max-width: 240px; }
+
+/* SPOTLIGHT */
+.spotlight {
+  background: linear-gradient(135deg, var(--gradient-violet) 0%, var(--gradient-magenta) 100%);
+  border-radius: var(--r-xxl); padding: clamp(40px, 6vw, 56px); position: relative; overflow: hidden;
+}
+.spotlight::before {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(circle at 75% 20%, rgba(255,255,255,0.25), transparent 50%); pointer-events: none;
+}
+.spotlight-eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 20px; position: relative; opacity: 0.9; }
+.spotlight-h {
+  font-family: var(--font-display); font-size: clamp(28px, 4vw, 44px); font-weight: 500;
+  line-height: 1.05; letter-spacing: -0.04em; max-width: 720px; position: relative; margin-bottom: 24px;
+}
+.spotlight-cta {
+  position: relative; display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 18px; background: rgba(0,0,0,0.4); border-radius: var(--r-pill);
+  font-size: 14px; font-weight: 500; backdrop-filter: blur(8px); transition: background 200ms ease;
+}
+.spotlight-cta:hover { background: rgba(0,0,0,0.6); }
+
+/* PRICING */
+.pricing-toggle {
+  display: inline-flex; align-items: center; background: var(--canvas);
+  border: 1px solid var(--hairline); padding: 4px; border-radius: var(--r-pill); margin-bottom: 40px;
+}
+.pricing-tab {
+  font-size: 13px; font-weight: 500; padding: 8px 16px;
+  border-radius: var(--r-pill); color: var(--ink-muted);
+  transition: background 160ms ease, color 160ms ease;
+}
+.pricing-tab.active { background: var(--surface-2); color: var(--ink); }
+.pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 880px) { .pricing-grid { grid-template-columns: 1fr; } }
+.pricing-card { background: var(--surface-1); border-radius: var(--r-xl); padding: 32px; display: flex; flex-direction: column; position: relative; }
+.pricing-card.featured { background: var(--surface-2); }
+.pricing-card.featured::before {
+  content: "Most popular"; position: absolute; top: -10px; left: 32px;
+  background: var(--ink); color: var(--on-primary);
+  font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: var(--r-pill);
+}
+.pricing-name { font-family: var(--font-display); font-size: 26px; font-weight: 500; letter-spacing: -0.03em; margin-bottom: 8px; }
+.pricing-tagline { font-size: 14px; color: var(--ink-muted); margin-bottom: 24px; min-height: 44px; line-height: 1.4; }
+.pricing-amount { display: flex; align-items: baseline; gap: 6px; margin-bottom: 4px; }
+.pricing-num { font-family: var(--font-display); font-size: 48px; font-weight: 500; line-height: 1; letter-spacing: -0.05em; }
+.pricing-per { font-size: 13px; color: var(--ink-muted); }
+.pricing-billed { font-family: var(--font-mono); font-size: 11px; color: var(--ink-muted); margin-bottom: 24px; }
+.pricing-cta { margin-bottom: 28px; }
+.pricing-cta .btn { width: 100%; }
+.pricing-features { list-style: none; padding-top: 20px; border-top: 1px solid var(--hairline); display: flex; flex-direction: column; gap: 12px; }
+.pricing-features li { font-size: 13px; color: var(--ink); display: flex; gap: 10px; line-height: 1.5; }
+.pricing-features li::before {
+  content: ""; width: 14px; height: 14px; background: var(--semantic-success);
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3'><polyline points='20 6 9 17 4 12'/></svg>") center / contain no-repeat;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3'><polyline points='20 6 9 17 4 12'/></svg>") center / contain no-repeat;
+  flex-shrink: 0; margin-top: 3px;
+}
+
+/* COMPARISON TABLE */
+.compare-wrap { border: 1px solid var(--hairline); border-radius: var(--r-xl); overflow: hidden; }
+.compare-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.compare-table thead th { padding: 16px 24px; border-bottom: 1px solid var(--hairline); text-align: left; font-weight: 500; font-size: 13px; letter-spacing: -0.01em; }
+.compare-table thead th.center { text-align: center; }
+.compare-table thead .featured-col { background: var(--surface-1); }
+.compare-table tbody td { padding: 14px 24px; border-bottom: 1px solid var(--hairline-soft); color: var(--ink-muted); font-size: 13px; }
+.compare-table tbody td.center { text-align: center; }
+.compare-table tbody td.featured-col { background: var(--surface-1); color: var(--ink); }
+.compare-table tbody tr.head td {
+  font-weight: 600; color: var(--ink); background: var(--canvas);
+  text-transform: uppercase; font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.18em; padding-top: 28px; padding-bottom: 12px;
+}
+.check-mark { color: var(--semantic-success); font-size: 14px; }
+.dash { color: var(--ink-faint); }
+
+/* FAQ */
+.faq-list { display: flex; flex-direction: column; border-top: 1px solid var(--hairline-soft); }
+.faq-item { border-bottom: 1px solid var(--hairline-soft); }
+.faq-q {
+  width: 100%; text-align: left; padding: 26px 0;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 17px; font-weight: 500; letter-spacing: -0.02em; color: var(--ink);
+  transition: color 160ms ease;
+}
+.faq-q:hover { color: var(--ink-muted); }
+.faq-icon {
+  width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%; background: var(--surface-1); color: var(--ink-muted);
+  font-size: 18px; transition: transform 250ms ease, background 200ms ease;
+  flex-shrink: 0; margin-left: 16px;
+}
+.faq-item.open .faq-icon { transform: rotate(45deg); background: var(--ink); color: var(--on-primary); }
+.faq-a { max-height: 0; overflow: hidden; font-size: 15px; color: var(--ink-muted); line-height: 1.55; transition: max-height 300ms ease, padding 300ms ease; }
+.faq-item.open .faq-a { max-height: 400px; padding: 0 0 26px 0; }
+
+/* COMPANY */
+.mission-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: start; }
+@media (max-width: 880px) { .mission-grid { grid-template-columns: 1fr; gap: 40px; } }
+.values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 880px) { .values-grid { grid-template-columns: 1fr; } }
+.value-card { background: var(--surface-1); border-radius: var(--r-xl); padding: 32px; min-height: 240px; display: flex; flex-direction: column; }
+.value-num { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; color: var(--ink-muted); margin-bottom: 20px; }
+.value-title { font-family: var(--font-display); font-size: 22px; font-weight: 500; letter-spacing: -0.03em; margin-bottom: 12px; }
+.value-body { font-size: 14px; color: var(--ink-muted); line-height: 1.55; }
+
+.timeline { display: flex; flex-direction: column; border-top: 1px solid var(--hairline-soft); }
+.timeline-row { display: grid; grid-template-columns: 120px 1fr; gap: 32px; padding: 24px 0; border-bottom: 1px solid var(--hairline-soft); }
+.timeline-when { font-family: var(--font-mono); font-size: 12px; color: var(--ink-muted); letter-spacing: 0.1em; }
+.timeline-what { font-size: 15px; color: var(--ink); line-height: 1.5; max-width: 600px; }
+
+.contact-card {
+  background: var(--surface-1); border-radius: var(--r-xxl); padding: clamp(40px, 6vw, 72px);
+  display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: center;
+}
+@media (max-width: 880px) { .contact-card { grid-template-columns: 1fr; gap: 32px; } }
+.contact-card h2 { margin-bottom: 16px; }
+.contact-meta { display: flex; flex-direction: column; gap: 20px; padding-left: 32px; border-left: 1px solid var(--hairline); }
+@media (max-width: 880px) { .contact-meta { padding-left: 0; border-left: none; padding-top: 24px; border-top: 1px solid var(--hairline); } }
+.contact-row .contact-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 6px; }
+.contact-row .contact-val { font-size: 16px; color: var(--ink); }
+.contact-row .contact-val a { color: var(--accent-blue); }
+
+/* CTA */
+.cta-section { padding: clamp(72px, 11vw, 144px) 0; }
+.cta-card { background: var(--surface-1); border-radius: var(--r-xxl); padding: clamp(48px, 7vw, 88px); text-align: center; position: relative; overflow: hidden; }
+.cta-card::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 50% 0%, rgba(0,153,255,0.08), transparent 60%); pointer-events: none; }
+.cta-h { margin-bottom: 20px; position: relative; max-width: 800px; margin-left: auto; margin-right: auto; }
+.cta-body { font-size: 18px; color: var(--ink-muted); margin-bottom: 36px; max-width: 520px; margin-left: auto; margin-right: auto; position: relative; }
+.cta-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; position: relative; }
+
+/* FOOTER */
+.footer { border-top: 1px solid var(--hairline-soft); padding: 72px 0 36px; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 56px; margin-bottom: 72px; }
+@media (max-width: 880px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px 28px; } .footer-brand-col { grid-column: 1 / -1; } }
+.footer-brand-mark { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+.footer-brand-mark .nav-mark { width: 22px; height: 22px; }
+.footer-brand-mark .name { font-family: var(--font-display); font-size: 18px; font-weight: 600; letter-spacing: -0.035em; }
+.footer-tagline { font-size: 14px; color: var(--ink-muted); max-width: 280px; line-height: 1.5; margin-bottom: 24px; }
+.footer-col-head { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 18px; }
+.footer-links { display: flex; flex-direction: column; gap: 12px; }
+.footer-links a { font-size: 14px; color: var(--ink); opacity: 0.85; transition: opacity 160ms ease, color 160ms ease; cursor: pointer; }
+.footer-links a:hover { opacity: 1; color: var(--accent-blue); }
+.footer-bottom { padding-top: 28px; border-top: 1px solid var(--hairline-soft); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav-wrap">
+  <nav class="nav">
+    <a href="#top" class="nav-brand">
+      <span class="nav-mark"></span>
+      <span>Perceptivity</span>
+    </a>
+    <div class="nav-links">
+      <a href="#product" class="nav-link">Product</a>
+      <a href="#industries" class="nav-link">Industries</a>
+      <a href="#pricing" class="nav-link">Pricing</a>
+      <a href="#company" class="nav-link">Company</a>
+    </div>
+    <div class="nav-actions">
+      <a href="#" class="btn btn-secondary">Sign in</a>
+      <a href="#cta" class="btn btn-primary">Get started</a>
+    </div>
+  </nav>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-glow"></div>
+  <div class="container">
+    <div class="hero-eyebrow eyebrow" data-reveal>
+      <span class="hero-pulse"></span>
+      <span>AI Search Marketing Platform</span>
+    </div>
+    <h1 class="display-xxl" data-reveal data-delay="1">Be the answer<br/>AI gives.</h1>
+    <p class="hero-subhead" data-reveal data-delay="2">See how ChatGPT, Perplexity, Gemini, and Claude describe your brand. Know what works before you spend. Get cited more — across every AI engine that matters.</p>
+    <div class="hero-cta" data-reveal data-delay="3">
+      <a href="#cta" class="btn btn-primary btn-lg btn-arrow">
+        Get started
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <a href="#product" class="btn btn-secondary btn-lg">See how it works</a>
+    </div>
+
+    <!-- Product preview -->
+    <div class="product-preview" data-reveal data-delay="4">
+      <div class="preview-chrome">
+        <span class="preview-dot"></span><span class="preview-dot"></span><span class="preview-dot"></span>
+        <span class="preview-url">app.perceptivity.ai / dashboard</span>
+      </div>
+      <div class="preview-body">
+        <div class="preview-score-block">
+          <span class="score-label">AI visibility · last 30 days</span>
+          <div class="score-value">47<span class="score-out-of">/100</span></div>
+          <span class="score-delta">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="17 6 9 14 5 10"/><polyline points="17 11 17 6 12 6"/></svg>
+            +4.2 vs last month
+          </span>
+          <div class="preview-meta">
+            <div class="preview-meta-item"><div class="preview-meta-label">Citations</div><div class="preview-meta-val">1,247</div></div>
+            <div class="preview-meta-item"><div class="preview-meta-label">Avg rank</div><div class="preview-meta-val">2.3</div></div>
+            <div class="preview-meta-item"><div class="preview-meta-label">Queries tracked</div><div class="preview-meta-val">2,847</div></div>
+            <div class="preview-meta-item"><div class="preview-meta-label">Sentiment</div><div class="preview-meta-val">+0.62</div></div>
+          </div>
+        </div>
+        <div class="preview-bars">
+          <div class="preview-bars-head"><span>Engine</span><span>Coverage</span></div>
+          <div class="bar-row"><span class="bar-name">Perplexity</span><div class="bar-track"><div class="bar-fill" style="--w: 0.84;"></div></div><span class="bar-value">84%</span></div>
+          <div class="bar-row"><span class="bar-name">Google AIO</span><div class="bar-track"><div class="bar-fill" style="--w: 0.69;"></div></div><span class="bar-value">69%</span></div>
+          <div class="bar-row"><span class="bar-name">ChatGPT</span><div class="bar-track"><div class="bar-fill" style="--w: 0.42;"></div></div><span class="bar-value">42%</span></div>
+          <div class="bar-row"><span class="bar-name">Gemini</span><div class="bar-track"><div class="bar-fill" style="--w: 0.34;"></div></div><span class="bar-value">34%</span></div>
+          <div class="bar-row"><span class="bar-name">Claude</span><div class="bar-track"><div class="bar-fill" style="--w: 0.23;"></div></div><span class="bar-value">23%</span></div>
+          <div class="bar-row"><span class="bar-name">Grok</span><div class="bar-track"><div class="bar-fill" style="--w: 0.18;"></div></div><span class="bar-value">18%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUE PROPS -->
+<section class="section">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Why Perceptivity</span>
+      <h2 class="display-lg">Three things every CMO<br/>needs in the AI search era.</h2>
+      <p>Built for marketing teams running real campaigns, real budgets, real accountability.</p>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-card" data-reveal>
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="icon-blink">
+            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+            <circle cx="12" cy="12" r="3" fill="currentColor"/>
+          </svg>
+        </div>
+        <h3 class="feature-title">See exactly how AI describes you</h3>
+        <p class="feature-body">Six AI engines. Hundreds of buyer queries. Daily. You see what ChatGPT says about your brand vs your competitors, where you rank, who's citing you, and what's changing — all on one dashboard.</p>
+      </div>
+
+      <div class="feature-card" data-reveal data-delay="1">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3 17 9 11 13 15 21 7" class="icon-draw"/>
+            <polyline points="14 7 21 7 21 14"/>
+          </svg>
+        </div>
+        <h3 class="feature-title">Know what works before you spend</h3>
+        <p class="feature-body">Thinking about a PR campaign, a content drop, a schema update? Tell us what you're planning and we'll predict the visibility lift — per engine — before you commit a rupee.</p>
+      </div>
+
+      <div class="feature-card" data-reveal data-delay="2">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="icon-flash">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" fill="currentColor" stroke="none"/>
+          </svg>
+        </div>
+        <h3 class="feature-title">Get the work done</h3>
+        <p class="feature-body">Quick fixes happen automatically. Bigger campaigns route to vetted agencies with fixed pricing. Brand calls stay with your team. Everything tracked. Nothing wasted.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 STAGES -->
+<section class="section" style="padding-top: 32px;" id="product">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">How it works</span>
+      <h2 class="display-lg">Four steps.<br/>One platform that learns.</h2>
+    </div>
+    <div class="stages-grid">
+      <div class="stage-card" data-reveal>
+        <div class="stage-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="icon-pulse">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+          </svg>
+        </div>
+        <div class="stage-num">STEP 01</div>
+        <h3 class="stage-name">Sense</h3>
+        <p class="stage-desc">See how AI describes your brand. Daily tracking across all six engines.</p>
+        <div class="stage-tag">Track</div>
+      </div>
+
+      <div class="stage-card featured" data-reveal data-delay="1">
+        <div class="stage-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 3v18h18"/>
+            <path d="M7 16l4-4 4 2 5-7" class="icon-draw"/>
+          </svg>
+        </div>
+        <div class="stage-num">STEP 02</div>
+        <h3 class="stage-name">Simulate</h3>
+        <p class="stage-desc">Predict the visibility lift of any campaign before you spend.</p>
+        <div class="stage-tag">Predict · The differentiator</div>
+      </div>
+
+      <div class="stage-card" data-reveal data-delay="2">
+        <div class="stage-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="icon-flash">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          </svg>
+        </div>
+        <div class="stage-num">STEP 03</div>
+        <h3 class="stage-name">Strike</h3>
+        <p class="stage-desc">Route every action to the right channel. Software, partners, or your team.</p>
+        <div class="stage-tag">Act</div>
+      </div>
+
+      <div class="stage-card" data-reveal data-delay="3">
+        <div class="stage-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="icon-spin">
+            <polyline points="23 4 23 10 17 10"/>
+            <polyline points="1 20 1 14 7 14"/>
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10"/>
+            <path d="M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+          </svg>
+        </div>
+        <div class="stage-num">STEP 04</div>
+        <h3 class="stage-name">Learn</h3>
+        <p class="stage-desc">Every campaign measured. Predictions sharper. Your platform gets smarter every month.</p>
+        <div class="stage-tag">Improve</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEEP DIVE: SENSE -->
+<section class="deep-dive" id="sense">
+  <div class="container">
+    <div class="deep-dive-grid">
+      <div data-reveal>
+        <div class="dd-eyebrow"><span class="dd-eyebrow-dot"></span><span>Stage 01 · Sense</span></div>
+        <h2 class="display-lg dd-headline">See your AI visibility,<br/>daily.</h2>
+        <p class="dd-body">Perceptivity runs 500 to 5,000 of your top buyer queries against six AI engines every day. You see exactly how each engine describes your brand, where you rank against competitors, who's citing you, and what changed since yesterday.</p>
+        <ul class="dd-features">
+          <li>Daily tracking across ChatGPT, Perplexity, Gemini, Claude, Google AIO, Grok</li>
+          <li>Share of voice, citations, sentiment, position — every key query</li>
+          <li>Competitor benchmarking on the queries your buyers actually ask</li>
+          <li>Slack and email alerts the moment your visibility moves</li>
+        </ul>
+      </div>
+      <div class="dd-visual" data-reveal data-delay="1">
+        <div class="dd-visual-head">
+          <span class="dd-visual-title">Visibility heatmap · Last 30 days</span>
+          <span class="dd-visual-tag">2,847 cells</span>
+        </div>
+        <div class="heatmap-grid" id="heatmap-1"></div>
+        <div style="display: flex; justify-content: space-between; padding-top: 14px; border-top: 1px solid var(--hairline); font-family: var(--font-mono); font-size: 11px; color: var(--ink-muted);">
+          <span>Low ←</span>
+          <span>How often AI cites you per engine × topic</span>
+          <span>→ High</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEEP DIVE: SIMULATE -->
+<section class="deep-dive" id="simulate">
+  <div class="container">
+    <div class="deep-dive-grid reverse">
+      <div data-reveal>
+        <div class="dd-eyebrow"><span class="dd-eyebrow-dot"></span><span>Stage 02 · Simulate · The differentiator</span></div>
+        <h2 class="display-lg dd-headline">Know what works<br/>before you spend.</h2>
+        <p class="dd-body">Thinking of publishing a comparison article? Sponsoring a PR placement on YourStory? Updating schema on 14 product pages? Tell Perceptivity what you're planning. We'll show you the predicted lift — per engine — before you spend a rupee.</p>
+        <ul class="dd-features">
+          <li>Test any content, PR, or technical change before you ship it</li>
+          <li>Per-engine predictions — what works on ChatGPT may not on Perplexity</li>
+          <li>See how reliable each prediction is — no false certainty</li>
+          <li>Plan campaigns in the right order to compound impact</li>
+        </ul>
+      </div>
+      <div class="dd-visual" data-reveal data-delay="1">
+        <div class="dd-visual-head"><span class="dd-visual-title">Predicted lift · 1,800-word reliability article</span></div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div class="sim-row"><span class="sim-engine">ChatGPT</span><span class="sim-pred pos">+2.4pp</span><span class="sim-conf">conf 0.81</span></div>
+          <div class="sim-row"><span class="sim-engine">Perplexity</span><span class="sim-pred pos">+1.1pp</span><span class="sim-conf">conf 0.76</span></div>
+          <div class="sim-row"><span class="sim-engine">Google AIO</span><span class="sim-pred pos">+0.6pp</span><span class="sim-conf">conf 0.68</span></div>
+          <div class="sim-row"><span class="sim-engine">Claude</span><span class="sim-pred pos">+0.4pp</span><span class="sim-conf">conf 0.71</span></div>
+          <div class="sim-row"><span class="sim-engine">Gemini</span><span class="sim-pred neg">−0.2pp</span><span class="sim-conf">conf 0.69</span></div>
+          <div class="sim-row"><span class="sim-engine">Grok</span><span class="sim-pred pos">+0.1pp</span><span class="sim-conf">conf 0.55</span></div>
+        </div>
+        <div class="sim-net">
+          <span class="sim-net-label">Net lift · 12 days to impact</span>
+          <span class="sim-net-val">+1.1pp</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEEP DIVE: STRIKE -->
+<section class="deep-dive" id="strike">
+  <div class="container">
+    <div class="deep-dive-grid">
+      <div data-reveal>
+        <div class="dd-eyebrow"><span class="dd-eyebrow-dot"></span><span>Stage 03 · Strike</span></div>
+        <h2 class="display-lg dd-headline">Get the work done.</h2>
+        <p class="dd-body">Every recommendation comes with a clear path. Quick technical fixes happen automatically. Bigger work — PR placements, long-form content, creator campaigns — routes to vetted agencies with fixed pricing and tracked outcomes. Brand and creative calls stay with you.</p>
+        <ul class="dd-features">
+          <li>Software handles: schema, robots.txt, briefs, drafts, publishing</li>
+          <li>Vetted agencies handle: PR, long-form content, technical SEO, creators</li>
+          <li>Your team handles: brand decisions, creative direction, sign-offs</li>
+          <li>Every rupee allocated by predicted impact — nothing wasted</li>
+        </ul>
+      </div>
+      <div class="dd-visual" data-reveal data-delay="1">
+        <div class="dd-visual-head"><span class="dd-visual-title">This quarter's action plan · ₹6L budget</span></div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div class="strike-row"><span class="strike-id">01</span><span class="strike-action">Schema deploy · 14 product pages</span><span class="strike-route sw">Software</span><span class="strike-cost">₹0</span></div>
+          <div class="strike-row"><span class="strike-id">02</span><span class="strike-action">Robots.txt · enable AI crawlers</span><span class="strike-route sw">Software</span><span class="strike-cost">₹0</span></div>
+          <div class="strike-row"><span class="strike-id">03</span><span class="strike-action">Content brief · "best EV under 30L"</span><span class="strike-route sw">Software</span><span class="strike-cost">₹500</span></div>
+          <div class="strike-row"><span class="strike-id">04</span><span class="strike-action">PR placement · YourStory + Inc42 + Mint</span><span class="strike-route partner">Partner</span><span class="strike-cost">₹2.4L</span></div>
+          <div class="strike-row"><span class="strike-id">05</span><span class="strike-action">Long-form article · reliability deep-dive</span><span class="strike-route partner">Partner</span><span class="strike-cost">₹85K</span></div>
+          <div class="strike-row"><span class="strike-id">06</span><span class="strike-action">Creative direction · brand voice update</span><span class="strike-route team">Your team</span><span class="strike-cost">Internal</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEEP DIVE: LEARN -->
+<section class="deep-dive" id="learn">
+  <div class="container">
+    <div class="deep-dive-grid reverse">
+      <div data-reveal>
+        <div class="dd-eyebrow"><span class="dd-eyebrow-dot"></span><span>Stage 04 · Learn</span></div>
+        <h2 class="display-lg dd-headline">Gets smarter every month.<br/>Even when you sleep.</h2>
+        <p class="dd-body">Every campaign Perceptivity runs gets measured. Our predictions get compared to what actually happened. We use that to sharpen the next prediction. After six months, our recommendations for your category will be better than your team's gut — and you'll have a full record of what drove results.</p>
+        <ul class="dd-features">
+          <li>Every recommendation tracked from prediction to result</li>
+          <li>Per-engine recalibration as AI models change every few weeks</li>
+          <li>Auto-alerts when ChatGPT, Perplexity, or Gemini ship updates</li>
+          <li>Quarterly reports: what worked, what didn't, what's next</li>
+        </ul>
+      </div>
+      <div class="dd-visual" data-reveal data-delay="1">
+        <div class="dd-visual-head"><span class="dd-visual-title">Feedback loop · last 90 days</span></div>
+        <div class="learn-cards">
+          <div class="learn-card">
+            <div class="learn-label">Mean prediction error</div>
+            <div class="learn-val">7.8%</div>
+            <div class="learn-ctx">↓ from 14.2% in M-12</div>
+            <div class="learn-spark">
+              <div class="learn-spark-bar" style="height: 90%"></div>
+              <div class="learn-spark-bar" style="height: 82%"></div>
+              <div class="learn-spark-bar" style="height: 78%"></div>
+              <div class="learn-spark-bar" style="height: 71%"></div>
+              <div class="learn-spark-bar" style="height: 68%"></div>
+              <div class="learn-spark-bar" style="height: 62%"></div>
+              <div class="learn-spark-bar" style="height: 55%"></div>
+              <div class="learn-spark-bar" style="height: 50%"></div>
+              <div class="learn-spark-bar" style="height: 48%"></div>
+              <div class="learn-spark-bar" style="height: 42%"></div>
+              <div class="learn-spark-bar" style="height: 39%"></div>
+              <div class="learn-spark-bar" style="height: 35%"></div>
+            </div>
+          </div>
+          <div class="learn-card">
+            <div class="learn-label">Campaigns measured</div>
+            <div class="learn-val">12,847</div>
+            <div class="learn-ctx">across 47 brands</div>
+          </div>
+          <div class="learn-card full">
+            <div class="learn-label">Recent engine update</div>
+            <div class="learn-val" style="font-size: 20px; letter-spacing: -0.02em; line-height: 1.3;">ChatGPT changed retrieval · July 14 · re-fingerprinted in 36 hours</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENGINE COVERAGE -->
+<section class="section">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Engine coverage</span>
+      <h2 class="display-lg">Every AI engine that matters.<br/>Every day.</h2>
+      <p>We track six AI engines and add new ones the moment they reach meaningful consumer adoption. Each one fingerprinted nightly so we know how they actually behave.</p>
+    </div>
+    <div class="engine-cards">
+      <div class="engine-card" data-reveal><div class="engine-card-head"><span class="engine-dot"></span><span class="engine-name">ChatGPT</span></div><div class="engine-stat">600M+</div><div class="engine-trend up">↑ Weekly active users</div></div>
+      <div class="engine-card" data-reveal data-delay="1"><div class="engine-card-head"><span class="engine-dot"></span><span class="engine-name">Perplexity</span></div><div class="engine-stat">22M</div><div class="engine-trend up">↑ 4× YoY growth</div></div>
+      <div class="engine-card" data-reveal data-delay="2"><div class="engine-card-head"><span class="engine-dot"></span><span class="engine-name">Google AIO</span></div><div class="engine-stat">2B+</div><div class="engine-trend up">↑ Search results with AI</div></div>
+      <div class="engine-card" data-reveal data-delay="3"><div class="engine-card-head"><span class="engine-dot"></span><span class="engine-name">Gemini</span></div><div class="engine-stat">350M</div><div class="engine-trend up">↑ Monthly users</div></div>
+      <div class="engine-card" data-reveal data-delay="4"><div class="engine-card-head"><span class="engine-dot"></span><span class="engine-name">Claude</span></div><div class="engine-stat">19M</div><div class="engine-trend up">↑ Monthly users</div></div>
+      <div class="engine-card" data-reveal data-delay="5"><div class="engine-card-head"><span class="engine-dot"></span><span class="engine-name">Grok</span></div><div class="engine-stat">15M</div><div class="engine-trend up">↑ X integration</div></div>
+    </div>
+    <p class="caption" style="text-align: center; margin-top: 24px; opacity: 0.6;">User numbers from public sources · Updated quarterly</p>
+  </div>
+</section>
+
+<!-- INDUSTRIES INTRO -->
+<section class="section" id="industries" style="padding-bottom: 24px;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Industries</span>
+      <h2 class="display-lg">Built for the categories<br/>that drive AI search.</h2>
+      <p>High-consideration purchases. High-intent comparison queries. High stakes per buyer. These are the industries where being the AI answer changes revenue — and where Perceptivity delivers most.</p>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRY: AUTOMOTIVE -->
+<section>
+  <div class="container">
+    <div class="industry-row">
+      <div data-reveal>
+        <div class="ind-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 17h-2v-5l2-5h12l4 5v5h-2"/>
+            <circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/>
+            <line x1="9" y1="17" x2="15" y2="17"/>
+          </svg>
+        </div>
+        <div class="eyebrow" style="margin-bottom: 12px;">01 · Automotive</div>
+        <h2 class="ind-name">Automotive</h2>
+        <p class="ind-body">A car is a 5-lakh-to-50-lakh decision. Buyers research for months before they walk into a dealership — and increasingly, that research starts with "best EV under 30 lakhs" or "Mahindra XUV vs Tata Harrier." Whoever AI cites first owns the consideration set.</p>
+        <div class="ind-stat-grid">
+          <div class="ind-stat"><div class="ind-stat-num">82%</div><div class="ind-stat-label">Use AI in research</div></div>
+          <div class="ind-stat"><div class="ind-stat-num">3.4×</div><div class="ind-stat-label">More likely to test-drive named brand</div></div>
+        </div>
+        <ul class="ind-features">
+          <li>Track AI visibility for model-level queries — not just brand</li>
+          <li>Predict the impact of every launch, refresh, and review cycle</li>
+          <li>Route content to autocar, motoroctane, OD India, and creator network</li>
+          <li>Monitor competitor mentions — when AI shifts toward them, you know first</li>
+        </ul>
+      </div>
+      <div class="ind-visual" data-reveal data-delay="1">
+        <div class="dd-visual-head"><span class="dd-visual-title">Sample queries · Automotive · India</span></div>
+        <div class="ind-visual-query-list">
+          <div class="ind-query"><span class="ind-query-text">"best electric SUV under ₹30 lakhs"</span><span class="ind-query-score">142K/mo</span></div>
+          <div class="ind-query"><span class="ind-query-text">"Mahindra XUV700 vs Tata Harrier"</span><span class="ind-query-score">89K/mo</span></div>
+          <div class="ind-query"><span class="ind-query-text">"most reliable car India 2026"</span><span class="ind-query-score">76K/mo</span></div>
+          <div class="ind-query"><span class="ind-query-text">"best automatic car under 15 lakhs"</span><span class="ind-query-score">68K/mo</span></div>
+          <div class="ind-query"><span class="ind-query-text">"Hyundai Creta resale value"</span><span class="ind-query-score warn">42K/mo</span></div>
+          <div class="ind-query"><span class="ind-query-text">"EV charging range India"</span><span class="ind-query-score">31K/mo</span></div>
+        </div>
+        <p class="caption" style="margin-top: auto; font-family: var(--font-mono); opacity: 0.6;">Volume estimates from ChatGPT, Perplexity, Gemini · Quarterly aggregated</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRY: REAL ESTATE -->
+<section>
+  <div class="container">
+    <div class="industry-row reverse">
+      <div data-reveal>
+        <div class="ind-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/>
+            <path d="M9 9h.01"/><path d="M9 12h.01"/><path d="M9 15h.01"/><path d="M9 18h.01"/>
+            <path d="M14 9h.01"/><path d="M14 12h.01"/><path d="M14 15h.01"/><path d="M14 18h.01"/>
+          </svg>
+        </div>
+        <div class="eyebrow" style="margin-bottom: 12px;">02 · Real Estate</div>
+        <h2 class="ind-name">Real Estate</h2>
+        <p class="ind-body">Someone is about to spend ₹2 crore on a home. They asked ChatGPT "best 3BHK in Whitefield." If your project isn't in the consideration set, you lost the buyer before they ever saw your hoarding. AI is the new RERA search — and most developers don't know it yet.</p>
+        <div class="ind-stat-grid">
+          <div class="ind-stat"><div class="ind-stat-num">67%</div><div class="ind-stat-label">Of homebuyers research AI first</div></div>
+          <div class="ind-stat"><div class="ind-stat-num">₹1.8 Cr</div><div class="ind-stat-label">Average ticket size</div></div>
+        </div>
+        <ul class="ind-features">
+          <li>Track project-level visibility across micro-markets and price bands</li>
+          <li>Predict the impact of OC, completion, RERA filings on AI mentions</li>
+          <li>Route to housing.com, magicbricks, and broker network</li>
+          <li>Monitor what AI says about handover delays, build quality, amenities</li>
+        </ul>
+      </div>
+      <div class="ind-visual" data-reveal data-delay="1">
+        <div class="dd-visual-head"><span class="dd-visual-title">Sample queries · Real Estate</span></div>
+        <div class="ind-visual-query-list">
+          <div class="ind-query"><span class="ind-query-text">"best 3BHK apartments Whitefield"</span><span class="ind-query-score">38K/mo</span></div>
+          <div class="ind-query"><span class="ind-query-text">"Lodha vs Godrej Properties review"</span><span class="ind-query-score">22K/mo</span></div>
+          <div class="ind-query"><span class="ind-query-text">"luxury apartments Gurgaon under 5 cr"</span><span class="ind-query-score">31K/mo</span></div>
+          <div class="ind-query"><span class="ind-query-text">"DLF One Midtown price per sqft"</span><span class="ind-query-score warn">14K/mo</span></div>
+          <div class="ind-query"><span class="ind-query-text">"Prestige City Bangalore possession date"</span><span class="ind-query-score">19K/mo</span></div>
+          <div class="ind-query"><span class="ind-query-text">"safest builders India 2026"</span><span class="ind-query-score">11K/mo</span></div>
+        </div>
+        <p class="caption" style="margin-top: auto; font-family: var(--font-mono); opacity: 0.6;">Volume estimates · Q-aggregated across engines</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRY: FINANCIAL SERVICES -->
+<section>
+  <div class="container">
+    <div class="industry-row">
+      <div data-reveal>
+        <div class="ind-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="5" width="20" height="14" rx="2"/>
+            <line x1="2" y1="10" x2="22" y2="10"/>
+            <line x1="6" y1="15" x2="10" y2="15"/>
+            <line x1="14" y1="15" x2="18" y2="15"/>
+          </svg>
+        </div>
+        <div class="eyebrow" style="margin-bottom: 12px;">03 · Financial Services</div>
+        <h2 class="ind-name">Financial Services</h2>
+        <p class="ind-body">"Best credit card for travel." "HDFC vs ICICI for home loan." "Mutual fund SIP for 10 years." These used to be search queries that ended on MoneyControl. Now they end at ChatGPT. The credit card AI cites for travel becomes the credit card you apply for.</p>
+        <div class="ind-stat-grid">
+          <div class="ind-stat"><div class="ind-stat-num">89%</div><div class="ind-stat-label">Of fintech users research AI first</div></div>
+          <div class="ind-stat"><div class="ind-stat-num">5.2×</div><div class="ind-stat-label">Higher application rate from AI cite</div></div>
+        </div>
+        <ul class="ind-features">
+          <li>Track visibility for product-specific comparison queries</li>
+          <li>Predict impact of new product launches, rate changes, regulatory news</li>
+          <li>Route content to MoneyControl, ETMoney, finshots, expert creator network</li>
+          <li>Monitor sentiment shifts around fees, customer service, trust signals</li>
+        </ul>
+      </div>
+      <div class="ind-visual" data-reveal data-delay="1">
+        <div class="dd-visual-head"><span class="dd-visual-title">Sample queries · Financial Services</span></div>
+        <div class="ind-visual-query-list">
+          <div class="ind-query"><span class="ind-query-text">"best credit card for international travel"</span><span class="ind-query-score">94K/mo</span></div>
+          <div class="ind-query"><span class="ind-query-text">"HDFC vs ICICI home loan comparison"</span><span class="ind-query-score">52K/mo</span></div>
+          <div class="ind-query"><span class="ind-query-text">"best mutual fund SIP 2026"</span><span class="ind-query-score">71K/mo</span></div>
+          <div class="ind-query"><span class="ind-query-text">"Razorpay vs Cashfree pricing"</span><span class="ind-query-score">28K/mo</span></div>
+          <div class="ind-query"><span class="ind-query-text">"safest neobank India"</span><span class="ind-query-score warn">19K/mo</span></div>
+          <div class="ind-query"><span class="ind-query-text">"term insurance for 1 cr coverage"</span><span class="ind-query-score">44K/mo</span></div>
+        </div>
+        <p class="caption" style="margin-top: auto; font-family: var(--font-mono); opacity: 0.6;">Volume estimates · Q-aggregated across engines</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRY: HEALTHCARE -->
+<section>
+  <div class="container">
+    <div class="industry-row reverse">
+      <div data-reveal>
+        <div class="ind-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+        </div>
+        <div class="eyebrow" style="margin-bottom: 12px;">04 · Healthcare</div>
+        <h2 class="ind-name">Healthcare</h2>
+        <p class="ind-body">Patients are scared, time-pressed, and Googling at midnight. "Best cardiac hospital Delhi." "Apollo vs Fortis for cancer treatment." The hospital AI recommends gets the consultation. The pharma brand AI cites for asthma becomes the inhaler their doctor matches. Trust starts with citation.</p>
+        <div class="ind-stat-grid">
+          <div class="ind-stat"><div class="ind-stat-num">76%</div><div class="ind-stat-label">Of patients research before consulting</div></div>
+          <div class="ind-stat"><div class="ind-stat-num">2.8×</div><div class="ind-stat-label">Higher conversion from AI cite</div></div>
+        </div>
+        <ul class="ind-features">
+          <li>Track condition-specific visibility — cardiac, oncology, transplant, etc.</li>
+          <li>Predict impact of new accreditations, specialist hires, success stories</li>
+          <li>Route to medical creator network, health publishers, doctor communities</li>
+          <li>Monitor what AI says about wait times, costs, doctor expertise</li>
+        </ul>
+      </div>
+      <div class="ind-visual" data-reveal data-delay="1">
+        <div class="dd-visual-head"><span class="dd-visual-title">Sample queries · Healthcare</span></div>
+        <div class="ind-visual-query-list">
+          <div class="ind-query"><span class="ind-query-text">"best cardiac hospital Delhi NCR"</span><span class="ind-query-score">26K/mo</span></div>
+          <div class="ind-query"><span class="ind-query-text">"Apollo vs Fortis cancer treatment"</span><span class="ind-query-score">14K/mo</span></div>
+          <div class="ind-query"><span class="ind-query-text">"best dermatologist Mumbai for acne"</span><span class="ind-query-score">31K/mo</span></div>
+          <div class="ind-query"><span class="ind-query-text">"affordable IVF clinic Bangalore"</span><span class="ind-query-score warn">18K/mo</span></div>
+          <div class="ind-query"><span class="ind-query-text">"top orthopedic surgeons India"</span><span class="ind-query-score">22K/mo</span></div>
+          <div class="ind-query"><span class="ind-query-text">"diabetes medication side effects"</span><span class="ind-query-score">58K/mo</span></div>
+        </div>
+        <p class="caption" style="margin-top: auto; font-family: var(--font-mono); opacity: 0.6;">Volume estimates · Q-aggregated across engines</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRY: CONSUMER DURABLES -->
+<section>
+  <div class="container">
+    <div class="industry-row">
+      <div data-reveal>
+        <div class="ind-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="7" width="20" height="14" rx="2"/>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+          </svg>
+        </div>
+        <div class="eyebrow" style="margin-bottom: 12px;">05 · Consumer Durables</div>
+        <h2 class="ind-name">Consumer Durables</h2>
+        <p class="ind-body">Refrigerators. ACs. Washing machines. TVs. Earbuds. Mixers. Every category is now an AI search query: "best 1.5 ton inverter AC under 40k." The brand cited first in the answer doesn't just win awareness — it wins the Amazon search, the Reliance Digital walk-in, the eventual purchase.</p>
+        <div class="ind-stat-grid">
+          <div class="ind-stat"><div class="ind-stat-num">71%</div><div class="ind-stat-label">Of durables buyers consult AI</div></div>
+          <div class="ind-stat"><div class="ind-stat-num">80K/mo</div><div class="ind-stat-label">Queries for "best 1.5 ton AC"</div></div>
+        </div>
+        <ul class="ind-features">
+          <li>Track SKU-level visibility — model number, price band, feature</li>
+          <li>Predict impact of price drops, EMI offers, festive launches</li>
+          <li>Route to GSMArena, Smartprix, NDTV Gadgets, regional creators</li>
+          <li>Monitor reviews and complaints — fix issues before AI repeats them</li>
+        </ul>
+      </div>
+      <div class="ind-visual" data-reveal data-delay="1">
+        <div class="dd-visual-head"><span class="dd-visual-title">Sample queries · Consumer Durables</span></div>
+        <div class="ind-visual-query-list">
+          <div class="ind-query"><span class="ind-query-text">"best 1.5 ton inverter AC under 40k"</span><span class="ind-query-score">80K/mo</span></div>
+          <div class="ind-query"><span class="ind-query-text">"Samsung vs LG French door refrigerator"</span><span class="ind-query-score">42K/mo</span></div>
+          <div class="ind-query"><span class="ind-query-text">"best wireless earbuds under 3000"</span><span class="ind-query-score">128K/mo</span></div>
+          <div class="ind-query"><span class="ind-query-text">"top loading vs front loading washing machine"</span><span class="ind-query-score">36K/mo</span></div>
+          <div class="ind-query"><span class="ind-query-text">"55 inch OLED TV 2026 India"</span><span class="ind-query-score">31K/mo</span></div>
+          <div class="ind-query"><span class="ind-query-text">"best mixer grinder for daily use"</span><span class="ind-query-score warn">24K/mo</span></div>
+        </div>
+        <p class="caption" style="margin-top: auto; font-family: var(--font-mono); opacity: 0.6;">Volume estimates · Q-aggregated across engines</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BANNER -->
+<section class="stats-banner">
+  <div class="container">
+    <div class="section-head" data-reveal style="margin-bottom: 56px;">
+      <span class="eyebrow">By the numbers</span>
+      <h2 class="display-lg">The platform in numbers.</h2>
+    </div>
+    <div class="stats-grid">
+      <div data-reveal>
+        <div class="stat-big-num" data-counter data-to="6">0</div>
+        <div class="stat-big-label">AI engines tracked</div>
+        <p class="stat-big-ctx">ChatGPT, Perplexity, Gemini, Claude, Google AIO, and Grok — every day.</p>
+      </div>
+      <div data-reveal data-delay="1">
+        <div class="stat-big-num" data-counter data-to="12000" data-suffix="+">0</div>
+        <div class="stat-big-label">Daily test queries</div>
+        <p class="stat-big-ctx">Detecting AI updates within 24 hours so your visibility stays accurate.</p>
+      </div>
+      <div data-reveal data-delay="2">
+        <div class="stat-big-num" data-counter data-to="150" data-suffix="K">0</div>
+        <div class="stat-big-label">Measured outcomes</div>
+        <p class="stat-big-ctx">Real campaigns tracked from prediction to result — projected by month 18.</p>
+      </div>
+      <div data-reveal data-delay="3">
+        <div class="stat-big-num"><span data-counter data-to="8">0</span>%</div>
+        <div class="stat-big-label">Prediction accuracy</div>
+        <p class="stat-big-ctx">Mean error on visibility lift — our target by month 18.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPOTLIGHT -->
+<section class="section">
+  <div class="container">
+    <div class="spotlight" data-reveal>
+      <div class="spotlight-eyebrow">The shift</div>
+      <h3 class="spotlight-h">AI search is the new front door.<br/>Win it before your competitors do.</h3>
+      <a href="#cta" class="spotlight-cta">
+        Get started
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section" id="pricing">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Pricing</span>
+      <h2 class="display-lg">Simple pricing.<br/>Free to start.</h2>
+      <p>Every plan tracks your AI visibility across all six engines. Upgrade when you're ready to predict and execute.</p>
+    </div>
+
+    <div data-reveal data-delay="1" style="display: flex; justify-content: flex-start;">
+      <div class="pricing-toggle">
+        <button class="pricing-tab active" data-bill="monthly">Monthly</button>
+        <button class="pricing-tab" data-bill="annual">Annual · save 20%</button>
+      </div>
+    </div>
+
+    <div class="pricing-grid" data-reveal data-delay="2">
+      <div class="pricing-card">
+        <h3 class="pricing-name">Sense</h3>
+        <p class="pricing-tagline">For brands ready to see how AI describes them — and what's changing daily.</p>
+        <div class="pricing-amount">
+          <span class="pricing-num" data-price-monthly="₹49K" data-price-annual="₹39K">₹49K</span>
+          <span class="pricing-per">/mo</span>
+        </div>
+        <p class="pricing-billed" data-billing-monthly="billed monthly" data-billing-annual="billed annually">billed monthly</p>
+        <div class="pricing-cta"><a href="#cta" class="btn btn-secondary">Start free trial</a></div>
+        <ul class="pricing-features">
+          <li>Daily visibility tracking across 6 AI engines</li>
+          <li>Up to 500 buyer queries per day</li>
+          <li>Share of voice, citations, sentiment, position</li>
+          <li>Competitor benchmarking on every key query</li>
+          <li>Weekly email digests + Slack alerts</li>
+          <li>1 brand · 3 user seats</li>
+        </ul>
+      </div>
+
+      <div class="pricing-card featured">
+        <h3 class="pricing-name">Sense + Simulate</h3>
+        <p class="pricing-tagline">When predicting what works matters more than measuring what didn't.</p>
+        <div class="pricing-amount">
+          <span class="pricing-num" data-price-monthly="₹2.4L" data-price-annual="₹1.9L">₹2.4L</span>
+          <span class="pricing-per">/mo</span>
+        </div>
+        <p class="pricing-billed" data-billing-monthly="billed monthly" data-billing-annual="billed annually">billed monthly</p>
+        <div class="pricing-cta"><a href="#cta" class="btn btn-primary">Start free trial</a></div>
+        <ul class="pricing-features">
+          <li>Everything in Sense</li>
+          <li>Up to 5,000 buyer queries per day</li>
+          <li>Predict visibility lift before any campaign</li>
+          <li>Per-engine predictions — what works where</li>
+          <li>Pre-publish content review</li>
+          <li>Campaign sequencing optimizer</li>
+          <li>3 brands · 10 seats · API access</li>
+        </ul>
+      </div>
+
+      <div class="pricing-card">
+        <h3 class="pricing-name">Full Platform</h3>
+        <p class="pricing-tagline">End-to-end. Predictions plus execution plus measurement. For enterprise teams.</p>
+        <div class="pricing-amount"><span class="pricing-num">Custom</span></div>
+        <p class="pricing-billed">annual contract</p>
+        <div class="pricing-cta"><a href="#cta" class="btn btn-secondary">Talk to sales</a></div>
+        <ul class="pricing-features">
+          <li>Everything in Sense + Simulate</li>
+          <li>Route execution to software, partners, or your team</li>
+          <li>Every campaign measured · attribution to revenue</li>
+          <li>Dedicated solutions engineer</li>
+          <li>White-glove onboarding · 90 days</li>
+          <li>SSO · audit logs · contractual SLA</li>
+          <li>Unlimited brands · unlimited seats</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section class="section" style="padding-top: 24px;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Compare plans</span>
+      <h2 class="display-lg">What's in each tier.</h2>
+    </div>
+    <div class="compare-wrap" data-reveal data-delay="1">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th style="width: 36%;">Feature</th>
+            <th class="center" style="width: 21%;">Sense</th>
+            <th class="center featured-col" style="width: 21%;">Sense + Simulate</th>
+            <th class="center" style="width: 22%;">Full Platform</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="head"><td colspan="4">Sense · Track AI visibility</td></tr>
+          <tr><td>Engines tracked</td><td class="center">6</td><td class="center featured-col">6</td><td class="center">6 + custom</td></tr>
+          <tr><td>Daily query volume</td><td class="center">500</td><td class="center featured-col">5,000</td><td class="center">Unlimited</td></tr>
+          <tr><td>Competitor benchmarking</td><td class="center"><span class="check-mark">✓</span></td><td class="center featured-col"><span class="check-mark">✓</span></td><td class="center"><span class="check-mark">✓</span></td></tr>
+          <tr><td>Sentiment + citation tracking</td><td class="center"><span class="check-mark">✓</span></td><td class="center featured-col"><span class="check-mark">✓</span></td><td class="center"><span class="check-mark">✓</span></td></tr>
+          <tr><td>Slack + email alerts</td><td class="center"><span class="check-mark">✓</span></td><td class="center featured-col"><span class="check-mark">✓</span></td><td class="center"><span class="check-mark">✓</span></td></tr>
+
+          <tr class="head"><td colspan="4">Simulate · Predict campaign impact</td></tr>
+          <tr><td>Pre-campaign lift prediction</td><td class="center"><span class="dash">—</span></td><td class="center featured-col"><span class="check-mark">✓</span></td><td class="center"><span class="check-mark">✓</span></td></tr>
+          <tr><td>Per-engine breakdown</td><td class="center"><span class="dash">—</span></td><td class="center featured-col"><span class="check-mark">✓</span></td><td class="center"><span class="check-mark">✓</span></td></tr>
+          <tr><td>Pre-publish content review</td><td class="center"><span class="dash">—</span></td><td class="center featured-col"><span class="check-mark">✓</span></td><td class="center"><span class="check-mark">✓</span></td></tr>
+          <tr><td>Campaign sequencing</td><td class="center"><span class="dash">—</span></td><td class="center featured-col"><span class="check-mark">✓</span></td><td class="center"><span class="check-mark">✓</span></td></tr>
+
+          <tr class="head"><td colspan="4">Strike · Execute and route</td></tr>
+          <tr><td>Software-handled fixes</td><td class="center"><span class="dash">—</span></td><td class="center featured-col"><span class="dash">—</span></td><td class="center"><span class="check-mark">✓</span></td></tr>
+          <tr><td>Vetted partner network</td><td class="center"><span class="dash">—</span></td><td class="center featured-col"><span class="dash">—</span></td><td class="center"><span class="check-mark">✓</span></td></tr>
+          <tr><td>Budget-aware routing</td><td class="center"><span class="dash">—</span></td><td class="center featured-col"><span class="dash">—</span></td><td class="center"><span class="check-mark">✓</span></td></tr>
+          <tr><td>Revenue attribution</td><td class="center"><span class="dash">—</span></td><td class="center featured-col"><span class="dash">—</span></td><td class="center"><span class="check-mark">✓</span></td></tr>
+
+          <tr class="head"><td colspan="4">Team + support</td></tr>
+          <tr><td>User seats</td><td class="center">3</td><td class="center featured-col">10</td><td class="center">Unlimited</td></tr>
+          <tr><td>Brands tracked</td><td class="center">1</td><td class="center featured-col">3</td><td class="center">Unlimited</td></tr>
+          <tr><td>API access</td><td class="center"><span class="dash">—</span></td><td class="center featured-col"><span class="check-mark">✓</span></td><td class="center"><span class="check-mark">✓</span></td></tr>
+          <tr><td>SSO + audit logs</td><td class="center"><span class="dash">—</span></td><td class="center featured-col"><span class="dash">—</span></td><td class="center"><span class="check-mark">✓</span></td></tr>
+          <tr><td>Dedicated solutions engineer</td><td class="center"><span class="dash">—</span></td><td class="center featured-col"><span class="dash">—</span></td><td class="center"><span class="check-mark">✓</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING FAQ -->
+<section class="section" id="faq">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Pricing FAQ</span>
+      <h2 class="display-lg">Questions about pricing.</h2>
+    </div>
+    <div class="faq-list" data-reveal data-delay="1">
+      <div class="faq-item">
+        <button class="faq-q">Is there really a free trial?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Yes. 14 days of full Sense access for 1 brand, 500 daily queries, all 6 engines. No credit card required. We don't ask for one until the trial converts.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">What counts as a "buyer query"?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>One unique prompt sent to one engine. So "best electric SUV under 30 lakhs" sent to ChatGPT, Perplexity, and Gemini = 3 queries. We help you build a smart query list during onboarding so you're not wasting volume on low-intent prompts.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Can we change plans mid-cycle?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Yes. Upgrade anytime — you pay prorated for the rest of the period. Downgrade at the end of the current billing cycle. No lock-ins, no cancellation fees.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Why is Full Platform "custom"?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Because the Strike layer involves real money flowing to real partners on your behalf. Pricing depends on your category, your action volume, and which partner lanes you use. Expect ACVs in the ₹35L to ₹2Cr range. Annual contracts only.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Do you offer agency or reseller pricing?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Yes. Agencies serving multiple brands get a multi-tenant version with consolidated billing and per-client dashboards. Reach out to sales — we don't list these terms publicly.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">What happens if engines change pricing or rate-limit us?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>The engine API costs are baked into our pricing. If a major engine doubles its API price or rate-limits us, we absorb that on existing contracts and adjust pricing for new ones. You'll never get a surprise bill from us because OpenAI changed something.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Is my data safe?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Yes. Your data — content, campaigns, outcomes — is encrypted at rest and in transit, stored in your own tenant, and never used to improve other customers' results. SOC 2 Type II in progress, ISO 27001 planned.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPANY: MISSION -->
+<section class="section" id="company">
+  <div class="container">
+    <div class="mission-grid">
+      <div data-reveal>
+        <div class="eyebrow" style="margin-bottom: 16px;">Mission</div>
+        <h2 class="display-lg">Every brand deserves<br/>a fair shot<br/>at being the AI answer.</h2>
+      </div>
+      <div data-reveal data-delay="1">
+        <p class="body-lg" style="margin-bottom: 24px;">For two decades, SEO decided who buyers found. The rules were clear: rank on Google. The toolkit was mature. The agencies knew how to play.</p>
+        <p class="body-lg" style="margin-bottom: 24px;">AI search broke that. ChatGPT doesn't show ten blue links — it writes one paragraph and names three brands. Today, most marketing teams can't see if they're being cited, can't predict what will move them, and can't take action. The old toolkit doesn't work.</p>
+        <p class="body-lg">Perceptivity is building the new one. We see the substrate. We model the engines. We route the work. So every brand — not just the biggest — has a fair shot at being the answer AI gives.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPANY: VALUES -->
+<section class="section" style="padding-top: 32px;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">How we operate</span>
+      <h2 class="display-lg">Three principles<br/>that shape every decision.</h2>
+    </div>
+    <div class="values-grid">
+      <div class="value-card" data-reveal>
+        <div class="value-num">01</div>
+        <h3 class="value-title">Operator-first</h3>
+        <p class="value-body">We've sat in the marketing chair. We've signed the agency PO. We've explained the numbers to the board. Every product decision passes through "would the CMO actually use this on a Monday morning?"</p>
+      </div>
+      <div class="value-card" data-reveal data-delay="1">
+        <div class="value-num">02</div>
+        <h3 class="value-title">Predictions, not promises</h3>
+        <p class="value-body">If our model can't predict your campaign's impact with stated confidence, we don't ship the campaign. We'd rather show "low confidence, here's why" than fake certainty that breaks trust on contact with reality.</p>
+      </div>
+      <div class="value-card" data-reveal data-delay="2">
+        <div class="value-num">03</div>
+        <h3 class="value-title">Closed loop or nothing</h3>
+        <p class="value-body">Measurement without prediction is a dashboard. Prediction without execution is a slide. Only the closed loop — predict, route, measure, learn — produces actual business outcomes. That's what we build.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPANY: ROADMAP -->
+<section class="section" style="padding-top: 0;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Where we are</span>
+      <h2 class="display-lg">Roadmap.</h2>
+    </div>
+    <div class="timeline" data-reveal data-delay="1">
+      <div class="timeline-row">
+        <div class="timeline-when">Q3 2026</div>
+        <div class="timeline-what">Sense alpha · 3 engines, 100-prompt panel, first design partners onboarded</div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-when">Q4 2026</div>
+        <div class="timeline-what">Sense beta · 6 engines, 5K daily prompts. Simulate v0 with first lift predictions. Seed round closed.</div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-when">Q1 2027</div>
+        <div class="timeline-what">Simulate v1 with calibrated lift estimator. First 15 paid customers across 3 industries.</div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-when">Q2 2027</div>
+        <div class="timeline-what">Strike launch — agent orchestration plus first 5 vetted partners onboarded. 30 paying customers.</div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-when">Q3 2027</div>
+        <div class="timeline-what">Learn loop closed. 50 customers · ₹2M ARR run-rate · 25 vetted partners across 5 industries.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact" style="padding-top: 0;">
+  <div class="container">
+    <div class="contact-card" data-reveal>
+      <div>
+        <div class="eyebrow" style="margin-bottom: 16px;">Get in touch</div>
+        <h2 class="display-xl">Let's talk.</h2>
+        <p class="body-lg" style="max-width: 440px; margin-bottom: 28px;">Whether you're a CMO exploring AI search, an investor evaluating the space, or a partner — we'd love to hear from you.</p>
+        <div class="cta-actions" style="justify-content: flex-start;">
+          <a href="#" class="btn btn-primary btn-lg btn-arrow">
+            Schedule a call
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="contact-meta">
+        <div class="contact-row"><div class="contact-label">Customer enquiries</div><div class="contact-val"><a href="#">hello@perceptivity.ai</a></div></div>
+        <div class="contact-row"><div class="contact-label">Investor enquiries</div><div class="contact-val"><a href="#">investors@perceptivity.ai</a></div></div>
+        <div class="contact-row"><div class="contact-label">Partner network</div><div class="contact-val"><a href="#">partners@perceptivity.ai</a></div></div>
+        <div class="contact-row"><div class="contact-label">Press</div><div class="contact-val"><a href="#">press@perceptivity.ai</a></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div class="container">
+    <div class="cta-card" data-reveal>
+      <h2 class="display-xl cta-h">See your AI visibility<br/>in 72 hours.</h2>
+      <p class="cta-body">Free trial. No credit card. No commitment. Walk away with a full report of how AI describes your brand — even if you decide not to continue.</p>
+      <div class="cta-actions">
+        <a href="#" class="btn btn-primary btn-lg btn-arrow">
+          Start free trial
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a href="#" class="btn btn-secondary btn-lg">Talk to sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <div class="footer-brand-mark">
+          <span class="nav-mark"></span>
+          <span class="name">Perceptivity</span>
+        </div>
+        <p class="footer-tagline">The AI search marketing platform. Helping brands win when buyers ask AI.</p>
+      </div>
+      <div>
+        <h4 class="footer-col-head">Product</h4>
+        <div class="footer-links">
+          <a href="#sense">Sense</a>
+          <a href="#simulate">Simulate</a>
+          <a href="#strike">Strike</a>
+          <a href="#learn">Learn</a>
+        </div>
+      </div>
+      <div>
+        <h4 class="footer-col-head">Industries</h4>
+        <div class="footer-links">
+          <a href="#industries">Automotive</a>
+          <a href="#industries">Real Estate</a>
+          <a href="#industries">Financial Services</a>
+          <a href="#industries">Healthcare</a>
+          <a href="#industries">Consumer Durables</a>
+        </div>
+      </div>
+      <div>
+        <h4 class="footer-col-head">Company</h4>
+        <div class="footer-links">
+          <a href="#company">About</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#contact">Contact</a>
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="micro">© 2026 Perceptivity Technologies · All rights reserved</p>
+      <p class="micro" style="font-family: var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase;">Be the answer AI gives</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }});
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
+
+// Animated counters
+const counters = document.querySelectorAll('[data-counter]');
+const cio = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !e.target.dataset.done) {
+      e.target.dataset.done = '1';
+      const target = parseInt(e.target.dataset.to, 10);
+      const suffix = e.target.dataset.suffix || '';
+      const duration = 1400;
+      const start = performance.now();
+      const tick = (now) => {
+        const t = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - t, 3);
+        const val = Math.round(target * eased);
+        e.target.textContent = (val >= 1000 ? val.toLocaleString() : val) + suffix;
+        if (t < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+      cio.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.4 });
+counters.forEach(c => cio.observe(c));
+
+// Nav scroll
+const nav = document.querySelector('.nav-wrap');
+const navLinks = document.querySelectorAll('.nav-link');
+const sections = ['product', 'industries', 'pricing', 'company'];
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 20) nav.classList.add('scrolled');
+  else nav.classList.remove('scrolled');
+  
+  // Active nav state based on scroll position
+  let current = null;
+  for (const id of sections) {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top <= 100) current = id;
+  }
+  navLinks.forEach(l => {
+    l.classList.toggle('active', l.getAttribute('href') === '#' + current);
+  });
+}, { passive: true });
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', (e) => {
+    const id = a.getAttribute('href');
+    if (id === '#' || id === '#!') return;
+    const target = document.querySelector(id);
+    if (target) {
+      e.preventDefault();
+      const top = target.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  });
+});
+
+// FAQ accordion
+document.querySelectorAll('.faq-item').forEach(item => {
+  item.querySelector('.faq-q').addEventListener('click', () => {
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+
+// Pricing toggle
+const tabs = document.querySelectorAll('.pricing-tab');
+const priceEls = document.querySelectorAll('[data-price-monthly]');
+const billEls = document.querySelectorAll('[data-billing-monthly]');
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    const mode = tab.dataset.bill;
+    priceEls.forEach(el => {
+      el.textContent = mode === 'annual' ? el.dataset.priceAnnual : el.dataset.priceMonthly;
+    });
+    billEls.forEach(el => {
+      el.textContent = mode === 'annual' ? el.dataset.billingAnnual : el.dataset.billingMonthly;
+    });
+  });
+});
+
+// Build heatmap
+const heat = [
+  [0.85, 0.92, 0.45, 0.32, 0.71, 0.18],
+  [0.78, 0.88, 0.41, 0.28, 0.66, 0.22],
+  [0.72, 0.81, 0.38, 0.31, 0.62, 0.19],
+  [0.55, 0.68, 0.35, 0.24, 0.51, 0.15],
+  [0.48, 0.61, 0.29, 0.21, 0.45, 0.14],
+  [0.38, 0.52, 0.26, 0.19, 0.38, 0.12],
+  [0.31, 0.42, 0.22, 0.15, 0.31, 0.10],
+  [0.24, 0.31, 0.18, 0.13, 0.24, 0.08],
+  [0.18, 0.24, 0.15, 0.11, 0.18, 0.07],
+  [0.12, 0.18, 0.11, 0.08, 0.13, 0.05],
+];
+const grid = document.getElementById('heatmap-1');
+if (grid) {
+  heat.forEach(row => row.forEach(v => {
+    const c = document.createElement('div');
+    c.className = 'heat-cell';
+    const f = document.createElement('div');
+    f.className = 'heat-cell-fill';
+    f.style.setProperty('--o', v);
+    c.appendChild(f);
+    grid.appendChild(c);
+  }));
+}
+</script>
+
+</body>
+</html>
