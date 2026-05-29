@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="How Perceptivity works: Sense, Simulate, Act, Learn — a four-step operating rhythm for marketing leaders to shape what AI tells your buyer." />
+<title>How it works — Perceptivity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;650;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="perceptivity.css">
+<style>
+  .page-head{padding:150px 0 30px}
+  .page-head .kicker{margin-bottom:22px}
+  .page-head h1{max-width:18ch}
+  .page-head p{max-width:54ch;margin-top:24px;color:var(--ink);opacity:.85;font-size:21px;line-height:1.55}
+
+  /* SHIFT */
+  .shift-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:48px}
+  @media (max-width:780px){ .shift-grid{grid-template-columns:1fr} }
+  .shift-card{padding:30px 30px 34px}
+  .shift-card .kicker{margin-bottom:18px}
+  .shift-card h3{font-family:var(--fontDisplay);font-size:30px;font-weight:600;line-height:1.1;letter-spacing:-0.03em;color:var(--ink);margin-bottom:14px}
+  .shift-statement{margin-top:64px;font-family:var(--fontDisplay);font-weight:600;font-size:clamp(32px,4vw,56px);line-height:1.1;letter-spacing:-0.04em;color:rgba(250,241,229,.5);max-width:28ch}
+  .shift-statement em{font-style:normal;color:var(--ink)}
+
+  /* LOOP — sticky */
+  .loop-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:flex-start;margin-top:60px}
+  @media (max-width:980px){ .loop-grid{grid-template-columns:1fr;gap:40px} }
+  .loop-steps{display:flex;flex-direction:column;gap:120px}
+  .loop-step .mono{color:var(--muted);margin-bottom:14px;display:block}
+  .loop-step h3{font-family:var(--fontDisplay);font-size:clamp(32px,4vw,52px);font-weight:600;line-height:.96;letter-spacing:-0.05em;margin-bottom:18px}
+  .loop-step p{max-width:44ch;color:var(--ink);opacity:.85;font-size:19px;line-height:1.55}
+  .loop-viz{margin-top:24px;padding:22px;border-radius:24px;background:rgba(7,7,19,.5);border:1px solid var(--line)}
+  .loop-sticky{position:sticky;top:120px;height:520px;display:flex;align-items:center;justify-content:center}
+  .loop-sticky .wormhole{width:380px;height:380px}
+  .loop-sticky .center-word{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--fontDisplay);font-size:42px;font-weight:600;letter-spacing:-0.04em;color:var(--ink);text-align:center;transition:opacity .4s, transform .4s}
+
+  .v-heat{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-top:10px}
+  .v-heat .c{aspect-ratio:1;border-radius:5px;border:1px solid var(--line)}
+  .v-rows{display:flex;flex-direction:column;gap:8px}
+  .v-row{display:flex;align-items:center;gap:10px;font-family:var(--fontMono);font-size:11.5px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted)}
+  .v-row .bar{flex:1;height:7px;border-radius:4px;background:var(--glass);border:1px solid var(--line);position:relative;overflow:hidden}
+  .v-row .bar::before{content:"";position:absolute;inset:0;width:var(--w,40%);background:linear-gradient(90deg,var(--amber),var(--peach))}
+  .v-row .lift{color:var(--ink);min-width:54px;text-align:right}
+
+  .v-impact{display:flex;flex-direction:column;gap:10px}
+  .v-impact .row{display:flex;align-items:center;gap:12px;font-family:var(--fontMono);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted)}
+  .v-impact .lbl{flex:0 0 38%}
+  .v-impact .bar{flex:1;height:8px;border-radius:5px;background:var(--glass);border:1px solid var(--line);position:relative;overflow:hidden}
+  .v-impact .bar::before{content:"";position:absolute;inset:0;width:var(--w);background:linear-gradient(90deg,var(--teal),var(--violet))}
+  .v-impact .pct{color:var(--ink);min-width:38px;text-align:right}
+
+  .v-loop{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .v-loop .card{padding:14px;border-radius:14px;background:rgba(7,7,19,.45);border:1px solid var(--line)}
+  .v-loop .card .mono-sm{margin-bottom:8px}
+  .v-loop .card p{font-size:13.5px;color:var(--ink);line-height:1.45}
+  .v-loop .card.before{opacity:.7}
+  .v-loop .card.after{border-color:rgba(138,199,194,.4)}
+
+  /* OS cards */
+  .os-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:48px}
+  @media (max-width:900px){ .os-grid{grid-template-columns:1fr} }
+  .os-card{padding:32px 30px 36px;min-height:280px;display:flex;flex-direction:column;justify-content:space-between;gap:24px}
+  .os-card h4{font-family:var(--fontDisplay);font-size:26px;font-weight:600;line-height:1.1;letter-spacing:-0.03em;margin-bottom:10px}
+  .os-card p{color:var(--ink);opacity:.78;font-size:16px;line-height:1.55}
+  .os-card .num{font-family:var(--fontMono);font-size:12px;letter-spacing:0.14em;color:var(--muted)}
+
+  /* final cta */
+  .cta-final{padding:64px 48px 70px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:18px;max-width:920px;margin:60px auto 0}
+  .cta-final h2{font-family:var(--fontDisplay);font-size:clamp(40px,5vw,70px);font-weight:600;line-height:.96;letter-spacing:-0.05em;max-width:18ch}
+  .cta-final p{color:var(--ink);opacity:.85;font-size:19px;max-width:42ch;line-height:1.5}
+  .cta-final .btn{margin-top:14px}
+
+  .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;flex-wrap:wrap;margin-bottom:8px}
+  .section-head h2{font-family:var(--fontDisplay);font-size:clamp(34px,5vw,60px);font-weight:600;line-height:.95;letter-spacing:-0.05em;max-width:20ch}
+  .section-head p{max-width:42ch;color:var(--ink);opacity:.82;font-size:18px;line-height:1.55}
+</style>
+</head>
+<body>
+
+<section class="container">
+  <div class="page-head">
+    <span class="kicker reveal">How Perceptivity works</span>
+    <h1 class="display-xl reveal" data-delay="1">A four-step operating rhythm for the answer-engine age.</h1>
+    <p class="reveal" data-delay="2">Sense what AI is saying. Simulate which campaigns will change it. Act with your team and partners. Measure the lift. A repeatable cycle for brand and marketing leaders.</p>
+  </div>
+</section>
+
+<!-- SHIFT -->
+<section class="section">
+  <div class="container">
+    <span class="kicker reveal">Why this matters now</span>
+    <div class="display-lg reveal" data-delay="1" style="margin-top:18px;max-width:24ch">Your buyer no longer compares ten options. They ask. They get one.</div>
+    <div class="shift-grid">
+      <div class="glass shift-card glow-violet reveal">
+        <span class="kicker">The old funnel</span>
+        <h3>Ten blue links. A scroll. A click.</h3>
+        <p class="body">They compared brands themselves. Your media plan, your SEO, your reviews — all visible side by side. You optimised for the page.</p>
+      </div>
+      <div class="glass shift-card glow-teal reveal" data-delay="1">
+        <span class="kicker">The new funnel</span>
+        <h3>One answer. One recommendation. One brand named.</h3>
+        <p class="body">An AI reads the category for them and returns a single verdict. If your brand isn't in it, your funnel never starts. Optimise for the answer.</p>
+      </div>
+    </div>
+    <p class="shift-statement reveal" data-delay="2">More than a third of category research now starts with an AI assistant. <em>If you can't see what AI is saying about you, you're flying blind on a third of demand.</em></p>
+  </div>
+</section>
+
+<!-- LOOP -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="kicker reveal">The operating rhythm</span>
+        <h2 class="reveal" data-delay="1" style="margin-top:18px">Sense. Simulate. Act. Learn.</h2>
+      </div>
+      <p class="reveal" data-delay="2">Four moves. Looped quarterly. Every cycle makes the next campaign forecast sharper.</p>
+    </div>
+
+    <div class="loop-grid">
+      <div class="loop-steps">
+
+        <div class="loop-step reveal">
+          <span class="mono">Step 01 · Sense</span>
+          <h3>See exactly what AI is telling your buyer.</h3>
+          <p>Every engine, every buyer question, every claim made about your brand and your competitors. One heatmap, no guesswork. The first time most CMOs see this, they don't speak for a minute.</p>
+          <div class="loop-viz">
+            <div class="mono-sm">VISIBILITY HEATMAP · 7 ENGINES × 6 TOPICS</div>
+            <div class="v-heat" id="heatMini"></div>
+          </div>
+        </div>
+
+        <div class="loop-step reveal">
+          <span class="mono">Step 02 · Simulate</span>
+          <h3>Know which campaign will move the answer — before you brief the agency.</h3>
+          <p>Every candidate investment is scored for expected lift, confidence, and effort. Stop arguing about which campaign moves the needle. See the forecast, then commit.</p>
+          <div class="loop-viz">
+            <div class="mono-sm" style="margin-bottom:14px">PREDICTED LIFT · PROPOSED INVESTMENTS</div>
+            <div class="v-rows">
+              <div class="v-row"><span style="flex:1">Reliability comparison piece</span><div class="bar" style="--w:42%"></div><span class="lift">+2.4pp</span></div>
+              <div class="v-row"><span style="flex:1">Tier-1 industry citation</span><div class="bar" style="--w:66%"></div><span class="lift">+3.8pp</span></div>
+              <div class="v-row"><span style="flex:1">Correct a competitor claim</span><div class="bar" style="--w:18%"></div><span class="lift">+0.9pp</span></div>
+              <div class="v-row"><span style="flex:1">Refresh product pages</span><div class="bar" style="--w:22%"></div><span class="lift">+1.1pp</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="loop-step reveal">
+          <span class="mono">Step 03 · Act</span>
+          <h3>One queue. Your team, your agencies, your partners.</h3>
+          <p>Brief, owner, budget and forecast lift on every action. PR partners, content studios, schema fixes — orchestrated against the gaps that actually lose you deals.</p>
+          <div class="loop-viz">
+            <div class="mono-sm" style="margin-bottom:14px">PRIORITY QUEUE · BY EXPECTED IMPACT</div>
+            <div class="v-impact">
+              <div class="row"><span class="lbl">Knowledge graph fix</span><div class="bar" style="--w:82%"></div><span class="pct">82%</span></div>
+              <div class="row"><span class="lbl">Comparison page rewrite</span><div class="bar" style="--w:72%"></div><span class="pct">72%</span></div>
+              <div class="row"><span class="lbl">Trusted-source placement</span><div class="bar" style="--w:64%"></div><span class="pct">64%</span></div>
+              <div class="row"><span class="lbl">Review-site cleanup</span><div class="bar" style="--w:56%"></div><span class="pct">56%</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="loop-step reveal">
+          <span class="mono">Step 04 · Learn</span>
+          <h3>Measure what each campaign actually moved.</h3>
+          <p>Predicted vs actual lift after every action. Defend the brand budget with numbers your CFO can read. Every cycle makes the next forecast sharper.</p>
+          <div class="loop-viz">
+            <div class="mono-sm" style="margin-bottom:14px">BEFORE / AFTER · PRIORITY BUYER QUERY</div>
+            <div class="v-loop">
+              <div class="card before"><div class="mono-sm">BEFORE</div><p>Not named in any engine when buyers asked about ownership experience.</p></div>
+              <div class="card after"><div class="mono-sm" style="color:var(--teal)">AFTER</div><p>Named in 4 of 6 engines. Service trust now a positive signal.</p></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="loop-sticky">
+        <div class="wormhole"></div>
+        <div class="center-word" id="loopWord">Sense</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OS CARDS -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="kicker reveal">Inside the platform</span>
+        <h2 class="reveal" data-delay="1" style="margin-top:18px">Three layers, one operating rhythm.</h2>
+      </div>
+      <p class="reveal" data-delay="2">Diagnosis, decision support, and an execution queue your team and agencies can actually work from.</p>
+    </div>
+    <div class="os-grid">
+      <div class="glass os-card glow-amber reveal">
+        <div>
+          <div class="num">01</div>
+          <h4 style="margin-top:14px">Brand answer graph</h4>
+          <p>Every source, citation and claim AI trusts in your category — mapped. Know exactly which publishers, reviews and pages are shaping the recommendation.</p>
+        </div>
+        <span class="kicker">Diagnose</span>
+      </div>
+      <div class="glass os-card glow-violet reveal" data-delay="1">
+        <div>
+          <div class="num">02</div>
+          <h4 style="margin-top:14px">Investment forecasting</h4>
+          <p>Score every brief, every campaign, every PR play for expected lift before you commit budget. Replace gut calls with a defensible forecast.</p>
+        </div>
+        <span class="kicker">Decide</span>
+      </div>
+      <div class="glass os-card glow-teal reveal" data-delay="2">
+        <div>
+          <div class="num">03</div>
+          <h4 style="margin-top:14px">Marketing action queue</h4>
+          <p>One priority list across your brand team, agencies and tech partners. Owners, budgets, status and measured lift — board-ready every quarter.</p>
+        </div>
+        <span class="kicker">Act · Learn</span>
+      </div>
+    </div>
+
+    <!-- FINAL CTA -->
+    <div class="glass glass-lg cta-final reveal">
+      <span class="kicker">Start with your category</span>
+      <h2 class="grad">Don't optimise for blue links. Optimise for belief.</h2>
+      <p>See what AI is telling your buyer about your brand this week. A 30-minute walkthrough, your category already scanned.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:14px">
+        <a class="btn primary btn-lg" href="demo.html">Book a demo <span class="arrow">→</span></a>
+        <a class="btn btn-lg" href="onboarding.html">Get started</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="demo-data.js"></script>
+<script src="chrome.js"></script>
+<script>
+  // mini heatmap viz
+  const heat = document.getElementById('heatMini');
+  const sample = DEMO.auto.heatmap;
+  ENGINES.forEach(e => {
+    sample[e].forEach(v => {
+      const c = document.createElement('div');
+      c.className = 'c';
+      const color = v > .65 ? `rgba(217,154,108,${v})` : (v > .45 ? `rgba(240,188,163,${v*0.8})` : `rgba(155,131,197,${v*0.6})`);
+      c.style.background = color;
+      heat.appendChild(c);
+    });
+  });
+  // loop word cycle
+  const words = ['Sense','Simulate','Act','Learn'];
+  let wi = 0;
+  const wEl = document.getElementById('loopWord');
+  setInterval(() => {
+    wi = (wi + 1) % words.length;
+    wEl.style.opacity = 0; wEl.style.transform = 'translateY(8px)';
+    setTimeout(() => { wEl.textContent = words[wi]; wEl.style.opacity = 1; wEl.style.transform = 'translateY(0)'; }, 240);
+  }, 2600);
+</script>
+</body>
+</html>

@@ -1,0 +1,367 @@
+/* ============================================================
+   PERCEPTIVITY — Interstellar, but usable
+   Shared design system: tokens, atmosphere, primitives.
+   ============================================================ */
+
+:root{
+  /* surfaces */
+  --void:#010109; --bg:#070713; --bg2:#151126;
+  --panel:rgba(11,11,22,.72); --panel2:rgba(23,18,39,.66); --glass:rgba(245,230,215,.055);
+  /* ink */
+  --ink:#FAF1E5;          /* primary text — warmer, brighter cream */
+  --muted:#D7CBD8;        /* secondary — lifted from C0AFC6 for legibility */
+  --faint:#A296A8;        /* tertiary — lifted from 82778B; meets AA on dark */
+  /* accents */
+  --amber:#D99A6C; --amberSoft:rgba(217,154,108,.20);
+  --teal:#8AC7C2;  --tealSoft:rgba(138,199,194,.18);
+  --violet:#9B83C5; --violetSoft:rgba(155,131,197,.17);
+  --peach:#F0BCA3; --dust:#E0C7AE;
+  /* status */
+  --pos:#8BD2A9; --neg:#E48A8A; --warn:#E5C07B;
+  /* lines & shadow */
+  --line:rgba(250,241,229,.16); --lineStrong:rgba(250,241,229,.34);
+  --shadow:0 30px 80px -20px rgba(0,0,0,.52);
+  --shadowStrong:0 50px 120px -30px rgba(0,0,0,.84);
+  --inset:inset 0 1px 0 rgba(255,255,255,.12);
+  /* system */
+  --r:26px; --r-lg:42px; --r-sm:14px;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --max:1260px;
+  --fontDisplay:'Inter Tight','Avenir Next',system-ui,sans-serif;
+  --fontBody:'Inter','Avenir Next',system-ui,sans-serif;
+  --fontMono:'JetBrains Mono','IBM Plex Mono',ui-monospace,monospace;
+}
+
+/* reset */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+html,body{min-height:100%}
+body{
+  background:#070713;
+  color:var(--ink);
+  font-family:var(--fontBody);
+  font-size:18px;
+  line-height:1.55;
+  letter-spacing:-0.015em;
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+  position:relative;
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,textarea,select{font:inherit;color:inherit;background:none;border:none;outline:none}
+ul,ol{list-style:none}
+img,svg{display:block;max-width:100%}
+::selection{background:rgba(138,199,194,.35);color:var(--ink)}
+
+/* ============================================================
+   ATMOSPHERE — radial glows, starfield, grain, gradient base
+   ============================================================ */
+.atmos-bg{
+  position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:
+    radial-gradient(60vmax 50vmax at 73% 31%, rgba(217,154,108,.22), transparent 60%),
+    radial-gradient(50vmax 40vmax at 82% 38%, rgba(138,199,194,.16), transparent 65%),
+    radial-gradient(70vmax 60vmax at 8% 12%, rgba(155,131,197,.20), transparent 60%),
+    radial-gradient(60vmax 50vmax at 6% 88%, rgba(240,188,163,.14), transparent 60%),
+    linear-gradient(135deg, #010109 0%, #070713 30%, #151126 65%, #2b2148 100%);
+}
+.atmos-stars{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.32;
+  background-image:
+    radial-gradient(1.2px 1.2px at 50% 50%, rgba(245,230,215,.8) 0, transparent 60%),
+    radial-gradient(1px 1px at 50% 50%, rgba(245,230,215,.55) 0, transparent 60%);
+  background-size:120px 120px, 190px 190px;
+  background-position:0 0, 60px 90px;
+  mask-image:linear-gradient(180deg, #000 0%, #000 60%, transparent 100%);
+  -webkit-mask-image:linear-gradient(180deg, #000 0%, #000 60%, transparent 100%);
+}
+.atmos-grain{
+  position:fixed;inset:0;z-index:50;pointer-events:none;opacity:.035;
+  mix-blend-mode:multiply;
+}
+.atmos-grain svg{width:100%;height:100%}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+.display-xxl{
+  font-family:var(--fontDisplay);
+  font-size:clamp(64px,11vw,158px);
+  font-weight:620;
+  line-height:.8;
+  letter-spacing:-0.085em;
+}
+.display-xl{
+  font-family:var(--fontDisplay);
+  font-size:clamp(48px,7.5vw,108px);
+  font-weight:600;
+  line-height:.86;
+  letter-spacing:-0.08em;
+}
+.display-lg{
+  font-family:var(--fontDisplay);
+  font-size:clamp(36px,5vw,68px);
+  font-weight:600;
+  line-height:.92;
+  letter-spacing:-0.06em;
+}
+.display-md{
+  font-family:var(--fontDisplay);
+  font-size:clamp(28px,3.4vw,44px);
+  font-weight:600;
+  line-height:1;
+  letter-spacing:-0.045em;
+}
+.body-lg{font-size:22px;line-height:1.5;letter-spacing:-0.015em;color:var(--muted);font-weight:400}
+.body{font-size:18px;line-height:1.55;color:var(--muted);font-weight:400}
+.body-sm{font-size:15px;line-height:1.5;color:var(--muted)}
+.mono{
+  font-family:var(--fontMono);font-size:11.5px;font-weight:500;
+  text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);
+}
+.mono-sm{font-family:var(--fontMono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}
+
+.grad{
+  background:linear-gradient(110deg, var(--ink) 0%, var(--peach) 30%, var(--violet) 58%, var(--teal) 100%);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+}
+
+/* kicker dash motif */
+.kicker{
+  display:inline-flex;align-items:center;gap:12px;
+  font-family:var(--fontMono);font-size:11.5px;font-weight:500;
+  text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);
+}
+.kicker::before{
+  content:"";width:28px;height:1px;background:var(--teal);
+  box-shadow: 6px 0 0 -0.5px var(--amber), 14px 0 0 -0.5px var(--amber);
+  position:relative;
+}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.container{width:100%;max-width:var(--max);margin:0 auto;padding:0 28px}
+.container-wide{width:100%;max-width:1400px;margin:0 auto;padding:0 28px}
+.section{padding:clamp(72px,11vw,140px) 0;position:relative}
+
+/* ============================================================
+   GLASS PANELS
+   ============================================================ */
+/* heavier glass — text needs to sit on a darker base to read */
+.glass{
+  background:linear-gradient(180deg, rgba(11,11,22,.82), rgba(11,11,22,.74));
+  backdrop-filter:blur(22px) saturate(132%);
+  -webkit-backdrop-filter:blur(22px) saturate(132%);
+  border:1px solid var(--line);
+  border-radius:var(--r);
+  box-shadow:var(--shadow), var(--inset);
+  position:relative;
+}
+.glass-lg{border-radius:var(--r-lg)}
+.glass-sm{border-radius:var(--r-sm)}
+.glass-2{
+  background:var(--panel2);
+  backdrop-filter:blur(26px) saturate(135%);
+  -webkit-backdrop-filter:blur(26px) saturate(135%);
+  border:1px solid var(--line);
+  border-radius:var(--r);
+  box-shadow:var(--shadow), var(--inset);
+}
+/* corner bleed glow */
+.glow-amber::after,.glow-teal::after,.glow-violet::after{
+  content:"";position:absolute;width:60%;height:60%;border-radius:50%;
+  filter:blur(60px);pointer-events:none;opacity:.55;z-index:-1;
+}
+.glow-amber::after{background:radial-gradient(circle, var(--amber), transparent 60%);top:-20%;right:-20%}
+.glow-teal::after{background:radial-gradient(circle, var(--teal), transparent 60%);bottom:-20%;right:-20%}
+.glow-violet::after{background:radial-gradient(circle, var(--violet), transparent 60%);bottom:-25%;left:-15%}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  height:48px;padding:0 24px;
+  font-family:var(--fontMono);font-size:12px;font-weight:500;
+  text-transform:uppercase;letter-spacing:0.12em;color:var(--ink);
+  background:rgba(11,11,22,.55);
+  border:1px solid var(--lineStrong);
+  border-radius:999px;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  transition: transform .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease), color .25s var(--ease);
+  white-space:nowrap;user-select:none;
+}
+.btn:hover{transform:translateY(-1px);border-color:var(--teal);color:var(--ink)}
+.btn:active{transform:translateY(0) scale(.98)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:transparent}
+.btn.primary:hover{background:#fff;color:var(--void)}
+.btn.ghost{background:transparent}
+.btn .arrow{display:inline-block;transition:transform .25s var(--ease)}
+.btn:hover .arrow{transform:translateX(4px)}
+.btn-lg{height:54px;padding:0 28px;font-size:12px}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav-wrap{
+  position:fixed;top:18px;left:0;right:0;z-index:80;
+  display:flex;justify-content:center;padding:0 20px;
+  pointer-events:none;
+}
+.nav{
+  pointer-events:auto;
+  width:100%;max-width:var(--max);
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px;
+  padding:10px 14px 10px 22px;
+  background:rgba(7,7,19,.62);
+  backdrop-filter:blur(22px) saturate(132%);
+  -webkit-backdrop-filter:blur(22px) saturate(132%);
+  border:1px solid var(--line);
+  border-radius:999px;
+  box-shadow:var(--shadow), var(--inset);
+}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--fontDisplay);font-weight:600;font-size:17px;letter-spacing:-0.04em}
+.brand-word{color:var(--ink);text-transform:lowercase}
+.nav-links{display:flex;align-items:center;gap:6px;justify-self:center}
+.nav-link{
+  font-family:var(--fontMono);font-size:11.5px;font-weight:500;
+  text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);
+  padding:8px 14px;border-radius:999px;
+  transition:color .2s var(--ease), background .2s var(--ease);
+}
+.nav-link:hover{color:var(--ink);background:rgba(245,230,215,.05)}
+.nav-link.active{color:var(--ink);background:rgba(245,230,215,.07)}
+.nav-actions{display:flex;align-items:center;gap:8px;justify-self:end}
+@media (max-width:1040px){
+  .nav-links{display:none}
+  .nav{grid-template-columns:1fr auto}
+}
+
+/* ============================================================
+   EYE LOGO
+   ============================================================ */
+.eye-mark{position:relative;width:26px;height:26px;display:inline-block}
+.eye-mark svg{width:100%;height:100%;overflow:visible}
+
+/* ============================================================
+   MOTION — reveal, letter-in, scan, pulse, drift, spin
+   ============================================================ */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease), transform .9s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.reveal[data-delay="1"]{transition-delay:.08s}
+.reveal[data-delay="2"]{transition-delay:.16s}
+.reveal[data-delay="3"]{transition-delay:.24s}
+.reveal[data-delay="4"]{transition-delay:.32s}
+.reveal[data-delay="5"]{transition-delay:.40s}
+
+.letter{display:inline-block;opacity:0;transform:translateY(.4em);transition:opacity .6s var(--ease), transform .6s var(--ease)}
+.letter.in{opacity:1;transform:none}
+
+@keyframes scan{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}
+.scan-line{
+  position:absolute;left:0;right:0;top:0;height:1px;pointer-events:none;
+  background:linear-gradient(90deg, transparent 0%, var(--teal) 50%, transparent 100%);
+  box-shadow:0 0 20px var(--teal);
+  animation: scan 4s linear infinite;
+  opacity:.7;
+}
+@keyframes pulse-soft{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.06);opacity:.85}}
+.pulse{animation: pulse-soft 3s ease-in-out infinite}
+
+@property --spin {syntax: '<angle>'; initial-value: 0deg; inherits: false;}
+@keyframes spin-ring{to{--spin:360deg}}
+.wormhole{
+  position:relative;border-radius:50%;
+  background:conic-gradient(from var(--spin), var(--violet), var(--peach), var(--teal), var(--amber), var(--violet));
+  animation: spin-ring 14s linear infinite;
+  filter:blur(.5px);
+}
+.wormhole::after{
+  content:"";position:absolute;inset:8%;border-radius:50%;
+  background: radial-gradient(circle at 50% 50%, var(--void) 40%, rgba(7,7,19,.85) 70%, transparent 100%);
+}
+
+/* drift grid */
+@keyframes drift{from{background-position:0 0}to{background-position:80px 80px}}
+.drift-grid{
+  background-image:
+    linear-gradient(rgba(245,230,215,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245,230,215,.06) 1px, transparent 1px);
+  background-size:40px 40px;
+  animation:drift 30s linear infinite;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.foot{
+  padding:60px 28px 80px;
+  display:flex;justify-content:space-between;align-items:center;gap:20px;
+  max-width:var(--max);margin:0 auto;
+  border-top:1px solid var(--line);
+  font-family:var(--fontMono);font-size:11.5px;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--muted);
+}
+.foot-l{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+@media (max-width:640px){ .foot{flex-direction:column;align-items:flex-start;gap:18px} }
+.foot a:hover{color:var(--ink)}
+
+/* ============================================================
+   FORM CONTROLS (onboarding, etc.)
+   ============================================================ */
+.field{display:flex;flex-direction:column;gap:8px}
+.field label{font-family:var(--fontMono);font-size:10.5px;text-transform:uppercase;letter-spacing:0.16em;color:var(--faint)}
+.input{
+  background:rgba(7,7,19,.5);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:14px 16px;font-size:16px;color:var(--ink);
+  transition:border-color .2s var(--ease), background .2s var(--ease);
+}
+.input:focus{border-color:var(--teal);background:rgba(7,7,19,.7)}
+.input::placeholder{color:var(--faint)}
+
+.chip{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:8px 14px;border-radius:999px;
+  background:var(--glass);
+  border:1px solid var(--line);
+  font-family:var(--fontMono);font-size:10.5px;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);
+  cursor:pointer;
+  transition:border-color .2s var(--ease), color .2s var(--ease), background .2s var(--ease);
+}
+.chip:hover{color:var(--ink);border-color:var(--lineStrong)}
+.chip.on{color:var(--ink);border-color:var(--teal);background:var(--tealSoft)}
+.chip .x{width:6px;height:6px;border-radius:50%;background:var(--teal)}
+
+/* badges */
+.badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 10px;border-radius:999px;
+  font-family:var(--fontMono);font-size:10.5px;font-weight:500;text-transform:uppercase;letter-spacing:0.12em;
+  background:rgba(11,11,22,.5);border:1px solid var(--line);color:var(--muted);
+}
+.badge.software{color:var(--teal);border-color:rgba(138,199,194,.4);background:var(--tealSoft)}
+.badge.brand{color:var(--peach);border-color:rgba(240,188,163,.4);background:rgba(240,188,163,.12)}
+.badge.partner{color:var(--violet);border-color:rgba(155,131,197,.4);background:var(--violetSoft)}
+.badge.pos{color:var(--pos);border-color:rgba(139,210,169,.4);background:rgba(139,210,169,.12)}
+.badge.warn{color:var(--warn);border-color:rgba(229,192,123,.4);background:rgba(229,192,123,.12)}
+.badge.neg{color:var(--neg);border-color:rgba(228,138,138,.4);background:rgba(228,138,138,.12)}
+
+/* small dot */
+.dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px var(--teal)}
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;transition-delay:0ms !important;
+  }
+  .reveal{opacity:1;transform:none}
+  .letter{opacity:1;transform:none}
+}

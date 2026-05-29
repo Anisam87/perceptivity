@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900">
+<defs><radialGradient id="glow"><stop offset="0" stop-color="#F5E6D7" stop-opacity=".7"></stop><stop offset=".35" stop-color="#D99A6C" stop-opacity=".25"></stop><stop offset="1" stop-color="#010109" stop-opacity="0"></stop></radialGradient></defs>
+<rect width="900" height="900" fill="#010109"></rect><circle cx="450" cy="450" r="390" fill="url(#glow)"></circle>
+<g fill="none" stroke-linecap="round">
+<circle cx="450" cy="450" r="300" stroke="#F5E6D7" stroke-opacity=".14" stroke-width="2"></circle>
+<circle cx="450" cy="450" r="230" stroke="#8AC7C2" stroke-opacity=".22" stroke-width="2"></circle>
+<circle cx="450" cy="450" r="155" stroke="#D99A6C" stroke-opacity=".28" stroke-width="2"></circle>
+<path d="M450 150A300 300 0 0 1 742 382" stroke="#8AC7C2" stroke-width="7"></path>
+<path d="M675 603A270 270 0 0 1 293 675" stroke="#D99A6C" stroke-width="7"></path>
+<path d="M260 330A220 220 0 0 1 558 260" stroke="#9B83C5" stroke-width="7"></path>
+</g>
+<g font-family="JetBrains Mono, monospace" font-size="16" letter-spacing="2" fill="#F5E6D7">
+<text x="414" y="132">SENSE</text><text x="714" y="446">SIMULATE</text><text x="401" y="790">LEARN</text><text x="110" y="456">STRIKE</text>
+</g>
+<circle cx="450" cy="450" r="64" fill="#010109" stroke="#F5E6D7" stroke-opacity=".5"></circle><circle cx="450" cy="450" r="12" fill="#8AC7C2"></circle>
+</svg>

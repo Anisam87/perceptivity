@@ -1,0 +1,2008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Get started — Perceptivity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #ffffff;
+  --on-primary: #000000;
+  --accent-blue: #0099ff;
+  --ink: #ffffff;
+  --ink-muted: #999999;
+  --ink-faint: #666666;
+  --canvas: #090909;
+  --surface-1: #141414;
+  --surface-2: #1c1c1c;
+  --surface-3: #242424;
+  --hairline: #262626;
+  --hairline-soft: #1a1a1a;
+  --gradient-magenta: #d44df0;
+  --gradient-violet: #6a4cf5;
+  --gradient-orange: #ff7a3d;
+  --gradient-coral: #ff5577;
+  --semantic-success: #22c55e;
+  --semantic-warn: #f59e0b;
+  --r-xs: 4px; --r-sm: 6px; --r-md: 10px; --r-lg: 15px; --r-xl: 20px; --r-xxl: 30px; --r-pill: 100px;
+  --font-display: 'Inter Tight', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.4;
+  letter-spacing: -0.15px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+input, textarea { font: inherit; color: inherit; background: none; border: none; outline: none; }
+ul, ol { list-style: none; }
+a { color: inherit; text-decoration: none; }
+::selection { background: rgba(0,153,255,0.3); }
+
+/* Ambient grain */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.012) 1px, transparent 0);
+  background-size: 3px 3px;
+  opacity: 0.6;
+}
+
+/* ===== NAV ===== */
+.nav-wrap {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(9, 9, 9, 0.86);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--hairline-soft);
+}
+.nav {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: -0.035em;
+}
+.nav-mark {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  position: relative;
+  background: radial-gradient(circle at 30% 30%, #fff, #888);
+}
+.nav-mark::after {
+  content: "";
+  position: absolute;
+  inset: 30%;
+  background: var(--canvas);
+  border-radius: 50%;
+}
+.nav-step-indicator {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.nav-exit {
+  font-size: 13px;
+  color: var(--ink-muted);
+  padding: 6px 12px;
+  border-radius: var(--r-pill);
+  transition: color 160ms ease, background 160ms ease;
+}
+.nav-exit:hover { color: var(--ink); background: var(--surface-1); }
+
+/* ===== PROGRESS BAR ===== */
+.progress-shell {
+  position: fixed;
+  top: 60px; left: 0; right: 0;
+  height: 2px;
+  background: var(--hairline-soft);
+  z-index: 99;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-blue), var(--gradient-magenta));
+  width: 0%;
+  transition: width 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ===== MAIN ===== */
+.shell {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  padding: 120px 30px 140px;
+  max-width: 880px;
+  margin: 0 auto;
+}
+.shell.wide { max-width: 1080px; }
+
+.step {
+  display: none;
+  animation: fadeIn 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.step.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.eyebrow-pulse {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent-blue);
+  box-shadow: 0 0 12px var(--accent-blue);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.7); }
+}
+
+.step-title {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 5vw, 56px);
+  font-weight: 500;
+  line-height: 1.0;
+  letter-spacing: -0.04em;
+  margin-bottom: 18px;
+}
+.step-sub {
+  font-size: 18px;
+  color: var(--ink-muted);
+  line-height: 1.5;
+  margin-bottom: 48px;
+  max-width: 640px;
+}
+
+/* ===== INPUTS ===== */
+.field {
+  margin-bottom: 24px;
+}
+.field-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 10px;
+  display: block;
+}
+.field-input {
+  width: 100%;
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  padding: 16px 18px;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  transition: border-color 160ms ease, background 160ms ease;
+}
+.field-input:focus {
+  border-color: var(--accent-blue);
+  background: var(--surface-2);
+}
+.field-input::placeholder { color: var(--ink-faint); }
+.field-hint {
+  font-size: 13px;
+  color: var(--ink-muted);
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  letter-spacing: -0.005em;
+}
+
+/* ===== INDUSTRY CARDS ===== */
+.ind-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.ind-grid .ind-card.full { grid-column: 1 / -1; }
+@media (max-width: 640px) { .ind-grid { grid-template-columns: 1fr; } .ind-grid .ind-card.full { grid-column: auto; } }
+.ind-card {
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-xl);
+  padding: 28px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  cursor: pointer;
+  text-align: left;
+  transition: background 200ms ease, border-color 200ms ease, transform 200ms ease;
+}
+.ind-card:hover { background: var(--surface-2); transform: translateY(-2px); }
+.ind-card.selected {
+  background: var(--surface-2);
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 1px var(--accent-blue), 0 12px 32px -12px rgba(0,153,255,0.25);
+}
+.ind-icon {
+  width: 44px; height: 44px;
+  background: var(--surface-2);
+  border-radius: var(--r-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--ink);
+}
+.ind-card.selected .ind-icon { background: rgba(0,153,255,0.12); color: var(--accent-blue); }
+.ind-icon svg { width: 22px; height: 22px; }
+.ind-meta { flex: 1; }
+.ind-name {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  margin-bottom: 4px;
+}
+.ind-desc {
+  font-size: 13px;
+  color: var(--ink-muted);
+  line-height: 1.5;
+}
+
+/* ===== CHIPS (competitors) ===== */
+.chip-section { margin-bottom: 28px; }
+.chip-section-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 14px;
+}
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-pill);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 160ms ease, border-color 160ms ease, transform 120ms ease;
+}
+.chip:hover { background: var(--surface-2); }
+.chip:active { transform: scale(0.97); }
+.chip.selected {
+  background: rgba(0,153,255,0.12);
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+}
+.chip.selected::after {
+  content: "✓";
+  font-size: 11px;
+  margin-left: 2px;
+}
+.chip.custom {
+  background: rgba(212,77,240,0.12);
+  border-color: var(--gradient-magenta);
+  color: var(--gradient-magenta);
+}
+.chip-remove {
+  margin-left: 4px;
+  width: 16px; height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  font-size: 11px;
+  line-height: 1;
+}
+.chip-remove:hover { background: rgba(255,255,255,0.2); }
+
+.chip-counter {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.chip-counter strong { color: var(--ink); font-weight: 500; }
+.chip-counter.ok strong { color: var(--semantic-success); }
+
+.add-custom {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+.add-custom input {
+  flex: 1;
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-pill);
+  padding: 10px 16px;
+  font-size: 14px;
+  transition: border-color 160ms ease;
+}
+.add-custom input:focus { border-color: var(--accent-blue); }
+.add-custom button {
+  padding: 10px 18px;
+  background: var(--surface-2);
+  border-radius: var(--r-pill);
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 160ms ease;
+}
+.add-custom button:hover { background: var(--surface-3); }
+
+/* ===== QUERY LIST ===== */
+.query-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 24px;
+}
+.query-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 160ms ease, border-color 160ms ease;
+}
+.query-row:hover { background: var(--surface-2); }
+.query-row.selected {
+  background: rgba(0,153,255,0.06);
+  border-color: rgba(0,153,255,0.4);
+}
+.query-row.custom {
+  background: rgba(212,77,240,0.06);
+  border-color: rgba(212,77,240,0.4);
+}
+.query-checkbox {
+  width: 18px; height: 18px;
+  border: 1.5px solid var(--ink-faint);
+  border-radius: var(--r-xs);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 160ms ease, border-color 160ms ease;
+}
+.query-row.selected .query-checkbox {
+  background: var(--accent-blue);
+  border-color: var(--accent-blue);
+}
+.query-row.selected .query-checkbox::after {
+  content: "";
+  width: 6px; height: 10px;
+  border: solid var(--on-primary);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) translateY(-1px);
+}
+.query-text { flex: 1; color: var(--ink); }
+.query-vol {
+  font-size: 11px;
+  color: var(--ink-muted);
+  padding: 3px 8px;
+  background: var(--canvas);
+  border-radius: var(--r-pill);
+  white-space: nowrap;
+}
+.query-remove {
+  font-size: 14px;
+  color: var(--ink-faint);
+  width: 24px; height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+.query-remove:hover { background: var(--surface-3); color: var(--ink); }
+
+.quota-bar {
+  background: var(--surface-1);
+  border-radius: var(--r-md);
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
+  border: 1px solid var(--hairline);
+}
+.quota-text {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-muted);
+  flex-shrink: 0;
+}
+.quota-text strong { color: var(--ink); font-weight: 500; }
+.quota-track {
+  flex: 1;
+  height: 6px;
+  background: var(--hairline);
+  border-radius: var(--r-pill);
+  overflow: hidden;
+}
+.quota-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-blue), var(--gradient-magenta));
+  border-radius: var(--r-pill);
+  width: 0%;
+  transition: width 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ===== ENGINE CARDS ===== */
+.engine-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+@media (max-width: 700px) { .engine-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) { .engine-grid { grid-template-columns: 1fr; } }
+.engine-tile {
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-xl);
+  padding: 22px;
+  cursor: pointer;
+  transition: background 200ms ease, border-color 200ms ease;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+}
+.engine-tile:hover { background: var(--surface-2); }
+.engine-tile.on { background: var(--surface-2); border-color: rgba(34,197,94,0.4); }
+.engine-tile-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.engine-tile-name {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.engine-toggle {
+  width: 36px; height: 20px;
+  background: var(--hairline);
+  border-radius: var(--r-pill);
+  position: relative;
+  transition: background 200ms ease;
+}
+.engine-toggle::after {
+  content: "";
+  width: 16px; height: 16px;
+  background: var(--ink-muted);
+  border-radius: 50%;
+  position: absolute;
+  top: 2px; left: 2px;
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1), background 200ms ease;
+}
+.engine-tile.on .engine-toggle { background: var(--semantic-success); }
+.engine-tile.on .engine-toggle::after { transform: translateX(16px); background: #fff; }
+.engine-tile-stat {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.engine-tile-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-muted);
+}
+
+/* ===== SCAN ===== */
+.scan-shell {
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-xl);
+  padding: 32px;
+  margin-bottom: 32px;
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+}
+.scan-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--hairline);
+  margin-bottom: 20px;
+}
+.scan-head-title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.scan-head-tag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--semantic-success);
+}
+.scan-head-tag .dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--semantic-success);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+.scan-log {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink-muted);
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-y: auto;
+  max-height: 380px;
+}
+.scan-log .line { display: block; }
+.scan-log .ok { color: var(--semantic-success); }
+.scan-log .info { color: var(--accent-blue); }
+.scan-log .warn { color: var(--semantic-warn); }
+.scan-log .accent { color: var(--gradient-magenta); }
+.scan-log .pop { color: var(--ink); font-weight: 500; }
+.scan-log .cursor::after {
+  content: "▍";
+  color: var(--accent-blue);
+  animation: blink-cursor 1s steps(2) infinite;
+}
+@keyframes blink-cursor {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.scan-meta {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 20px;
+}
+.scan-stat {
+  background: var(--canvas);
+  padding: 14px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--hairline-soft);
+}
+.scan-stat-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 6px;
+}
+.scan-stat-val {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+/* ===== DASHBOARD ===== */
+.dash-hero {
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-xxl);
+  padding: 48px;
+  margin-bottom: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 48px;
+  position: relative;
+  overflow: hidden;
+}
+.dash-hero::before {
+  content: "";
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(0,153,255,0.10), transparent 60%);
+  pointer-events: none;
+}
+@media (max-width: 760px) { .dash-hero { grid-template-columns: 1fr; padding: 32px; gap: 32px; } }
+.dash-score-block { position: relative; }
+.dash-score-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 8px;
+}
+.dash-score {
+  font-family: var(--font-display);
+  font-size: clamp(72px, 9vw, 110px);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.dash-score-suffix {
+  font-size: 26px;
+  color: var(--ink-muted);
+  letter-spacing: -0.02em;
+}
+.dash-score-delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 18px;
+  padding: 4px 12px;
+  background: rgba(34,197,94,0.12);
+  color: var(--semantic-success);
+  border-radius: var(--r-pill);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+.dash-score-context {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--hairline);
+  font-size: 14px;
+  color: var(--ink-muted);
+  line-height: 1.5;
+}
+.dash-score-context strong { color: var(--ink); font-weight: 500; }
+
+.dash-bars { display: flex; flex-direction: column; gap: 12px; position: relative; }
+.dash-bars-head {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--hairline-soft);
+}
+.bar-row { display: grid; grid-template-columns: 100px 1fr 44px; gap: 14px; align-items: center; font-size: 13px; }
+.bar-name { font-family: var(--font-mono); color: var(--ink); }
+.bar-track { height: 8px; background: var(--hairline); border-radius: var(--r-pill); overflow: hidden; }
+.bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-blue), var(--gradient-magenta));
+  border-radius: var(--r-pill);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.bar-row.dim .bar-fill { background: var(--ink-faint); }
+.bar-value { font-family: var(--font-mono); font-size: 12px; color: var(--ink); text-align: right; }
+
+.dash-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+@media (max-width: 760px) { .dash-grid { grid-template-columns: 1fr; } }
+.dash-card {
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-xl);
+  padding: 28px;
+}
+.dash-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--hairline);
+}
+.dash-card-title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.dash-card-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-muted);
+}
+
+.q-row {
+  display: grid;
+  grid-template-columns: 28px 1fr 60px;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--hairline-soft);
+  font-size: 13px;
+}
+.q-row:last-child { border-bottom: none; }
+.q-rank {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink);
+  font-weight: 500;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-2);
+}
+.q-rank.good { background: rgba(34,197,94,0.16); color: var(--semantic-success); }
+.q-rank.bad { background: rgba(255,85,119,0.16); color: var(--gradient-coral); }
+.q-text { font-family: var(--font-mono); font-size: 12px; color: var(--ink); line-height: 1.4; }
+.q-cite { text-align: right; font-family: var(--font-mono); font-size: 11px; color: var(--ink-muted); }
+
+.comp-row {
+  display: grid;
+  grid-template-columns: 1fr 50px 1fr 50px;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--hairline-soft);
+}
+.comp-row:last-child { border-bottom: none; }
+.comp-name { font-size: 14px; color: var(--ink); font-weight: 500; }
+.comp-score {
+  font-family: var(--font-display);
+  font-size: 22px;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  text-align: right;
+}
+.comp-score.you { color: var(--accent-blue); }
+.comp-mini-bar {
+  height: 4px;
+  background: var(--hairline);
+  border-radius: var(--r-pill);
+  overflow: hidden;
+}
+.comp-mini-fill {
+  height: 100%;
+  background: var(--ink);
+  border-radius: var(--r-pill);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.comp-mini-fill.you { background: var(--accent-blue); }
+
+.action-card {
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-xl);
+  padding: 28px;
+  margin-bottom: 16px;
+}
+.action-row {
+  display: grid;
+  grid-template-columns: 32px 1fr auto auto;
+  gap: 16px;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--hairline-soft);
+}
+.action-row:last-child { border-bottom: none; }
+.action-num {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--ink-muted);
+}
+.action-text {
+  font-size: 14px;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.action-text small { display: block; color: var(--ink-muted); font-size: 12px; margin-top: 4px; }
+.action-lift {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+  background: rgba(34,197,94,0.12);
+  color: var(--semantic-success);
+  white-space: nowrap;
+}
+.action-route {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border-radius: var(--r-pill);
+  white-space: nowrap;
+}
+.action-route.sw { background: rgba(0,153,255,0.12); color: var(--accent-blue); }
+.action-route.partner { background: rgba(212,77,240,0.12); color: var(--gradient-magenta); }
+.action-route.team { background: rgba(255,122,61,0.12); color: var(--gradient-orange); }
+
+.dash-cta {
+  background: linear-gradient(135deg, var(--gradient-violet) 0%, var(--gradient-magenta) 100%);
+  border-radius: var(--r-xxl);
+  padding: 44px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+  position: relative;
+  overflow: hidden;
+}
+.dash-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 75% 20%, rgba(255,255,255,0.25), transparent 50%);
+  pointer-events: none;
+}
+@media (max-width: 760px) { .dash-cta { flex-direction: column; align-items: flex-start; padding: 32px; } }
+.dash-cta-body { position: relative; z-index: 1; flex: 1; }
+.dash-cta-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  opacity: 0.9;
+}
+.dash-cta-h {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+.dash-cta-sub {
+  font-size: 14px;
+  opacity: 0.85;
+  max-width: 480px;
+  line-height: 1.5;
+}
+.dash-cta-actions { position: relative; z-index: 1; display: flex; gap: 8px; flex-shrink: 0; }
+.dash-cta .btn-inv { background: var(--canvas); color: var(--ink); }
+.dash-cta .btn-inv:hover { background: #000; }
+.dash-cta .btn-tr { background: rgba(0,0,0,0.4); color: var(--ink); backdrop-filter: blur(8px); }
+.dash-cta .btn-tr:hover { background: rgba(0,0,0,0.6); }
+
+/* ===== FOOT ACTIONS ===== */
+.step-foot {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, var(--canvas) 60%, rgba(9,9,9,0));
+  padding: 24px 30px 32px;
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+}
+.step-foot-inner {
+  width: 100%;
+  max-width: 880px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 24px;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  border-radius: var(--r-pill);
+  transition: transform 160ms ease, background 160ms ease, color 160ms ease, opacity 160ms ease;
+  white-space: nowrap;
+}
+.btn:hover:not(:disabled) { transform: translateY(-1px); }
+.btn:active:not(:disabled) { transform: scale(0.97); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-primary { background: var(--primary); color: var(--on-primary); }
+.btn-primary:hover:not(:disabled) { background: #f0f0f0; }
+.btn-secondary { background: var(--surface-1); color: var(--ink); }
+.btn-secondary:hover:not(:disabled) { background: var(--surface-2); }
+.btn-ghost { color: var(--ink-muted); padding: 0 16px; }
+.btn-ghost:hover:not(:disabled) { color: var(--ink); }
+.btn svg { transition: transform 200ms ease; }
+.btn-primary:hover svg { transform: translateX(3px); }
+
+/* Done state */
+.success-banner {
+  background: rgba(34,197,94,0.08);
+  border: 1px solid rgba(34,197,94,0.3);
+  border-radius: var(--r-md);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+  font-size: 14px;
+  color: var(--semantic-success);
+}
+.success-banner svg { flex-shrink: 0; }
+
+/* Reveal animation for dashboard */
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: revealIn 800ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.reveal-stagger > *:nth-child(1) { animation-delay: 0ms; }
+.reveal-stagger > *:nth-child(2) { animation-delay: 120ms; }
+.reveal-stagger > *:nth-child(3) { animation-delay: 240ms; }
+.reveal-stagger > *:nth-child(4) { animation-delay: 360ms; }
+.reveal-stagger > *:nth-child(5) { animation-delay: 480ms; }
+@keyframes revealIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  .shell { padding: 100px 20px 130px; }
+  .dash-hero { padding: 28px; }
+  .step-foot { padding: 16px 20px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav-wrap">
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">
+      <span class="nav-mark"></span>
+      <span>Perceptivity</span>
+    </a>
+    <div class="nav-step-indicator" id="step-indicator">Step 1 of 6</div>
+    <a href="index.html" class="nav-exit" onclick="return confirmExit(event);">Save &amp; exit</a>
+  </nav>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-shell">
+  <div class="progress-fill" id="progress-fill"></div>
+</div>
+
+<!-- SHELL -->
+<main class="shell" id="shell">
+
+  <!-- STEP 1: BRAND -->
+  <div class="step active" data-step="1">
+    <div class="eyebrow"><span class="eyebrow-pulse"></span><span>Welcome to Perceptivity</span></div>
+    <h1 class="step-title">Let's set up<br/>your brand.</h1>
+    <p class="step-sub">Takes about 3 minutes. We'll start tracking your AI visibility the moment we're done — and you'll have your first dashboard before you finish your next coffee.</p>
+
+    <div class="field">
+      <label class="field-label">Brand name</label>
+      <input type="text" class="field-input" id="brand-name" placeholder="e.g. Tata Motors, Lodha Group, HDFC Bank" />
+    </div>
+
+    <div class="field">
+      <label class="field-label">Work email</label>
+      <input type="email" class="field-input" id="brand-email" placeholder="priya@tatamotors.com" autocomplete="email" />
+      <p class="field-hint" id="brand-email-hint">We'll send your daily visibility report here. Use your work email — not gmail/yahoo.</p>
+    </div>
+
+    <div class="field">
+      <label class="field-label">Website</label>
+      <input type="text" class="field-input" id="brand-url" placeholder="tatamotors.com" />
+      <p class="field-hint">We'll crawl your public pages to fingerprint your content</p>
+    </div>
+
+    <div class="field">
+      <label class="field-label">One-line description <span style="text-transform: none; color: var(--ink-faint);">(optional)</span></label>
+      <input type="text" class="field-input" id="brand-desc" placeholder="India's largest passenger vehicle manufacturer" />
+    </div>
+  </div>
+
+  <!-- STEP 2: INDUSTRY -->
+  <div class="step" data-step="2">
+    <div class="eyebrow"><span class="eyebrow-pulse"></span><span>Step 2 · Industry</span></div>
+    <h1 class="step-title">What category<br/>do you compete in?</h1>
+    <p class="step-sub">We'll use this to pre-fill your competitor list and the queries your buyers actually ask AI. You can edit everything in the next two steps.</p>
+
+    <div class="ind-grid" id="industry-grid">
+      <button class="ind-card" data-industry="automotive">
+        <div class="ind-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h-2v-5l2-5h12l4 5v5h-2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+        </div>
+        <div class="ind-meta">
+          <div class="ind-name">Automotive</div>
+          <div class="ind-desc">Cars, SUVs, EVs, two-wheelers. "Best EV under ₹30L" decides ₹50,000 Cr of buyer intent.</div>
+        </div>
+      </button>
+      <button class="ind-card" data-industry="real-estate">
+        <div class="ind-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 12h.01"/><path d="M9 15h.01"/><path d="M9 18h.01"/><path d="M14 12h.01"/><path d="M14 15h.01"/><path d="M14 18h.01"/></svg>
+        </div>
+        <div class="ind-meta">
+          <div class="ind-name">Real Estate</div>
+          <div class="ind-desc">Residential, commercial, plotted. Buyers spend ₹2 Cr based on an AI's answer.</div>
+        </div>
+      </button>
+      <button class="ind-card" data-industry="financial-services">
+        <div class="ind-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="15" x2="10" y2="15"/></svg>
+        </div>
+        <div class="ind-meta">
+          <div class="ind-name">Financial Services</div>
+          <div class="ind-desc">Cards, loans, insurance, broking, fintech. Comparison queries that used to go to MoneyControl now go to ChatGPT.</div>
+        </div>
+      </button>
+      <button class="ind-card" data-industry="healthcare">
+        <div class="ind-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <div class="ind-meta">
+          <div class="ind-name">Healthcare</div>
+          <div class="ind-desc">Hospitals, pharma, diagnostics, telehealth. Patient research starts with AI now.</div>
+        </div>
+      </button>
+      <button class="ind-card full" data-industry="consumer-durables">
+        <div class="ind-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        </div>
+        <div class="ind-meta">
+          <div class="ind-name">Consumer Durables</div>
+          <div class="ind-desc">ACs, refrigerators, TVs, washing machines, audio, appliances. "Best 1.5 ton AC" gets asked 80K times a month on ChatGPT alone.</div>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 3: COMPETITORS -->
+  <div class="step" data-step="3">
+    <div class="eyebrow"><span class="eyebrow-pulse"></span><span>Step 3 · Competitors</span></div>
+    <h1 class="step-title">Who are you up against?</h1>
+    <p class="step-sub">Pick 3 to 5 competitors. We'll benchmark you against them daily across every AI engine — share of voice, sentiment, citation count, position.</p>
+
+    <div class="chip-section">
+      <div class="chip-section-label">Suggested for your industry</div>
+      <div class="chip-row" id="competitor-chips"></div>
+    </div>
+
+    <div class="chip-section">
+      <div class="chip-section-label">Add a custom competitor</div>
+      <div class="add-custom">
+        <input type="text" id="custom-comp-input" placeholder="Brand name" onkeydown="if(event.key==='Enter'){addCustomCompetitor()}" />
+        <button onclick="addCustomCompetitor()">+ Add</button>
+      </div>
+      <div class="chip-counter" id="comp-counter">
+        <span><strong>0</strong> selected — pick at least 3</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4: QUERIES -->
+  <div class="step" data-step="4">
+    <div class="eyebrow"><span class="eyebrow-pulse"></span><span>Step 4 · Buyer queries</span></div>
+    <h1 class="step-title">What questions<br/>do your buyers ask AI?</h1>
+    <p class="step-sub">We'll run these against all 6 engines, every day. Tap to select. Aim for 20 to 50 queries — the more specific to your category, the sharper your visibility score.</p>
+
+    <div class="quota-bar">
+      <div class="quota-text"><strong id="quota-current">0</strong> / 500 daily queries</div>
+      <div class="quota-track"><div class="quota-fill" id="quota-fill"></div></div>
+      <div class="quota-text" id="quota-runs">0 runs/day</div>
+    </div>
+
+    <div class="query-list" id="query-list"></div>
+
+    <div class="chip-section">
+      <div class="chip-section-label">Add a custom query</div>
+      <div class="add-custom">
+        <input type="text" id="custom-query-input" placeholder='e.g. "best premium SUV with ADAS"' onkeydown="if(event.key==='Enter'){addCustomQuery()}" />
+        <button onclick="addCustomQuery()">+ Add</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5: ENGINES -->
+  <div class="step" data-step="5">
+    <div class="eyebrow"><span class="eyebrow-pulse"></span><span>Step 5 · AI engines</span></div>
+    <h1 class="step-title">Which engines matter?</h1>
+    <p class="step-sub">All six are included in your trial. Most teams leave them all on — there's no extra cost, and AI traffic moves between engines faster than you'd think.</p>
+
+    <div class="engine-grid" id="engine-grid">
+      <button class="engine-tile on" data-engine="chatgpt">
+        <div class="engine-tile-head"><div class="engine-tile-name">ChatGPT</div><div class="engine-toggle"></div></div>
+        <div class="engine-tile-stat">600M+</div>
+        <div class="engine-tile-meta">Weekly active users · The default</div>
+      </button>
+      <button class="engine-tile on" data-engine="perplexity">
+        <div class="engine-tile-head"><div class="engine-tile-name">Perplexity</div><div class="engine-toggle"></div></div>
+        <div class="engine-tile-stat">22M</div>
+        <div class="engine-tile-meta">↑ 4× YoY · High-intent comparison</div>
+      </button>
+      <button class="engine-tile on" data-engine="aio">
+        <div class="engine-tile-head"><div class="engine-tile-name">Google AIO</div><div class="engine-toggle"></div></div>
+        <div class="engine-tile-stat">2B+</div>
+        <div class="engine-tile-meta">Searches with AI overviews</div>
+      </button>
+      <button class="engine-tile on" data-engine="gemini">
+        <div class="engine-tile-head"><div class="engine-tile-name">Gemini</div><div class="engine-toggle"></div></div>
+        <div class="engine-tile-stat">350M</div>
+        <div class="engine-tile-meta">Monthly users · Workspace native</div>
+      </button>
+      <button class="engine-tile on" data-engine="claude">
+        <div class="engine-tile-head"><div class="engine-tile-name">Claude</div><div class="engine-toggle"></div></div>
+        <div class="engine-tile-stat">19M</div>
+        <div class="engine-tile-meta">Monthly users · Professional skew</div>
+      </button>
+      <button class="engine-tile on" data-engine="grok">
+        <div class="engine-tile-head"><div class="engine-tile-name">Grok</div><div class="engine-toggle"></div></div>
+        <div class="engine-tile-stat">15M</div>
+        <div class="engine-tile-meta">X integration · Real-time</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 6: SCAN -->
+  <div class="step" data-step="6">
+    <div class="eyebrow"><span class="eyebrow-pulse"></span><span>Step 6 · Running your first scan</span></div>
+    <h1 class="step-title">Scanning AI engines<br/>across your queries.</h1>
+    <p class="step-sub">Takes about 90 seconds in production. We've sped it up so you can see your dashboard now.</p>
+
+    <div class="scan-shell">
+      <div class="scan-head">
+        <div class="scan-head-title">Live scan · <span id="scan-brand-tag">Your brand</span></div>
+        <div class="scan-head-tag"><span class="dot"></span><span id="scan-status">Initializing</span></div>
+      </div>
+      <div class="scan-log" id="scan-log"></div>
+      <div class="scan-meta">
+        <div class="scan-stat">
+          <div class="scan-stat-label">Queries run</div>
+          <div class="scan-stat-val" id="scan-queries">0</div>
+        </div>
+        <div class="scan-stat">
+          <div class="scan-stat-label">Citations found</div>
+          <div class="scan-stat-val" id="scan-citations">0</div>
+        </div>
+        <div class="scan-stat">
+          <div class="scan-stat-label">Engines reached</div>
+          <div class="scan-stat-val" id="scan-engines">0</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 7: DASHBOARD -->
+  <div class="step" data-step="7">
+    <div class="success-banner">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      <span>Scan complete. Your first visibility report is ready — daily updates from now on.</span>
+    </div>
+
+    <div class="reveal-stagger">
+      <!-- HERO -->
+      <div class="dash-hero">
+        <div class="dash-score-block">
+          <div class="dash-score-label">AI visibility · Today</div>
+          <div class="dash-score">
+            <span id="dash-score-num">0</span><span class="dash-score-suffix">/100</span>
+          </div>
+          <div class="dash-score-delta">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="17 6 9 14 5 10"/><polyline points="17 11 17 6 12 6"/></svg>
+            <span>Baseline established</span>
+          </div>
+          <div class="dash-score-context">
+            <strong id="dash-context-brand">Your brand</strong> ranks <strong id="dash-context-rank">#4</strong> in your category. Category leader: <strong id="dash-context-leader">73/100</strong>. Closest competitor: <strong id="dash-context-near">52/100</strong>.
+          </div>
+        </div>
+        <div class="dash-bars">
+          <div class="dash-bars-head"><span>Engine</span><span>Visibility</span></div>
+          <div class="bar-row" data-engine-id="perplexity"><span class="bar-name">Perplexity</span><div class="bar-track"><div class="bar-fill" data-w="0.62"></div></div><span class="bar-value">62%</span></div>
+          <div class="bar-row" data-engine-id="aio"><span class="bar-name">Google AIO</span><div class="bar-track"><div class="bar-fill" data-w="0.54"></div></div><span class="bar-value">54%</span></div>
+          <div class="bar-row" data-engine-id="chatgpt"><span class="bar-name">ChatGPT</span><div class="bar-track"><div class="bar-fill" data-w="0.41"></div></div><span class="bar-value">41%</span></div>
+          <div class="bar-row" data-engine-id="gemini"><span class="bar-name">Gemini</span><div class="bar-track"><div class="bar-fill" data-w="0.33"></div></div><span class="bar-value">33%</span></div>
+          <div class="bar-row" data-engine-id="claude"><span class="bar-name">Claude</span><div class="bar-track"><div class="bar-fill" data-w="0.28"></div></div><span class="bar-value">28%</span></div>
+          <div class="bar-row" data-engine-id="grok"><span class="bar-name">Grok</span><div class="bar-track"><div class="bar-fill" data-w="0.19"></div></div><span class="bar-value">19%</span></div>
+        </div>
+      </div>
+
+      <!-- GRID: TOP QUERIES + COMPETITORS -->
+      <div class="dash-grid">
+        <div class="dash-card">
+          <div class="dash-card-head">
+            <div class="dash-card-title">Your top queries</div>
+            <div class="dash-card-tag">Last 24 hrs</div>
+          </div>
+          <div id="dash-queries"></div>
+        </div>
+        <div class="dash-card">
+          <div class="dash-card-head">
+            <div class="dash-card-title">Competitor benchmark</div>
+            <div class="dash-card-tag">SoV %</div>
+          </div>
+          <div id="dash-competitors"></div>
+        </div>
+      </div>
+
+      <!-- QUICK WINS -->
+      <div class="action-card">
+        <div class="dash-card-head" style="border-bottom: 1px solid var(--hairline); padding-bottom: 16px; margin-bottom: 8px;">
+          <div class="dash-card-title">Quick wins · This week</div>
+          <div class="dash-card-tag">3 of 12 recommendations</div>
+        </div>
+        <div class="action-row">
+          <div class="action-num">01</div>
+          <div class="action-text">Allow AI crawlers in robots.txt<small>Currently blocking GPTBot, PerplexityBot. Easy fix — biggest single lever.</small></div>
+          <div class="action-lift">+4.2pp</div>
+          <div class="action-route sw">Software</div>
+        </div>
+        <div class="action-row">
+          <div class="action-num">02</div>
+          <div class="action-text">Add Product + Review schema to top 14 pages<small>Increases citation rate on Perplexity and AIO by ~22%.</small></div>
+          <div class="action-lift">+2.8pp</div>
+          <div class="action-route sw">Software</div>
+        </div>
+        <div class="action-row">
+          <div class="action-num">03</div>
+          <div class="action-text">Long-form comparison: <span id="action-3-query">"your top query"</span><small>You're missing on the highest-volume comparison query in your category.</small></div>
+          <div class="action-lift">+3.6pp</div>
+          <div class="action-route partner">Partner</div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="dash-cta">
+        <div class="dash-cta-body">
+          <div class="dash-cta-eyebrow">Your trial · 14 days remaining</div>
+          <div class="dash-cta-h">You've got the dashboard.<br/>Now invite the team that'll act on it.</div>
+          <div class="dash-cta-sub">Add up to 3 teammates in your trial — your marketing lead, your content owner, your agency. Everyone sees the same daily report.</div>
+        </div>
+        <div class="dash-cta-actions">
+          <a href="mailto:hello@perceptivity.ai?subject=Invite%20my%20team" class="btn btn-inv">Invite team</a>
+          <a href="dashboard.html" class="btn btn-tr">Open dashboard
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOT -->
+<div class="step-foot" id="step-foot">
+  <div class="step-foot-inner">
+    <button class="btn btn-ghost" id="back-btn" onclick="goBack()">← Back</button>
+    <button class="btn btn-primary" id="next-btn" onclick="goNext()">
+      Continue
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+// ===== STATE =====
+const state = {
+  step: 1,
+  totalSteps: 6,
+  brand: { name: '', url: '', email: '', description: '' },
+  industry: null,
+  competitors: [],
+  customCompetitors: [],
+  queries: [],
+  customQueries: [],
+  engines: { chatgpt: true, perplexity: true, aio: true, gemini: true, claude: true, grok: true },
+  scanComplete: false,
+};
+
+// ===== INDUSTRY DATA =====
+const INDUSTRY_DATA = {
+  'automotive': {
+    competitors: ['Tata Motors', 'Mahindra', 'Hyundai', 'Maruti Suzuki', 'MG Motor', 'Kia', 'Toyota', 'Honda', 'Skoda', 'Volkswagen'],
+    queries: [
+      { q: 'best electric SUV under ₹30 lakhs', vol: '142K/mo' },
+      { q: 'Mahindra XUV700 vs Tata Harrier', vol: '89K/mo' },
+      { q: 'most reliable car India 2026', vol: '76K/mo' },
+      { q: 'best automatic car under 15 lakhs', vol: '68K/mo' },
+      { q: 'Hyundai Creta vs Kia Seltos', vol: '54K/mo' },
+      { q: 'EV charging infrastructure India', vol: '31K/mo' },
+      { q: 'best mileage SUV diesel 2026', vol: '42K/mo' },
+      { q: 'safest cars India under 20 lakhs', vol: '38K/mo' },
+      { q: 'best 7 seater SUV under 25 lakhs', vol: '47K/mo' },
+      { q: 'top compact sedan India 2026', vol: '29K/mo' },
+      { q: 'used car vs new car India', vol: '22K/mo' },
+      { q: 'CNG cars India fuel economy', vol: '19K/mo' },
+    ]
+  },
+  'real-estate': {
+    competitors: ['Lodha Group', 'DLF', 'Godrej Properties', 'Prestige Estates', 'Oberoi Realty', 'Sobha', 'Brigade', 'M3M', 'Signature Global', 'Birla Estates'],
+    queries: [
+      { q: 'best 3BHK apartments Whitefield Bangalore', vol: '38K/mo' },
+      { q: 'Lodha vs Godrej Properties review', vol: '22K/mo' },
+      { q: 'luxury apartments Gurgaon under 5 cr', vol: '31K/mo' },
+      { q: 'DLF One Midtown price per sqft', vol: '14K/mo' },
+      { q: 'Prestige City Bangalore possession date', vol: '19K/mo' },
+      { q: 'safest builders India 2026', vol: '11K/mo' },
+      { q: 'investment property Pune vs Mumbai', vol: '24K/mo' },
+      { q: 'ready to move flats Noida Expressway', vol: '28K/mo' },
+      { q: 'plot vs apartment Bangalore investment', vol: '17K/mo' },
+      { q: 'best builders Hyderabad Gachibowli', vol: '21K/mo' },
+      { q: 'RERA registered projects Whitefield', vol: '9K/mo' },
+      { q: 'villa communities Bangalore north', vol: '13K/mo' },
+    ]
+  },
+  'financial-services': {
+    competitors: ['HDFC Bank', 'ICICI Bank', 'Axis Bank', 'SBI', 'Razorpay', 'CRED', 'Fi Money', 'Zerodha', 'Groww', 'PayTM Money'],
+    queries: [
+      { q: 'best credit card for international travel', vol: '94K/mo' },
+      { q: 'HDFC vs ICICI home loan comparison', vol: '52K/mo' },
+      { q: 'best mutual fund SIP 2026', vol: '71K/mo' },
+      { q: 'Razorpay vs Cashfree pricing', vol: '28K/mo' },
+      { q: 'safest neobank India', vol: '19K/mo' },
+      { q: 'term insurance for 1 cr coverage', vol: '44K/mo' },
+      { q: 'best demat account zero brokerage', vol: '63K/mo' },
+      { q: 'personal loan low interest rate India', vol: '48K/mo' },
+      { q: 'best credit card lounge access', vol: '37K/mo' },
+      { q: 'mutual fund ELSS tax saving 2026', vol: '32K/mo' },
+      { q: 'fixed deposit highest interest rate', vol: '41K/mo' },
+      { q: 'best UPI app rewards cashback', vol: '24K/mo' },
+    ]
+  },
+  'healthcare': {
+    competitors: ['Apollo Hospitals', 'Fortis', 'Max Healthcare', 'Manipal', 'Medanta', 'Cipla', 'Sun Pharma', 'Practo', 'PharmEasy', '1mg'],
+    queries: [
+      { q: 'best cardiac hospital Delhi NCR', vol: '26K/mo' },
+      { q: 'Apollo vs Fortis cancer treatment', vol: '14K/mo' },
+      { q: 'best dermatologist Mumbai for acne', vol: '31K/mo' },
+      { q: 'affordable IVF clinic Bangalore', vol: '18K/mo' },
+      { q: 'top orthopedic surgeons India', vol: '22K/mo' },
+      { q: 'diabetes medication side effects', vol: '58K/mo' },
+      { q: 'best multispecialty hospital Gurgaon', vol: '17K/mo' },
+      { q: 'liver transplant cost India', vol: '11K/mo' },
+      { q: 'PCOS treatment specialist Pune', vol: '13K/mo' },
+      { q: 'best teleconsultation app India', vol: '27K/mo' },
+      { q: 'cataract surgery hospital Chennai', vol: '15K/mo' },
+      { q: 'cancer second opinion hospital', vol: '9K/mo' },
+    ]
+  },
+  'consumer-durables': {
+    competitors: ['Samsung', 'LG', 'Sony', 'Whirlpool', 'Havells', 'Voltas', 'Daikin', 'Blue Star', 'boAt', 'Sony', 'Bosch', 'Godrej Appliances'],
+    queries: [
+      { q: 'best 1.5 ton inverter AC under 40k', vol: '80K/mo' },
+      { q: 'Samsung vs LG French door refrigerator', vol: '42K/mo' },
+      { q: 'best wireless earbuds under 3000', vol: '128K/mo' },
+      { q: 'top loading vs front loading washing machine', vol: '36K/mo' },
+      { q: '55 inch OLED TV 2026 India', vol: '31K/mo' },
+      { q: 'best mixer grinder for daily use', vol: '24K/mo' },
+      { q: 'best chimney for Indian kitchen', vol: '29K/mo' },
+      { q: 'most energy efficient AC 2026', vol: '34K/mo' },
+      { q: 'best smart TV under 50000', vol: '51K/mo' },
+      { q: 'water purifier RO vs UV India', vol: '22K/mo' },
+      { q: 'best microwave convection oven', vol: '19K/mo' },
+      { q: 'soundbar vs home theatre system', vol: '17K/mo' },
+    ]
+  },
+};
+
+// ===== RENDER =====
+function showStep(n) {
+  state.step = n;
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  const target = document.querySelector(`.step[data-step="${n}"]`);
+  if (target) target.classList.add('active');
+
+  // Progress
+  const totalForBar = state.totalSteps + 1; // including dashboard
+  const pct = Math.min((n / totalForBar) * 100, 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  
+  const ind = document.getElementById('step-indicator');
+  if (n <= state.totalSteps) {
+    ind.textContent = `Step ${n} of ${state.totalSteps}`;
+  } else {
+    ind.textContent = 'Dashboard';
+  }
+
+  // Footer visibility
+  const foot = document.getElementById('step-foot');
+  if (n === 6 || n === 7) {
+    foot.style.display = 'none';
+  } else {
+    foot.style.display = 'flex';
+  }
+
+  // Back button
+  document.getElementById('back-btn').style.visibility = n === 1 ? 'hidden' : 'visible';
+
+  // Next button label
+  const nextBtn = document.getElementById('next-btn');
+  if (n === 5) {
+    nextBtn.innerHTML = `Run my first scan <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`;
+  } else {
+    nextBtn.innerHTML = `Continue <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`;
+  }
+
+  // Shell width
+  document.getElementById('shell').classList.toggle('wide', n === 7);
+
+  // Scroll top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Validate
+  validate();
+  
+  // Step-specific renders
+  if (n === 3) renderCompetitors();
+  if (n === 4) renderQueries();
+  if (n === 6) startScan();
+  if (n === 7) { renderDashboard(); persistProfile(); }
+}
+
+function persistProfile(){
+  try {
+    const profile = {
+      brand: state.brand,
+      industry: state.industry,
+      competitors: [...state.competitors, ...state.customCompetitors],
+      queries: [...state.queries, ...state.customQueries],
+      engines: state.engines,
+      createdAt: new Date().toISOString()
+    };
+    localStorage.setItem('perceptivity:profile', JSON.stringify(profile));
+  } catch(e) {}
+}
+
+// ===== VALIDATE =====
+function validate() {
+  const next = document.getElementById('next-btn');
+  let ok = true;
+  if (state.step === 1) {
+    const nameOk = state.brand.name.trim().length >= 2;
+    const urlOk  = state.brand.url.trim().length >= 3;
+    const email  = state.brand.email.trim();
+    const emailOk = isWorkEmail(email);
+    ok = nameOk && urlOk && emailOk;
+    // Inline hint feedback
+    const hint = document.getElementById('brand-email-hint');
+    if (hint) {
+      if (!email) {
+        hint.style.color = '';
+        hint.textContent = "We'll send your daily visibility report here. Use your work email \u2014 not gmail/yahoo.";
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        hint.style.color = 'var(--gradient-coral)';
+        hint.textContent = 'That doesn\u2019t look like a valid email address.';
+      } else if (!emailOk) {
+        hint.style.color = 'var(--gradient-coral)';
+        hint.textContent = 'Use a work email \u2014 personal addresses (gmail, yahoo, outlook\u2026) aren\u2019t accepted on the trial.';
+      } else {
+        hint.style.color = 'var(--semantic-success)';
+        hint.textContent = '\u2713 Looks good \u2014 reports will go to ' + email;
+      }
+    }
+  } else if (state.step === 2) {
+    ok = !!state.industry;
+  } else if (state.step === 3) {
+    ok = (state.competitors.length + state.customCompetitors.length) >= 3;
+  } else if (state.step === 4) {
+    ok = (state.queries.length + state.customQueries.length) >= 5;
+  } else if (state.step === 5) {
+    ok = Object.values(state.engines).some(v => v);
+  }
+  next.disabled = !ok;
+}
+
+// ===== NAV =====
+function goNext() {
+  if (document.getElementById('next-btn').disabled) return;
+  if (state.step < 6) {
+    showStep(state.step + 1);
+  } else if (state.step === 6) {
+    showStep(7);
+  }
+}
+function goBack() {
+  if (state.step > 1) showStep(state.step - 1);
+}
+function confirmExit(e) {
+  if (!confirm('Save your progress and exit? You can resume from where you left off.')) {
+    if (e) e.preventDefault();
+    return false;
+  }
+  return true; // allow navigation to index.html
+}
+
+// ===== STEP 1: BRAND =====
+['brand-name', 'brand-url', 'brand-email', 'brand-desc'].forEach(id => {
+  const el = document.getElementById(id);
+  el.addEventListener('input', () => {
+    if (id === 'brand-name')  state.brand.name = el.value;
+    if (id === 'brand-url')   state.brand.url = el.value;
+    if (id === 'brand-email') state.brand.email = el.value;
+    if (id === 'brand-desc')  state.brand.description = el.value;
+    validate();
+  });
+});
+
+function isWorkEmail(addr) {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!re.test(addr)) return false;
+  const personal = ['gmail.com','yahoo.com','yahoo.co.in','hotmail.com','outlook.com','icloud.com','protonmail.com','rediffmail.com','aol.com','live.com','me.com'];
+  const domain = addr.split('@')[1].toLowerCase();
+  return !personal.includes(domain);
+}
+
+// ===== STEP 2: INDUSTRY =====
+document.querySelectorAll('.ind-card').forEach(card => {
+  card.addEventListener('click', () => {
+    document.querySelectorAll('.ind-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    state.industry = card.dataset.industry;
+    // Reset downstream
+    state.competitors = [];
+    state.customCompetitors = [];
+    state.queries = [];
+    state.customQueries = [];
+    validate();
+  });
+});
+
+// ===== STEP 3: COMPETITORS =====
+function renderCompetitors() {
+  const container = document.getElementById('competitor-chips');
+  const data = INDUSTRY_DATA[state.industry];
+  if (!data) return;
+  container.innerHTML = '';
+  
+  data.competitors.forEach(name => {
+    const chip = document.createElement('button');
+    chip.className = 'chip' + (state.competitors.includes(name) ? ' selected' : '');
+    chip.textContent = name;
+    chip.addEventListener('click', () => {
+      if (state.competitors.includes(name)) {
+        state.competitors = state.competitors.filter(c => c !== name);
+        chip.classList.remove('selected');
+      } else {
+        if ((state.competitors.length + state.customCompetitors.length) >= 5) {
+          flashCounter('Maximum 5 competitors');
+          return;
+        }
+        state.competitors.push(name);
+        chip.classList.add('selected');
+      }
+      updateCompCounter();
+      validate();
+    });
+    container.appendChild(chip);
+  });
+  
+  // Custom competitor chips
+  state.customCompetitors.forEach(name => {
+    container.appendChild(makeCustomCompChip(name));
+  });
+  
+  updateCompCounter();
+}
+
+function makeCustomCompChip(name) {
+  const chip = document.createElement('button');
+  chip.className = 'chip custom selected';
+  chip.innerHTML = `${name} <span class="chip-remove">×</span>`;
+  chip.addEventListener('click', () => {
+    state.customCompetitors = state.customCompetitors.filter(c => c !== name);
+    chip.remove();
+    updateCompCounter();
+    validate();
+  });
+  return chip;
+}
+
+function addCustomCompetitor() {
+  const input = document.getElementById('custom-comp-input');
+  const v = input.value.trim();
+  if (!v) return;
+  if ((state.competitors.length + state.customCompetitors.length) >= 5) {
+    flashCounter('Maximum 5 competitors');
+    return;
+  }
+  if (state.customCompetitors.includes(v) || state.competitors.includes(v)) {
+    input.value = '';
+    return;
+  }
+  state.customCompetitors.push(v);
+  document.getElementById('competitor-chips').appendChild(makeCustomCompChip(v));
+  input.value = '';
+  updateCompCounter();
+  validate();
+}
+
+function updateCompCounter() {
+  const total = state.competitors.length + state.customCompetitors.length;
+  const counter = document.getElementById('comp-counter');
+  if (total === 0) {
+    counter.classList.remove('ok');
+    counter.innerHTML = `<span><strong>0</strong> selected — pick at least 3</span>`;
+  } else if (total < 3) {
+    counter.classList.remove('ok');
+    counter.innerHTML = `<span><strong>${total}</strong> selected — ${3 - total} more to continue</span>`;
+  } else {
+    counter.classList.add('ok');
+    counter.innerHTML = `<span><strong>${total}</strong> selected — ready to continue</span>`;
+  }
+}
+
+function flashCounter(msg) {
+  const counter = document.getElementById('comp-counter');
+  const original = counter.innerHTML;
+  counter.innerHTML = `<span style="color: var(--gradient-coral);">${msg}</span>`;
+  setTimeout(() => { updateCompCounter(); }, 1500);
+}
+
+// ===== STEP 4: QUERIES =====
+function renderQueries() {
+  const container = document.getElementById('query-list');
+  const data = INDUSTRY_DATA[state.industry];
+  if (!data) return;
+  container.innerHTML = '';
+  
+  data.queries.forEach((q, idx) => {
+    const row = document.createElement('div');
+    row.className = 'query-row' + (state.queries.some(sq => sq.q === q.q) ? ' selected' : '');
+    row.innerHTML = `
+      <div class="query-checkbox"></div>
+      <div class="query-text">${q.q}</div>
+      <div class="query-vol">${q.vol}</div>
+    `;
+    row.addEventListener('click', () => {
+      const i = state.queries.findIndex(sq => sq.q === q.q);
+      if (i >= 0) {
+        state.queries.splice(i, 1);
+        row.classList.remove('selected');
+      } else {
+        state.queries.push(q);
+        row.classList.add('selected');
+      }
+      updateQuota();
+      validate();
+    });
+    container.appendChild(row);
+  });
+  
+  // Custom queries
+  state.customQueries.forEach(q => {
+    container.appendChild(makeCustomQueryRow(q));
+  });
+  
+  updateQuota();
+}
+
+function makeCustomQueryRow(q) {
+  const row = document.createElement('div');
+  row.className = 'query-row selected custom';
+  row.innerHTML = `
+    <div class="query-checkbox"></div>
+    <div class="query-text">${q.q}</div>
+    <div class="query-vol">custom</div>
+    <button class="query-remove">×</button>
+  `;
+  row.querySelector('.query-remove').addEventListener('click', (e) => {
+    e.stopPropagation();
+    state.customQueries = state.customQueries.filter(x => x.q !== q.q);
+    row.remove();
+    updateQuota();
+    validate();
+  });
+  return row;
+}
+
+function addCustomQuery() {
+  const input = document.getElementById('custom-query-input');
+  const v = input.value.trim();
+  if (!v) return;
+  const exists = state.customQueries.some(x => x.q === v) || state.queries.some(x => x.q === v);
+  if (exists) { input.value = ''; return; }
+  const q = { q: v, vol: 'custom' };
+  state.customQueries.push(q);
+  document.getElementById('query-list').appendChild(makeCustomQueryRow(q));
+  input.value = '';
+  updateQuota();
+  validate();
+}
+
+function updateQuota() {
+  const totalQueries = state.queries.length + state.customQueries.length;
+  // each query × number of engines × ~1 run/day = daily count
+  const enginesOn = Object.values(state.engines).filter(v => v).length || 6;
+  const dailyRuns = totalQueries * enginesOn;
+  document.getElementById('quota-current').textContent = dailyRuns;
+  const pct = Math.min((dailyRuns / 500) * 100, 100);
+  document.getElementById('quota-fill').style.width = pct + '%';
+  document.getElementById('quota-runs').textContent = `${totalQueries} queries × ${enginesOn} engines`;
+}
+
+// ===== STEP 5: ENGINES =====
+document.querySelectorAll('.engine-tile').forEach(tile => {
+  tile.addEventListener('click', () => {
+    const eng = tile.dataset.engine;
+    state.engines[eng] = !state.engines[eng];
+    tile.classList.toggle('on', state.engines[eng]);
+    validate();
+  });
+});
+
+// ===== STEP 6: SCAN =====
+function startScan() {
+  const log = document.getElementById('scan-log');
+  const status = document.getElementById('scan-status');
+  const queriesEl = document.getElementById('scan-queries');
+  const citationsEl = document.getElementById('scan-citations');
+  const enginesEl = document.getElementById('scan-engines');
+  
+  document.getElementById('scan-brand-tag').textContent = state.brand.name || 'Your brand';
+  log.innerHTML = '';
+  status.textContent = 'Initializing';
+  queriesEl.textContent = '0';
+  citationsEl.textContent = '0';
+  enginesEl.textContent = '0';
+
+  const totalQueries = state.queries.length + state.customQueries.length;
+  const engines = Object.entries(state.engines).filter(([k, v]) => v).map(([k]) => k);
+  const engineLabels = {
+    chatgpt: 'ChatGPT',
+    perplexity: 'Perplexity',
+    aio: 'Google AIO',
+    gemini: 'Gemini',
+    claude: 'Claude',
+    grok: 'Grok'
+  };
+
+  const lines = [];
+  lines.push({ text: `> Perceptivity scanner v1.2.4 · init`, cls: 'info', delay: 200 });
+  lines.push({ text: `> brand → "${state.brand.name}"`, cls: 'pop', delay: 280 });
+  lines.push({ text: `> industry → ${state.industry}`, delay: 200 });
+  lines.push({ text: `> queries loaded → ${totalQueries}`, delay: 200 });
+  lines.push({ text: `> competitors → ${state.competitors.length + state.customCompetitors.length}`, delay: 200 });
+  lines.push({ text: `> engines online → ${engines.length}`, delay: 250 });
+  lines.push({ text: ``, delay: 150 });
+
+  let runningQueries = 0;
+  let runningCitations = 0;
+  let runningEngines = 0;
+
+  engines.forEach((eng, idx) => {
+    lines.push({ text: `[${engineLabels[eng]}] authenticating...`, delay: 380, status: `Connecting to ${engineLabels[eng]}` });
+    lines.push({ text: `[${engineLabels[eng]}] ✓ connection established`, cls: 'ok', delay: 200 });
+    lines.push({ text: `[${engineLabels[eng]}] running ${totalQueries} queries`, delay: 350, status: `Running queries on ${engineLabels[eng]}` });
+    const cites = Math.floor(totalQueries * (0.35 + Math.random() * 0.35));
+    const sentiment = (0.2 + Math.random() * 0.5).toFixed(2);
+    lines.push({
+      text: `[${engineLabels[eng]}] ✓ done · ${totalQueries} queries · ${cites} citations · sentiment +${sentiment}`,
+      cls: 'ok',
+      delay: 280,
+      onShow: () => {
+        runningQueries += totalQueries;
+        runningCitations += cites;
+        runningEngines += 1;
+        queriesEl.textContent = runningQueries.toLocaleString();
+        citationsEl.textContent = runningCitations.toLocaleString();
+        enginesEl.textContent = runningEngines;
+      }
+    });
+    lines.push({ text: ``, delay: 80 });
+  });
+
+  lines.push({ text: `> aggregating cross-engine signals`, cls: 'info', delay: 400, status: 'Aggregating' });
+  lines.push({ text: `> mapping competitor share of voice`, cls: 'info', delay: 350, status: 'Mapping SoV' });
+  lines.push({ text: `> running sentiment + position scoring`, cls: 'info', delay: 350, status: 'Scoring' });
+  lines.push({ text: `> computing visibility index`, cls: 'info', delay: 350, status: 'Computing score' });
+  lines.push({ text: `> generating quick-win recommendations`, cls: 'accent', delay: 400, status: 'Recommendations' });
+  lines.push({ text: ``, delay: 150 });
+  lines.push({ text: `> ✓ baseline established`, cls: 'pop', delay: 250 });
+  lines.push({ text: `> ✓ dashboard ready · redirecting...`, cls: 'pop', delay: 600 });
+
+  // Stream lines
+  let i = 0;
+  const cursor = document.createElement('span');
+  cursor.className = 'line cursor';
+  log.appendChild(cursor);
+  
+  function next() {
+    if (i >= lines.length) {
+      cursor.remove();
+      status.textContent = 'Complete';
+      setTimeout(() => { showStep(7); }, 700);
+      return;
+    }
+    const ln = lines[i];
+    const lineEl = document.createElement('span');
+    lineEl.className = 'line ' + (ln.cls || '');
+    lineEl.textContent = ln.text;
+    log.insertBefore(lineEl, cursor);
+    if (ln.status) status.textContent = ln.status;
+    if (ln.onShow) ln.onShow();
+    log.scrollTop = log.scrollHeight;
+    i++;
+    setTimeout(next, ln.delay);
+  }
+  setTimeout(next, 300);
+}
+
+// ===== STEP 7: DASHBOARD =====
+function renderDashboard() {
+  const brand = state.brand.name || 'Your brand';
+  document.getElementById('dash-context-brand').textContent = brand;
+  
+  // Compute a baseline-ish score
+  const baseScore = 32 + Math.floor(Math.random() * 18); // 32-50
+  animateCount('dash-score-num', 0, baseScore, 1600);
+  
+  // Compute rank within competitors
+  const allCompetitors = [...state.competitors, ...state.customCompetitors];
+  const rankNum = Math.min(Math.max(2, Math.floor(allCompetitors.length / 2) + 1), 6);
+  document.getElementById('dash-context-rank').textContent = `#${rankNum}`;
+  document.getElementById('dash-context-leader').textContent = (baseScore + 22 + Math.floor(Math.random() * 8)) + '/100';
+  document.getElementById('dash-context-near').textContent = (baseScore + 6 + Math.floor(Math.random() * 6)) + '/100';
+  
+  // Hide engine bars that are off
+  document.querySelectorAll('.bar-row').forEach(row => {
+    const eng = row.dataset.engineId;
+    row.style.display = state.engines[eng] ? '' : 'none';
+  });
+  
+  // Animate bars
+  setTimeout(() => {
+    document.querySelectorAll('.bar-fill').forEach(b => {
+      const w = parseFloat(b.dataset.w);
+      b.style.transform = `scaleX(${w})`;
+    });
+  }, 300);
+
+  // Top queries
+  const queriesContainer = document.getElementById('dash-queries');
+  queriesContainer.innerHTML = '';
+  const allQueries = [...state.queries, ...state.customQueries].slice(0, 6);
+  allQueries.forEach((q, i) => {
+    const rank = Math.floor(Math.random() * 8) + 1;
+    const rankCls = rank <= 3 ? 'good' : rank >= 6 ? 'bad' : '';
+    const cites = Math.floor(Math.random() * 40) + 5;
+    const row = document.createElement('div');
+    row.className = 'q-row';
+    row.innerHTML = `
+      <div class="q-rank ${rankCls}">#${rank}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-cite">${cites} cites</div>
+    `;
+    queriesContainer.appendChild(row);
+  });
+  
+  // Update action 3 text with best query
+  if (allQueries.length > 0) {
+    const topQuery = allQueries.find(q => q.q.includes(' vs ')) || allQueries[0];
+    document.getElementById('action-3-query').textContent = `"${topQuery.q}"`;
+  }
+
+  // Competitors
+  const compContainer = document.getElementById('dash-competitors');
+  compContainer.innerHTML = '';
+  
+  // Build list with you + competitors
+  const compList = [
+    { name: brand, score: baseScore, you: true },
+    ...allCompetitors.slice(0, 4).map(c => ({
+      name: c,
+      score: Math.floor(20 + Math.random() * 55),
+      you: false
+    }))
+  ].sort((a, b) => b.score - a.score);
+  
+  const maxScore = Math.max(...compList.map(c => c.score));
+  
+  compList.forEach((c, i) => {
+    const row = document.createElement('div');
+    row.className = 'comp-row';
+    row.innerHTML = `
+      <div class="comp-name">${c.you ? '★ ' + c.name : c.name}</div>
+      <div class="comp-score ${c.you ? 'you' : ''}">${c.score}</div>
+      <div class="comp-mini-bar"><div class="comp-mini-fill ${c.you ? 'you' : ''}" data-w="${c.score / maxScore}"></div></div>
+      <div></div>
+    `;
+    compContainer.appendChild(row);
+  });
+  
+  setTimeout(() => {
+    document.querySelectorAll('.comp-mini-fill').forEach(b => {
+      const w = parseFloat(b.dataset.w);
+      b.style.transform = `scaleX(${w})`;
+    });
+  }, 600);
+}
+
+function animateCount(id, from, to, duration) {
+  const el = document.getElementById(id);
+  const start = performance.now();
+  function tick(now) {
+    const t = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - t, 3);
+    el.textContent = Math.round(from + (to - from) * eased);
+    if (t < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+// ===== KEYBOARD =====
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.target.matches('input, textarea, button')) {
+    if (!document.getElementById('next-btn').disabled && state.step !== 6 && state.step !== 7) {
+      goNext();
+    }
+  }
+});
+
+// ===== INIT =====
+showStep(1);
+</script>
+
+</body>
+</html>

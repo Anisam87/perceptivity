@@ -11,6 +11,32 @@
 <link rel="stylesheet" href="perceptivity.css">
 <link rel="stylesheet" href="home.css">
 <link rel="stylesheet" href="perceptivity-pack.css">
+<style id="print-rules">
+@media print{
+  @page{ size:A4 portrait; margin:12mm; }
+  html,body{
+    background:#070713 !important;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  *{ -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+  /* drop chrome + atmosphere that can't paginate */
+  .nav-wrap{ display:none !important; }
+  .atmos-stars,.atmos-grain{ display:none !important; }
+  .atmos-bg{ position:absolute !important; }
+  /* kill motion + force every scroll-reveal element visible */
+  *,*::before,*::after{ animation:none !important; transition:none !important; }
+  .reveal,.pc-reveal,.letter{ opacity:1 !important; transform:none !important; }
+  /* recover top space now that the fixed nav is gone */
+  .hero{ padding-top:24px !important; }
+  /* keep cards & sections intact across page breaks */
+  .sec,.stage,.trust-band{ padding-top:26px !important; padding-bottom:26px !important; }
+  .three-card,.step-card,.num-card,.eng-card,.cat-card,.res-card,
+  .price-card,.faq,.stage-viz,.b2a-stat,.vern-band,.shift-cta,.final-cta,
+  .lead-capture,.hero-dash{ break-inside:avoid; page-break-inside:avoid; }
+  .stage-grid,.three-grid,.b2a{ break-inside:avoid; }
+  a{ color:inherit !important; text-decoration:none !important; }
+}
+</style>
 </head>
 <body>
 
@@ -100,43 +126,6 @@
         <p>Custom audiences, tailored prompts and brand-level accuracy controls. Built for enterprise — encrypted tenants, SSO, audit logs, and infosec reviews passed with ease.</p>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- SOURCE OF TRUTH · interactive -->
-<section class="sec" id="ground-truth">
-  <div class="container">
-    <span class="kicker sec-kicker reveal">Source of truth · accuracy &amp; control</span>
-    <div class="sec-head reveal" data-delay="1">
-      <h2>Don't just watch the answer. Author it.</h2>
-      <p>Feed Perceptivity your canonical truth — guidelines, narratives, live SKU &amp; pricing, approved claims, spec sheets. AI stops guessing and starts quoting you.</p>
-    </div>
-
-    <div class="glass gt-panel reveal" data-delay="2">
-      <div class="gt-grid">
-        <!-- LEFT · source ledger -->
-        <div class="gt-sources">
-          <div class="gt-sub"><span class="mono">Your source of truth</span><span class="mono" id="gtCount">5 / 5 synced</span></div>
-          <div class="gt-list" id="gtList"></div>
-          <p class="gt-hint">Toggle a source off to see what AI says when it can't see your truth.</p>
-        </div>
-
-        <!-- RIGHT · live answer -->
-        <div class="gt-answer">
-          <div class="gt-ans-bar">
-            <span class="gt-eng"><span class="dot"></span> ChatGPT · live answer</span>
-            <span class="gt-acc" id="gtAcc">Accuracy 100%</span>
-          </div>
-          <div class="gt-query" id="gtQuery"></div>
-          <div class="gt-ans-body" id="gtAns"></div>
-          <div class="gt-ans-foot">
-            <span class="mono">Grounded in your truth</span>
-            <span class="mono"><b id="gtErr">0</b> errors</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="eng-note reveal">Illustrative worked example · Mahindra, automotive</div>
   </div>
 </section>
 
@@ -673,63 +662,17 @@
     email.addEventListener('input', () => { email.style.borderColor = ''; });
   })();
 
-  // ---- source of truth · interactive ----
+  // ---- auto-print (print copy only) ----
   (function(){
-    const gt = window.GROUND_TRUTH && GROUND_TRUTH.auto;
-    const list = document.getElementById('gtList');
-    const ans  = document.getElementById('gtAns');
-    if (!gt || !list || !ans) return;
-
-    document.getElementById('gtQuery').textContent = '“' + gt.query + '”';
-
-    // state: every source starts grounded (on)
-    const state = {};
-    gt.sources.forEach(s => state[s.id] = true);
-
-    const stateLabel = { synced:'Synced', drift:'Price drift', review:'In review' };
-
-    // build the source toggles
-    gt.sources.forEach(s => {
-      const btn = document.createElement('button');
-      btn.className = 'gt-src on';
-      btn.dataset.id = s.id;
-      btn.setAttribute('aria-pressed', 'true');
-      btn.innerHTML = `
-        <span class="gt-tick"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.4 3.4L11 1.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        <span class="gt-src-main">
-          <span class="gt-src-grp">${s.group}</span>
-          <span class="gt-src-note">${s.facts} facts · synced ${s.synced}</span>
-        </span>
-        <span class="gt-src-state st-${s.status}">${stateLabel[s.status]}</span>`;
-      btn.addEventListener('click', () => {
-        state[s.id] = !state[s.id];
-        btn.classList.toggle('on', state[s.id]);
-        btn.setAttribute('aria-pressed', String(state[s.id]));
-        render();
-      });
-      list.appendChild(btn);
-    });
-
-    function render(){
-      ans.innerHTML = '';
-      gt.answer.forEach(seg => {
-        const grounded = state[seg.groundedBy];
-        const span = document.createElement('span');
-        span.className = 'gt-seg ' + (grounded ? 'on' : 'off');
-        span.textContent = (grounded ? seg.right : seg.wrong) + ' ';
-        ans.appendChild(span);
-      });
-      const on = gt.sources.filter(s => state[s.id]).length;
-      const total = gt.sources.length;
-      const errs = total - on;
-      const acc = Math.round((on / total) * 100);
-      document.getElementById('gtCount').textContent = `${on} / ${total} synced`;
-      document.getElementById('gtErr').textContent = errs;
-      const accEl = document.getElementById('gtAcc');
-      accEl.textContent = 'Accuracy ' + acc + '%';
-      accEl.className = 'gt-acc' + (acc === 100 ? ' good' : acc >= 60 ? ' mid' : ' bad');
+    function ready(){
+      // belt-and-suspenders: reveal everything that the scroll observer would have shown
+      document.querySelectorAll('.reveal,.pc-reveal,.letter').forEach(e=>e.classList.add('in'));
     }
-    render();
+    window.addEventListener('load', async () => {
+      ready();
+      try { if (document.fonts && document.fonts.ready) await document.fonts.ready; } catch(e){}
+      setTimeout(() => window.print(), 700);
+    });
   })();
 </script>
 </body>

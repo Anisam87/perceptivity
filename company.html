@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Perceptivity's mission, vision and ethos — the operating system for AI perception, built for Indian marketing leaders." />
+<title>Company — Perceptivity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;650;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="perceptivity.css">
+<style>
+  .page-head{padding:150px 0 30px}
+  .page-head .kicker{margin-bottom:22px}
+  .page-head h1{max-width:18ch}
+  .page-head .lede{max-width:62ch;margin-top:24px;color:var(--ink);opacity:.85;font-size:22px;line-height:1.5}
+
+  /* mission / vision block */
+  .mv-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:60px}
+  @media (max-width:900px){ .mv-grid{grid-template-columns:1fr} }
+  .mv-card{padding:36px 36px 40px;border-radius:32px;display:flex;flex-direction:column;gap:18px;min-height:340px;justify-content:space-between}
+  .mv-card .label{font-family:var(--fontMono);font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}
+  .mv-card h2{font-family:var(--fontDisplay);font-size:clamp(28px,3.4vw,42px);font-weight:600;line-height:1.05;letter-spacing:-0.04em;color:var(--ink);max-width:22ch}
+  .mv-card .credit{font-family:var(--fontMono);font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}
+
+  /* large statement */
+  .statement{
+    margin:80px 0 30px;
+    font-family:var(--fontDisplay);font-weight:600;
+    font-size:clamp(36px,5.5vw,84px);line-height:.96;letter-spacing:-0.055em;
+    max-width:24ch;color:rgba(250,241,229,.45);
+  }
+  .statement em{font-style:normal;color:var(--ink)}
+
+  /* ethos / principles */
+  .ethos{padding:60px 0 40px}
+  .ethos-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-bottom:36px}
+  .ethos-head h2{font-family:var(--fontDisplay);font-size:clamp(32px,4vw,56px);font-weight:600;line-height:.95;letter-spacing:-0.05em}
+  .ethos-head p{max-width:42ch;color:var(--ink);opacity:.82;font-size:17px;line-height:1.55}
+
+  .principles{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  @media (max-width:800px){ .principles{grid-template-columns:1fr} }
+  .principle{
+    padding:28px 30px 30px;border-radius:24px;
+    background:rgba(11,11,22,.55);border:1px solid var(--line);
+    display:flex;flex-direction:column;gap:14px;
+    backdrop-filter:blur(18px);
+    transition:border-color .25s var(--ease);
+  }
+  .principle:hover{border-color:var(--lineStrong)}
+  .principle .num{font-family:var(--fontMono);font-size:11.5px;letter-spacing:0.14em;color:var(--muted)}
+  .principle h3{font-family:var(--fontDisplay);font-size:24px;font-weight:600;line-height:1.1;letter-spacing:-0.03em;color:var(--ink)}
+  .principle p{color:var(--ink);opacity:.82;font-size:15.5px;line-height:1.55}
+  .principle .tag{font-family:var(--fontMono);font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-top:auto}
+
+  /* manifesto card */
+  .manifesto{
+    margin-top:60px;padding:50px 50px 52px;border-radius:42px;
+    background:linear-gradient(180deg, rgba(217,154,108,.10), rgba(11,11,22,.78));
+    border:1px solid rgba(217,154,108,.3);
+    box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,.12);
+    position:relative;overflow:hidden;
+  }
+  .manifesto::after{
+    content:"";position:absolute;width:60%;height:60%;border-radius:50%;
+    filter:blur(80px);background:radial-gradient(circle, var(--amber), transparent 60%);
+    top:-30%;right:-20%;opacity:.5;z-index:-1;
+  }
+  .manifesto .label{font-family:var(--fontMono);font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber)}
+  .manifesto h2{font-family:var(--fontDisplay);font-size:clamp(32px,4.4vw,60px);font-weight:600;line-height:1;letter-spacing:-0.05em;color:var(--ink);max-width:24ch;margin-top:18px}
+  .manifesto p{font-size:18px;color:var(--ink);opacity:.86;line-height:1.6;margin-top:22px;max-width:64ch}
+  .manifesto .lines{margin-top:28px;display:flex;flex-direction:column;gap:14px}
+  .manifesto .lines li{
+    display:flex;gap:14px;align-items:flex-start;
+    font-family:var(--fontDisplay);font-size:22px;font-weight:600;letter-spacing:-0.025em;color:var(--ink);line-height:1.3;
+  }
+  .manifesto .lines li::before{
+    content:"·";color:var(--amber);font-size:32px;line-height:1;margin-top:-4px;
+  }
+
+  /* origin / context */
+  .context-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:60px}
+  @media (max-width:900px){ .context-grid{grid-template-columns:1fr} }
+  .context-card{padding:30px 30px 34px;border-radius:26px;display:flex;flex-direction:column;gap:14px}
+  .context-card h3{font-family:var(--fontDisplay);font-size:24px;font-weight:600;letter-spacing:-0.03em;color:var(--ink)}
+  .context-card p{color:var(--ink);opacity:.84;font-size:15.5px;line-height:1.6}
+  .context-card .mono{color:var(--muted)}
+
+  /* CTA */
+  .cta-final{padding:54px 48px 60px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:18px;max-width:920px;margin:80px auto 0;border-radius:42px}
+  .cta-final h2{font-family:var(--fontDisplay);font-size:clamp(36px,5vw,62px);font-weight:600;line-height:.96;letter-spacing:-0.05em;max-width:20ch}
+  .cta-final p{color:var(--ink);opacity:.85;font-size:18px;max-width:44ch;line-height:1.5}
+</style>
+</head>
+<body>
+
+<section class="container">
+  <div class="page-head">
+    <span class="kicker reveal">Company</span>
+    <h1 class="display-xl reveal" data-delay="1">We help brands win the question.</h1>
+    <p class="lede reveal" data-delay="2">Perceptivity is the operating system for AI perception. We were built because the funnel changed and the tools didn't. Today, every category — from premium SUVs to vitamin C serums — is being recommended by AI before the buyer ever opens a browser tab.</p>
+  </div>
+
+  <!-- MISSION + VISION -->
+  <div class="mv-grid">
+    <div class="glass mv-card glow-teal reveal">
+      <div>
+        <div class="label">·  Mission</div>
+        <h2 style="margin-top:18px">Give every brand the power to shape what AI says about it.</h2>
+      </div>
+      <p style="color:var(--ink);opacity:.82;font-size:16.5px;line-height:1.55">Marketing leaders have built decades of expertise around channels they can see — paid, organic, social, PR. The most influential channel of the next decade is one they cannot. We exist to fix that.</p>
+    </div>
+
+    <div class="glass mv-card glow-amber reveal" data-delay="1">
+      <div>
+        <div class="label">·  Vision</div>
+        <h2 style="margin-top:18px">Every AI answer should reflect the truth your customers experience.</h2>
+      </div>
+      <p style="color:var(--ink);opacity:.82;font-size:16.5px;line-height:1.55">When AI describes your brand, it should be accurate, current, and faithful to what you actually deliver. Not a hallucination. Not last year's pricing. Not a rival's framing. We are the layer between brand reality and machine perception.</p>
+    </div>
+  </div>
+
+  <!-- STATEMENT -->
+  <p class="statement reveal">The next brand battlefield is not search. <em>It is perception.</em></p>
+
+</section>
+
+<!-- ETHOS -->
+<section class="ethos">
+  <div class="container">
+    <div class="ethos-head reveal">
+      <h2>How we work.</h2>
+      <p>Five principles for the team and the product. The ones we'll be embarrassed by if we ever forget.</p>
+    </div>
+
+    <div class="principles">
+      <div class="principle reveal">
+        <span class="num">·  01</span>
+        <h3>Forecast before you spend.</h3>
+        <p>Every meaningful action — ours or our customers' — must come with a forecast. Show your work. Confidence levels, expected lift, defensible math. Marketing decisions deserve the same rigour as engineering ones.</p>
+        <span class="tag">Product principle</span>
+      </div>
+
+      <div class="principle reveal" data-delay="1">
+        <span class="num">·  02</span>
+        <h3>Measure what you moved.</h3>
+        <p>If we can't measure the lift, we shouldn't have made the claim. Predicted vs actual is a sacred number. The CFO is allowed in every conversation.</p>
+        <span class="tag">Operating principle</span>
+      </div>
+
+      <div class="principle reveal" data-delay="2">
+        <span class="num">·  03</span>
+        <h3>Respect the brand. Reject the spam.</h3>
+        <p>Shaping AI perception is not gaming AI. We don't pump fake reviews, we don't farm citations, we don't manufacture authority. Anything we wouldn't be proud to show a journalist, we don't ship.</p>
+        <span class="tag">Ethics</span>
+      </div>
+
+      <div class="principle reveal" data-delay="3">
+        <span class="num">·  04</span>
+        <h3>Local context is not an afterthought.</h3>
+        <p>Local publishers, buyer language, competitive sets and regulatory context — built in per market, not bolted on. We go market by market and earn depth; India is where ours runs deepest today.</p>
+        <span class="tag">Market principle</span>
+      </div>
+
+      <div class="principle reveal" data-delay="4">
+        <span class="num">·  05</span>
+        <h3>Diagnosis is half the job.</h3>
+        <p>An insight nobody acts on is wasted compute. Every gap in our dashboard ends in an action with an owner. We will not be a tool that decorates the problem.</p>
+        <span class="tag">Product principle</span>
+      </div>
+
+      <div class="principle reveal" data-delay="5">
+        <span class="num">·  06</span>
+        <h3>One loop, looped forever.</h3>
+        <p>Sense. Simulate. Act. Learn. Every cycle makes the next forecast sharper. Compounding is a marketing strategy, not just a financial one.</p>
+        <span class="tag">Operating principle</span>
+      </div>
+    </div>
+
+    <!-- MANIFESTO -->
+    <div class="manifesto reveal" data-delay="2">
+      <div class="label">·  Our manifesto</div>
+      <h2>The funnel changed. The tools didn't. We built the missing layer.</h2>
+      <p>For twenty years, marketing leaders built playbooks for a world where buyers compared ten links. That world is ending. A new buyer is forming — one who asks, gets a single answer, and decides. The CMOs who learn to shape that answer will own the next decade. The ones who don't will spend it confused about why their funnel is shrinking.</p>
+      <ul class="lines">
+        <li>We do not sell a dashboard.</li>
+        <li>We sell a defensible quarterly plan for AI perception.</li>
+        <li>We sell the forecast that lets a CMO commit budget.</li>
+        <li>We sell the queue that lets a brand team execute.</li>
+        <li>We sell the number that lets a CFO sign off.</li>
+      </ul>
+    </div>
+
+    <!-- ORIGIN / CONTEXT -->
+    <div class="context-grid">
+      <div class="glass context-card glow-violet reveal">
+        <span class="mono">·  Where we sit</span>
+        <h3>Between brand reality and machine perception.</h3>
+        <p>Brands invest enormous effort building what they actually are. AI engines describe what they appear to be. We're the layer that closes the gap — by changing what AI reads, not by gaming what it returns.</p>
+      </div>
+      <div class="glass context-card glow-teal reveal" data-delay="1">
+        <span class="mono">·  Who we serve</span>
+        <h3>Brand and marketing leaders ready to take AI seriously.</h3>
+        <p>CMOs, brand heads, and marketing teams at consumer-facing brands. Not agencies (though our partners are). Not engineering teams (though we work with them). The people whose quarterly review is about category share.</p>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="glass cta-final glow-amber reveal">
+      <span class="kicker">Get started</span>
+      <h2 class="grad">Don't optimise for blue links. Optimise for belief.</h2>
+      <p>Book a walkthrough on your brand, or read the playbook first. We'll take it from there.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:14px">
+        <a class="btn primary btn-lg" href="demo.html">Book a demo <span class="arrow">→</span></a>
+        <a class="btn btn-lg" href="index.html#resources">Read the playbook</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="demo-data.js"></script>
+<script src="chrome.js"></script>
+</body>
+</html>

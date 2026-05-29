@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Category insight — Perceptivity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;650;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="perceptivity.css">
+<style>
+  .cat-head{padding:150px 0 40px}
+  .cat-head .breadcrumb{display:flex;align-items:center;gap:14px;font-family:var(--fontMono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:22px}
+  .cat-head .breadcrumb a{color:var(--muted);transition:color .2s}
+  .cat-head .breadcrumb a:hover{color:var(--ink)}
+  .cat-head .breadcrumb .sep{color:var(--faint)}
+  .cat-head h1{max-width:22ch}
+  .cat-head .lede{margin-top:24px;color:var(--ink);opacity:.86;font-size:21px;line-height:1.55;max-width:60ch}
+
+  .head-cta{margin-top:32px;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .head-cta .meta{font-family:var(--fontMono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-left:8px}
+
+  .twoCol{display:grid;grid-template-columns:1.6fr 1fr;gap:22px;margin-top:40px}
+  @media (max-width:1060px){ .twoCol{grid-template-columns:1fr} }
+
+  .module{padding:28px 28px 30px;border-radius:26px;position:relative}
+  .module .head{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;margin-bottom:18px;flex-wrap:wrap}
+  .module h3{font-family:var(--fontDisplay);font-size:24px;font-weight:600;letter-spacing:-0.03em;color:var(--ink)}
+  .module .head .mono{color:var(--muted)}
+  .module .foot{font-family:var(--fontMono);font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-top:18px;border-top:1px dashed var(--line);padding-top:14px}
+
+  /* ===== LEADERBOARD ===== */
+  .lb{display:flex;flex-direction:column;gap:0}
+  .lb-row{
+    display:grid;grid-template-columns:42px 1fr 80px 80px 70px 80px;gap:18px;align-items:center;
+    padding:14px 12px;border-bottom:1px solid var(--line);
+    transition:background .2s;
+  }
+  .lb-row:hover{background:rgba(245,230,215,.025)}
+  .lb-row:last-child{border-bottom:none}
+  .lb-row.header{font-family:var(--fontMono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);padding-top:10px;padding-bottom:10px;border-bottom:1px solid var(--lineStrong)}
+  .lb-row.header:hover{background:none}
+  .lb-rank{
+    font-family:var(--fontMono);font-size:14px;letter-spacing:0.06em;color:var(--ink);text-align:center;
+    width:36px;height:36px;border-radius:50%;display:grid;place-items:center;
+    background:rgba(245,230,215,.05);border:1px solid var(--line);
+  }
+  .lb-rank.r1{background:var(--amberSoft);border-color:rgba(217,154,108,.4);color:var(--ink)}
+  .lb-name{font-size:16px;color:var(--ink);font-weight:500}
+  .lb-mini{position:relative;height:6px;border-radius:4px;background:var(--glass);border:1px solid var(--line);overflow:hidden}
+  .lb-mini::before{content:"";position:absolute;inset:0;width:var(--w);background:linear-gradient(90deg,var(--amber),var(--peach));border-radius:4px}
+  .lb-val{font-family:var(--fontMono);font-size:12px;letter-spacing:0.06em;color:var(--ink);text-align:right}
+  .lb-bar{display:flex;flex-direction:column;gap:6px}
+  .lb-bar .lb-val{text-align:left}
+
+  /* ===== SAMPLE ANSWERS ===== */
+  .samples{display:flex;flex-direction:column;gap:14px}
+  .sample{
+    padding:18px 20px;border-radius:18px;
+    background:rgba(7,7,19,.5);border:1px solid var(--line);
+  }
+  .sample .meta-row{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:12px;flex-wrap:wrap}
+  .sample .engine{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--fontMono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink);
+  }
+  .sample .engine .dot{background:var(--teal);box-shadow:0 0 10px var(--teal)}
+  .sample .qmono{font-family:var(--fontMono);font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}
+  .sample blockquote{
+    font-size:15.5px;line-height:1.55;color:var(--ink);opacity:.92;
+    border-left:2px solid var(--teal);padding-left:16px;font-style:normal;
+  }
+  .sample blockquote::before{content:'"';color:var(--teal);font-family:var(--fontDisplay);font-size:24px;margin-right:4px;line-height:0;position:relative;top:6px}
+
+  /* ===== HALLUCINATIONS ===== */
+  .claims{display:flex;flex-direction:column;gap:10px}
+  .claim{
+    padding:14px 16px;border-radius:14px;
+    background:rgba(7,7,19,.5);border:1px solid var(--line);
+    display:flex;justify-content:space-between;align-items:flex-start;gap:14px;
+  }
+  .claim .txt{font-size:14.5px;color:var(--ink);line-height:1.45;flex:1}
+  .claim .meta{font-family:var(--fontMono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+  .claim.hallucinated{border-left:3px solid var(--neg);background:rgba(228,138,138,.05)}
+  .claim.outdated{border-left:3px solid var(--warn)}
+
+  /* ===== BUYER QUESTIONS ===== */
+  .qlist{display:flex;flex-direction:column;gap:8px}
+  .qitem{
+    display:flex;align-items:center;gap:14px;
+    padding:14px 16px;border-radius:14px;
+    background:rgba(7,7,19,.4);border:1px solid var(--line);
+    transition:border-color .2s, transform .2s;
+  }
+  .qitem:hover{border-color:var(--lineStrong);transform:translateX(2px)}
+  .qitem .qn{
+    font-family:var(--fontMono);font-size:11px;letter-spacing:0.06em;color:var(--muted);
+    width:28px;text-align:center;
+  }
+  .qitem .qtxt{font-size:14.5px;color:var(--ink);line-height:1.4}
+
+  /* ===== STAKES CTA ===== */
+  .stakes{
+    margin-top:30px;padding:36px 36px 40px;border-radius:26px;
+    display:grid;grid-template-columns:1.4fr auto;gap:24px;align-items:center;
+  }
+  @media (max-width:780px){ .stakes{grid-template-columns:1fr} }
+  .stakes .num{font-family:var(--fontDisplay);font-size:clamp(40px,6vw,84px);font-weight:600;line-height:.95;letter-spacing:-0.05em;color:var(--ink)}
+  .stakes .num .grad{display:inline}
+  .stakes h3{font-family:var(--fontDisplay);font-size:24px;font-weight:600;line-height:1.15;letter-spacing:-0.025em;color:var(--ink);margin-top:18px;max-width:32ch}
+  .stakes p{color:var(--ink);opacity:.85;font-size:16px;line-height:1.5;margin-top:10px;max-width:48ch}
+  .stakes .btn{align-self:start;justify-self:end}
+  @media (max-width:780px){ .stakes .btn{justify-self:start} }
+
+  .related{margin-top:60px;padding-top:36px;border-top:1px solid var(--line)}
+  .related h4{font-family:var(--fontMono);font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+  .related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media (max-width:780px){ .related-grid{grid-template-columns:1fr 1fr} }
+  @media (max-width:500px){ .related-grid{grid-template-columns:1fr} }
+  .related-card{
+    padding:18px 18px 20px;border-radius:18px;
+    background:rgba(11,11,22,.55);border:1px solid var(--line);
+    display:flex;justify-content:space-between;align-items:center;gap:14px;
+    transition:.2s;text-decoration:none;
+  }
+  .related-card:hover{border-color:var(--lineStrong);transform:translateY(-2px)}
+  .related-card .mono{color:var(--muted);font-size:10px}
+  .related-card h5{font-family:var(--fontDisplay);font-size:16px;font-weight:600;letter-spacing:-0.025em;color:var(--ink);margin-top:6px}
+  .related-card .arrow{color:var(--ink);opacity:.6}
+</style>
+</head>
+<body>
+
+<section class="container">
+  <div class="cat-head">
+    <div class="breadcrumb">
+      <a href="index.html">Categories</a><span class="sep">/</span><span id="bcLabel">…</span>
+    </div>
+    <span class="kicker reveal" id="kicker">Category insight</span>
+    <h1 class="display-lg reveal" data-delay="1" id="headline" style="margin-top:18px"></h1>
+    <p class="lede reveal" data-delay="2" id="lede"></p>
+    <div class="head-cta reveal" data-delay="3">
+      <a class="btn primary btn-lg" id="auditCta" href="onboarding.html">Run this audit on YOUR brand <span class="arrow">→</span></a>
+      <a class="btn btn-lg" href="dashboard.html">See a sample dashboard</a>
+      <span class="meta">Illustrative · refreshed daily in production</span>
+    </div>
+  </div>
+
+  <div class="twoCol">
+
+    <!-- LEFT: leaderboard + sample answers + hallucinations -->
+    <div style="display:flex;flex-direction:column;gap:22px">
+
+      <div class="glass module" id="lbMod">
+        <div class="head">
+          <div><span class="kicker">Top 5 in category</span><h3 style="margin-top:8px">Who AI is naming this week</h3></div>
+          <span class="mono">Visibility · share · citation · sentiment</span>
+        </div>
+        <div class="lb">
+          <div class="lb-row header">
+            <span></span>
+            <span>Brand</span>
+            <span>Visibility</span>
+            <span>Share</span>
+            <span>Cite</span>
+            <span>Sentiment</span>
+          </div>
+          <div id="lbBody"></div>
+        </div>
+        <div class="foot">Illustrative demo data. Production runs hundreds of buyer queries per engine, refreshed daily.</div>
+      </div>
+
+      <div class="glass module">
+        <div class="head">
+          <div><span class="kicker">Sample answers</span><h3 style="margin-top:8px">What buyers are reading right now</h3></div>
+          <span class="mono">Verbatim · representative</span>
+        </div>
+        <div class="samples" id="samples"></div>
+        <div class="foot">Sample responses representative of typical engine output. Quoted text is illustrative.</div>
+      </div>
+
+      <div class="glass module">
+        <div class="head">
+          <div><span class="kicker">Hallucinations & outdated claims</span><h3 style="margin-top:8px">Wrong things AI is saying about this category</h3></div>
+          <span class="mono">Most-cited misses</span>
+        </div>
+        <div class="claims" id="claims"></div>
+        <div class="foot">Each claim is mapped to the engines repeating it, with a remediation plan in the Action queue.</div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: buyer questions + stakes CTA -->
+    <div style="display:flex;flex-direction:column;gap:22px">
+
+      <div class="glass module">
+        <div class="head">
+          <div><span class="kicker">Question set</span><h3 style="margin-top:8px">Buyer questions we track</h3></div>
+        </div>
+        <div class="qlist" id="qlist"></div>
+        <div class="foot">A sample of the questions monitored in this category. Custom sets are added during onboarding.</div>
+      </div>
+
+      <div class="glass stakes glow-violet">
+        <div>
+          <span class="kicker">Your turn</span>
+          <h3>How does YOUR brand appear in these answers?</h3>
+          <p>Add your brand, three competitors, and the buyer questions you care about. We'll run the same scan against your name and surface where you're winning, losing, or invisible.</p>
+        </div>
+        <a class="btn primary btn-lg" id="auditCta2" href="onboarding.html">Get my report <span class="arrow">→</span></a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- related categories -->
+  <div class="related">
+    <h4>Other categories</h4>
+    <div class="related-grid" id="related"></div>
+  </div>
+</section>
+
+<script src="demo-data.js"></script>
+<script src="chrome.js"></script>
+<script>
+  const params = new URLSearchParams(location.search);
+  const catId = params.get('cat') || 'auto';
+  const cat = CATEGORIES.find(c => c.id === catId) || CATEGORIES[0];
+  const insight = (window.CATEGORY_INSIGHTS && CATEGORY_INSIGHTS[catId]) || CATEGORY_INSIGHTS.auto;
+
+  document.title = `${cat.label} · what AI tells your buyer — Perceptivity`;
+  document.getElementById('bcLabel').textContent = cat.label;
+  document.getElementById('kicker').textContent = `${cat.label} · India`;
+  document.getElementById('headline').textContent = insight.headline;
+  document.getElementById('lede').textContent = insight.summary;
+  const auditHref = `onboarding.html?category=${catId}`;
+  document.getElementById('auditCta').href = auditHref;
+  document.getElementById('auditCta2').href = auditHref;
+
+  // ---- LEADERBOARD ----
+  const lbBody = document.getElementById('lbBody');
+  const maxV = Math.max(...insight.leaderboard.map(b => b.visibility));
+  insight.leaderboard.forEach((b, i) => {
+    const row = document.createElement('div');
+    row.className = 'lb-row';
+    row.innerHTML = `
+      <span class="lb-rank ${i===0?'r1':''}">${i+1}</span>
+      <span class="lb-name">${b.name}</span>
+      <div class="lb-bar">
+        <div class="lb-mini" style="--w:${(b.visibility/maxV)*100}%"></div>
+        <span class="lb-val">${b.visibility}</span>
+      </div>
+      <span class="lb-val">${b.share}%</span>
+      <span class="lb-val">${b.citation}</span>
+      <span class="lb-val" style="color:${b.sentiment>0.5?'var(--pos)':b.sentiment>0.4?'var(--ink)':'var(--warn)'}">${b.sentiment >= 0 ? '+' : ''}${b.sentiment.toFixed(2)}</span>`;
+    lbBody.appendChild(row);
+  });
+
+  // ---- SAMPLES ----
+  const samples = document.getElementById('samples');
+  insight.sampleAnswers.forEach(s => {
+    const el = document.createElement('div');
+    el.className = 'sample';
+    el.innerHTML = `
+      <div class="meta-row">
+        <span class="engine"><span class="dot"></span> ${s.engine}</span>
+        <span class="qmono">↳ "${s.query}"</span>
+      </div>
+      <blockquote>${s.answer}</blockquote>`;
+    samples.appendChild(el);
+  });
+
+  // ---- CLAIMS ----
+  const claimsEl = document.getElementById('claims');
+  const verdictBadge = { positive:'pos', outdated:'warn', hallucinated:'neg' };
+  const verdictLabel = { positive:'Accurate', outdated:'Outdated', hallucinated:'False' };
+  insight.commonClaims.forEach(cl => {
+    const d = document.createElement('div'); d.className = 'claim ' + cl.verdict;
+    d.innerHTML = `
+      <div>
+        <div class="txt">"${cl.text}"</div>
+        <div class="meta">Repeated by: ${cl.engines.join(' · ')}</div>
+      </div>
+      <span class="badge ${verdictBadge[cl.verdict]}">${verdictLabel[cl.verdict]}</span>`;
+    claimsEl.appendChild(d);
+  });
+
+  // ---- BUYER QUESTIONS ----
+  const ql = document.getElementById('qlist');
+  insight.buyerQuestions.forEach((q, i) => {
+    const el = document.createElement('div');
+    el.className = 'qitem';
+    el.innerHTML = `<span class="qn">${String(i+1).padStart(2,'0')}</span><span class="qtxt">${q}</span>`;
+    ql.appendChild(el);
+  });
+
+  // ---- RELATED ----
+  const rel = document.getElementById('related');
+  CATEGORIES.filter(c => c.id !== catId).slice(0, 6).forEach(c => {
+    const a = document.createElement('a');
+    a.href = `category.html?cat=${c.id}`;
+    a.className = 'related-card';
+    a.innerHTML = `
+      <div>
+        <span class="mono">${c.label}</span>
+        <h5>${c.brand}</h5>
+      </div>
+      <span class="arrow">→</span>`;
+    rel.appendChild(a);
+  });
+
+  // also persist the chosen category for downstream onboarding
+  PCV.set({ category: catId });
+</script>
+</body>
+</html>

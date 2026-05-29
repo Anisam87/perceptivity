@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 1000">
+<defs>
+  <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#F5E6D7"></stop>
+    <stop offset=".38" stop-color="#E0C7AE"></stop>
+    <stop offset=".68" stop-color="#9B83C5"></stop>
+    <stop offset="1" stop-color="#010109"></stop>
+  </linearGradient>
+  <radialGradient id="sun" cx="51%" cy="43%" r="47%">
+    <stop offset="0" stop-color="#F5E6D7" stop-opacity=".92"></stop>
+    <stop offset=".34" stop-color="#D99A6C" stop-opacity=".26"></stop>
+    <stop offset=".72" stop-color="#8AC7C2" stop-opacity=".11"></stop>
+    <stop offset="1" stop-color="#010109" stop-opacity="0"></stop>
+  </radialGradient>
+  <filter id="blur"><feGaussianBlur stdDeviation="22"></feGaussianBlur></filter>
+  <filter id="grain"><feTurbulence baseFrequency=".72" numOctaves="2"></feTurbulence><feComponentTransfer><feFuncA type="table" tableValues="0 .055"></feFuncA></feComponentTransfer></filter>
+  <g id="feather">
+    <path d="M0 0 C40 -112 118 -214 252 -294" stroke="#F5E6D7" stroke-opacity=".25" stroke-width="2.3" fill="none"></path>
+    <circle cx="252" cy="-294" r="6" fill="#8AC7C2" opacity=".7"></circle>
+    <circle cx="252" cy="-294" r="19" stroke="#D99A6C" stroke-opacity=".24" fill="none"></circle>
+  </g>
+</defs>
+<rect width="1800" height="1000" fill="url(#sky)"></rect>
+<rect width="1800" height="1000" fill="url(#sun)"></rect>
+<g filter="url(#blur)" opacity=".52">
+  <ellipse cx="170" cy="610" rx="320" ry="230" fill="#8AC7C2"></ellipse>
+  <ellipse cx="545" cy="560" rx="360" ry="270" fill="#E0C7AE"></ellipse>
+  <ellipse cx="910" cy="585" rx="330" ry="240" fill="#9B83C5"></ellipse>
+  <ellipse cx="1320" cy="540" rx="410" ry="290" fill="#8AC7C2"></ellipse>
+  <ellipse cx="1650" cy="500" rx="340" ry="320" fill="#D99A6C"></ellipse>
+</g>
+<g opacity=".24" fill="#010109">
+  <path d="M0 670C170 570 295 690 438 586S715 604 835 534S1045 590 1200 506S1512 513 1800 390V1000H0Z"></path>
+  <path d="M0 750C235 655 415 780 620 680S887 730 1088 654S1420 708 1800 600V1000H0Z" opacity=".55"></path>
+</g>
+<g filter="url(#blur)" opacity=".58">
+  <rect y="390" width="1800" height="320" fill="#F5E6D7"></rect>
+  <rect y="505" width="1800" height="230" fill="#8AC7C2" opacity=".18"></rect>
+</g>
+<path d="M0 805C270 750 520 775 770 735S1135 760 1370 720S1625 735 1800 700V1000H0Z" fill="#010109" opacity=".70"></path>
+<g transform="translate(900 730)">
+  <g opacity=".92">
+    <use href="#feather" transform="rotate(-82) scale(.82)"></use>
+    <use href="#feather" transform="rotate(-70) scale(.90)"></use>
+    <use href="#feather" transform="rotate(-58) scale(.98)"></use>
+    <use href="#feather" transform="rotate(-46) scale(1.04)"></use>
+    <use href="#feather" transform="rotate(-34) scale(1.08)"></use>
+    <use href="#feather" transform="rotate(-22) scale(1.11)"></use>
+    <use href="#feather" transform="rotate(-10) scale(1.13)"></use>
+    <use href="#feather" transform="rotate(4) scale(1.13)"></use>
+    <use href="#feather" transform="rotate(18) scale(1.11)"></use>
+    <use href="#feather" transform="rotate(32) scale(1.08)"></use>
+    <use href="#feather" transform="rotate(46) scale(1.04)"></use>
+    <use href="#feather" transform="rotate(60) scale(.97)"></use>
+    <use href="#feather" transform="rotate(72) scale(.88)"></use>
+    <use href="#feather" transform="rotate(84) scale(.80)"></use>
+  </g>
+  <path d="M0 -134C-23 -78 -24 -30 -17 5C-12 31 -2 45 0 88C2 45 12 31 17 5C24 -30 23 -78 0 -134Z" fill="#010109"></path>
+  <circle cx="0" cy="-140" r="19" fill="#010109"></circle>
+  <circle cx="0" cy="-140" r="4.5" fill="#8AC7C2"></circle>
+</g>
+<rect width="1800" height="1000" filter="url(#grain)" opacity=".6"></rect>
+</svg>

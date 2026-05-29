@@ -1,0 +1,136 @@
+/* Perceptivity Claude Design Pack */
+
+:root{
+  --void:#010109;
+  --space:#070713;
+  --deep-violet:#151126;
+  --violet:#9B83C5;
+  --film-amber:#D99A6C;
+  --dust:#E0C7AE;
+  --ink:#F5E6D7;
+  --cold-teal:#8AC7C2;
+  --blue-grey:#A4BBC8;
+  --muted:#C0AFC6;
+  --line:rgba(245,230,215,.13);
+  --glass:rgba(245,230,215,.055);
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+
+.pc-hero-bg{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse at 50% 44%, rgba(245,230,215,.50), transparent 30%),
+    linear-gradient(180deg, rgba(245,230,215,.20), rgba(1,1,9,.92));
+  isolation:isolate;
+}
+.pc-hero-bg::before{
+  content:"";
+  position:absolute;
+  inset:-8%;
+  background:url("../assets/mist-peacock-hero.svg") center/cover no-repeat;
+  transform-origin:center;
+  animation:pc-dream-pan 18s ease-in-out infinite alternate;
+}
+.pc-hero-bg::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse at 50% 74%, transparent 0 36%, rgba(1,1,9,.64) 100%),
+    linear-gradient(90deg, rgba(1,1,9,.82), rgba(1,1,9,.16) 48%, rgba(1,1,9,.74));
+}
+
+.pc-mist-layer{
+  position:absolute;
+  inset:-20%;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse at 22% 58%, rgba(245,230,215,.22), transparent 30%),
+    radial-gradient(ellipse at 74% 46%, rgba(138,199,194,.16), transparent 34%),
+    radial-gradient(ellipse at 48% 54%, rgba(217,154,108,.12), transparent 30%);
+  filter:blur(28px);
+  animation:pc-mist-drift 11s ease-in-out infinite alternate;
+}
+
+.pc-graphic-card{
+  min-height:520px;
+  border-radius:32px;
+  border:1px solid var(--line);
+  box-shadow:0 30px 90px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.12);
+  overflow:hidden;
+  background-color:var(--void);
+}
+.pc-graph-card{background:url("../assets/answer-graph-field.svg") center/cover no-repeat;}
+.pc-constellation-card{background:url("../assets/source-constellation-map.svg") center/cover no-repeat;}
+.pc-vernacular-card{background:url("../assets/vernacular-wave-field.svg") center/cover no-repeat;}
+
+.pc-plume-orb{
+  width:min(72vw,640px);
+  aspect-ratio:1;
+  background:url("../assets/perception-plume-animated.svg") center/contain no-repeat;
+  filter:drop-shadow(0 0 42px rgba(138,199,194,.24));
+}
+
+.pc-agentic-rings{
+  width:min(72vw,620px);
+  aspect-ratio:1;
+  background:url("../assets/agentic-loop-rings.svg") center/cover no-repeat;
+  border-radius:50%;
+  filter:drop-shadow(0 0 48px rgba(217,154,108,.18));
+  animation:pc-float 7s var(--ease) infinite;
+}
+
+.pc-scan-divider{
+  height:clamp(80px,12vw,170px);
+  background:url("../assets/horizon-scan-divider.svg") center/100% 100% no-repeat;
+  position:relative;
+  overflow:hidden;
+}
+.pc-scan-divider::after{
+  content:"";
+  position:absolute;
+  left:-30%;
+  top:50%;
+  width:34%;
+  height:1px;
+  background:linear-gradient(90deg, transparent, var(--cold-teal), var(--ink), transparent);
+  box-shadow:0 0 22px rgba(138,199,194,.8);
+  animation:pc-scan 4.8s linear infinite;
+}
+
+.pc-glass-panel{
+  border:1px solid var(--line);
+  background:linear-gradient(180deg, rgba(245,230,215,.075), rgba(245,230,215,.025));
+  backdrop-filter:blur(24px) saturate(130%);
+  box-shadow:0 24px 80px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.13);
+  border-radius:28px;
+}
+
+.pc-reveal{
+  opacity:0;
+  transform:translateY(28px) scale(.985);
+  transition:opacity .9s var(--ease), transform .9s var(--ease);
+}
+.pc-reveal.in{
+  opacity:1;
+  transform:none;
+}
+.pc-float{animation:pc-float 6.5s var(--ease) infinite;}
+
+@keyframes pc-dream-pan{
+  0%{transform:scale(1.035) translate3d(-1.4%,0,0); filter:saturate(.94) contrast(.96)}
+  100%{transform:scale(1.11) translate3d(1.4%,-1%,0); filter:saturate(1.08) contrast(1.02)}
+}
+@keyframes pc-mist-drift{
+  0%{transform:translate3d(-4%,0,0); opacity:.45}
+  100%{transform:translate3d(4%,-2%,0); opacity:.85}
+}
+@keyframes pc-scan{to{left:100%}}
+@keyframes pc-float{0%,100%{transform:translateY(0) rotate(-.2deg)}50%{transform:translateY(-14px) rotate(.35deg)}}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .pc-reveal{opacity:1;transform:none}
+}

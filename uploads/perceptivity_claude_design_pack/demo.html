@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Perceptivity Claude Design Pack Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="animations/perceptivity-claude-pack.css">
+<style>
+*{box-sizing:border-box} body{margin:0;background:#010109;color:#F5E6D7;font-family:Inter,system-ui,sans-serif;overflow-x:hidden}
+section{position:relative;padding:100px clamp(22px,5vw,76px);border-bottom:1px solid rgba(245,230,215,.13)}
+.hero{min-height:100svh;display:grid;align-items:end;overflow:hidden}
+.hero-content{position:relative;z-index:3;max-width:1050px;padding-bottom:40px}
+h1,h2{font-family:"Inter Tight",system-ui,sans-serif;letter-spacing:-.085em;line-height:.84;margin:0}
+h1{font-size:clamp(68px,12vw,164px)} h2{font-size:clamp(48px,7vw,100px);max-width:1000px}
+p{color:#C0AFC6;font-size:20px;line-height:1.5;max-width:760px}
+.eyebrow{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#C0AFC6;margin-bottom:18px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:34px}.center{display:grid;place-items:center;min-height:650px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:32px}.mini{padding:28px;min-height:250px}
+@media(max-width:900px){.grid,.cards{grid-template-columns:1fr}.hero{min-height:800px}}
+</style>
+</head>
+<body>
+<section class="hero">
+  <div class="pc-hero-bg"></div>
+  <div class="pc-mist-layer"></div>
+  <div class="hero-content pc-reveal">
+    <div class="eyebrow">Perceptivity / Claude design pack</div>
+    <h1>See how AI sees your brand.</h1>
+    <p>Visual system, graphics, animation classes, and Claude-ready prompts for a cinematic AEO/GEO website.</p>
+  </div>
+</section>
+<div class="pc-scan-divider"></div>
+<section>
+  <div class="eyebrow pc-reveal">Visual modules</div>
+  <h2 class="pc-reveal">Mist, graph, constellation, plume, and rings.</h2>
+  <div class="grid">
+    <div class="pc-graphic-card pc-graph-card pc-reveal pc-float"></div>
+    <div class="pc-graphic-card pc-constellation-card pc-reveal pc-float"></div>
+  </div>
+</section>
+<section class="center">
+  <div class="pc-plume-orb pc-reveal"></div>
+</section>
+<section>
+  <div class="eyebrow pc-reveal">India wedge</div>
+  <h2 class="pc-reveal">Voice, video, vernacular, and local AI answers.</h2>
+  <div class="pc-graphic-card pc-vernacular-card pc-reveal"></div>
+</section>
+<section>
+  <div class="eyebrow pc-reveal">System loop</div>
+  <h2 class="pc-reveal">Sense. Simulate. Strike. Learn.</h2>
+  <div class="center" style="min-height:560px"><div class="pc-agentic-rings pc-reveal"></div></div>
+</section>
+<script src="animations/perceptivity-claude-pack.js"></script>
+</body>
+</html>

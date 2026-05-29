@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 900">
+<defs>
+<radialGradient id="g" cx="50%" cy="44%" r="66%"><stop offset="0" stop-color="#F5E6D7" stop-opacity=".62"></stop><stop offset=".28" stop-color="#D99A6C" stop-opacity=".26"></stop><stop offset=".58" stop-color="#8AC7C2" stop-opacity=".14"></stop><stop offset="1" stop-color="#010109"></stop></radialGradient>
+</defs>
+<rect width="1400" height="900" fill="#010109"></rect><rect width="1400" height="900" fill="url(#g)"></rect>
+<g stroke="#F5E6D7" stroke-opacity=".17" fill="none" stroke-width="2">
+<path d="M170 460C335 260 550 320 700 410S1040 530 1220 250"></path>
+<path d="M260 210C460 360 540 620 820 545S1068 382 1260 640"></path>
+<path d="M245 710C410 515 560 500 710 290S935 166 1160 330"></path>
+<path d="M90 385C320 462 478 230 675 330S930 715 1320 520"></path>
+</g>
+<g fill="#F5E6D7">
+<circle cx="170" cy="460" r="7"></circle><circle cx="700" cy="410" r="11"></circle><circle cx="1220" cy="250" r="7"></circle>
+<circle cx="260" cy="210" r="6"></circle><circle cx="820" cy="545" r="9"></circle><circle cx="1260" cy="640" r="6"></circle>
+<circle cx="245" cy="710" r="7"></circle><circle cx="710" cy="290" r="9"></circle><circle cx="1160" cy="330" r="7"></circle>
+<circle cx="90" cy="385" r="6"></circle><circle cx="675" cy="330" r="12"></circle><circle cx="1320" cy="520" r="6"></circle>
+</g>
+<g opacity=".76"><circle cx="700" cy="430" r="150" fill="none" stroke="#8AC7C2" stroke-opacity=".30"></circle><circle cx="700" cy="430" r="70" fill="none" stroke="#D99A6C" stroke-opacity=".34"></circle><circle cx="700" cy="430" r="20" fill="#F5E6D7"></circle></g>
+<g font-family="JetBrains Mono, monospace" font-size="18" fill="#E0C7AE" opacity=".78" letter-spacing="2"><text x="74" y="84">ANSWER GRAPH</text><text x="900" y="802">CLAIMS / CITATIONS / DRIFT</text></g>
+</svg>
