@@ -166,6 +166,26 @@
     text-align:center;margin-top:16px;
     font-family:var(--fontMono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);
   }
+
+  @media (max-width:640px){
+    .ob-wrap{padding:100px 0 56px}
+    .ob-console{padding:24px 18px 28px;border-radius:28px}
+    .ob-progress{gap:12px;margin-bottom:26px}
+    .ob-step-label{display:none}
+    .ob-step h2{font-size:clamp(26px,7.5vw,34px)}
+    .ob-step .lede{font-size:16px;margin-bottom:26px}
+    .ob-actions{margin-top:30px;gap:12px}
+    .ob-actions .btn{flex:1 1 auto;justify-content:center}
+    .counter{margin-top:22px;padding:18px}
+    .counter .big{font-size:24px}
+
+    .scan-stage{height:420px}
+    .scan-eye{width:150px;height:150px}
+    .engine-chip{font-size:9.5px;padding:6px 9px}
+    .scan-readout{left:18px;right:18px;bottom:18px;gap:12px}
+    .scan-status{left:18px;top:18px}
+    .scan-counter{font-size:36px}
+  }
 </style>
 </head>
 <body>
@@ -486,7 +506,8 @@
   const ring = document.getElementById('enginesRing');
   ENGINES.forEach((name, i) => {
     const angle = (i / ENGINES.length) * Math.PI * 2 - Math.PI/2;
-    const rx = 38, ry = 38;
+    const narrow = window.matchMedia('(max-width:560px)').matches;
+    const rx = narrow ? 29 : 38, ry = narrow ? 40 : 38;
     const cx = 50 + Math.cos(angle) * rx;
     const cy = 50 + Math.sin(angle) * ry;
     const chip = document.createElement('div');

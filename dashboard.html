@@ -312,6 +312,37 @@
   .pane{display:none}
   .pane.on{display:block;animation:paneIn .4s var(--ease)}
   @keyframes paneIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  /* ===== MOBILE REFINEMENTS ===== */
+  @media (max-width:640px){
+    .app{padding:100px 0 48px}
+    .app-bar{padding:16px 18px;gap:12px}
+    .ctx-name{font-size:19px}
+    .ctx-eye{width:38px;height:38px}
+
+    /* keep the tab bar on one scrollable row instead of stacking */
+    .tabs-wrap{flex-direction:column;align-items:stretch;gap:8px}
+    .tabs{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .tabs::-webkit-scrollbar{display:none}
+    .tab{white-space:nowrap;flex:0 0 auto}
+    .tabs-meta{padding:4px 4px 2px}
+
+    .module{padding:20px 16px 22px}
+    .module-head h3{font-size:20px}
+    .kpi-c{padding:18px 18px 20px}
+    .kpi-c .v{font-size:44px}
+    .drift-row .num{font-size:44px}
+
+    .heat-wrap{grid-template-columns:80px 1fr;gap:9px}
+    .heat-row-label{font-size:9.5px;letter-spacing:0.06em;height:32px}
+    .heat-cols{font-size:8.5px;letter-spacing:0.04em}
+
+    .share-row{grid-template-columns:92px 1fr 38px;gap:10px}
+    .share-row .name{font-size:13px}
+
+    .learn-ba{grid-template-columns:1fr}
+    .gate-banner{padding:16px 18px}
+  }
 </style>
 </head>
 <body>

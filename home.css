@@ -23,19 +23,19 @@
 
 /* rotating engine name */
 .rot{
-  position:relative;display:inline-block;vertical-align:baseline;
-  height:1em;line-height:.88;overflow:hidden;
+  position:relative;display:inline-block;vertical-align:top;
+  height:1.12em;line-height:.88;overflow:hidden;padding-bottom:.04em;
   transition: width 520ms cubic-bezier(0.22,1,0.36,1);will-change:width;min-width:5ch;
 }
 .rot-word{
-  position:absolute;top:0;left:0;white-space:nowrap;opacity:0;transform:translateY(110%);
+  position:absolute;top:0;left:0;white-space:nowrap;opacity:0;transform:translateY(135%);
   transition:opacity 480ms cubic-bezier(0.22,1,0.36,1), transform 520ms cubic-bezier(0.22,1,0.36,1);
   letter-spacing:-0.07em;font-weight:600;
   background:linear-gradient(180deg, var(--ink) 0%, var(--peach) 60%, var(--amber) 100%);
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
 }
 .rot-word.active{opacity:1;transform:translateY(0)}
-.rot-word.exit{opacity:0;transform:translateY(-110%)}
+.rot-word.exit{opacity:0;transform:translateY(-135%)}
 .rot-measure{position:absolute;visibility:hidden;white-space:nowrap;pointer-events:none;left:-9999px;top:0;letter-spacing:-0.07em;font-weight:600}
 
 /* hero dashboard card */
@@ -478,3 +478,38 @@
 .gt-ans-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:16px;padding-top:14px;border-top:1px dashed var(--line)}
 .gt-ans-foot .mono{color:var(--muted)}
 .gt-ans-foot b{color:var(--ink);font-weight:500}
+
+/* ============================================================
+   MOBILE / RESPONSIVE REFINEMENTS (homepage)
+   ============================================================ */
+@media (max-width:640px){
+  .hero{padding:104px 0 22px}
+  .hero h1{margin:18px 0 20px;max-width:100%}
+  .hero-lede{font-size:17px}
+  .hero-cta{margin-top:24px}
+  .hero-cta .btn{flex:1 1 auto;justify-content:center}
+  .hero-trust{margin-top:20px;gap:8px}
+
+  .sec{padding:54px 0}
+  .sec-head{margin-bottom:26px;gap:14px}
+  .sec-head h2{font-size:clamp(28px,8vw,40px)}
+  .sec-head .meta{text-align:left}
+
+  .three-card,.eng-card,.num-card,.res-card,.price-card{padding:24px 22px}
+  .three-card{min-height:0}
+
+  .shift-cta{padding:40px 22px 44px;border-radius:28px}
+  .final-cta{padding:40px 20px 44px;border-radius:28px}
+  .lead-capture{padding:28px 20px;border-radius:24px}
+  .lc-form{flex-direction:column}
+  .lc-form .input{min-width:0;width:100%}
+  .lc-form .btn{width:100%}
+
+  .b2a-stat{padding:26px 22px}
+  .b2a-tag{font-size:42px;margin-bottom:16px}
+  .eng-strip{padding:20px 22px;gap:16px}
+  .vern-copy{padding:32px 22px}
+
+  /* keep the hero rotator readable when the headline shrinks */
+  .rot{min-width:4ch}
+}

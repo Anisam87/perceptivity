@@ -504,26 +504,62 @@
 <script src="perceptivity-pack.js"></script>
 <script>
   // ---- rotating engine name ----
+  // Two persistent slots that cross-fade. No node creation/removal, so words
+  // can never pile up ("clot") if the tab is backgrounded and timers/rAF drift.
   (function(){
     const ENG = ['ChatGPT','Perplexity','Gemini','Claude','Copilot','Google AIO','Grok'];
     const rot = document.getElementById('rotEngine');
     if (!rot) return;
     const measure = rot.querySelector('.rot-measure');
-    let i = 0;
-    function setWidth(){ measure.textContent = ENG[i]; rot.style.width = measure.getBoundingClientRect().width + 'px'; }
-    setWidth();
-    setInterval(() => {
-      const cur = rot.querySelector('.rot-word.active');
+
+    // rebuild slots cleanly
+    rot.querySelectorAll('.rot-word').forEach(n => n.remove());
+    const a = document.createElement('span'); a.className = 'rot-word active';
+    const b = document.createElement('span'); b.className = 'rot-word';
+    rot.insertBefore(a, measure);
+    rot.insertBefore(b, measure);
+
+    let i = 0, front = a, back = b, timer = null;
+
+    function setWidth(text){
+      measure.textContent = text;
+      rot.style.width = Math.ceil(measure.getBoundingClientRect().width) + 'px';
+    }
+    function step(){
       i = (i + 1) % ENG.length;
-      const next = document.createElement('span');
-      next.className = 'rot-word'; next.textContent = ENG[i];
-      rot.insertBefore(next, measure); setWidth();
+      // snap the incoming slot to its start state with no transition,
+      // so it always enters from below regardless of where it was left
+      back.style.transition = 'none';
+      back.classList.remove('exit', 'active');
+      back.textContent = ENG[i];
+      void back.offsetWidth;                 // force reflow
+      back.style.transition = '';
+      setWidth(ENG[i]);
       requestAnimationFrame(() => {
-        next.classList.add('active');
-        if (cur) cur.classList.add('exit');
-        setTimeout(() => { if (cur) cur.remove(); }, 700);
+        back.classList.add('active');        // slide/fade in
+        front.classList.remove('active');
+        front.classList.add('exit');         // slide/fade out
+        const t = front; front = back; back = t;
       });
-    }, 2200);
+    }
+    function start(){ if (!timer) timer = setInterval(step, 2600); }
+    function stop(){ clearInterval(timer); timer = null; }
+
+    function init(){
+      front.textContent = ENG[0];
+      setWidth(ENG[0]);
+      start();
+    }
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(init);
+    } else { init(); }
+
+    // pause when hidden; re-measure + resume when visible (prevents drift)
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) { stop(); }
+      else { setWidth(front.textContent); start(); }
+    });
+    window.addEventListener('resize', () => setWidth(front.textContent));
   })();
 
   // ---- hero dashboard: engine coverage from heatmap ----

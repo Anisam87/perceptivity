@@ -365,3 +365,31 @@ img,svg{display:block;max-width:100%}
   .reveal{opacity:1;transform:none}
   .letter{opacity:1;transform:none}
 }
+
+/* ============================================================
+   MOBILE / RESPONSIVE REFINEMENTS (global chrome)
+   ============================================================ */
+@media (max-width:640px){
+  .container,.container-wide{padding:0 18px}
+  .section{padding:clamp(56px,14vw,96px) 0}
+
+  /* nav: tighten and drop the secondary CTA so the pill never overflows */
+  .nav-wrap{top:12px;padding:0 12px}
+  .nav{gap:12px;padding:8px 8px 8px 16px}
+  .brand{font-size:15px;gap:8px}
+  .eye-mark{width:22px;height:22px}
+  .nav-actions{gap:6px}
+  .nav-actions .btn.ghost{display:none}
+  .nav-actions .btn{height:42px;padding:0 16px;font-size:11px}
+
+  .btn{height:46px;padding:0 20px}
+  .btn-lg{height:50px;padding:0 22px}
+
+  .foot{padding:48px 18px 64px;gap:14px}
+  .foot-l{gap:16px}
+}
+@media (max-width:380px){
+  .nav-actions .btn{padding:0 13px;font-size:10px;letter-spacing:0.08em}
+  .nav-actions .btn .arrow{display:none}
+  .brand-word{display:none}
+}

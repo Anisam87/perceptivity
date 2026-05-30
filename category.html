@@ -127,6 +127,23 @@
   .related-card .mono{color:var(--muted);font-size:10px}
   .related-card h5{font-family:var(--fontDisplay);font-size:16px;font-weight:600;letter-spacing:-0.025em;color:var(--ink);margin-top:6px}
   .related-card .arrow{color:var(--ink);opacity:.6}
+
+  @media (max-width:640px){
+    .cat-head{padding:104px 0 32px}
+    .cat-head .lede{font-size:17px;margin-top:18px}
+    .twoCol{margin-top:30px;gap:18px}
+    .module{padding:22px 18px 24px}
+    .module h3{font-size:21px}
+
+    /* leaderboard is a 6-col table — let it scroll instead of overflowing */
+    #lbMod .lb{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+    #lbMod .lb-row{min-width:470px;gap:12px;padding:14px 8px}
+    .lb-name{font-size:15px}
+
+    .stakes{margin-top:24px;padding:26px 22px 28px;gap:18px}
+    .stakes h3{font-size:21px}
+    .related{margin-top:44px;padding-top:28px}
+  }
 </style>
 </head>
 <body>
