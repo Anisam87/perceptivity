@@ -1,0 +1,400 @@
+/* ============================================================
+   PERCEPTIVITY — Adaptive theme layer
+   "Daybreak" light counterpart to the cosmic dark system.
+   Loaded LAST. All light rules scoped under html[data-theme="light"]
+   so the dark default (no attribute) is untouched.
+   ============================================================ */
+
+/* base cross-fade so flips feel like a sunrise, not a hard cut.
+   only active while .theme-transition is on <html> (set briefly on
+   change) — initial load paints the correct theme with no animation. */
+html.theme-transition,
+html.theme-transition body,
+html.theme-transition .glass,
+html.theme-transition .glass-2,
+html.theme-transition .nav,
+html.theme-transition .btn,
+html.theme-transition .atmos-bg,
+html.theme-transition .hero-dash,
+html.theme-transition .hero-dash .bar,
+html.theme-transition .hero-dash .url,
+html.theme-transition .hd-chip,
+html.theme-transition .stage-viz,
+html.theme-transition .vz-plan .item,
+html.theme-transition .vz-loop .stat,
+html.theme-transition .faq,
+html.theme-transition .gt-answer,
+html.theme-transition .gt-src,
+html.theme-transition .hero-trust .pill,
+html.theme-transition .trust-mark,
+html.theme-transition .three-card .ix,
+html.theme-transition .input,
+html.theme-transition .badge,
+html.theme-transition .atmos-stars{
+  transition: background .55s var(--ease), background-color .55s var(--ease),
+              color .55s var(--ease), border-color .55s var(--ease),
+              box-shadow .55s var(--ease), opacity .55s var(--ease) !important;
+}
+
+/* ============================================================
+   LIGHT TOKENS — warm cream paper, deep espresso-violet ink
+   ============================================================ */
+html[data-theme="light"]{
+  /* surfaces */
+  --void:#2A2033;                /* kept dark: used as a check/catchlight ink */
+  --bg:#F4ECE0;                  /* page cream (also = primary-button text) */
+  --bg2:#EFE6D9;
+  --panel:rgba(255,255,255,.78);
+  --panel2:rgba(255,255,255,.72);
+  --glass:rgba(42,32,52,.045);
+
+  /* ink */
+  --ink:#241B2E;                 /* deep warm espresso-violet — AAA on cream */
+  --muted:#564B62;               /* secondary */
+  --faint:#6B6076;               /* tertiary — meets AA for small text */
+
+  /* accents — same hues, deepened so they read as TEXT on light (AA) */
+  --amber:#A55E30;  --amberSoft:rgba(165,94,48,.12);
+  --teal:#256E68;   --tealSoft:rgba(37,110,104,.12);
+  --violet:#6A53A0; --violetSoft:rgba(106,83,160,.12);
+  --peach:#C77B4E;  --dust:#B08A66;
+
+  /* status */
+  --pos:#1E7344; --neg:#BC4239; --warn:#8F6610;
+
+  /* lines & shadow — warm, soft */
+  --line:rgba(42,28,52,.13); --lineStrong:rgba(42,28,52,.26);
+  --shadow:0 26px 64px -28px rgba(70,48,34,.34);
+  --shadowStrong:0 44px 110px -34px rgba(70,48,34,.40);
+  --inset:inset 0 1px 0 rgba(255,255,255,.7);
+}
+
+html[data-theme="light"] body{
+  background:#F4ECE0;
+}
+html[data-theme="light"] ::selection{
+  background:rgba(47,125,119,.22);
+  color:var(--ink);
+}
+
+/* ============================================================
+   ATMOSPHERE — sunrise washes, stars off
+   ============================================================ */
+html[data-theme="light"] .atmos-bg{
+  background:
+    radial-gradient(60vmax 50vmax at 78% 18%, rgba(217,154,108,.30), transparent 58%),
+    radial-gradient(48vmax 42vmax at 88% 30%, rgba(240,188,163,.26), transparent 62%),
+    radial-gradient(70vmax 60vmax at 6% 8%, rgba(155,131,197,.20), transparent 60%),
+    radial-gradient(60vmax 52vmax at 4% 92%, rgba(138,199,194,.18), transparent 60%),
+    linear-gradient(155deg, #FCF7EF 0%, #F6EEE2 44%, #F1E7D8 72%, #ECE0D0 100%);
+}
+html[data-theme="light"] .atmos-stars{ opacity:0; }
+html[data-theme="light"] .atmos-grain{ opacity:.05; }
+
+/* ============================================================
+   GLASS — frosted white instead of frosted black
+   ============================================================ */
+html[data-theme="light"] .glass{
+  background:linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.70));
+  border-color:var(--line);
+  box-shadow:var(--shadow), var(--inset);
+}
+html[data-theme="light"] .glass-2{
+  background:var(--panel2);
+  border-color:var(--line);
+}
+/* corner glows: keep the brand hues but quiet them so they read as
+   warm light, not muddy smudges, on a pale card */
+html[data-theme="light"] .glow-amber::after,
+html[data-theme="light"] .glow-teal::after,
+html[data-theme="light"] .glow-violet::after{ opacity:.28; }
+
+/* ============================================================
+   NAV / BUTTONS
+   ============================================================ */
+html[data-theme="light"] .nav{
+  background:rgba(255,255,255,.72);
+  border-color:var(--line);
+}
+html[data-theme="light"] .nav-link:hover{ background:rgba(42,28,52,.05); }
+html[data-theme="light"] .nav-link.active{ background:rgba(42,28,52,.07); }
+
+html[data-theme="light"] .btn{
+  background:rgba(255,255,255,.62);
+  border-color:var(--lineStrong);
+  color:var(--ink);
+}
+html[data-theme="light"] .btn:hover{ border-color:var(--teal); }
+html[data-theme="light"] .btn.ghost{ background:transparent; }
+html[data-theme="light"] .btn.primary{
+  background:var(--ink); color:var(--bg); border-color:transparent;
+}
+html[data-theme="light"] .btn.primary:hover{ background:#3a2d49; color:#fff; }
+
+/* ============================================================
+   FORM / CHIP / BADGE
+   ============================================================ */
+html[data-theme="light"] .input{
+  background:rgba(255,255,255,.6);
+  border-color:var(--line);
+}
+html[data-theme="light"] .input:focus{
+  border-color:var(--teal); background:rgba(255,255,255,.85);
+}
+html[data-theme="light"] .badge{
+  background:rgba(255,255,255,.6); border-color:var(--line);
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+html[data-theme="light"] .hero-trust .pill{
+  background:rgba(255,255,255,.62); border-color:var(--line);
+}
+/* rotating engine word — deep warm gradient */
+html[data-theme="light"] .rot-word{
+  background:linear-gradient(180deg, var(--ink) 0%, #B26A3C 58%, #9a4f2a 100%);
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+}
+
+/* hero dashboard "app screenshot" — bright UI */
+html[data-theme="light"] .hero-dash{
+  background:rgba(255,255,255,.82);
+  border-color:var(--lineStrong);
+  box-shadow:var(--shadowStrong), inset 0 1px 0 rgba(255,255,255,.7);
+}
+html[data-theme="light"] .hero-dash .bar{
+  background:rgba(248,243,236,.9); border-color:var(--line);
+}
+html[data-theme="light"] .hero-dash .url{
+  background:rgba(255,255,255,.7); border-color:var(--line);
+}
+html[data-theme="light"] .hero-dash .dots i{ background:var(--faint); }
+html[data-theme="light"] .hd-chip{
+  background:rgba(248,243,236,.85); border-color:var(--line);
+}
+/* score / big numbers: deep amber gradient (ink→amber reads on cream) */
+html[data-theme="light"] .hd-score,
+html[data-theme="light"] .num-card .v{
+  background:linear-gradient(180deg, var(--ink), #B26A3C);
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+}
+html[data-theme="light"] .hd-score small{ -webkit-text-fill-color:var(--muted); }
+
+/* ============================================================
+   TRUST BAND
+   ============================================================ */
+html[data-theme="light"] .trust-mark{
+  background:rgba(255,255,255,.5); border-color:var(--line);
+  color:var(--ink); opacity:.7;
+}
+html[data-theme="light"] .trust-mark:hover{ opacity:1; }
+
+/* ============================================================
+   THREE / STAGE VISUALS
+   ============================================================ */
+html[data-theme="light"] .three-card .ix{
+  background:rgba(248,243,236,.8); border-color:var(--line);
+}
+html[data-theme="light"] .stage-viz{
+  background:rgba(255,255,255,.62); border-color:var(--line);
+}
+html[data-theme="light"] .vz-plan .item,
+html[data-theme="light"] .vz-loop .stat{
+  background:rgba(248,243,236,.82); border-color:var(--line);
+}
+html[data-theme="light"] .vz-loop .wide{
+  background:rgba(47,125,119,.08); border-color:rgba(47,125,119,.28);
+}
+
+/* ============================================================
+   B2A / GRADIENT HEADLINES
+   ============================================================ */
+html[data-theme="light"] .b2a-stat{
+  background:linear-gradient(180deg, rgba(106,83,160,.12), rgba(255,255,255,.78));
+  border-color:rgba(106,83,160,.30);
+  box-shadow:var(--shadow), inset 0 1px 0 rgba(255,255,255,.6);
+}
+html[data-theme="light"] .b2a-tag{
+  background:linear-gradient(120deg, var(--ink), #6A53A0 52%, #2F7D77);
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+}
+/* shared .grad utility (final CTA headline, etc.) */
+html[data-theme="light"] .grad{
+  background:linear-gradient(110deg, var(--ink) 0%, #B26A3C 32%, #6A53A0 64%, #2F7D77 100%);
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+}
+
+/* ============================================================
+   INDIA ANSWER LAYER — stays a dark imagery "night" band on the
+   light page; force its inner text light so it never disappears
+   ============================================================ */
+html[data-theme="light"] .vern-copy h3,
+html[data-theme="light"] .vern-copy p{ color:#FAF1E5; }
+html[data-theme="light"] .vern-engines span{
+  color:#FAF1E5; opacity:.9;
+  border-color:rgba(250,241,229,.22); background:rgba(7,7,19,.45);
+}
+html[data-theme="light"] .vern-band .kicker{ color:#E0C7AE; }
+
+/* ============================================================
+   RESOURCES / CTAs
+   ============================================================ */
+html[data-theme="light"] .lead-capture{
+  background:linear-gradient(180deg, rgba(47,125,119,.10), rgba(255,255,255,.80));
+  border-color:rgba(47,125,119,.28);
+  box-shadow:var(--shadow), inset 0 1px 0 rgba(255,255,255,.6);
+}
+html[data-theme="light"] .shift-cta{
+  background:linear-gradient(180deg, rgba(178,106,60,.12), rgba(255,255,255,.80));
+  border-color:rgba(178,106,60,.30);
+  box-shadow:var(--shadow), inset 0 1px 0 rgba(255,255,255,.6);
+}
+html[data-theme="light"] .shift-cta::after{ opacity:.22; }
+html[data-theme="light"] .cta-mark{
+  filter:drop-shadow(0 0 14px rgba(178,106,60,.35));
+}
+
+/* ============================================================
+   FAQ
+   ============================================================ */
+html[data-theme="light"] .faq{
+  background:rgba(255,255,255,.6); border-color:var(--line);
+}
+
+/* ============================================================
+   SOURCE OF TRUTH — interactive panel
+   ============================================================ */
+html[data-theme="light"] .gt-answer{
+  background:rgba(248,243,236,.9); border-color:var(--line);
+}
+html[data-theme="light"] .gt-src{
+  background:rgba(255,255,255,.6); border-color:var(--line);
+}
+html[data-theme="light"] .gt-src.on{
+  border-color:rgba(47,125,119,.4); background:rgba(47,125,119,.10);
+}
+html[data-theme="light"] .gt-tick{
+  background:rgba(255,255,255,.7); border-color:var(--lineStrong);
+}
+html[data-theme="light"] .gt-src.on .gt-tick{
+  background:var(--teal); border-color:var(--teal); color:#fff;
+}
+html[data-theme="light"] .gt-src-state{
+  background:rgba(255,255,255,.6); border-color:var(--line);
+}
+html[data-theme="light"] .gt-src:not(.on) .gt-src-state{ background:rgba(255,255,255,.5); }
+/* the "off / wrong" answer segment: keep the red error read */
+html[data-theme="light"] .gt-seg.on{ box-shadow:inset 0 -0.5em 0 rgba(47,125,119,.16); }
+
+/* ============================================================
+   THEME TOGGLE — footer-resident sun/moon control
+   ============================================================ */
+.theme-toggle{
+  display:inline-flex; align-items:center; gap:9px;
+  height:34px; padding:0 6px 0 13px;
+  border-radius:999px;
+  background:rgba(7,7,19,.5);
+  border:1px solid var(--line);
+  box-shadow:var(--inset);
+  font-family:var(--fontMono); font-size:10.5px; font-weight:500;
+  letter-spacing:0.12em; text-transform:uppercase; color:var(--muted);
+  cursor:pointer; user-select:none;
+  transition:border-color .25s var(--ease), color .25s var(--ease);
+}
+html[data-theme="light"] .theme-toggle{ background:rgba(255,255,255,.62); }
+.theme-toggle:hover{ border-color:var(--teal); color:var(--ink); }
+.theme-toggle .tt-label{ white-space:nowrap; }
+.theme-toggle .tt-mode{ color:var(--ink); }
+.theme-toggle .tt-icon{
+  width:24px; height:24px; flex:0 0 auto; border-radius:50%;
+  display:grid; place-items:center;
+  border:1px solid var(--line); color:var(--amber);
+  background:var(--amberSoft);
+}
+.theme-toggle .tt-icon svg{ width:14px; height:14px; }
+/* show sun in light, moon in dark */
+.tt-sun{ display:none; }
+.tt-moon{ display:block; }
+html[data-theme="light"] .theme-toggle .tt-icon{ color:var(--amber); }
+html[data-theme="light"] .tt-sun{ display:block; }
+html[data-theme="light"] .tt-moon{ display:none; }
+
+/* sits inside the injected footer's left cluster */
+.foot .theme-toggle{ margin-left:4px; }
+@media (max-width:640px){
+  .theme-toggle .tt-label{ display:none; }
+}
+
+/* ============================================================
+   DISSOLVE VEIL — full-screen fade-through on theme change
+   ============================================================ */
+.theme-veil{
+  position:fixed; inset:0; z-index:200; pointer-events:none;
+  background:#070713; opacity:0;
+  transition:opacity .30s var(--ease);
+}
+.theme-veil.show{ opacity:.97; transition:opacity .24s var(--ease); }
+@media (prefers-reduced-motion: reduce){
+  .theme-veil{ display:none !important; }
+}
+
+/* ============================================================
+   PAGE-SPECIFIC LIGHT SURFACES
+   (dashboard / company / how-it-works / category / onboarding)
+
+   Base cards use :where() → ZERO specificity, so each page's accent
+   modifier states (.measured, .hallucinated, .on, .lit, .r1 …) keep
+   their own tints automatically without being re-declared here.
+   ============================================================ */
+
+/* default dark card surfaces → frosted-white */
+html[data-theme="light"] :where(
+  .ctx-mode, .tabs-wrap, .claim, .gap, .sim-row, .pipe-col, .qcard,
+  .learn-card, .ba, .int-card, .bt-src,           /* dashboard */
+  .principle,                                     /* company */
+  .loop-viz,                                      /* how-it-works */
+  .sample, .qitem, .related-card,                 /* category */
+  .cat-mini, .counter, .qoption, .engine-chip     /* onboarding */
+){
+  background:rgba(255,255,255,.62);
+}
+
+/* compound-selector surfaces need explicit (higher-specificity) rules */
+html[data-theme="light"] .heat-cell .tip{
+  background:rgba(255,255,255,.96); border-color:var(--line); color:var(--ink);
+  box-shadow:0 14px 34px -16px rgba(70,48,34,.4);
+}
+html[data-theme="light"] .v-loop .card{
+  background:rgba(255,255,255,.58);
+}
+
+/* cream-faint hovers / tracks / active states → warm-dark faint
+   (they were near-invisible cream tints designed for a dark bg) */
+html[data-theme="light"] :where(.lb-rank){ background:rgba(42,28,52,.05); }
+html[data-theme="light"] :where(.ob-track){ background:rgba(42,28,52,.08); }
+html[data-theme="light"] .tab.on{ background:rgba(42,28,52,.06); }
+html[data-theme="light"] .lb-row:hover{ background:rgba(42,28,52,.035); }
+html[data-theme="light"] .price-toggle button.on{ background:rgba(42,28,52,.06); }
+
+/* leaderboard / share "other" bars used a cream fill → invisible on cream */
+html[data-theme="light"] .share-row:not(.me) .bar::before{
+  background:linear-gradient(90deg, rgba(42,28,52,.13), rgba(42,28,52,.24));
+}
+
+/* dashboard hero/context eye glows read better a touch softer on light */
+html[data-theme="light"] .ctx-eye{ box-shadow:0 0 14px rgba(178,106,60,.3); }
+
+/* onboarding "cosmic scan" stage stays a dark island on the light page
+   (its radial eye + sweep are built for dark) — force its content light */
+html[data-theme="light"] .scan-status,
+html[data-theme="light"] .scan-counter,
+html[data-theme="light"] .scan-readout b{ color:#FAF1E5; }
+html[data-theme="light"] .scan-readout{ color:rgba(250,241,229,.72); }
+html[data-theme="light"] .engine-chip{
+  background:rgba(7,7,19,.85); color:rgba(250,241,229,.72);
+  border-color:rgba(250,241,229,.18);
+}
+html[data-theme="light"] .engine-chip.lit{
+  background:rgba(37,110,104,.32); color:#FAF1E5; border-color:var(--teal);
+}
