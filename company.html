@@ -32,6 +32,27 @@
   }
   .statement em{font-style:normal;color:var(--ink)}
 
+  /* escalation triplet — indexed → amplified → interpreted */
+  .escalation{
+    margin-top:30px;max-width:60ch;
+    font-family:var(--fontDisplay);font-weight:600;
+    font-size:clamp(21px,2.5vw,31px);line-height:1.28;letter-spacing:-0.035em;
+    color:rgba(250,241,229,.42);
+  }
+  .escalation em{font-style:normal;color:var(--ink)}
+
+  /* what we believe — market thesis list */
+  .beliefs{margin-top:54px;display:grid;gap:0}
+  .belief{
+    display:grid;grid-template-columns:128px 1fr;gap:30px;
+    padding:30px 0;border-top:1px solid var(--line);align-items:start;
+  }
+  .belief:last-child{border-bottom:1px solid var(--line)}
+  .belief .b-num{font-family:var(--fontMono);font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber);padding-top:6px}
+  .belief h3{font-family:var(--fontDisplay);font-size:clamp(23px,2.5vw,30px);font-weight:600;line-height:1.06;letter-spacing:-0.035em;color:var(--ink);margin-bottom:12px;max-width:26ch}
+  .belief p{color:var(--ink);opacity:.82;font-size:16.5px;line-height:1.6;max-width:70ch}
+  @media (max-width:760px){ .belief{grid-template-columns:1fr;gap:8px} .belief .b-num{padding-top:0} }
+
   /* ethos / principles */
   .ethos{padding:60px 0 40px}
   .ethos-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-bottom:36px}
@@ -118,6 +139,7 @@
     <span class="kicker reveal">Company</span>
     <h1 class="display-xl reveal" data-delay="1">We help brands win the question.</h1>
     <p class="lede reveal" data-delay="2">Perceptivity is the operating system for AI perception. We were built because the funnel changed and the tools didn't. Today, every category — from premium SUVs to vitamin C serums — is being recommended by AI before the buyer ever opens a browser tab.</p>
+    <p class="escalation reveal" data-delay="3">Search engines <em>indexed</em> the web. Social platforms <em>amplified</em> it. AI systems now <em>interpret</em> it — and decide what your buyers believe before they ever click.</p>
   </div>
 
   <!-- MISSION + VISION -->
@@ -193,6 +215,42 @@
         <h3>One loop, looped forever.</h3>
         <p>Sense. Simulate. Act. Learn. Every cycle makes the next forecast sharper. Compounding is a marketing strategy, not just a financial one.</p>
         <span class="tag">Operating principle</span>
+      </div>
+    </div>
+
+    <!-- WHAT WE BELIEVE -->
+    <div class="ethos-head reveal" style="margin-top:96px">
+      <h2>What we believe.</h2>
+      <p>Four convictions about the AI internet that shape what we build — and who we build it for.</p>
+    </div>
+    <div class="beliefs">
+      <div class="belief reveal">
+        <span class="b-num">Belief 01</span>
+        <div>
+          <h3>AI answers are the new front door.</h3>
+          <p>Buyers increasingly ask AI what to buy, where to go and who to trust — and act on the first answer they get. The answer layer has quietly become the decision layer. Showing up at rank six on Google doesn't show up at all in that answer.</p>
+        </div>
+      </div>
+      <div class="belief reveal" data-delay="1">
+        <span class="b-num">Belief 02</span>
+        <div>
+          <h3>Perception is now infrastructure.</h3>
+          <p>What AI says about you isn't a campaign outcome — it's assembled from reviews, product pages, comparisons, forums, listings and model memory, and it runs whether you manage it or not. Treat brand perception as infrastructure, or inherit whatever the machine builds for you.</p>
+        </div>
+      </div>
+      <div class="belief reveal" data-delay="2">
+        <span class="b-num">Belief 03</span>
+        <div>
+          <h3>Truth needs engineering.</h3>
+          <p>In the AI internet, truth doesn't automatically win. It has to be structured, sourced, localized, repeated and made legible to machines. We change what AI reads — we never game what it returns. Anything we couldn't show a journalist, we don't ship.</p>
+        </div>
+      </div>
+      <div class="belief reveal" data-delay="3">
+        <span class="b-num">Belief 04</span>
+        <div>
+          <h3>Local context is not a translation layer.</h3>
+          <p>A brand trusted in English on ChatGPT can be invisible — or mis-described — in Hindi on the very same model. Perception has to be won market by market, in the language your buyers actually ask in. We earn that depth one market at a time; India is where ours runs deepest today.</p>
+        </div>
       </div>
     </div>
 

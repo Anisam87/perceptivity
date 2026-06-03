@@ -671,8 +671,6 @@
   (function(){
     const grid = document.getElementById('catGrid'); if (!grid) return;
     CATEGORIES.forEach((c, i)=>{
-      const insight = (window.CATEGORY_INSIGHTS && CATEGORY_INSIGHTS[c.id]) || null;
-      const qn = insight ? insight.buyerQuestions.length : 6;
       const card = document.createElement('a');
       card.href = `category.html?cat=${c.id}`;
       card.className = `glass cat-card glow-${c.glow} reveal`;
@@ -680,14 +678,11 @@
       card.innerHTML = `
         <span class="cat-arrow"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5h9M7 2.5l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         <div>
-          <span class="mono">${String(i+1).padStart(2,'0')} · Industry deep-dive</span>
+          <span class="mono">${String(i+1).padStart(2,'0')}</span>
           <h4>${c.label}</h4>
           <p class="hook">${c.hook}</p>
         </div>
-        <div>
-          <div class="cat-metric">${qn} buyer questions · 7 engines tracked</div>
-          <p class="qprev">↳ "${c.query}"</p>
-        </div>`;
+        <p class="qprev">↳ "${c.query}"</p>`;
       grid.appendChild(card);
       const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){card.classList.add('in'); io.disconnect();} }), {threshold:.05});
       io.observe(card);

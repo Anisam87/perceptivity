@@ -47,7 +47,7 @@
   .cat-mini:hover{border-color:var(--lineStrong)}
   .cat-mini.on{border-color:var(--teal);background:var(--tealSoft)}
   .cat-mini .mono{color:var(--muted);font-size:10px}
-  .cat-mini h5{font-family:var(--fontDisplay);font-size:16px;font-weight:600;line-height:1.1;letter-spacing:-0.02em;color:var(--ink);margin-top:10px}
+  .cat-mini h5{font-family:var(--fontDisplay);font-size:16px;font-weight:600;line-height:1.15;letter-spacing:-0.02em;color:var(--ink)}
 
   /* === Forms === */
   .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
@@ -408,7 +408,7 @@
     const t = document.createElement('div');
     t.className = 'cat-mini' + (c.id === chosenCat ? ' on' : '');
     t.dataset.id = c.id;
-    t.innerHTML = `<span class="mono">${c.label}</span><h5>${c.brand}</h5>`;
+    t.innerHTML = `<h5>${c.label}</h5>`;
     t.addEventListener('click', () => {
       chosenCat = c.id;
       miniGrid.querySelectorAll('.cat-mini').forEach(x => x.classList.toggle('on', x.dataset.id === c.id));
