@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Onboarding — Perceptivity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;650;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="perceptivity.css">
+<style>
+  .ob-wrap{padding:140px 0 80px;min-height:100vh}
+  .ob-console{
+    position:relative;padding:36px 40px 42px;
+    border-radius:42px;overflow:hidden;
+    max-width:1080px;margin:0 auto;
+  }
+  .ob-console .scan-line{top:0;animation: scan 5s linear infinite}
+
+  /* progress */
+  .ob-progress{display:flex;align-items:center;gap:18px;margin-bottom:36px}
+  .ob-step-num{font-family:var(--fontMono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+  .ob-track{flex:1;height:2px;background:rgba(245,230,215,.08);border-radius:2px;position:relative;overflow:hidden}
+  .ob-track-fill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,var(--teal),var(--amber));border-radius:2px;transition:width .8s var(--ease)}
+  .ob-step-label{font-family:var(--fontMono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink)}
+
+  /* steps */
+  .ob-step{display:none}
+  .ob-step.on{display:block;animation: stepIn .6s var(--ease)}
+  @keyframes stepIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+  .ob-step h2{font-family:var(--fontDisplay);font-size:clamp(34px,4.4vw,52px);font-weight:600;line-height:1;letter-spacing:-0.045em;max-width:18ch;margin-bottom:14px}
+  .ob-step .lede{color:var(--ink);opacity:.84;font-size:18px;max-width:56ch;margin-bottom:36px;line-height:1.55}
+
+  .ob-actions{margin-top:42px;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+  .ob-back{font-family:var(--fontMono);font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);background:none;border:none;cursor:pointer}
+  .ob-back:hover{color:var(--ink)}
+
+  /* === Step 1 — categories === */
+  .cat-mini-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:8px}
+  @media (max-width:780px){ .cat-mini-grid{grid-template-columns:repeat(2,1fr)} }
+  .cat-mini{
+    padding:16px 16px 18px;border-radius:18px;cursor:pointer;
+    background:rgba(7,7,19,.45);border:1px solid var(--line);
+    transition: border-color .25s var(--ease), background .25s var(--ease);
+  }
+  .cat-mini:hover{border-color:var(--lineStrong)}
+  .cat-mini.on{border-color:var(--teal);background:var(--tealSoft)}
+  .cat-mini .mono{color:var(--muted);font-size:10px}
+  .cat-mini h5{font-family:var(--fontDisplay);font-size:16px;font-weight:600;line-height:1.15;letter-spacing:-0.02em;color:var(--ink)}
+
+  /* === Forms === */
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  @media (max-width:780px){ .form-grid{grid-template-columns:1fr} }
+  .full{grid-column:1/-1}
+  .chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+  .rivals{display:flex;flex-direction:column;gap:10px}
+  .rival-row{display:flex;gap:10px;align-items:center}
+  .rival-row .input{flex:1}
+  .rival-row .x{
+    width:36px;height:36px;border-radius:50%;border:1px solid var(--line);
+    display:grid;place-items:center;color:var(--muted);background:transparent;
+    transition:color .2s, border-color .2s;
+  }
+  .rival-row .x:hover{color:var(--neg);border-color:var(--neg)}
+  .add-rival{
+    align-self:flex-start;margin-top:4px;
+    font-family:var(--fontMono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);
+    padding:8px 14px;border:1px dashed rgba(138,199,194,.4);border-radius:999px;
+  }
+  .add-rival:hover{background:var(--tealSoft)}
+
+  .counter{
+    margin-top:30px;padding:20px 22px;border-radius:18px;
+    background:rgba(7,7,19,.5);border:1px solid var(--line);
+    display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;
+  }
+  .counter .mono{color:var(--muted)}
+  .counter .big{font-family:var(--fontDisplay);font-size:30px;font-weight:600;letter-spacing:-0.035em;color:var(--ink);line-height:1.15;margin-top:6px}
+  .counter .big em{font-style:normal;color:var(--amber);font-weight:600}
+
+  /* Step 4 — question picker */
+  .qpicker{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+  .qoption{
+    padding:14px 16px;border-radius:14px;cursor:pointer;
+    background:rgba(7,7,19,.4);border:1px solid var(--line);
+    display:flex;justify-content:space-between;align-items:center;gap:14px;
+    transition:.2s;
+  }
+  .qoption:hover{border-color:var(--lineStrong)}
+  .qoption.on{border-color:var(--teal);background:var(--tealSoft);color:var(--ink)}
+  .qoption .qtxt{font-size:14.5px;color:var(--ink);line-height:1.4;flex:1}
+  .qoption .qcheck{
+    width:22px;height:22px;border-radius:50%;border:1px solid var(--lineStrong);
+    display:grid;place-items:center;flex-shrink:0;
+    transition:.2s;
+  }
+  .qoption.on .qcheck{background:var(--teal);border-color:var(--teal);color:var(--void)}
+  .qoption .qcheck svg{opacity:0;transition:opacity .2s}
+  .qoption.on .qcheck svg{opacity:1}
+  .qcount{
+    font-family:var(--fontMono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-top:14px;
+  }
+  .qcount b{color:var(--ink);font-weight:500}
+
+  /* === Step 5 — the scan === */
+  .scan-stage{
+    position:relative;height:520px;border-radius:32px;overflow:hidden;
+    background:linear-gradient(160deg, rgba(7,7,19,.75), rgba(23,18,39,.75));
+    border:1px solid var(--line);
+  }
+  .scan-stage .drift-grid{position:absolute;inset:0;opacity:.5}
+  .scan-eye{
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:200px;height:200px;border-radius:50%;
+    background:
+      radial-gradient(circle at 50% 50%, transparent 56%, rgba(245,230,215,.18) 57%, transparent 60%),
+      radial-gradient(circle at 50% 50%, transparent 70%, rgba(217,154,108,.30) 71%, transparent 74%),
+      radial-gradient(circle at 50% 50%, transparent 82%, rgba(138,199,194,.22) 83%, transparent 86%);
+  }
+  .scan-eye::before{
+    content:"";position:absolute;inset:34%;border-radius:50%;
+    background:radial-gradient(circle at 38% 38%, var(--ink), var(--peach) 50%, var(--amber) 100%);
+    box-shadow: 0 0 40px rgba(240,188,163,.5);
+    animation: pulse-soft 2s ease-in-out infinite;
+  }
+  .scan-sweep{
+    position:absolute;left:0;right:0;top:50%;height:1px;
+    background:linear-gradient(90deg,transparent,var(--teal),transparent);
+    box-shadow:0 0 16px var(--teal);
+    animation: stage-sweep 3s ease-in-out infinite;
+  }
+  @keyframes stage-sweep{
+    0%{top:6%;opacity:0}10%{opacity:1}90%{opacity:1}100%{top:94%;opacity:0}
+  }
+  .engines-ring{position:absolute;inset:0}
+  .engine-chip{
+    position:absolute;
+    display:inline-flex;align-items:center;gap:8px;
+    padding:8px 12px;border-radius:999px;
+    background:rgba(7,7,19,.85);border:1px solid var(--line);backdrop-filter:blur(10px);
+    font-family:var(--fontMono);font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);
+    transition: color .4s var(--ease), border-color .4s var(--ease), background .4s var(--ease), box-shadow .4s var(--ease);
+    transform:translate(-50%,-50%);white-space:nowrap;
+  }
+  .engine-chip .nd{width:6px;height:6px;border-radius:50%;background:var(--muted);transition:background .4s, box-shadow .4s}
+  .engine-chip.lit{color:var(--ink);border-color:var(--teal);background:var(--tealSoft);box-shadow:0 0 24px rgba(138,199,194,.35)}
+  .engine-chip.lit .nd{background:var(--teal);box-shadow:0 0 10px var(--teal)}
+
+  .scan-readout{
+    position:absolute;left:30px;bottom:24px;right:30px;
+    display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;
+    font-family:var(--fontMono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);
+  }
+  .scan-readout b{color:var(--ink);font-weight:500}
+  .scan-counter{font-family:var(--fontDisplay);font-size:48px;font-weight:600;letter-spacing:-0.04em;color:var(--ink);line-height:1}
+
+  .scan-status{
+    position:absolute;left:30px;top:24px;
+    font-family:var(--fontMono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink);
+    display:flex;align-items:center;gap:10px;
+  }
+  .scan-status .dot{background:var(--amber);box-shadow:0 0 12px var(--amber)}
+
+  .demo-note{
+    text-align:center;margin-top:16px;
+    font-family:var(--fontMono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);
+  }
+
+  @media (max-width:640px){
+    .ob-wrap{padding:100px 0 56px}
+    .ob-console{padding:24px 18px 28px;border-radius:28px}
+    .ob-progress{gap:12px;margin-bottom:26px}
+    .ob-step-label{display:none}
+    .ob-step h2{font-size:clamp(26px,7.5vw,34px)}
+    .ob-step .lede{font-size:16px;margin-bottom:26px}
+    .ob-actions{margin-top:30px;gap:12px}
+    .ob-actions .btn{flex:1 1 auto;justify-content:center}
+    .counter{margin-top:22px;padding:18px}
+    .counter .big{font-size:24px}
+
+    .scan-stage{height:420px}
+    .scan-eye{width:150px;height:150px}
+    .engine-chip{font-size:9.5px;padding:6px 9px}
+    .scan-readout{left:18px;right:18px;bottom:18px;gap:12px}
+    .scan-status{left:18px;top:18px}
+    .scan-counter{font-size:36px}
+  }
+</style>
+<link rel="stylesheet" href="theme-adaptive.css">
+<script src="theme.js"></script>
+</head>
+<body>
+
+<section class="ob-wrap">
+  <div class="container">
+    <div class="glass ob-console reveal in">
+      <div class="scan-line"></div>
+
+      <div class="ob-progress">
+        <span class="ob-step-num" id="stepNum">Step 01 / 05</span>
+        <div class="ob-track"><div class="ob-track-fill" id="trackFill" style="width:20%"></div></div>
+        <span class="ob-step-label" id="stepLabel">Confirm category</span>
+      </div>
+
+      <!-- STEP 1 — CATEGORY -->
+      <div class="ob-step on" data-step="1">
+        <span class="kicker">Step 01 · Category</span>
+        <h2 style="margin-top:18px">Confirm the world your buyer asks about.</h2>
+        <p class="lede">Your workspace is shaped by the buyer questions in your category. We've pre-filled the closest match.</p>
+        <div class="cat-mini-grid" id="catMiniGrid"></div>
+        <div class="ob-actions">
+          <a class="ob-back" href="index.html#categories">← Back</a>
+          <button class="btn primary btn-lg" data-next>Continue <span class="arrow">→</span></button>
+        </div>
+      </div>
+
+      <!-- STEP 2 — YOU -->
+      <div class="ob-step" data-step="2">
+        <span class="kicker">Step 02 · You</span>
+        <h2 style="margin-top:18px">A few details, so we can set up your workspace.</h2>
+        <p class="lede">We'll email a shareable version of the dashboard you're about to see. No password, no spam.</p>
+
+        <div class="form-grid">
+          <div class="field">
+            <label>Full name</label>
+            <input class="input" id="userName" placeholder="Priya Iyer" />
+          </div>
+          <div class="field">
+            <label>Designation</label>
+            <select class="input" id="userRole">
+              <option>CMO</option>
+              <option>VP Marketing</option>
+              <option>Head of Brand</option>
+              <option>Head of Digital</option>
+              <option>Brand Manager</option>
+              <option>Performance Marketing</option>
+              <option>Founder / CEO</option>
+              <option>Agency / Consultant</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field full">
+            <label>Work email</label>
+            <input class="input" type="email" id="userEmail" placeholder="priya@brand.com" />
+            <span class="mono" style="margin-top:4px;color:var(--muted)">We'll send your dashboard link here. No marketing emails.</span>
+          </div>
+        </div>
+
+        <div class="ob-actions">
+          <button class="ob-back" data-prev>← Back</button>
+          <button class="btn primary btn-lg" data-next id="step2Next">Continue <span class="arrow">→</span></button>
+        </div>
+      </div>
+
+      <!-- STEP 3 — BRAND & COMPETITORS -->
+      <div class="ob-step" data-step="3">
+        <span class="kicker">Step 03 · Brand & rivals</span>
+        <h2 style="margin-top:18px">Your brand. Your three biggest rivals.</h2>
+        <p class="lede">We benchmark you against the three brands AI is most likely to recommend instead. Edit the pre-fills with your real competitive set.</p>
+
+        <div class="form-grid">
+          <div class="field full">
+            <label>Your brand</label>
+            <input class="input" id="brandIn" value="Mahindra" />
+          </div>
+          <div class="field full">
+            <label>Up to 3 competitors</label>
+            <div class="rivals" id="rivals"></div>
+            <button class="add-rival" id="addRival">+ Add competitor</button>
+          </div>
+        </div>
+
+        <div class="ob-actions">
+          <button class="ob-back" data-prev>← Back</button>
+          <button class="btn primary btn-lg" data-next>Continue <span class="arrow">→</span></button>
+        </div>
+      </div>
+
+      <!-- STEP 4 — QUESTIONS & MARKETS -->
+      <div class="ob-step" data-step="4">
+        <span class="kicker">Step 04 · Question set & markets</span>
+        <h2 style="margin-top:18px">Pick the buyer questions that matter most.</h2>
+        <p class="lede">Choose up to five questions from the category set. Your workspace forecasts visibility and lift specifically for these.</p>
+
+        <div class="field full" style="margin-bottom:24px">
+          <label>Markets</label>
+          <div class="chip-row" id="markets">
+            <span class="chip on" data-m="India"><span class="x"></span>India</span>
+            <span class="chip on" data-m="Metros"><span class="x"></span>Metros</span>
+            <span class="chip" data-m="Tier 2 / 3">Tier 2 / 3</span>
+            <span class="chip" data-m="South Asia">South Asia</span>
+            <span class="chip" data-m="Global">Global</span>
+          </div>
+        </div>
+
+        <div class="field full">
+          <label>Buyer questions <span style="color:var(--ink);opacity:.6;text-transform:none;letter-spacing:0">— up to 5</span></label>
+          <div class="qpicker" id="qpicker"></div>
+          <div class="qcount"><b id="qSel">0</b> / 5 questions selected</div>
+        </div>
+
+        <div class="counter">
+          <div>
+            <div class="mono">Scan plan</div>
+            <div class="big">We'll run <em><span id="qCount">1,284</span></em> total questions across <em>7</em> engines for <em><span id="brandConfirm">Mahindra</span></em>.</div>
+          </div>
+          <div class="mono">~ <span id="rivalCount">3</span> rivals · <span id="markCount">2</span> markets</div>
+        </div>
+
+        <div class="ob-actions">
+          <button class="ob-back" data-prev>← Back</button>
+          <button class="btn primary btn-lg" data-next>Run the scan <span class="arrow">→</span></button>
+        </div>
+      </div>
+
+      <!-- STEP 5 — THE SCAN -->
+      <div class="ob-step" data-step="5">
+        <span class="kicker">Step 05 · Sense</span>
+        <h2 style="margin-top:18px">Mapping perception across seven engines.</h2>
+        <p class="lede">Simulated scan — no real API calls in this demo. In production this runs in parallel across every answer surface.</p>
+
+        <div class="scan-stage">
+          <div class="drift-grid"></div>
+          <div class="scan-sweep"></div>
+          <div class="scan-eye pulse"></div>
+          <div class="engines-ring" id="enginesRing"></div>
+
+          <div class="scan-status"><span class="dot"></span> <span id="scanStatus">Initialising perception scan…</span></div>
+
+          <div class="scan-readout">
+            <div>questions processed<br/><span class="scan-counter" id="qProc">0</span></div>
+            <div style="text-align:right">engines online<br/><span class="scan-counter" id="eOn">0 / 7</span></div>
+          </div>
+        </div>
+
+        <p class="demo-note">Opening your brand-specific dashboard automatically…</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script src="demo-data.js"></script>
+<script src="chrome.js"></script>
+<script>
+  // ---- read category from URL or storage ----
+  const params = new URLSearchParams(location.search);
+  const initCat = params.get('category') || PCV.get().category || 'auto';
+
+  // ---- step state ----
+  let step = 1;
+  let chosenCat = initCat;
+  const STEPS = [
+    { num: '01 / 05', label: 'Confirm category', fill: 20 },
+    { num: '02 / 05', label: 'About you',         fill: 40 },
+    { num: '03 / 05', label: 'Brand & rivals',    fill: 60 },
+    { num: '04 / 05', label: 'Questions & markets', fill: 80 },
+    { num: '05 / 05', label: 'Perception scan',   fill: 100 },
+  ];
+
+  const stepNum = document.getElementById('stepNum');
+  const stepLabel = document.getElementById('stepLabel');
+  const trackFill = document.getElementById('trackFill');
+
+  function setStep(n){
+    step = n;
+    document.querySelectorAll('.ob-step').forEach(s => s.classList.toggle('on', +s.dataset.step === n));
+    stepNum.textContent = 'Step ' + STEPS[n-1].num;
+    stepLabel.textContent = STEPS[n-1].label;
+    trackFill.style.width = STEPS[n-1].fill + '%';
+    window.scrollTo({top:0, behavior:'smooth'});
+    if (n === 4) refreshStep4();
+    if (n === 5) runScan();
+  }
+
+  document.querySelectorAll('[data-next]').forEach(b => b.addEventListener('click', () => {
+    if (step === 1) { PCV.set({ category: chosenCat }); }
+    if (step === 2) {
+      const email = document.getElementById('userEmail').value.trim();
+      const name  = document.getElementById('userName').value.trim();
+      const role  = document.getElementById('userRole').value;
+      // soft validate but don't block — demo
+      if (!email || !email.includes('@')) {
+        document.getElementById('userEmail').focus();
+        document.getElementById('userEmail').style.borderColor = 'var(--neg)';
+        return;
+      }
+      PCV.set({ email, name, role });
+    }
+    if (step === 3) {
+      const brand = document.getElementById('brandIn').value.trim();
+      const rivals = window._rivals || [];
+      PCV.set({ brand, competitors: rivals });
+    }
+    if (step === 4) {
+      const markets = [...document.querySelectorAll('#markets .chip.on')].map(c => c.dataset.m);
+      const questions = [...document.querySelectorAll('#qpicker .qoption.on')].map(q => q.dataset.q);
+      PCV.set({ markets, questions, brandComplete: true });
+    }
+    setStep(Math.min(STEPS.length, step + 1));
+  }));
+  document.querySelectorAll('[data-prev]').forEach(b => b.addEventListener('click', () => setStep(Math.max(1, step - 1))));
+
+  // ---- step 1 mini grid ----
+  const miniGrid = document.getElementById('catMiniGrid');
+  CATEGORIES.forEach(c => {
+    const t = document.createElement('div');
+    t.className = 'cat-mini' + (c.id === chosenCat ? ' on' : '');
+    t.dataset.id = c.id;
+    t.innerHTML = `<h5>${c.label}</h5>`;
+    t.addEventListener('click', () => {
+      chosenCat = c.id;
+      miniGrid.querySelectorAll('.cat-mini').forEach(x => x.classList.toggle('on', x.dataset.id === c.id));
+      document.getElementById('brandIn').value = c.brand;
+    });
+    miniGrid.appendChild(t);
+  });
+  // initial pre-fills based on chosen category
+  const initialCat = CATEGORIES.find(c => c.id === chosenCat) || CATEGORIES[0];
+  document.getElementById('brandIn').value = initialCat.brand;
+
+  // ---- step 2 — pre-fill from storage ----
+  const persisted = PCV.get();
+  if (persisted.email) document.getElementById('userEmail').value = persisted.email;
+  if (persisted.name)  document.getElementById('userName').value  = persisted.name;
+  if (persisted.role)  document.getElementById('userRole').value  = persisted.role;
+  document.getElementById('userEmail').addEventListener('input', e => { e.target.style.borderColor = ''; });
+
+  // ---- step 3 — rivals ----
+  const rivalsEl = document.getElementById('rivals');
+  function renderRivals(arr){
+    rivalsEl.innerHTML = '';
+    arr.forEach((name, i) => {
+      const r = document.createElement('div');
+      r.className = 'rival-row';
+      r.innerHTML = `
+        <input class="input" value="${name}" />
+        <button class="x" aria-label="Remove">
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 2l7 7M9 2l-7 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </button>`;
+      r.querySelector('.x').addEventListener('click', () => { arr.splice(i,1); renderRivals(arr); });
+      r.querySelector('input').addEventListener('input', e => { arr[i] = e.target.value; });
+      rivalsEl.appendChild(r);
+    });
+    window._rivals = arr;
+  }
+  const seedRivals = ((CATEGORY_INSIGHTS[chosenCat] && CATEGORY_INSIGHTS[chosenCat].leaderboard) || DEMO.auto.answerShare)
+    .filter(b => b.name && b.name !== initialCat.brand && b.name !== 'Long tail')
+    .slice(0, 3).map(b => b.name);
+  renderRivals(seedRivals.length ? seedRivals : [...DEMO.auto.competitors]);
+  document.getElementById('addRival').addEventListener('click', () => {
+    if (window._rivals.length >= 5) return;
+    window._rivals.push('New competitor');
+    renderRivals(window._rivals);
+  });
+
+  // ---- step 4 — question picker, markets, counter ----
+  function refreshStep4(){
+    const insight = CATEGORY_INSIGHTS[chosenCat] || CATEGORY_INSIGHTS.auto;
+    const qp = document.getElementById('qpicker');
+    qp.innerHTML = '';
+    insight.buyerQuestions.forEach((q, i) => {
+      const opt = document.createElement('div');
+      opt.className = 'qoption' + (i < 3 ? ' on' : '');  // pre-select first three
+      opt.dataset.q = q;
+      opt.innerHTML = `
+        <span class="qtxt">${q}</span>
+        <span class="qcheck"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5L4 7.5L10 1.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`;
+      opt.addEventListener('click', () => {
+        const isOn = opt.classList.contains('on');
+        if (!isOn && document.querySelectorAll('#qpicker .qoption.on').length >= 5) return;
+        opt.classList.toggle('on');
+        updateCounter();
+      });
+      qp.appendChild(opt);
+    });
+
+    document.getElementById('brandConfirm').textContent =
+      (document.getElementById('brandIn') && document.getElementById('brandIn').value) || initialCat.brand;
+    updateCounter();
+  }
+
+  const marketsEl = document.getElementById('markets');
+  marketsEl.addEventListener('click', e => {
+    const chip = e.target.closest('.chip'); if (!chip) return;
+    chip.classList.toggle('on');
+    if (chip.classList.contains('on') && !chip.querySelector('.x')) {
+      chip.insertAdjacentHTML('afterbegin','<span class="x"></span>');
+    } else if (!chip.classList.contains('on') && chip.querySelector('.x')) {
+      chip.querySelector('.x').remove();
+    }
+    updateCounter();
+  });
+
+  function updateCounter(){
+    const rivalN = (window._rivals || []).length;
+    const markN = marketsEl.querySelectorAll('.chip.on').length;
+    const qSelN = document.querySelectorAll('#qpicker .qoption.on').length;
+    const q = (300 + qSelN * 180) * Math.max(1, markN) * Math.max(1, rivalN ? 1 : 0.6);
+    document.getElementById('qCount').textContent = Math.round(q).toLocaleString();
+    document.getElementById('rivalCount').textContent = rivalN;
+    document.getElementById('markCount').textContent = markN;
+    document.getElementById('qSel').textContent = qSelN;
+  }
+
+  // ---- step 5 — the scan ----
+  const ring = document.getElementById('enginesRing');
+  ENGINES.forEach((name, i) => {
+    const angle = (i / ENGINES.length) * Math.PI * 2 - Math.PI/2;
+    const narrow = window.matchMedia('(max-width:560px)').matches;
+    const rx = narrow ? 29 : 38, ry = narrow ? 40 : 38;
+    const cx = 50 + Math.cos(angle) * rx;
+    const cy = 50 + Math.sin(angle) * ry;
+    const chip = document.createElement('div');
+    chip.className = 'engine-chip';
+    chip.style.left = cx + '%';
+    chip.style.top  = cy + '%';
+    chip.innerHTML = `<span class="nd"></span> ${name}`;
+    chip.dataset.engine = name;
+    ring.appendChild(chip);
+  });
+
+  let scanRan = false;
+  function runScan(){
+    if (scanRan) return; scanRan = true;
+    const chips = [...ring.querySelectorAll('.engine-chip')];
+    const qEl = document.getElementById('qProc');
+    const eEl = document.getElementById('eOn');
+    const statusEl = document.getElementById('scanStatus');
+    const total = parseInt(document.getElementById('qCount').textContent.replace(/,/g,''), 10) || 1284;
+    let qNow = 0;
+    let lit = 0;
+    const statuses = [
+      'Initialising perception scan…',
+      'Polling ChatGPT and Perplexity…',
+      'Crawling answer surfaces…',
+      'Extracting citations and claims…',
+      'Mapping competitor mentions…',
+      'Resolving entity graph…',
+      'Perception mapped.'
+    ];
+    let sIdx = 0;
+    const counterDur = 5200;
+    const t0 = performance.now();
+    const tick = (now) => {
+      const p = Math.min(1, (now - t0) / counterDur);
+      qNow = Math.floor(total * p);
+      qEl.textContent = qNow.toLocaleString();
+      const ns = Math.min(statuses.length - 1, Math.floor(p * statuses.length));
+      if (ns !== sIdx) { sIdx = ns; statusEl.textContent = statuses[ns]; }
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+
+    chips.forEach((c, i) => {
+      setTimeout(() => {
+        c.classList.add('lit');
+        lit++;
+        eEl.textContent = `${lit} / 7`;
+        if (lit === chips.length) {
+          setTimeout(() => {
+            statusEl.textContent = 'Perception mapped.';
+            // auto-advance straight to the brand-specific dashboard
+            setTimeout(() => { location.href = 'dashboard.html?personalized=1'; }, 1100);
+          }, 500);
+        }
+      }, 400 + i * 580);
+    });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Perceptivity helps brands win when buyers ask AI. Track, predict and improve how ChatGPT, Perplexity, Gemini and Claude describe your brand — across every answer engine that matters." />
+<title>Perceptivity — Be the brand AI recommends</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;650;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="perceptivity.css">
+<link rel="stylesheet" href="home.css">
+<link rel="stylesheet" href="perceptivity-pack.css">
+<link rel="stylesheet" href="theme-adaptive.css">
+<script src="theme.js"></script>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="container">
+    <div class="hero-inner">
+      <div>
+        <span class="kicker reveal">Enterprise AI search marketing platform</span>
+        <h1 class="display-xl reveal" data-delay="1">
+          Be the brand<br/>
+          <span class="rot" id="rotEngine" aria-label="answer engine name">
+            <span class="rot-word active">ChatGPT</span>
+            <span class="rot-measure">ChatGPT</span>
+          </span><br/>
+          recommends.
+        </h1>
+        <p class="hero-lede reveal" data-delay="2">See how every major AI engine describes your brand — then turn that visibility into measurable revenue.</p>
+        <div class="hero-cta reveal" data-delay="3">
+          <a class="btn primary btn-lg" href="demo.html">Book a demo <span class="arrow">→</span></a>
+          <a class="btn btn-lg" href="#how">See how it works</a>
+        </div>
+        <div class="hero-trust reveal" data-delay="4">
+          <span class="pill"><span class="dot"></span> 7 answer engines</span>
+          <span class="pill">Refreshed daily</span>
+          <span class="pill">SOC 2 Type II in progress</span>
+        </div>
+      </div>
+
+      <!-- HERO DASHBOARD -->
+      <div class="hero-dash reveal" data-delay="2">
+        <div class="bar">
+          <div class="dots"><i></i><i></i><i></i></div>
+          <div class="url"><span class="lock"></span> app.perceptivity.ai / dashboard</div>
+        </div>
+        <div class="body">
+          <div class="hd-top">
+            <div>
+              <span class="mono">AI VISIBILITY · LAST 30 DAYS</span>
+              <div class="hd-score">58<small>/100</small></div>
+              <span class="hd-delta">▲ 4.2 vs last month</span>
+            </div>
+          </div>
+          <div class="hd-chips">
+            <div class="hd-chip"><div class="k">Citations</div><div class="v">1,247</div></div>
+            <div class="hd-chip"><div class="k">Avg rank</div><div class="v">2.3</div></div>
+            <div class="hd-chip"><div class="k">Queries</div><div class="v">2,847</div></div>
+          </div>
+          <div class="hd-eng-h"><span>Engine coverage</span><span>Share of voice</span></div>
+          <div class="hd-eng" id="hdEng"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAND -->
+<section class="trust-band">
+  <div class="container">
+    <div class="lbl reveal">The enterprise marketing suite for the generative internet</div>
+    <div class="trust-marks reveal" data-delay="1" id="trustMarks"></div>
+  </div>
+</section>
+
+<!-- VALUE PILLARS -->
+<section class="sec" id="platform">
+  <div class="container">
+    <span class="kicker sec-kicker reveal">Designed for enterprise marketers</span>
+    <div class="sec-head reveal" data-delay="1">
+      <h2>Go beyond visibility. Get authority, influence and control.</h2>
+      <p>Visibility and share of voice are table stakes. Category leaders come to us for depth, control and accountability.</p>
+    </div>
+    <div class="three-grid">
+      <div class="glass three-card glow-amber reveal">
+        <span class="ix"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="10" cy="10" r="6.5" stroke="currentColor" stroke-width="1.6"/><path d="M15 15l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+        <h3>Impact &amp; influence</h3>
+        <p>See how AI actually <em>thinks</em> about your brand — what it claims, what it cites, and why it ranks rivals above you. Across all seven engines.</p>
+      </div>
+      <div class="glass three-card glow-teal reveal" data-delay="1">
+        <span class="ix"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 14l4-5 3 3 5-7 4 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <h3>Actionability</h3>
+        <p>Forecast the lift of any campaign before you spend, then route the work automatically. Your team focuses on what moves revenue — not vanity dashboards.</p>
+      </div>
+      <div class="glass three-card glow-violet reveal" data-delay="2">
+        <span class="ix"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 2l7 3v6c0 4.4-3 7.4-7 9-4-1.6-7-4.6-7-9V5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
+        <h3>Control, differentiation &amp; scale</h3>
+        <p>Custom audiences, tailored prompts and brand-level accuracy controls. Built for enterprise — encrypted tenants, SSO, audit logs, and infosec reviews passed with ease.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOURCE OF TRUTH · interactive -->
+<section class="sec" id="ground-truth">
+  <div class="container">
+    <span class="kicker sec-kicker reveal">Source of truth · accuracy &amp; control</span>
+    <div class="sec-head reveal" data-delay="1">
+      <h2>Don't just watch the answer. Author it.</h2>
+      <p>Feed Perceptivity your canonical truth — guidelines, narratives, live SKU &amp; pricing, approved claims, spec sheets. AI stops guessing and starts quoting you.</p>
+    </div>
+
+    <div class="glass gt-panel reveal" data-delay="2">
+      <div class="gt-grid">
+        <!-- LEFT · source ledger -->
+        <div class="gt-sources">
+          <div class="gt-sub"><span class="mono">Your source of truth</span><span class="mono" id="gtCount">5 / 5 synced</span></div>
+          <div class="gt-list" id="gtList"></div>
+          <p class="gt-hint">Toggle a source off to see what AI says when it can't see your truth.</p>
+        </div>
+
+        <!-- RIGHT · live answer -->
+        <div class="gt-answer">
+          <div class="gt-ans-bar">
+            <span class="gt-eng"><span class="dot"></span> ChatGPT · live answer</span>
+            <span class="gt-acc" id="gtAcc">Accuracy 100%</span>
+          </div>
+          <div class="gt-query" id="gtQuery"></div>
+          <div class="gt-ans-body" id="gtAns"></div>
+          <div class="gt-ans-foot">
+            <span class="mono">Grounded in your truth</span>
+            <span class="mono"><b id="gtErr">0</b> errors</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="eng-note reveal">Illustrative worked example · Mahindra, automotive</div>
+  </div>
+</section>
+
+<!-- B2A · NEW REVENUE MODEL -->
+<section class="sec" id="b2a" style="padding-top:20px">
+  <div class="container">
+    <div class="b2a">
+      <div class="b2a-copy reveal">
+        <span class="kicker">A new revenue model</span>
+        <h2>LLMs created a new go-to-market: <span class="grad">Business&nbsp;to&nbsp;Agent.</span></h2>
+        <p class="lead">Buyers now let AI agents evaluate, choose and buy for them. The brands that win sell to the agent as deliberately as they sell to the human.</p>
+        <p class="lead">Perceptivity makes your brand visible, convertible and measurable inside those journeys — from the first answer to the final purchase.</p>
+        <div class="hero-cta" style="margin-top:28px">
+          <a class="btn primary btn-lg" href="demo.html">Book a demo <span class="arrow">→</span></a>
+          <a class="btn btn-lg" href="#resources">Read the playbook</a>
+        </div>
+      </div>
+      <div class="b2a-stat reveal" data-delay="1">
+        <span class="b2a-tag">B2A</span>
+        <div class="b2a-rows">
+          <div class="b2a-row"><span class="k">Channel</span><span class="v">Human → Agent</span></div>
+          <div class="b2a-row"><span class="k">Surface</span><span class="v">The answer, not the SERP</span></div>
+          <div class="b2a-row"><span class="k">Unit of value</span><span class="v">Citation → conversion</span></div>
+          <div class="b2a-row"><span class="k">Proof</span><span class="v">Attributed to revenue</span></div>
+        </div>
+        <p class="b2a-foot">Visibility in LLMs, made convertible and measurable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="sec" id="how">
+  <div class="container">
+    <span class="kicker sec-kicker reveal">How it works</span>
+    <div class="sec-head reveal" data-delay="1">
+      <h2>Four steps. One platform that learns.</h2>
+      <p>One loop, run every quarter. Each cycle sharpens the next forecast.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="glass step-card glow-amber reveal">
+        <span class="num">Step 01</span>
+        <h3>Sense</h3>
+        <p>See how AI describes your brand. Daily tracking across all seven engines.</p>
+        <span class="tag">Track</span>
+      </div>
+      <div class="glass step-card diff glow-teal reveal" data-delay="1">
+        <span class="num">Step 02</span>
+        <h3>Simulate</h3>
+        <p>Predict the visibility lift of any campaign before you spend.</p>
+        <span class="tag">Predict · the differentiator</span>
+      </div>
+      <div class="glass step-card glow-violet reveal" data-delay="2">
+        <span class="num">Step 03</span>
+        <h3>Act</h3>
+        <p>Route every action to the right channel — software, partners, or your team.</p>
+        <span class="tag">Execute</span>
+      </div>
+      <div class="glass step-card glow-amber reveal" data-delay="3">
+        <span class="num">Step 04</span>
+        <h3>Learn</h3>
+        <p>Every campaign measured. Predictions sharper. The platform compounds each month.</p>
+        <span class="tag">Improve</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STAGE 01 · SENSE -->
+<section class="stage">
+  <div class="container">
+    <div class="stage-grid">
+      <div class="stage-copy reveal">
+        <span class="kicker">Stage 01 · Sense</span>
+        <h2>See your AI visibility, daily.</h2>
+        <p class="lead">We run up to 5,000 of your buyer queries against seven engines every day. See how each one describes you, where you rank, who's citing you, and what changed overnight.</p>
+        <ul class="stage-list">
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Daily tracking across ChatGPT, Perplexity, Gemini, Claude, Copilot, Google AIO and Grok</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Share of voice, citations, sentiment and position on every key query</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Competitor benchmarking on the queries your buyers actually ask</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Slack and email alerts the moment your visibility moves</li>
+        </ul>
+      </div>
+      <div class="stage-viz reveal" data-delay="1">
+        <div class="vh"><span class="mono">VISIBILITY HEATMAP · 7 ENGINES × 6 TOPICS</span><span class="mono">42 cells</span></div>
+        <div class="vz-heat">
+          <div class="vz-heat-rows" id="vzHeatRows"></div>
+          <div class="vz-heat-grid" id="vzHeatGrid"></div>
+        </div>
+        <div class="vz-heat-scale"><span>Low</span><span class="grad"></span><span>High</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STAGE 02 · SIMULATE -->
+<section class="stage flip">
+  <div class="container">
+    <div class="stage-grid">
+      <div class="stage-copy reveal">
+        <span class="kicker">Stage 02 · Simulate · the differentiator</span>
+        <h2>Know what works before you spend.</h2>
+        <p class="lead">Planning a comparison article, a PR placement, a schema update? Tell us what you're considering. We forecast the visibility lift — per engine — before you spend a rupee.</p>
+        <ul class="stage-list">
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Test any content, PR or technical change before you ship it</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Per-engine predictions — what works on ChatGPT may not on Perplexity</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> See how reliable each prediction is — no false certainty</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Sequence campaigns in the right order to compound impact</li>
+        </ul>
+      </div>
+      <div class="stage-viz reveal" data-delay="1">
+        <div class="vh"><span class="mono">PREDICTED LIFT · RELIABILITY COMPARISON PIECE</span></div>
+        <div class="vz-lift" id="vzLift"></div>
+        <div class="vz-lift-foot"><span>Net lift · 12 days to impact</span><b>+1.1pp</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STAGE 03 · ACT -->
+<section class="stage">
+  <div class="container">
+    <div class="stage-grid">
+      <div class="stage-copy reveal">
+        <span class="kicker">Stage 03 · Act</span>
+        <h2>Get the work done.</h2>
+        <p class="lead">Every recommendation comes with a clear path. Quick fixes run automatically. Bigger work routes to vetted partners at fixed prices. Brand and creative calls stay with you.</p>
+        <ul class="stage-list">
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Software handles: schema, robots.txt, briefs, drafts, publishing</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Vetted partners handle: PR, long-form content, technical SEO, creators</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Your team handles: brand decisions, creative direction, sign-offs</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Every rupee allocated by predicted impact — nothing wasted</li>
+        </ul>
+      </div>
+      <div class="stage-viz reveal" data-delay="1">
+        <div class="vh"><span class="mono">THIS QUARTER'S ACTION PLAN</span><span class="mono">₹6L budget</span></div>
+        <div class="vz-plan" id="vzPlan"></div>
+        <div class="vz-plan-foot"><span>Software · auto-routed</span><span>Partner · fixed price</span><span>Your team · internal</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STAGE 04 · LEARN -->
+<section class="stage flip">
+  <div class="container">
+    <div class="stage-grid">
+      <div class="stage-copy reveal">
+        <span class="kicker">Stage 04 · Learn</span>
+        <h2>Gets smarter every month.</h2>
+        <p class="lead">Every campaign gets measured against its forecast. The gap sharpens the next prediction. Over time, the model beats gut calls — and you keep a full record of what drove results.</p>
+        <ul class="stage-list">
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Every recommendation tracked from prediction to result</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Per-engine recalibration as AI models change every few weeks</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Auto-alerts when ChatGPT, Perplexity or Gemini ship updates</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Quarterly reports: what worked, what didn't, what's next</li>
+        </ul>
+      </div>
+      <div class="stage-viz reveal" data-delay="1">
+        <div class="vh"><span class="mono">FEEDBACK LOOP · LAST 90 DAYS</span></div>
+        <div class="vz-loop">
+          <div class="stat pos">
+            <div class="k">Mean prediction error</div>
+            <div class="v">7.8%</div>
+            <div class="s">↓ from 14.2% in M-12</div>
+          </div>
+          <div class="stat">
+            <div class="k">Campaigns measured</div>
+            <div class="v">2,847</div>
+            <div class="s">across the worked example set</div>
+          </div>
+          <div class="wide">
+            <span class="dot"></span>
+            <span class="t">Engine update detected — ChatGPT changed retrieval. Re-fingerprinted in 36 hours.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENGINE COVERAGE -->
+<section class="sec" id="engines">
+  <div class="container">
+    <span class="kicker sec-kicker reveal">Engine coverage</span>
+    <div class="sec-head reveal" data-delay="1">
+      <h2>Every AI engine that matters. Every day.</h2>
+      <p>Seven engines, fingerprinted nightly. We add new ones the moment they reach real consumer adoption.</p>
+    </div>
+    <div class="eng-grid" id="engGrid"></div>
+    <div class="eng-note reveal">User numbers from public sources · illustrative · updated quarterly</div>
+  </div>
+</section>
+
+<!-- INDUSTRIES -->
+<section class="sec" id="industries">
+  <div class="container">
+    <span class="kicker sec-kicker reveal">Industry deep-dives</span>
+    <div class="sec-head reveal" data-delay="1">
+      <h2>How AI is reshaping the categories that drive buying.</h2>
+      <div class="meta">Sector intelligence<br/><b>8 sectors · 7 engines</b></div>
+    </div>
+    <div class="cat-grid" id="catGrid"></div>
+
+    <!-- INDIA ANSWER LAYER -->
+    <div class="vern-band pc-reveal" data-delay="2">
+      <div class="vern-copy">
+        <span class="kicker">The India answer layer</span>
+        <h3>Built for how India actually asks.</h3>
+        <p>Voice, video and vernacular prompts — Hinglish and regional languages — shape what AI recommends. We model the answer graph in the languages your buyers actually use.</p>
+        <div class="vern-engines">
+          <span>ChatGPT</span><span>Perplexity</span><span>Gemini</span><span>Claude</span><span>Copilot</span><span>Google AIO</span><span>Grok</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BY THE NUMBERS -->
+<section class="sec" id="numbers">
+  <div class="container">
+    <span class="kicker sec-kicker reveal">By the numbers</span>
+    <div class="sec-head reveal" data-delay="1">
+      <h2>The platform in numbers.</h2>
+    </div>
+    <div class="nums-grid">
+      <div class="glass num-card glow-amber reveal">
+        <div class="v">7</div>
+        <div class="k">AI engines tracked</div>
+        <p>ChatGPT, Perplexity, Gemini, Claude, Copilot, Google AIO and Grok — every day.</p>
+      </div>
+      <div class="glass num-card glow-teal reveal" data-delay="1">
+        <div class="v">5,000</div>
+        <div class="k">Daily test queries</div>
+        <p>Per brand, detecting AI updates within 24 hours so your visibility stays accurate.</p>
+      </div>
+      <div class="glass num-card glow-violet reveal" data-delay="2">
+        <div class="v">&lt;24h</div>
+        <div class="k">Engine-change detection</div>
+        <p>Re-fingerprinted within a day whenever a model changes how it retrieves.</p>
+      </div>
+      <div class="glass num-card glow-amber reveal" data-delay="3">
+        <div class="v">±8%</div>
+        <div class="k">Prediction-error target</div>
+        <p>Mean error on forecast visibility lift — the bar we hold the model to.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESOURCES · INFORMATION SHARING -->
+<section class="sec" id="resources">
+  <div class="container">
+    <span class="kicker sec-kicker reveal">Resources</span>
+    <div class="sec-head reveal" data-delay="1">
+      <h2>One source. Every answer about AI search.</h2>
+      <p>Field notes, teardowns and frameworks for marketing leaders learning to win the generative internet. Free to read, no form wall.</p>
+    </div>
+    <div class="res-grid">
+      <a class="glass res-card glow-amber reveal" href="#resources">
+        <span class="res-cat">Strategy &amp; use cases</span>
+        <h4>AEO vs GEO vs SEO: where to spend in 2026</h4>
+        <p>The blue-link playbook optimised for a list. Answer engines name one brand. Here's how the disciplines differ — and what actually compounds.</p>
+        <div class="res-foot"><span>Guide · 11 min</span><span class="go">Read →</span></div>
+      </a>
+      <a class="glass res-card glow-teal reveal" data-delay="1" href="#resources">
+        <span class="res-cat">Product</span>
+        <h4>AI Accuracy: brand verification for AI channels</h4>
+        <p>When AI repeats a wrong price, a stale claim or a rival's framing, it costs revenue. How we detect, attribute and correct what engines get wrong.</p>
+        <div class="res-foot"><span>Field note · 7 min</span><span class="go">Read →</span></div>
+      </a>
+      <a class="glass res-card glow-violet reveal" data-delay="2" href="#resources">
+        <span class="res-cat">Agentic commerce</span>
+        <h4>Selling to the agent: a B2A primer</h4>
+        <p>Agents now evaluate, choose and act for buyers. What changes for go-to-market when the customer is a model — and how to make visibility convertible.</p>
+        <div class="res-foot"><span>Briefing · 9 min</span><span class="go">Read →</span></div>
+      </a>
+    </div>
+
+    <!-- LEAD CAPTURE -->
+    <div class="lead-capture reveal" data-delay="1">
+      <div>
+        <span class="kicker" style="margin-bottom:14px">The CMO briefing</span>
+        <h3>How buyers find brands through AI — every two weeks.</h3>
+        <p class="lc-sub">Engine updates, category teardowns and one move you can make this week. Read by marketing leaders across automotive, fintech, real estate and more.</p>
+      </div>
+      <div>
+        <form class="lc-form" id="briefForm" novalidate>
+          <input class="input" id="briefEmail" type="email" placeholder="you@brand.com" aria-label="Work email" />
+          <button class="btn primary" type="submit">Subscribe <span class="arrow">→</span></button>
+        </form>
+        <div class="lc-done" id="briefDone">✓ You're in — first briefing lands soon.</div>
+        <div class="lc-fine">No spam · Unsubscribe anytime</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SHIFT CTA -->
+<section class="sec" style="padding-top:20px">
+  <div class="container">
+    <div class="shift-cta reveal">
+      <img class="cta-mark" src="assets/singularity-mark.svg" alt="" aria-hidden="true" />
+      <span class="kicker">The shift</span>
+      <h2>AI search is the new front door. Win it before your competitors do.</h2>
+      <div class="cta-row">
+        <a class="btn primary btn-lg" href="demo.html">Book a demo <span class="arrow">→</span></a>
+        <a class="btn btn-lg" href="onboarding.html">Get started</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec" id="faq">
+  <div class="container">
+    <span class="kicker sec-kicker reveal">FAQ</span>
+    <div class="sec-head reveal" data-delay="1">
+      <h2>Questions before you start.</h2>
+      <p>Straight answers for marketing leaders and brand teams. Anything else, write to hello@perceptivity.ai.</p>
+    </div>
+    <div class="faqs">
+      <details class="faq reveal">
+        <summary>What's the difference between SEO and AEO/GEO?</summary>
+        <div class="a">SEO optimises for a list of ten blue links. AEO (Answer Engine Optimisation) and GEO (Generative Engine Optimisation) optimise for a single AI-generated answer. When a buyer asks ChatGPT or Gemini, the engine reads the web, forms a verdict, and names one brand. Showing up at rank 6 on Google doesn't show up at all in that answer.</div>
+      </details>
+      <details class="faq reveal">
+        <summary>Do you actually run real queries on ChatGPT, Gemini, Claude and the others?</summary>
+        <div class="a">Yes — in production we run thousands of category buyer questions across all seven engines, refreshed daily. This site simulates the scan so you can see the experience without sharing credentials. The flow, the data shape and the model are exactly what production looks like.</div>
+      </details>
+      <details class="faq reveal">
+        <summary>What counts as a "buyer query"?</summary>
+        <div class="a">One unique prompt sent to one engine. So "best electric SUV under ₹30 lakhs" sent to ChatGPT, Perplexity and Gemini counts as three queries. During onboarding we help you build a smart, high-intent query list so you're not wasting volume on low-value prompts.</div>
+      </details>
+      <details class="faq reveal">
+        <summary>How is this different from existing AEO monitoring tools?</summary>
+        <div class="a">Monitoring tools tell you AI mentioned your brand — a lagging signal. Perceptivity tells you which campaign will change the answer before you commit budget (Simulate), gives you an execution queue with owners and partners (Act), then measures predicted vs actual lift (Learn). The full loop, not half of it.</div>
+      </details>
+      <details class="faq reveal">
+        <summary>Is this a global platform, or India-only?</summary>
+        <div class="a">Global. Perceptivity runs on regional answer graphs — local buyer language, publishers and competitive sets — for every market we model. India is where our category depth runs deepest today, which is why the worked examples here are Indian brands; the platform itself rolls out market by market.</div>
+      </details>
+      <details class="faq reveal">
+        <summary>Is my data safe?</summary>
+        <div class="a">Your content, campaigns and outcomes are encrypted at rest and in transit, stored in your own tenant, and never used to improve other customers' results. Enterprise plans include SSO and audit logs; SOC 2 Type II is on the roadmap.</div>
+      </details>
+    </div>
+
+    <!-- FINAL CTA -->
+    <div class="glass final-cta glow-violet reveal" style="margin-top:44px">
+      <img class="cta-mark" src="assets/singularity-mark.svg" alt="" aria-hidden="true" />
+      <span class="kicker">Ready when you are</span>
+      <h2 class="grad">See your AI visibility this week.</h2>
+      <p>A 30-minute walkthrough on your brand and competitors, your category already scanned. Walk away knowing exactly where you stand.</p>
+      <div class="cta-row">
+        <a class="btn primary btn-lg" href="demo.html">Book a demo <span class="arrow">→</span></a>
+        <a class="btn btn-lg" href="onboarding.html">Get started</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="demo-data.js"></script>
+<script src="chrome.js"></script>
+<script src="perceptivity-pack.js"></script>
+<script>
+  // ---- rotating engine name ----
+  // Two persistent slots that cross-fade. No node creation/removal, so words
+  // can never pile up ("clot") if the tab is backgrounded and timers/rAF drift.
+  (function(){
+    const ENG = ['ChatGPT','Perplexity','Gemini','Claude','Copilot','Google AIO','Grok'];
+    const rot = document.getElementById('rotEngine');
+    if (!rot) return;
+    const measure = rot.querySelector('.rot-measure');
+
+    // rebuild slots cleanly
+    rot.querySelectorAll('.rot-word').forEach(n => n.remove());
+    const a = document.createElement('span'); a.className = 'rot-word active';
+    const b = document.createElement('span'); b.className = 'rot-word';
+    rot.insertBefore(a, measure);
+    rot.insertBefore(b, measure);
+
+    let i = 0, front = a, back = b, timer = null;
+
+    function setWidth(text){
+      measure.textContent = text;
+      rot.style.width = Math.ceil(measure.getBoundingClientRect().width) + 'px';
+    }
+    function step(){
+      i = (i + 1) % ENG.length;
+      // snap the incoming slot to its start state with no transition,
+      // so it always enters from below regardless of where it was left
+      back.style.transition = 'none';
+      back.classList.remove('exit', 'active');
+      back.textContent = ENG[i];
+      void back.offsetWidth;                 // force reflow
+      back.style.transition = '';
+      setWidth(ENG[i]);
+      requestAnimationFrame(() => {
+        back.classList.add('active');        // slide/fade in
+        front.classList.remove('active');
+        front.classList.add('exit');         // slide/fade out
+        const t = front; front = back; back = t;
+      });
+    }
+    function start(){ if (!timer) timer = setInterval(step, 2600); }
+    function stop(){ clearInterval(timer); timer = null; }
+
+    function init(){
+      front.textContent = ENG[0];
+      setWidth(ENG[0]);
+      start();
+    }
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(init);
+    } else { init(); }
+
+    // pause when hidden; re-measure + resume when visible (prevents drift)
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) { stop(); }
+      else { setWidth(front.textContent); start(); }
+    });
+    window.addEventListener('resize', () => setWidth(front.textContent));
+  })();
+
+  // ---- hero dashboard: engine coverage from heatmap ----
+  (function(){
+    const wrap = document.getElementById('hdEng');
+    const data = window.DEMO && DEMO.auto;
+    if (!wrap || !data) return;
+    const cov = ENGINES.map(e => {
+      const arr = data.heatmap[e];
+      const avg = arr.reduce((a,b)=>a+b,0) / arr.length;
+      return { name:e, pct: Math.round(avg*100) };
+    }).sort((a,b)=>b.pct-a.pct).slice(0,6);
+    const max = Math.max(...cov.map(c=>c.pct));
+    cov.forEach(c => {
+      const row = document.createElement('div'); row.className='row';
+      row.innerHTML = `<span class="nm">${c.name}</span><span class="track" style="--w:${(c.pct/max*100)}%"></span><span class="pct">${c.pct}%</span>`;
+      wrap.appendChild(row);
+    });
+  })();
+
+  // ---- trust band ----
+  (function(){
+    const wrap = document.getElementById('trustMarks');
+    if (!wrap || !window.CATEGORIES) return;
+    CATEGORIES.forEach(c => { const s=document.createElement('span'); s.className='trust-mark'; s.textContent=c.label; wrap.appendChild(s); });
+  })();
+
+  // ---- stage 01: heatmap ----
+  (function(){
+    const data = window.DEMO && DEMO.auto; if (!data) return;
+    const rows = document.getElementById('vzHeatRows');
+    const grid = document.getElementById('vzHeatGrid');
+    ENGINES.forEach(e => {
+      const r=document.createElement('div'); r.className='r'; r.textContent=e; rows.appendChild(r);
+      data.heatmap[e].forEach(v => {
+        const c=document.createElement('div'); c.className='c';
+        c.style.background = v>.7?`rgba(217,154,108,${0.18+v*0.7})`:v>.5?`rgba(240,188,163,${0.14+v*0.55})`:v>.3?`rgba(155,131,197,${0.18+v*0.5})`:`rgba(155,131,197,${0.12+v*0.32})`;
+        grid.appendChild(c);
+      });
+    });
+  })();
+
+  // ---- stage 02: per-engine predicted lift ----
+  (function(){
+    const wrap = document.getElementById('vzLift'); if (!wrap) return;
+    const rows = [
+      { nm:'ChatGPT',    lift:2.4, conf:0.81 },
+      { nm:'Perplexity', lift:1.1, conf:0.76 },
+      { nm:'Google AIO', lift:0.6, conf:0.68 },
+      { nm:'Claude',     lift:0.4, conf:0.71 },
+      { nm:'Gemini',     lift:-0.2, conf:0.69 },
+      { nm:'Grok',       lift:0.1, conf:0.55 }
+    ];
+    const maxAbs = Math.max(...rows.map(r=>Math.abs(r.lift)));
+    rows.forEach(r => {
+      const w = (Math.abs(r.lift)/maxAbs*50);
+      const fill = r.lift < 0 ? `<span class="fill neg" style="width:${w}%"></span>` : `<span class="fill" style="width:${w}%"></span>`;
+      const row = document.createElement('div'); row.className='row';
+      row.innerHTML = `<span class="nm">${r.nm}</span><span class="track"><span class="mid"></span>${fill}</span><span class="val ${r.lift<0?'dn':''}">${r.lift>0?'+':''}${r.lift.toFixed(1)}pp</span>`;
+      wrap.appendChild(row);
+    });
+  })();
+
+  // ---- stage 03: action plan ----
+  (function(){
+    const wrap = document.getElementById('vzPlan'); if (!wrap) return;
+    const plan = [
+      { nm:'Schema deploy · XUV700 product pages', type:'Software',  cost:'₹0' },
+      { nm:'Enable AI crawlers · robots.txt',       type:'Software',  cost:'₹0' },
+      { nm:'Content brief · "best 7-seater SUV"',   type:'Software',  cost:'₹500' },
+      { nm:'PR placement · Autocar + OD India',     type:'Partner',   cost:'₹2.4L' },
+      { nm:'Long-form · reliability deep-dive',     type:'Partner',   cost:'₹85K' },
+      { nm:'Creative direction · brand voice',      type:'Your team', cost:'Internal' }
+    ];
+    const badge = { 'Software':'software', 'Partner':'partner', 'Your team':'brand' };
+    plan.forEach((p, i) => {
+      const item = document.createElement('div'); item.className='item';
+      item.innerHTML = `<span class="i">${String(i+1).padStart(2,'0')}</span><span class="nm">${p.nm}</span><span class="badge ${badge[p.type]}">${p.type}</span><span class="cost">${p.cost}</span>`;
+      wrap.appendChild(item);
+    });
+  })();
+
+  // ---- engine coverage cards ----
+  (function(){
+    const wrap = document.getElementById('engGrid'); if (!wrap) return;
+    const engines = [
+      { nm:'ChatGPT',    v:'600M+', s:'Weekly active users' },
+      { nm:'Google AIO', v:'2B+',   s:'Searches with AI' },
+      { nm:'Gemini',     v:'350M',  s:'Monthly users' },
+      { nm:'Perplexity', v:'22M',   s:'4× YoY growth' },
+      { nm:'Claude',     v:'19M',   s:'Monthly users' },
+      { nm:'Grok',       v:'15M',   s:'X integration' }
+    ];
+    const glow = ['glow-amber','glow-teal','glow-violet'];
+    engines.forEach((e, i) => {
+      const c = document.createElement('div');
+      c.className = `glass eng-card ${glow[i%3]} reveal`;
+      c.dataset.delay = (i%3)+1;
+      c.innerHTML = `<div class="nm">${e.nm}</div><div class="v">${e.v}</div><div class="s">↑ ${e.s}</div>`;
+      wrap.appendChild(c);
+      const io = new IntersectionObserver(es=>es.forEach(en=>{ if(en.isIntersecting){c.classList.add('in'); io.disconnect();} }), {threshold:.05});
+      io.observe(c);
+    });
+  })();
+
+  // ---- industries (deep-dives, brand-agnostic) ----
+  (function(){
+    const grid = document.getElementById('catGrid'); if (!grid) return;
+    CATEGORIES.forEach((c, i)=>{
+      const card = document.createElement('a');
+      card.href = `category.html?cat=${c.id}`;
+      card.className = `glass cat-card glow-${c.glow} reveal`;
+      card.dataset.delay = (i%4) + 1;
+      card.innerHTML = `
+        <span class="cat-arrow"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5h9M7 2.5l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div>
+          <span class="mono">${String(i+1).padStart(2,'0')}</span>
+          <h4>${c.label}</h4>
+          <p class="hook">${c.hook}</p>
+        </div>
+        <p class="qprev">↳ "${c.query}"</p>`;
+      grid.appendChild(card);
+      const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){card.classList.add('in'); io.disconnect();} }), {threshold:.05});
+      io.observe(card);
+    });
+  })();
+
+  // ---- CMO briefing lead capture ----
+  (function(){
+    const form = document.getElementById('briefForm');
+    if (!form) return;
+    const email = document.getElementById('briefEmail');
+    const done = document.getElementById('briefDone');
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const v = email.value.trim();
+      if (!v || !v.includes('@')) { email.style.borderColor = 'var(--neg)'; email.focus(); return; }
+      email.style.borderColor = '';
+      form.style.display = 'none';
+      done.classList.add('on');
+    });
+    email.addEventListener('input', () => { email.style.borderColor = ''; });
+  })();
+
+  // ---- source of truth · interactive ----
+  (function(){
+    const gt = window.GROUND_TRUTH && GROUND_TRUTH.auto;
+    const list = document.getElementById('gtList');
+    const ans  = document.getElementById('gtAns');
+    if (!gt || !list || !ans) return;
+
+    document.getElementById('gtQuery').textContent = '“' + gt.query + '”';
+
+    // state: every source starts grounded (on)
+    const state = {};
+    gt.sources.forEach(s => state[s.id] = true);
+
+    const stateLabel = { synced:'Synced', drift:'Price drift', review:'In review' };
+
+    // build the source toggles
+    gt.sources.forEach(s => {
+      const btn = document.createElement('button');
+      btn.className = 'gt-src on';
+      btn.dataset.id = s.id;
+      btn.setAttribute('aria-pressed', 'true');
+      btn.innerHTML = `
+        <span class="gt-tick"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.4 3.4L11 1.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="gt-src-main">
+          <span class="gt-src-grp">${s.group}</span>
+          <span class="gt-src-note">${s.facts} facts · synced ${s.synced}</span>
+        </span>
+        <span class="gt-src-state st-${s.status}">${stateLabel[s.status]}</span>`;
+      btn.addEventListener('click', () => {
+        state[s.id] = !state[s.id];
+        btn.classList.toggle('on', state[s.id]);
+        btn.setAttribute('aria-pressed', String(state[s.id]));
+        render();
+      });
+      list.appendChild(btn);
+    });
+
+    function render(){
+      ans.innerHTML = '';
+      gt.answer.forEach(seg => {
+        const grounded = state[seg.groundedBy];
+        const span = document.createElement('span');
+        span.className = 'gt-seg ' + (grounded ? 'on' : 'off');
+        span.textContent = (grounded ? seg.right : seg.wrong) + ' ';
+        ans.appendChild(span);
+      });
+      const on = gt.sources.filter(s => state[s.id]).length;
+      const total = gt.sources.length;
+      const errs = total - on;
+      const acc = Math.round((on / total) * 100);
+      document.getElementById('gtCount').textContent = `${on} / ${total} synced`;
+      document.getElementById('gtErr').textContent = errs;
+      const accEl = document.getElementById('gtAcc');
+      accEl.textContent = 'Accuracy ' + acc + '%';
+      accEl.className = 'gt-acc' + (acc === 100 ? ' good' : acc >= 60 ? ' mid' : ' bad');
+    }
+    render();
+  })();
+</script>
+</body>
+</html>
