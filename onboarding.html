@@ -3,223 +3,571 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="Start with Perceptivity — an interactive preview of how AI describes your brand across answer engines." />
-<title>Get started — Perceptivity</title>
+<title>Onboarding — Perceptivity</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..500;1,6..72,200..500&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="editorial.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;650;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="perceptivity.css">
 <style>
-  .ob{padding:120px 0 90px;min-height:90vh}
-  .ob-head{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:40px;flex-wrap:wrap}
-  .ob-steps{display:flex;gap:0;align-items:center;font-family:var(--mono);font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-4)}
-  .ob-steps .s{display:flex;align-items:center;gap:9px;padding:0 16px;position:relative}
-  .ob-steps .s:not(:last-child)::after{content:"";width:26px;height:1px;background:var(--rule-2);margin-left:16px}
-  .ob-steps .s .n{width:22px;height:22px;border-radius:50%;border:1px solid var(--rule-2);display:grid;place-items:center;font-size:10px}
-  .ob-steps .s.on{color:var(--ink)}
-  .ob-steps .s.on .n{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-  .ob-steps .s.done .n{background:var(--amber-ink);color:#fff;border-color:var(--amber-ink)}
+  .ob-wrap{padding:140px 0 80px;min-height:100vh}
+  .ob-console{
+    position:relative;padding:36px 40px 42px;
+    border-radius:42px;overflow:hidden;
+    max-width:1080px;margin:0 auto;
+  }
+  .ob-console .scan-line{top:0;animation: scan 5s linear infinite}
 
-  .ob-panel{display:none}
-  .ob-panel.on{display:block;animation:obIn .5s var(--ease)}
-  @keyframes obIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  /* progress */
+  .ob-progress{display:flex;align-items:center;gap:18px;margin-bottom:36px}
+  .ob-step-num{font-family:var(--fontMono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+  .ob-track{flex:1;height:2px;background:rgba(245,230,215,.08);border-radius:2px;position:relative;overflow:hidden}
+  .ob-track-fill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,var(--teal),var(--amber));border-radius:2px;transition:width .8s var(--ease)}
+  .ob-step-label{font-family:var(--fontMono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink)}
 
-  /* step 1 — form */
-  .ob-1{max-width:620px}
-  .ob-1 h1{max-width:16ch}
-  .ob-1 .lede{margin:18px 0 32px}
-  .ob-card{background:var(--card);border:1px solid var(--rule-2);border-radius:var(--r-lg);padding:30px}
-  .ob-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  @media (max-width:560px){ .ob-row{grid-template-columns:1fr} }
-  .ob-card .btn{width:100%;margin-top:8px}
+  /* steps */
+  .ob-step{display:none}
+  .ob-step.on{display:block;animation: stepIn .6s var(--ease)}
+  @keyframes stepIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
-  /* step 2 — recorded scan */
-  .ob-2{max-width:760px;margin:0 auto;text-align:center}
-  .ob-2 h2{max-width:18ch;margin:0 auto}
-  .scan-stage{margin-top:36px;text-align:left}
-  .scan-engines{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule-2);border-radius:var(--r-lg);overflow:hidden}
-  @media (max-width:560px){ .scan-engines{grid-template-columns:1fr} }
-  .scan-eng{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 18px;background:var(--card);font-family:var(--mono);font-size:12.5px;color:var(--ink-2);letter-spacing:0.02em}
-  .scan-eng .stt{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-4);display:flex;align-items:center;gap:7px}
-  .scan-eng .blink{width:6px;height:6px;border-radius:50%;background:var(--amber)}
-  .scan-eng.done{color:var(--ink)}
-  .scan-eng.done .stt{color:var(--amber-ink)}
-  .scan-eng.done .blink{background:var(--pos);animation:none}
-  .scan-eng.active .blink{animation:dotpulse 1s infinite}
-  @keyframes dotpulse{0%,100%{opacity:1}50%{opacity:.25}}
-  .scan-bar{margin-top:22px;height:3px;background:var(--paper-3);border-radius:2px;overflow:hidden}
-  .scan-bar .f{height:100%;width:0;background:var(--amber);transition:width .4s linear}
-  .scan-cap{margin-top:16px;font-family:var(--mono);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-3);display:flex;justify-content:space-between;gap:10px}
+  .ob-step h2{font-family:var(--fontDisplay);font-size:clamp(34px,4.4vw,52px);font-weight:600;line-height:1;letter-spacing:-0.045em;max-width:18ch;margin-bottom:14px}
+  .ob-step .lede{color:var(--ink);opacity:.84;font-size:18px;max-width:56ch;margin-bottom:36px;line-height:1.55}
 
-  /* step 3 — first read */
-  .ob-3{max-width:920px;margin:0 auto}
-  .read-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:32px}
-  @media (max-width:760px){ .read-grid{grid-template-columns:1fr} }
-  .read-full{grid-column:1/-1}
-  .miss-row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--rule);font-size:14px;color:var(--ink-2)}
-  .miss-row:last-child{border-bottom:none}
-  .move-row{display:grid;grid-template-columns:24px 1fr auto;gap:13px;align-items:center;padding:13px 0;border-bottom:1px solid var(--rule)}
-  .move-row:last-child{border-bottom:none}
-  .move-row .mi{font-family:var(--mono);font-size:11px;color:var(--amber-ink)}
-  .move-row .mn{font-size:14.5px;color:var(--ink)}
-  .move-row .ml{font-family:var(--mono);font-size:12px;color:var(--pos)}
-  .ob-cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:32px;align-items:center}
-  @media (max-width:640px){ .ob{padding:92px 0 64px} .ob-card{padding:22px} }
+  .ob-actions{margin-top:42px;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+  .ob-back{font-family:var(--fontMono);font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);background:none;border:none;cursor:pointer}
+  .ob-back:hover{color:var(--ink)}
+
+  /* === Step 1 — categories === */
+  .cat-mini-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:8px}
+  @media (max-width:780px){ .cat-mini-grid{grid-template-columns:repeat(2,1fr)} }
+  .cat-mini{
+    padding:16px 16px 18px;border-radius:18px;cursor:pointer;
+    background:rgba(7,7,19,.45);border:1px solid var(--line);
+    transition: border-color .25s var(--ease), background .25s var(--ease);
+  }
+  .cat-mini:hover{border-color:var(--lineStrong)}
+  .cat-mini.on{border-color:var(--teal);background:var(--tealSoft)}
+  .cat-mini .mono{color:var(--muted);font-size:10px}
+  .cat-mini h5{font-family:var(--fontDisplay);font-size:16px;font-weight:600;line-height:1.15;letter-spacing:-0.02em;color:var(--ink)}
+
+  /* === Forms === */
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  @media (max-width:780px){ .form-grid{grid-template-columns:1fr} }
+  .full{grid-column:1/-1}
+  .chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+  .rivals{display:flex;flex-direction:column;gap:10px}
+  .rival-row{display:flex;gap:10px;align-items:center}
+  .rival-row .input{flex:1}
+  .rival-row .x{
+    width:36px;height:36px;border-radius:50%;border:1px solid var(--line);
+    display:grid;place-items:center;color:var(--muted);background:transparent;
+    transition:color .2s, border-color .2s;
+  }
+  .rival-row .x:hover{color:var(--neg);border-color:var(--neg)}
+  .add-rival{
+    align-self:flex-start;margin-top:4px;
+    font-family:var(--fontMono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);
+    padding:8px 14px;border:1px dashed rgba(138,199,194,.4);border-radius:999px;
+  }
+  .add-rival:hover{background:var(--tealSoft)}
+
+  .counter{
+    margin-top:30px;padding:20px 22px;border-radius:18px;
+    background:rgba(7,7,19,.5);border:1px solid var(--line);
+    display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;
+  }
+  .counter .mono{color:var(--muted)}
+  .counter .big{font-family:var(--fontDisplay);font-size:30px;font-weight:600;letter-spacing:-0.035em;color:var(--ink);line-height:1.15;margin-top:6px}
+  .counter .big em{font-style:normal;color:var(--amber);font-weight:600}
+
+  /* Step 4 — question picker */
+  .qpicker{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+  .qoption{
+    padding:14px 16px;border-radius:14px;cursor:pointer;
+    background:rgba(7,7,19,.4);border:1px solid var(--line);
+    display:flex;justify-content:space-between;align-items:center;gap:14px;
+    transition:.2s;
+  }
+  .qoption:hover{border-color:var(--lineStrong)}
+  .qoption.on{border-color:var(--teal);background:var(--tealSoft);color:var(--ink)}
+  .qoption .qtxt{font-size:14.5px;color:var(--ink);line-height:1.4;flex:1}
+  .qoption .qcheck{
+    width:22px;height:22px;border-radius:50%;border:1px solid var(--lineStrong);
+    display:grid;place-items:center;flex-shrink:0;
+    transition:.2s;
+  }
+  .qoption.on .qcheck{background:var(--teal);border-color:var(--teal);color:var(--void)}
+  .qoption .qcheck svg{opacity:0;transition:opacity .2s}
+  .qoption.on .qcheck svg{opacity:1}
+  .qcount{
+    font-family:var(--fontMono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-top:14px;
+  }
+  .qcount b{color:var(--ink);font-weight:500}
+
+  /* === Step 5 — the scan === */
+  .scan-stage{
+    position:relative;height:520px;border-radius:32px;overflow:hidden;
+    background:linear-gradient(160deg, rgba(7,7,19,.75), rgba(23,18,39,.75));
+    border:1px solid var(--line);
+  }
+  .scan-stage .drift-grid{position:absolute;inset:0;opacity:.5}
+  .scan-eye{
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:200px;height:200px;border-radius:50%;
+    background:
+      radial-gradient(circle at 50% 50%, transparent 56%, rgba(245,230,215,.18) 57%, transparent 60%),
+      radial-gradient(circle at 50% 50%, transparent 70%, rgba(217,154,108,.30) 71%, transparent 74%),
+      radial-gradient(circle at 50% 50%, transparent 82%, rgba(138,199,194,.22) 83%, transparent 86%);
+  }
+  .scan-eye::before{
+    content:"";position:absolute;inset:34%;border-radius:50%;
+    background:radial-gradient(circle at 38% 38%, var(--ink), var(--peach) 50%, var(--amber) 100%);
+    box-shadow: 0 0 40px rgba(240,188,163,.5);
+    animation: pulse-soft 2s ease-in-out infinite;
+  }
+  .scan-sweep{
+    position:absolute;left:0;right:0;top:50%;height:1px;
+    background:linear-gradient(90deg,transparent,var(--teal),transparent);
+    box-shadow:0 0 16px var(--teal);
+    animation: stage-sweep 3s ease-in-out infinite;
+  }
+  @keyframes stage-sweep{
+    0%{top:6%;opacity:0}10%{opacity:1}90%{opacity:1}100%{top:94%;opacity:0}
+  }
+  .engines-ring{position:absolute;inset:0}
+  .engine-chip{
+    position:absolute;
+    display:inline-flex;align-items:center;gap:8px;
+    padding:8px 12px;border-radius:999px;
+    background:rgba(7,7,19,.85);border:1px solid var(--line);backdrop-filter:blur(10px);
+    font-family:var(--fontMono);font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);
+    transition: color .4s var(--ease), border-color .4s var(--ease), background .4s var(--ease), box-shadow .4s var(--ease);
+    transform:translate(-50%,-50%);white-space:nowrap;
+  }
+  .engine-chip .nd{width:6px;height:6px;border-radius:50%;background:var(--muted);transition:background .4s, box-shadow .4s}
+  .engine-chip.lit{color:var(--ink);border-color:var(--teal);background:var(--tealSoft);box-shadow:0 0 24px rgba(138,199,194,.35)}
+  .engine-chip.lit .nd{background:var(--teal);box-shadow:0 0 10px var(--teal)}
+
+  .scan-readout{
+    position:absolute;left:30px;bottom:24px;right:30px;
+    display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;
+    font-family:var(--fontMono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);
+  }
+  .scan-readout b{color:var(--ink);font-weight:500}
+  .scan-counter{font-family:var(--fontDisplay);font-size:48px;font-weight:600;letter-spacing:-0.04em;color:var(--ink);line-height:1}
+
+  .scan-status{
+    position:absolute;left:30px;top:24px;
+    font-family:var(--fontMono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink);
+    display:flex;align-items:center;gap:10px;
+  }
+  .scan-status .dot{background:var(--amber);box-shadow:0 0 12px var(--amber)}
+
+  .demo-note{
+    text-align:center;margin-top:16px;
+    font-family:var(--fontMono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);
+  }
+
+  @media (max-width:640px){
+    .ob-wrap{padding:100px 0 56px}
+    .ob-console{padding:24px 18px 28px;border-radius:28px}
+    .ob-progress{gap:12px;margin-bottom:26px}
+    .ob-step-label{display:none}
+    .ob-step h2{font-size:clamp(26px,7.5vw,34px)}
+    .ob-step .lede{font-size:16px;margin-bottom:26px}
+    .ob-actions{margin-top:30px;gap:12px}
+    .ob-actions .btn{flex:1 1 auto;justify-content:center}
+    .counter{margin-top:22px;padding:18px}
+    .counter .big{font-size:24px}
+
+    .scan-stage{height:420px}
+    .scan-eye{width:150px;height:150px}
+    .engine-chip{font-size:9.5px;padding:6px 9px}
+    .scan-readout{left:18px;right:18px;bottom:18px;gap:12px}
+    .scan-status{left:18px;top:18px}
+    .scan-counter{font-size:36px}
+  }
 </style>
+<link rel="stylesheet" href="theme-adaptive.css">
+<script src="theme.js"></script>
 </head>
 <body>
 
-<section class="ob">
-  <div class="wrap">
-    <div class="ob-head">
-      <div class="kicker"><span class="ln"></span> Get started</div>
-      <div class="ob-steps" id="obSteps">
-        <span class="s on" data-s="1"><span class="n">1</span> Your brand</span>
-        <span class="s" data-s="2"><span class="n">2</span> Preview scan</span>
-        <span class="s" data-s="3"><span class="n">3</span> First read</span>
-      </div>
-    </div>
+<section class="ob-wrap">
+  <div class="container">
+    <div class="glass ob-console reveal in">
+      <div class="scan-line"></div>
 
-    <!-- STEP 1 -->
-    <div class="ob-panel on ob-1" data-panel="1">
-      <h1 class="display d-lg">See how AI describes your brand — in two minutes.</h1>
-      <p class="lede">This is an interactive preview built on illustrative data, so you can feel the product before we run your real scan. No credentials, no live API calls.</p>
-      <div class="ob-card">
-        <div class="ob-row">
-          <div class="field"><label for="brand">Your brand</label><input class="input" id="brand" type="text" placeholder="e.g. Mahindra" /></div>
-          <div class="field"><label for="cat">Category</label>
-            <select class="input" id="cat">
-              <option>Automotive &amp; EV</option>
-              <option>Paints &amp; home</option>
-              <option>BFSI &amp; fintech</option>
-              <option>FMCG &amp; packaged goods</option>
-              <option>Real estate &amp; proptech</option>
-              <option>Beauty &amp; personal care</option>
-              <option>Travel &amp; hospitality</option>
+      <div class="ob-progress">
+        <span class="ob-step-num" id="stepNum">Step 01 / 05</span>
+        <div class="ob-track"><div class="ob-track-fill" id="trackFill" style="width:20%"></div></div>
+        <span class="ob-step-label" id="stepLabel">Confirm category</span>
+      </div>
+
+      <!-- STEP 1 — CATEGORY -->
+      <div class="ob-step on" data-step="1">
+        <span class="kicker">Step 01 · Category</span>
+        <h2 style="margin-top:18px">Confirm the world your buyer asks about.</h2>
+        <p class="lede">Your workspace is shaped by the buyer questions in your category. We've pre-filled the closest match.</p>
+        <div class="cat-mini-grid" id="catMiniGrid"></div>
+        <div class="ob-actions">
+          <a class="ob-back" href="index.html#categories">← Back</a>
+          <button class="btn primary btn-lg" data-next>Continue <span class="arrow">→</span></button>
+        </div>
+      </div>
+
+      <!-- STEP 2 — YOU -->
+      <div class="ob-step" data-step="2">
+        <span class="kicker">Step 02 · You</span>
+        <h2 style="margin-top:18px">A few details, so we can set up your workspace.</h2>
+        <p class="lede">We'll email a shareable version of the dashboard you're about to see. No password, no spam.</p>
+
+        <div class="form-grid">
+          <div class="field">
+            <label>Full name</label>
+            <input class="input" id="userName" placeholder="Priya Iyer" />
+          </div>
+          <div class="field">
+            <label>Designation</label>
+            <select class="input" id="userRole">
+              <option>CMO</option>
+              <option>VP Marketing</option>
+              <option>Head of Brand</option>
+              <option>Head of Digital</option>
+              <option>Brand Manager</option>
+              <option>Performance Marketing</option>
+              <option>Founder / CEO</option>
+              <option>Agency / Consultant</option>
+              <option>Other</option>
             </select>
           </div>
+          <div class="field full">
+            <label>Work email</label>
+            <input class="input" type="email" id="userEmail" placeholder="priya@brand.com" />
+            <span class="mono" style="margin-top:4px;color:var(--muted)">We'll send your dashboard link here. No marketing emails.</span>
+          </div>
         </div>
-        <div class="field"><label for="rival">A key competitor <span style="text-transform:none;letter-spacing:0;color:var(--ink-4)">(optional)</span></label><input class="input" id="rival" type="text" placeholder="e.g. Tata Motors" /></div>
-        <button class="btn amber lg" id="startScan">Run the preview scan <span class="arrow">→</span></button>
-      </div>
-      <p class="illus" style="margin-top:16px">Interactive preview · figures are illustrative model outputs, not a live query</p>
-    </div>
 
-    <!-- STEP 2 -->
-    <div class="ob-panel ob-2" data-panel="2">
-      <div class="kicker" style="justify-content:center;margin-bottom:18px"><span class="ln"></span> Recorded preview scan</div>
-      <h2 class="display d-md">Querying the answer engines for <span class="amber" id="scanBrand">your brand</span>…</h2>
-      <div class="scan-stage">
-        <div class="scan-engines" id="scanEngines"></div>
-        <div class="scan-bar"><div class="f" id="scanFill"></div></div>
-        <div class="scan-cap"><span id="scanCount">0 / 7 engines</span><span>Recorded preview · not a live API call</span></div>
+        <div class="ob-actions">
+          <button class="ob-back" data-prev>← Back</button>
+          <button class="btn primary btn-lg" data-next id="step2Next">Continue <span class="arrow">→</span></button>
+        </div>
       </div>
-    </div>
 
-    <!-- STEP 3 -->
-    <div class="ob-panel ob-3" data-panel="3">
-      <div class="kicker"><span class="ln"></span> Your first read</div>
-      <h2 class="display d-md" style="margin-top:14px;max-width:20ch">Here's where <span id="readBrand">your brand</span> stands today.</h2>
-      <div class="read-grid">
-        <div class="term">
-          <div class="term-bar"><span class="ttl"><span class="dot"></span>Answer share · this category</span><span class="meta">Illustrative</span></div>
-          <div class="term-body"><div class="bars" id="readShare"></div></div>
+      <!-- STEP 3 — BRAND & COMPETITORS -->
+      <div class="ob-step" data-step="3">
+        <span class="kicker">Step 03 · Brand & rivals</span>
+        <h2 style="margin-top:18px">Your brand. Your three biggest rivals.</h2>
+        <p class="lede">We benchmark you against the three brands AI is most likely to recommend instead. Edit the pre-fills with your real competitive set.</p>
+
+        <div class="form-grid">
+          <div class="field full">
+            <label>Your brand</label>
+            <input class="input" id="brandIn" value="Mahindra" />
+          </div>
+          <div class="field full">
+            <label>Up to 3 competitors</label>
+            <div class="rivals" id="rivals"></div>
+            <button class="add-rival" id="addRival">+ Add competitor</button>
+          </div>
         </div>
-        <div class="term">
-          <div class="term-bar"><span class="ttl"><span class="dot"></span>What AI gets wrong</span><span class="meta">Illustrative</span></div>
-          <div class="term-body" style="padding-top:4px;padding-bottom:4px" id="readMiss"></div>
-        </div>
-        <div class="term read-full">
-          <div class="term-bar"><span class="ttl"><span class="dot"></span>Three forecasted moves</span><span class="meta">Model output</span></div>
-          <div class="term-body" style="padding-top:4px;padding-bottom:4px" id="readMoves"></div>
+
+        <div class="ob-actions">
+          <button class="ob-back" data-prev>← Back</button>
+          <button class="btn primary btn-lg" data-next>Continue <span class="arrow">→</span></button>
         </div>
       </div>
-      <div class="ob-cta">
-        <a class="btn amber lg" href="demo.html">Book a demo on your real data <span class="arrow">→</span></a>
-        <a class="btn lg" href="index.html">Back to home</a>
-        <span class="illus" style="margin-left:auto">This was a preview · your real scan runs before the demo</span>
+
+      <!-- STEP 4 — QUESTIONS & MARKETS -->
+      <div class="ob-step" data-step="4">
+        <span class="kicker">Step 04 · Question set & markets</span>
+        <h2 style="margin-top:18px">Pick the buyer questions that matter most.</h2>
+        <p class="lede">Choose up to five questions from the category set. Your workspace forecasts visibility and lift specifically for these.</p>
+
+        <div class="field full" style="margin-bottom:24px">
+          <label>Markets</label>
+          <div class="chip-row" id="markets">
+            <span class="chip on" data-m="India"><span class="x"></span>India</span>
+            <span class="chip on" data-m="Metros"><span class="x"></span>Metros</span>
+            <span class="chip" data-m="Tier 2 / 3">Tier 2 / 3</span>
+            <span class="chip" data-m="South Asia">South Asia</span>
+            <span class="chip" data-m="Global">Global</span>
+          </div>
+        </div>
+
+        <div class="field full">
+          <label>Buyer questions <span style="color:var(--ink);opacity:.6;text-transform:none;letter-spacing:0">— up to 5</span></label>
+          <div class="qpicker" id="qpicker"></div>
+          <div class="qcount"><b id="qSel">0</b> / 5 questions selected</div>
+        </div>
+
+        <div class="counter">
+          <div>
+            <div class="mono">Scan plan</div>
+            <div class="big">We'll run <em><span id="qCount">1,284</span></em> total questions across <em>7</em> engines for <em><span id="brandConfirm">Mahindra</span></em>.</div>
+          </div>
+          <div class="mono">~ <span id="rivalCount">3</span> rivals · <span id="markCount">2</span> markets</div>
+        </div>
+
+        <div class="ob-actions">
+          <button class="ob-back" data-prev>← Back</button>
+          <button class="btn primary btn-lg" data-next>Run the scan <span class="arrow">→</span></button>
+        </div>
       </div>
+
+      <!-- STEP 5 — THE SCAN -->
+      <div class="ob-step" data-step="5">
+        <span class="kicker">Step 05 · Sense</span>
+        <h2 style="margin-top:18px">Mapping perception across seven engines.</h2>
+        <p class="lede">Simulated scan — no real API calls in this demo. In production this runs in parallel across every answer surface.</p>
+
+        <div class="scan-stage">
+          <div class="drift-grid"></div>
+          <div class="scan-sweep"></div>
+          <div class="scan-eye pulse"></div>
+          <div class="engines-ring" id="enginesRing"></div>
+
+          <div class="scan-status"><span class="dot"></span> <span id="scanStatus">Initialising perception scan…</span></div>
+
+          <div class="scan-readout">
+            <div>questions processed<br/><span class="scan-counter" id="qProc">0</span></div>
+            <div style="text-align:right">engines online<br/><span class="scan-counter" id="eOn">0 / 7</span></div>
+          </div>
+        </div>
+
+        <p class="demo-note">Opening your brand-specific dashboard automatically…</p>
+      </div>
+
     </div>
   </div>
 </section>
 
-<script src="editorial.js"></script>
+<script src="demo-data.js"></script>
+<script src="chrome.js"></script>
 <script>
-(function(){
-  const ENGINES = ["ChatGPT","Perplexity","Gemini","Claude","Copilot","Google AIO","Grok"];
-  const $ = s => document.querySelector(s);
-  let brand = 'your brand', rival = 'Tata Motors';
+  // ---- read category from URL or storage ----
+  const params = new URLSearchParams(location.search);
+  const initCat = params.get('category') || PCV.get().category || 'auto';
 
-  function go(step){
-    document.querySelectorAll('.ob-panel').forEach(p=>p.classList.toggle('on', p.dataset.panel==String(step)));
-    document.querySelectorAll('.ob-steps .s').forEach(s=>{
-      const n=+s.dataset.s; s.classList.toggle('on', n===step); s.classList.toggle('done', n<step);
-    });
-    window.scrollTo({top:0,behavior:'smooth'});
+  // ---- step state ----
+  let step = 1;
+  let chosenCat = initCat;
+  const STEPS = [
+    { num: '01 / 05', label: 'Confirm category', fill: 20 },
+    { num: '02 / 05', label: 'About you',         fill: 40 },
+    { num: '03 / 05', label: 'Brand & rivals',    fill: 60 },
+    { num: '04 / 05', label: 'Questions & markets', fill: 80 },
+    { num: '05 / 05', label: 'Perception scan',   fill: 100 },
+  ];
+
+  const stepNum = document.getElementById('stepNum');
+  const stepLabel = document.getElementById('stepLabel');
+  const trackFill = document.getElementById('trackFill');
+
+  function setStep(n){
+    step = n;
+    document.querySelectorAll('.ob-step').forEach(s => s.classList.toggle('on', +s.dataset.step === n));
+    stepNum.textContent = 'Step ' + STEPS[n-1].num;
+    stepLabel.textContent = STEPS[n-1].label;
+    trackFill.style.width = STEPS[n-1].fill + '%';
+    window.scrollTo({top:0, behavior:'smooth'});
+    if (n === 4) refreshStep4();
+    if (n === 5) runScan();
   }
 
-  $('#startScan').addEventListener('click', ()=>{
-    const b=$('#brand').value.trim(); const r=$('#rival').value.trim();
-    if(b) brand=b; if(r) rival=r;
-    $('#scanBrand').textContent = brand;
-    $('#readBrand').textContent = brand;
-    go(2);
-    runScan();
+  document.querySelectorAll('[data-next]').forEach(b => b.addEventListener('click', () => {
+    if (step === 1) { PCV.set({ category: chosenCat }); }
+    if (step === 2) {
+      const email = document.getElementById('userEmail').value.trim();
+      const name  = document.getElementById('userName').value.trim();
+      const role  = document.getElementById('userRole').value;
+      // soft validate but don't block — demo
+      if (!email || !email.includes('@')) {
+        document.getElementById('userEmail').focus();
+        document.getElementById('userEmail').style.borderColor = 'var(--neg)';
+        return;
+      }
+      PCV.set({ email, name, role });
+    }
+    if (step === 3) {
+      const brand = document.getElementById('brandIn').value.trim();
+      const rivals = window._rivals || [];
+      PCV.set({ brand, competitors: rivals });
+    }
+    if (step === 4) {
+      const markets = [...document.querySelectorAll('#markets .chip.on')].map(c => c.dataset.m);
+      const questions = [...document.querySelectorAll('#qpicker .qoption.on')].map(q => q.dataset.q);
+      PCV.set({ markets, questions, brandComplete: true });
+    }
+    setStep(Math.min(STEPS.length, step + 1));
+  }));
+  document.querySelectorAll('[data-prev]').forEach(b => b.addEventListener('click', () => setStep(Math.max(1, step - 1))));
+
+  // ---- step 1 mini grid ----
+  const miniGrid = document.getElementById('catMiniGrid');
+  CATEGORIES.forEach(c => {
+    const t = document.createElement('div');
+    t.className = 'cat-mini' + (c.id === chosenCat ? ' on' : '');
+    t.dataset.id = c.id;
+    t.innerHTML = `<h5>${c.label}</h5>`;
+    t.addEventListener('click', () => {
+      chosenCat = c.id;
+      miniGrid.querySelectorAll('.cat-mini').forEach(x => x.classList.toggle('on', x.dataset.id === c.id));
+      document.getElementById('brandIn').value = c.brand;
+    });
+    miniGrid.appendChild(t);
+  });
+  // initial pre-fills based on chosen category
+  const initialCat = CATEGORIES.find(c => c.id === chosenCat) || CATEGORIES[0];
+  document.getElementById('brandIn').value = initialCat.brand;
+
+  // ---- step 2 — pre-fill from storage ----
+  const persisted = PCV.get();
+  if (persisted.email) document.getElementById('userEmail').value = persisted.email;
+  if (persisted.name)  document.getElementById('userName').value  = persisted.name;
+  if (persisted.role)  document.getElementById('userRole').value  = persisted.role;
+  document.getElementById('userEmail').addEventListener('input', e => { e.target.style.borderColor = ''; });
+
+  // ---- step 3 — rivals ----
+  const rivalsEl = document.getElementById('rivals');
+  function renderRivals(arr){
+    rivalsEl.innerHTML = '';
+    arr.forEach((name, i) => {
+      const r = document.createElement('div');
+      r.className = 'rival-row';
+      r.innerHTML = `
+        <input class="input" value="${name}" />
+        <button class="x" aria-label="Remove">
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 2l7 7M9 2l-7 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </button>`;
+      r.querySelector('.x').addEventListener('click', () => { arr.splice(i,1); renderRivals(arr); });
+      r.querySelector('input').addEventListener('input', e => { arr[i] = e.target.value; });
+      rivalsEl.appendChild(r);
+    });
+    window._rivals = arr;
+  }
+  const seedRivals = ((CATEGORY_INSIGHTS[chosenCat] && CATEGORY_INSIGHTS[chosenCat].leaderboard) || DEMO.auto.answerShare)
+    .filter(b => b.name && b.name !== initialCat.brand && b.name !== 'Long tail')
+    .slice(0, 3).map(b => b.name);
+  renderRivals(seedRivals.length ? seedRivals : [...DEMO.auto.competitors]);
+  document.getElementById('addRival').addEventListener('click', () => {
+    if (window._rivals.length >= 5) return;
+    window._rivals.push('New competitor');
+    renderRivals(window._rivals);
   });
 
-  function runScan(){
-    const wrap=$('#scanEngines'); wrap.innerHTML='';
-    const fill=$('#scanFill'); const count=$('#scanCount');
-    ENGINES.forEach(e=>{
-      const row=document.createElement('div'); row.className='scan-eng'; row.dataset.eng=e;
-      row.innerHTML='<span>'+e+'</span><span class="stt"><span class="blink"></span>queued</span>';
-      wrap.appendChild(row);
+  // ---- step 4 — question picker, markets, counter ----
+  function refreshStep4(){
+    const insight = CATEGORY_INSIGHTS[chosenCat] || CATEGORY_INSIGHTS.auto;
+    const qp = document.getElementById('qpicker');
+    qp.innerHTML = '';
+    insight.buyerQuestions.forEach((q, i) => {
+      const opt = document.createElement('div');
+      opt.className = 'qoption' + (i < 3 ? ' on' : '');  // pre-select first three
+      opt.dataset.q = q;
+      opt.innerHTML = `
+        <span class="qtxt">${q}</span>
+        <span class="qcheck"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5L4 7.5L10 1.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`;
+      opt.addEventListener('click', () => {
+        const isOn = opt.classList.contains('on');
+        if (!isOn && document.querySelectorAll('#qpicker .qoption.on').length >= 5) return;
+        opt.classList.toggle('on');
+        updateCounter();
+      });
+      qp.appendChild(opt);
     });
-    let i=0;
-    function tick(){
-      if(i>0){ const prev=wrap.children[i-1]; prev.classList.remove('active'); prev.classList.add('done'); prev.querySelector('.stt').innerHTML='<span class="blink"></span>scanned'; }
-      if(i>=ENGINES.length){ fill.style.width='100%'; count.textContent=ENGINES.length+' / '+ENGINES.length+' engines'; setTimeout(()=>{ buildRead(); go(3); }, 700); return; }
-      const cur=wrap.children[i]; cur.classList.add('active'); cur.querySelector('.stt').innerHTML='<span class="blink"></span>querying…';
-      fill.style.width=((i+1)/ENGINES.length*100)+'%';
-      count.textContent=(i+1)+' / '+ENGINES.length+' engines';
-      i++;
-      setTimeout(tick, 520);
-    }
-    setTimeout(tick, 400);
+
+    document.getElementById('brandConfirm').textContent =
+      (document.getElementById('brandIn') && document.getElementById('brandIn').value) || initialCat.brand;
+    updateCounter();
   }
 
-  function buildRead(){
-    // illustrative answer-share — brand sits mid-pack behind the rival
-    const share=[
-      {nm:rival.slice(0,14), v:31},
-      {nm:brand.slice(0,14), v:24, you:true},
-      {nm:'Hyundai', v:18},
-      {nm:'Toyota', v:12},
-      {nm:'Long tail', v:15}
-    ];
-    const max=Math.max(...share.map(s=>s.v));
-    const sw=$('#readShare'); sw.innerHTML='';
-    share.forEach(s=>{
-      const row=document.createElement('div'); row.className='bar-row';
-      row.innerHTML='<span class="nm'+(s.you?' ':'')+'">'+s.nm+'</span><span class="track"><span class="fill '+(s.you?'you':'')+'" style="width:'+(s.v/max*100)+'%"></span></span><span class="val'+(s.you?' you':'')+'">'+s.v+'%</span>';
-      sw.appendChild(row);
-    });
-    const miss=[
-      {t:'Quotes last year\u2019s pricing', e:'2 engines'},
-      {t:'Names a rival as "most reliable"', e:'3 engines'},
-      {t:'Misses your service-network claim', e:'4 engines'}
-    ];
-    const mw=$('#readMiss'); mw.innerHTML='';
-    miss.forEach(m=>{ const r=document.createElement('div'); r.className='miss-row'; r.innerHTML='<span>'+m.t+'</span><span class="tag neg"><span class="dot"></span>'+m.e+'</span>'; mw.appendChild(r); });
-    const moves=[
-      {n:'Correct the outdated pricing claims', l:'+1.2pp'},
-      {n:'Publish a category reliability comparison', l:'+2.4pp'},
-      {n:'Win a tier-1 trade citation', l:'+3.8pp'}
-    ];
-    const vw=$('#readMoves'); vw.innerHTML='';
-    moves.forEach((m,i)=>{ const r=document.createElement('div'); r.className='move-row'; r.innerHTML='<span class="mi">'+String(i+1).padStart(2,'0')+'</span><span class="mn">'+m.n+'</span><span class="ml">'+m.l+' predicted</span>'; vw.appendChild(r); });
+  const marketsEl = document.getElementById('markets');
+  marketsEl.addEventListener('click', e => {
+    const chip = e.target.closest('.chip'); if (!chip) return;
+    chip.classList.toggle('on');
+    if (chip.classList.contains('on') && !chip.querySelector('.x')) {
+      chip.insertAdjacentHTML('afterbegin','<span class="x"></span>');
+    } else if (!chip.classList.contains('on') && chip.querySelector('.x')) {
+      chip.querySelector('.x').remove();
+    }
+    updateCounter();
+  });
+
+  function updateCounter(){
+    const rivalN = (window._rivals || []).length;
+    const markN = marketsEl.querySelectorAll('.chip.on').length;
+    const qSelN = document.querySelectorAll('#qpicker .qoption.on').length;
+    const q = (300 + qSelN * 180) * Math.max(1, markN) * Math.max(1, rivalN ? 1 : 0.6);
+    document.getElementById('qCount').textContent = Math.round(q).toLocaleString();
+    document.getElementById('rivalCount').textContent = rivalN;
+    document.getElementById('markCount').textContent = markN;
+    document.getElementById('qSel').textContent = qSelN;
   }
-})();
+
+  // ---- step 5 — the scan ----
+  const ring = document.getElementById('enginesRing');
+  ENGINES.forEach((name, i) => {
+    const angle = (i / ENGINES.length) * Math.PI * 2 - Math.PI/2;
+    const narrow = window.matchMedia('(max-width:560px)').matches;
+    const rx = narrow ? 29 : 38, ry = narrow ? 40 : 38;
+    const cx = 50 + Math.cos(angle) * rx;
+    const cy = 50 + Math.sin(angle) * ry;
+    const chip = document.createElement('div');
+    chip.className = 'engine-chip';
+    chip.style.left = cx + '%';
+    chip.style.top  = cy + '%';
+    chip.innerHTML = `<span class="nd"></span> ${name}`;
+    chip.dataset.engine = name;
+    ring.appendChild(chip);
+  });
+
+  let scanRan = false;
+  function runScan(){
+    if (scanRan) return; scanRan = true;
+    const chips = [...ring.querySelectorAll('.engine-chip')];
+    const qEl = document.getElementById('qProc');
+    const eEl = document.getElementById('eOn');
+    const statusEl = document.getElementById('scanStatus');
+    const total = parseInt(document.getElementById('qCount').textContent.replace(/,/g,''), 10) || 1284;
+    let qNow = 0;
+    let lit = 0;
+    const statuses = [
+      'Initialising perception scan…',
+      'Polling ChatGPT and Perplexity…',
+      'Crawling answer surfaces…',
+      'Extracting citations and claims…',
+      'Mapping competitor mentions…',
+      'Resolving entity graph…',
+      'Perception mapped.'
+    ];
+    let sIdx = 0;
+    const counterDur = 5200;
+    const t0 = performance.now();
+    const tick = (now) => {
+      const p = Math.min(1, (now - t0) / counterDur);
+      qNow = Math.floor(total * p);
+      qEl.textContent = qNow.toLocaleString();
+      const ns = Math.min(statuses.length - 1, Math.floor(p * statuses.length));
+      if (ns !== sIdx) { sIdx = ns; statusEl.textContent = statuses[ns]; }
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+
+    chips.forEach((c, i) => {
+      setTimeout(() => {
+        c.classList.add('lit');
+        lit++;
+        eEl.textContent = `${lit} / 7`;
+        if (lit === chips.length) {
+          setTimeout(() => {
+            statusEl.textContent = 'Perception mapped.';
+            // auto-advance straight to the brand-specific dashboard
+            setTimeout(() => { location.href = 'dashboard.html?personalized=1'; }, 1100);
+          }, 500);
+        }
+      }, 400 + i * 580);
+    });
+  }
 </script>
 </body>
 </html>
