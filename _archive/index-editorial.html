@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Perceptivity is the India-first answer-engine platform. See the brand AI recommends instead of you, forecast the lift of a campaign before you spend, and prove it — across ChatGPT, Perplexity, Gemini, Claude, Google AIO, and India's retail-AI surfaces." />
+<title>Perceptivity — See the brand AI recommends instead of you</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..500;1,6..72,200..500&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="editorial.css">
+<link rel="stylesheet" href="home-editorial.css">
+</head>
+<body>
+
+<!-- ============================================================
+     01 · HERO — the fear, made personal (the one void moment)
+     ============================================================ -->
+<header class="hero" id="top">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="hero-grain" aria-hidden="true"></div>
+  <div class="wrap on-void">
+    <div class="hero-grid">
+      <div>
+        <div class="kicker on-dark reveal"><span class="ln"></span> India-first answer-engine optimisation</div>
+        <h1 class="display d-xxl reveal" data-d="1" style="margin-top:22px">See the brand AI <span class="amber">recommends</span> instead of you.</h1>
+        <p class="hero-sub reveal" data-d="2">When buyers ask ChatGPT, Perplexity or Gemini what to buy, one brand gets named. We track, forecast and change which brand that is — across every engine your Indian buyers actually use.</p>
+        <div class="hero-cta reveal" data-d="3">
+          <a class="btn amber lg" href="demo.html">Book a demo <span class="arrow">→</span></a>
+          <a class="btn lg" href="#simulate">See how it works</a>
+        </div>
+        <div class="hero-meta reveal" data-d="4">
+          <div class="m"><div class="v">7 engines + retail AI</div><div class="k">Coverage</div></div>
+          <div class="m"><div class="v">Refreshed daily</div><div class="k">Cadence</div></div>
+          <div class="m"><div class="v">India-first</div><div class="k">Answer graph</div></div>
+        </div>
+      </div>
+
+      <!-- brand probe -->
+      <div class="brand-probe reveal" data-d="2">
+        <div class="probe-bar"><span class="dot"></span> Ask an answer engine about your category</div>
+        <form class="probe-input-row" id="probeForm">
+          <label class="probe-field">
+            <span class="q">brand</span>
+            <input id="probeInput" type="text" placeholder="Type your brand…" autocomplete="off" spellcheck="false" />
+          </label>
+          <button class="probe-go" type="submit">Reveal</button>
+        </form>
+        <div class="probe-answer" id="probeAnswer"></div>
+      </div>
+    </div>
+
+    <div class="hero-foot">
+      <span class="mono">A recorded answer · not a live API call</span>
+      <span class="mono">Scroll — the differentiator is next ↓</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================
+     02 · THE SIMULATE WEDGE — lead with the differentiator
+     ============================================================ -->
+<section class="section" id="simulate">
+  <div class="wrap">
+    <div class="sec-split">
+      <div class="sec-head reveal">
+        <div class="kicker"><span class="idx">02</span><span class="ln"></span> Simulate · the differentiator</div>
+        <h2 class="display d-lg">Know what works before you spend a rupee.</h2>
+        <p class="sec-lede body">Tell us the campaign you're weighing — a comparison article, a PR placement, a schema fix. We forecast the visibility lift, per engine, before you commit budget. Then we measure predicted against actual, and the model compounds.</p>
+      </div>
+      <div class="reveal" data-d="1">
+        <div class="contrast-note">
+          <span class="mono" style="color:var(--amber-ink)">vs.</span>
+          <span>Monitoring tools tell you what AI <b>said yesterday</b>. That's the easy half. Perceptivity tells you what your next campaign will change — <b>before you spend</b> — then proves it.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sim-grid">
+      <!-- left: the forecast flow -->
+      <div class="reveal">
+        <div class="mono" style="margin-bottom:14px">The campaign under test</div>
+        <div class="sim-flow">
+          <div class="sim-step">
+            <span class="si">01</span>
+            <div><div class="st">Forecast</div><div class="sd">“Publish a category reliability comparison + correct two outdated pricing claims.” Model returns a per-engine lift estimate.</div></div>
+          </div>
+          <div class="sim-step">
+            <span class="si">02</span>
+            <div><div class="st">Wait <span id="simWindow">12 days</span></div><div class="sd">Predicted time-to-impact. We keep querying daily so you watch the answer move in real time.</div></div>
+          </div>
+          <div class="sim-step">
+            <span class="si">03</span>
+            <div><div class="st">Measure vs. predicted</div><div class="sd">The gap recalibrates the next forecast. Accuracy compounds, campaign after campaign.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- right: terminal -->
+      <div class="reveal" data-d="1">
+        <div class="term sim-bars">
+          <div class="term-bar">
+            <span class="ttl"><span class="dot"></span>Predicted lift · per engine</span>
+            <span class="meta">Model output</span>
+          </div>
+          <div class="term-body">
+            <div class="bars" id="simBars"></div>
+            <div class="sim-legend"><span><i class="p"></i>Predicted</span><span><i class="m"></i>Measured (actual)</span></div>
+          </div>
+        </div>
+        <div class="sim-result">
+          <div class="sim-cell"><div class="k">Predicted net</div><div class="v">+3.2pp</div><div class="s" id="simPred" style="display:none"></div><div class="s">answer share</div></div>
+          <div class="sim-cell"><div class="k">Measured net</div><div class="v pos" id="simMeas">+2.9pp</div><div class="s">answer share</div></div>
+          <div class="sim-cell"><div class="k">Forecast error</div><div class="v" id="simErr">0.3pp</div><div class="s">below ±8% target</div></div>
+        </div>
+        <p class="illus" style="margin-top:16px">Illustrative worked example · Mahindra, automotive · all figures are model outputs</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     03 · AUTHOR THE ANSWER — the showpiece
+     ============================================================ -->
+<section class="section author-sec rule-top" id="author">
+  <div class="wrap">
+    <div class="sec-split">
+      <div class="sec-head reveal">
+        <div class="kicker"><span class="idx">03</span><span class="ln"></span> Source of truth · accuracy &amp; control</div>
+        <h2 class="display d-lg">Don't just watch the answer. <em>Author</em> it.</h2>
+      </div>
+      <p class="sec-lede body reveal" data-d="1">Feed the engine your canonical truth — pricing, approved claims, spec sheets, positioning. It stops guessing and starts quoting you. Toggle a source off to watch the answer drift back to hallucination and a rival's framing.</p>
+    </div>
+
+    <div class="author-panel reveal" data-d="1" style="margin-top:48px">
+      <div class="author-left">
+        <div class="author-sub"><span class="mono">Your source of truth</span><span class="mono" id="authCount">5 / 5 synced</span></div>
+        <div id="authSources"></div>
+        <p class="author-hint">↑ Toggle a source off to see what the engine says when it can't see your truth.</p>
+      </div>
+      <div class="author-right">
+        <div class="auth-ans-bar">
+          <span class="auth-eng"><span class="dot"></span>ChatGPT · live answer</span>
+          <span class="auth-acc good" id="authAcc">Accuracy 100%</span>
+        </div>
+        <div class="auth-query" id="authQuery"></div>
+        <div class="auth-answer" id="authAnswer"></div>
+        <div class="auth-ans-foot">
+          <span>Grounded in your truth</span>
+          <span><b id="authErr">0</b> errors</span>
+        </div>
+      </div>
+    </div>
+    <p class="illus" style="margin-top:18px">Illustrative · Mahindra XUV700 worked example · demonstrates the grounding mechanic, not a live query</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     04 · INDIA ANSWER LAYER + RETAIL-AI SURFACES (the moat)
+     ============================================================ -->
+<section class="section india-sec rule-top" id="india">
+  <div class="wrap">
+    <div class="sec-split">
+      <div class="sec-head reveal">
+        <div class="kicker"><span class="idx">04</span><span class="ln"></span> The India answer layer</div>
+        <h2 class="display d-lg">Built for how India actually asks.</h2>
+      </div>
+      <p class="sec-lede body reveal" data-d="1">Buyers ask in Hinglish, Hindi, Tamil, Bangla and Marathi — and they buy on surfaces no monitoring tool watches: Amazon Rufus, Flipkart's assistant, Blinkit. We model the answer graph in the languages and on the surfaces your buyers actually use.</p>
+    </div>
+
+    <div class="india-grid">
+      <div class="reveal">
+        <div class="term">
+          <div class="term-bar"><span class="ttl"><span class="dot"></span>Answer share by query language</span><span class="meta">Illustrative</span></div>
+          <div class="term-body" style="padding-top:6px;padding-bottom:6px">
+            <div id="vernBars"></div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal" data-d="1">
+        <div class="mono" style="color:var(--cream-3);margin-bottom:14px">Retail-AI surfaces · the moat</div>
+        <div class="retail-cards" id="retailCards"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     05 · ONE PROOF BLOCK (real result — placeholder for now)
+     ============================================================ -->
+<section class="section rule-top" id="proof">
+  <div class="wrap">
+    <div class="proof">
+      <div class="sec-head reveal">
+        <div class="kicker"><span class="idx">05</span><span class="ln"></span> Proof</div>
+        <h2 class="display d-md">One result, shown in full.</h2>
+        <p class="body" style="margin-top:8px;max-width:42ch">Not a wall of logos — a single worked example from the paints category. We'll replace it with a verified, named design-partner result at launch. <span class="ph">Pending a genuine result</span></p>
+        <p class="illus" style="margin-top:20px">Illustrative · anonymised paints brand · figures are model outputs, not a verified result</p>
+      </div>
+      <div class="proof-card reveal" data-d="1">
+        <blockquote class="proof-quote">“When architects asked AI for premium exterior finishes, we simply weren't in the answer. One quarter of authoring our truth, and we were first-named in four of seven engines.”</blockquote>
+        <div class="proof-attr">— VP Marketing · national paints brand · India</div>
+        <div class="proof-metrics">
+          <div class="proof-metric"><div class="k">Answer share, before → after</div><div class="v">9% → 31%</div></div>
+          <div class="proof-metric"><div class="k">Window</div><div class="v">12 wks</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     06 · OPERATORS — anonymous but specific
+     ============================================================ -->
+<section class="section operators-sec" id="operators">
+  <div class="wrap">
+    <div class="sec-split">
+      <div class="sec-head reveal">
+        <div class="kicker"><span class="idx">06</span><span class="ln"></span> The operators behind it</div>
+        <h2 class="display d-lg">Built by people who've sat in the chair.</h2>
+      </div>
+      <p class="sec-lede body reveal" data-d="1">Built by operators who have run nine-figure consumer-brand P&amp;Ls across 13+ markets — people who've sat in the CMO's chair in India, not analysts watching from the outside.</p>
+    </div>
+    <div class="op-grid reveal" data-d="1">
+      <div class="op-cell"><div class="v">9-figure</div><div class="k">Consumer-brand P&amp;Ls run, first-hand</div></div>
+      <div class="op-cell"><div class="v">13+</div><div class="k">Markets operated across, India at the centre</div></div>
+      <div class="op-cell"><div class="v">In the chair</div><div class="k">CMO-side operators, not outside analysts</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     07 · THE LOOP — one clean diagram
+     ============================================================ -->
+<section class="section rule-top" id="loop">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker"><span class="idx">07</span><span class="ln"></span> The loop</div>
+      <h2 class="display d-lg" style="max-width:18ch">Sense, Simulate, Act, Learn — one loop that compounds.</h2>
+    </div>
+    <div class="loop-grid reveal" data-d="1" id="loopGrid"></div>
+    <p class="illus" style="margin-top:18px">Run every quarter · each cycle sharpens the next forecast</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     08 · ENTERPRISE & SECURITY — honest, dated
+     ============================================================ -->
+<section class="section security-sec" id="security">
+  <div class="wrap">
+    <div class="sec-split">
+      <div class="sec-head reveal">
+        <div class="kicker"><span class="idx">08</span><span class="ln"></span> Enterprise &amp; security</div>
+        <h2 class="display d-lg">Procurement-ready. Stated honestly.</h2>
+      </div>
+      <p class="sec-lede body reveal" data-d="1">Route this page to InfoSec. No “passed with ease” — just the real status, with a date. Your data stays in your own tenant and is never used to train anything for anyone else.</p>
+    </div>
+    <div class="sec-table reveal" data-d="1">
+      <table>
+        <thead><tr><th>Control</th><th>Status</th><th>Detail</th></tr></thead>
+        <tbody id="secRows"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     09 · RESOURCES / CMO briefing — no form wall
+     ============================================================ -->
+<section class="section rule-top" id="resources">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker"><span class="idx">09</span><span class="ln"></span> CMO briefing</div>
+      <h2 class="display d-lg" style="max-width:20ch">Field notes for marketing leaders, free to read.</h2>
+    </div>
+
+    <!-- flagship: B2A essay -->
+    <article class="res-feature reveal" data-d="1">
+      <div class="res-feature-body">
+        <span class="tag amber flag"><span class="dot"></span>Flagship essay</span>
+        <h3 class="display">Selling to the agent: the Business-to-Agent shift.</h3>
+        <p class="body">Buyers now let AI agents evaluate, shortlist and act for them. The brands that win sell to the agent as deliberately as they sell to the human. What changes for go-to-market when the customer is a model — and how to make visibility convertible.</p>
+        <a class="btn" href="#resources" style="margin-top:24px">Read the essay <span class="arrow">→</span></a>
+      </div>
+      <div class="res-img" style="overflow:hidden"><img src="assets/b2a-essay.png" alt="An answer graph: many buyer queries converging through a single AI agent into one recommended answer" style="width:100%;height:100%;min-height:260px;object-fit:cover;display:block" /></div>
+    </article>
+
+    <div class="res-grid reveal" data-d="1">
+      <a class="res-card" href="#resources">
+        <span class="rc-cat">Strategy</span>
+        <h4>AEO vs GEO vs SEO: where to spend in 2026</h4>
+        <p>Rank 6 on Google shows up nowhere in an AI answer. How the disciplines differ — and what actually compounds.</p>
+        <div class="rc-read"><span>Guide</span><span>11 min →</span></div>
+      </a>
+      <a class="res-card" href="#resources">
+        <span class="rc-cat">Product</span>
+        <h4>Brand verification for AI channels</h4>
+        <p>When an engine repeats a wrong price or a rival's framing, it costs revenue. How we detect and correct it.</p>
+        <div class="rc-read"><span>Field note</span><span>7 min →</span></div>
+      </a>
+      <a class="res-card" href="#resources">
+        <span class="rc-cat">India</span>
+        <h4>The retail-AI surfaces nobody is tracking</h4>
+        <p>Rufus, Flipkart's assistant, Blinkit. Where Indian purchase decisions are increasingly made — and lost.</p>
+        <div class="rc-read"><span>Briefing</span><span>9 min →</span></div>
+      </a>
+    </div>
+
+    <!-- briefing signup — no form wall -->
+    <div class="briefing reveal" data-d="1">
+      <div>
+        <h3 class="display">The CMO briefing, every two weeks.</h3>
+        <p>Engine updates, category teardowns and one move you can make this week. No form wall — read everything above without an email.</p>
+      </div>
+      <div>
+        <form class="brief-form" id="briefForm" novalidate>
+          <input class="input" id="briefEmail" type="email" placeholder="you@brand.com" aria-label="Work email" />
+          <button class="btn primary" type="submit">Subscribe</button>
+        </form>
+        <div class="brief-done" id="briefDone">✓ You're in — first briefing lands soon.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     10 · FAQ
+     ============================================================ -->
+<section class="section rule-top" id="faq">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker"><span class="idx">10</span><span class="ln"></span> Questions</div>
+      <h2 class="display d-lg">Before you book.</h2>
+    </div>
+    <div class="faq-list reveal" data-d="1">
+      <details class="faq">
+        <summary>What's the difference between SEO and AEO/GEO?<span class="pl"></span></summary>
+        <div class="a">SEO optimises for a list of ten blue links. AEO and GEO optimise for a single AI-generated answer. When a buyer asks ChatGPT or Gemini, the engine reads the web, forms a verdict, and names one brand. Rank 6 on Google doesn't appear in that answer at all.</div>
+      </details>
+      <details class="faq">
+        <summary>How is this different from AEO monitoring tools?<span class="pl"></span></summary>
+        <div class="a">Monitoring tools report that AI mentioned you — a lagging signal. Perceptivity forecasts which campaign will change the answer before you commit budget (Simulate), routes the work with owners and partners (Act), then measures predicted vs actual lift (Learn). The full loop, not half of it.</div>
+      </details>
+      <details class="faq">
+        <summary>Why India-first?<span class="pl"></span></summary>
+        <div class="a">Because the answer graph is local. Indian buyers ask in Hinglish and regional languages, and they decide on surfaces — Amazon Rufus, Flipkart, Blinkit — that global tools ignore. Our category depth and surface coverage run deepest in India. We expand market by market from there.</div>
+      </details>
+      <details class="faq">
+        <summary>Are the numbers on this site real?<span class="pl"></span></summary>
+        <div class="a">No — every metric in the worked examples is a labelled model output. Real Indian brands appear for context only, to demonstrate the mechanic; nothing here is a statement of fact about any brand. Real results appear in the proof block, and only once we have a genuine design-partner outcome to publish.</div>
+      </details>
+      <details class="faq">
+        <summary>How do you handle our data?<span class="pl"></span></summary>
+        <div class="a">Your content, campaigns and outcomes live in your own tenant, encrypted at rest and in transit, and are never used to improve another customer's results. SSO and full audit logs are available; SOC 2 Type II is in progress with a Q4 2026 target.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FINAL CTA
+     ============================================================ -->
+<section class="final-cta" id="cta">
+  <div class="wrap">
+    <div class="kicker reveal"><span class="ln"></span> Ready when you are</div>
+    <h2 class="display d-xl reveal" data-d="1">We'll arrive with your category <span class="amber">already scanned.</span></h2>
+    <p class="lede reveal" data-d="2" style="color:var(--cream-2)">A 30-minute walkthrough on your brand and your rivals, across every engine that matters. Walk away knowing exactly where you stand.</p>
+    <div class="cta-row reveal" data-d="3">
+      <a class="btn amber lg" href="demo.html">Book a demo <span class="arrow">→</span></a>
+      <a class="btn lg" href="onboarding.html">Start onboarding</a>
+    </div>
+    <div class="sandbox-note reveal" data-d="3">This site is an interactive preview — answers shown are recorded, not live API calls.</div>
+  </div>
+</section>
+
+<script src="site-data.js"></script>
+<script src="editorial.js"></script>
+<script src="home.js"></script>
+<script>
+  // loop diagram
+  (function(){
+    const g = document.getElementById('loopGrid'); if (!g || !window.SITE) return;
+    const arrow = '<svg class="arrow-c" viewBox="0 0 14 14" fill="none"><path d="M2 7h9M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    SITE.loop.forEach((s,i)=>{
+      const step = document.createElement('div');
+      step.className = 'loop-step' + (s.diff ? ' diff' : '');
+      step.innerHTML = '<span class="ix">'+String(i+1).padStart(2,'0')+'</span><h3>'+s.k+'</h3><p>'+s.d+'</p>'+
+        (i < SITE.loop.length-1 ? arrow : '');
+      g.appendChild(step);
+    });
+  })();
+
+  // briefing signup
+  (function(){
+    const f = document.getElementById('briefForm'); if (!f) return;
+    const email = document.getElementById('briefEmail');
+    f.addEventListener('submit', e=>{
+      e.preventDefault();
+      const v = email.value.trim();
+      if (!v || !v.includes('@')){ email.style.borderColor='var(--neg)'; email.focus(); return; }
+      f.style.display='none';
+      document.getElementById('briefDone').classList.add('on');
+    });
+    email.addEventListener('input', ()=> email.style.borderColor='');
+  })();
+</script>
+
+<!-- Tweaks panel (serif / canvas / accent) -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="tweaks-app.jsx"></script>
+</body>
+</html>
