@@ -3,209 +3,145 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="Book a Perceptivity demo. See what AI says about your brand across seven answer engines — and how to change it." />
+<meta name="description" content="Book a Perceptivity demo. We'll arrive with your category already scanned across seven answer engines and India's retail-AI surfaces." />
 <title>Book a demo — Perceptivity</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;650;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="perceptivity.css">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..500;1,6..72,200..500&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="editorial.css">
 <style>
-  .demo-wrap{padding:140px 0 90px}
-  .demo-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:48px;align-items:start}
-  @media (max-width:960px){ .demo-grid{grid-template-columns:1fr;gap:36px} }
-
+  .demo{padding:120px 0 90px}
+  .demo-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:56px;align-items:start}
+  @media (max-width:920px){ .demo-grid{grid-template-columns:1fr;gap:40px} }
   .demo-lhs h1{max-width:14ch}
-  .demo-lhs .lede{max-width:46ch;margin-top:22px;color:var(--ink);opacity:.86;font-size:20px;line-height:1.5}
-  .demo-points{margin-top:34px;display:flex;flex-direction:column;gap:16px}
-  .demo-point{display:flex;gap:14px;align-items:flex-start}
-  .demo-point .tick{
-    flex:0 0 auto;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
-    border:1px solid rgba(138,199,194,.4);background:var(--tealSoft);color:var(--teal);margin-top:2px;
-  }
-  .demo-point div .t{font-family:var(--fontDisplay);font-size:17px;font-weight:600;letter-spacing:-0.02em;color:var(--ink)}
-  .demo-point div .d{font-size:14.5px;color:var(--ink);opacity:.78;line-height:1.5;margin-top:3px}
+  .demo-lhs .lede{margin-top:22px}
+  .demo-scan{margin-top:38px}
+  .scan-list{display:flex;flex-direction:column}
+  .scan-line{display:grid;grid-template-columns:20px 1fr auto;gap:13px;align-items:center;padding:12px 0;border-bottom:1px solid var(--rule);font-family:var(--mono);font-size:12.5px;letter-spacing:0.02em;color:var(--ink-2)}
+  .scan-line:last-child{border-bottom:none}
+  .scan-line .ck{width:18px;height:18px;border-radius:4px;display:grid;place-items:center;background:var(--ink);color:var(--paper)}
+  .scan-line b{color:var(--ink);font-weight:500}
+  .scan-line .st{color:var(--amber-ink)}
+  .demo-meta{margin-top:30px;padding-top:22px;border-top:1px solid var(--rule);display:flex;gap:30px;flex-wrap:wrap}
+  .demo-meta .m .v{font-family:var(--serif);font-size:30px;color:var(--ink);letter-spacing:-0.02em;line-height:1}
+  .demo-meta .m .k{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-3);margin-top:7px}
 
-  .demo-meta{
-    margin-top:38px;padding-top:24px;border-top:1px solid var(--line);
-    display:flex;gap:32px;flex-wrap:wrap;
-  }
-  .demo-meta .m .v{font-family:var(--fontDisplay);font-size:30px;font-weight:600;letter-spacing:-0.04em;color:var(--ink)}
-  .demo-meta .m .k{font-family:var(--fontMono);font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-top:4px}
-
-  /* form card */
-  .demo-form{padding:36px 36px 38px;border-radius:32px}
-  .demo-form .form-head{font-family:var(--fontDisplay);font-size:24px;font-weight:600;letter-spacing:-0.03em;color:var(--ink);margin-bottom:6px}
-  .demo-form .form-sub{font-size:14.5px;color:var(--muted);line-height:1.5;margin-bottom:26px}
+  /* form */
+  .demo-form{background:var(--card);border:1px solid var(--rule-2);border-radius:var(--r-lg);padding:32px;box-shadow:0 40px 90px -55px rgba(27,24,19,.4)}
+  .demo-form .fh{font-family:var(--serif);font-size:26px;color:var(--ink);letter-spacing:-0.02em}
+  .demo-form .fs{font-size:14.5px;color:var(--ink-2);margin:8px 0 26px;line-height:1.5}
   .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   @media (max-width:520px){ .form-row{grid-template-columns:1fr} }
-  .field{margin-bottom:16px}
-  .demo-form .input,.demo-form select.input{width:100%}
-  .demo-form select.input{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23D7CBD8' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:38px}
-  .demo-form textarea.input{width:100%;min-height:92px;resize:vertical;font-family:var(--fontBody)}
   .demo-form .btn{width:100%;margin-top:6px}
-  .form-fine{margin-top:16px;font-family:var(--fontMono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--faint);text-align:center;line-height:1.7}
-
-  /* success state */
-  .demo-success{display:none;flex-direction:column;align-items:center;text-align:center;gap:14px;padding:40px 20px}
-  .demo-success.on{display:flex;animation:paneIn .5s var(--ease)}
-  @keyframes paneIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-  .demo-success .ok{
-    width:64px;height:64px;border-radius:50%;display:grid;place-items:center;
-    background:radial-gradient(circle at 40% 40%, var(--ink), var(--teal));box-shadow:0 0 30px rgba(138,199,194,.45);
-    color:var(--void);
-  }
-  .demo-success h3{font-family:var(--fontDisplay);font-size:26px;font-weight:600;letter-spacing:-0.03em;color:var(--ink)}
-  .demo-success p{color:var(--ink);opacity:.82;font-size:16px;line-height:1.55;max-width:38ch}
+  .form-fine{margin-top:14px;font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-4);text-align:center;line-height:1.7}
+  .demo-success{display:none;flex-direction:column;gap:14px;text-align:center;align-items:center;padding:30px 10px}
+  .demo-success.on{display:flex}
+  .demo-success .ok{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:var(--paper)}
+  .demo-success h3{font-family:var(--serif);font-size:26px;color:var(--ink);letter-spacing:-0.02em}
+  .demo-success p{color:var(--ink-2);font-size:15.5px;line-height:1.55;max-width:40ch}
   .demo-form.submitted .demo-form-body{display:none}
-
-  @media (max-width:640px){
-    .demo-wrap{padding:104px 0 64px}
-    .demo-lhs .lede{font-size:17px;margin-top:18px}
-    .demo-points{margin-top:26px;gap:14px}
-    .demo-meta{margin-top:28px;gap:20px 28px}
-    .demo-meta .m .v{font-size:26px}
-    .demo-form{padding:26px 22px 28px;border-radius:24px}
-    .demo-form .form-sub{margin-bottom:20px}
-  }
+  @media (max-width:640px){ .demo{padding:92px 0 64px} .demo-form{padding:24px} }
 </style>
-<link rel="stylesheet" href="theme-adaptive.css">
-<script src="theme.js"></script>
 </head>
 <body>
 
-<section class="demo-wrap">
-  <div class="container">
+<section class="demo">
+  <div class="wrap">
     <div class="demo-grid">
-
-      <!-- LHS -->
       <div class="demo-lhs">
-        <span class="kicker reveal">Book a demo</span>
-        <h1 class="display-lg reveal" data-delay="1" style="margin-top:20px">See your category through an AI's eyes.</h1>
-        <p class="lede reveal" data-delay="2">A 30-minute walkthrough on your brand and your competitors — live across seven answer engines. You'll leave with a read on where you stand and the three moves that change it.</p>
+        <div class="kicker reveal"><span class="ln"></span> Book a demo</div>
+        <h1 class="display d-lg reveal" data-d="1" style="margin-top:20px">We'll arrive with your category <span class="amber">already scanned.</span></h1>
+        <p class="lede reveal" data-d="2">No generic pitch. A 30-minute walkthrough on your brand and your rivals — across seven engines and India's retail-AI surfaces — with the read already done before we meet.</p>
 
-        <div class="demo-points reveal" data-delay="3">
-          <div class="demo-point">
-            <span class="tick"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 7l3 3 6-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <div><div class="t">Your live visibility</div><div class="d">Visibility, answer share, sentiment and citations for your brand vs rivals.</div></div>
+        <div class="demo-scan reveal" data-d="3">
+          <div class="term">
+            <div class="term-bar"><span class="ttl"><span class="dot"></span>What's on the table when we call</span><span class="meta">Recorded preview</span></div>
+            <div class="term-body" style="padding:6px 18px">
+              <div class="scan-list">
+                <div class="scan-line"><span class="ck"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.6l3 3L10 1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Your <b>answer share</b> vs named rivals, per engine</span><span class="st">ready</span></div>
+                <div class="scan-line"><span class="ck"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.6l3 3L10 1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>The <b>hallucinations</b> &amp; stale claims, mapped to engines</span><span class="st">ready</span></div>
+                <div class="scan-line"><span class="ck"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.6l3 3L10 1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Hinglish &amp; regional-language <b>answer graph</b></span><span class="st">ready</span></div>
+                <div class="scan-line"><span class="ck"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.6l3 3L10 1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Three <b>forecasted moves</b> most likely to shift the answer</span><span class="st">ready</span></div>
+              </div>
+            </div>
           </div>
-          <div class="demo-point">
-            <span class="tick"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 7l3 3 6-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <div><div class="t">What AI gets wrong</div><div class="d">Hallucinations and outdated claims, mapped to the engines repeating them.</div></div>
-          </div>
-          <div class="demo-point">
-            <span class="tick"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 7l3 3 6-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <div><div class="t">A forecasted plan</div><div class="d">The campaigns most likely to move your answer share next quarter — with the math.</div></div>
-          </div>
+          <p class="illus" style="margin-top:14px">Illustrative · we build your real read from your category before the call</p>
         </div>
 
-        <div class="demo-meta reveal" data-delay="4">
-          <div class="m"><div class="v">7</div><div class="k">Answer engines</div></div>
+        <div class="demo-meta reveal" data-d="4">
+          <div class="m"><div class="v">7 + retail</div><div class="k">Engines &amp; surfaces</div></div>
           <div class="m"><div class="v">30 min</div><div class="k">Walkthrough</div></div>
-          <div class="m"><div class="v">&lt; 1 day</div><div class="k">To first read</div></div>
+          <div class="m"><div class="v">&lt; 1 day</div><div class="k">To reply</div></div>
         </div>
       </div>
 
-      <!-- RHS FORM -->
-      <div class="glass demo-form glow-violet reveal" data-delay="2" id="demoForm">
+      <!-- form -->
+      <div class="demo-form reveal" data-d="2" id="demoForm">
         <div class="demo-form-body">
-          <div class="form-head">Tell us about your brand.</div>
-          <div class="form-sub">We'll come to the call with your category already scanned.</div>
-
+          <div class="fh">Tell us about your brand.</div>
+          <div class="fs">Five fields. We'll do the scanning.</div>
           <form id="bookForm" novalidate>
             <div class="form-row">
-              <div class="field">
-                <label for="fn">Full name</label>
-                <input class="input" id="fn" name="fn" type="text" placeholder="Priya Nair" required />
-              </div>
-              <div class="field">
-                <label for="email">Work email</label>
-                <input class="input" id="email" name="email" type="email" placeholder="you@brand.com" required />
-              </div>
+              <div class="field"><label for="fn">Full name</label><input class="input" id="fn" type="text" placeholder="Priya Nair" /></div>
+              <div class="field"><label for="email">Work email</label><input class="input" id="email" type="email" placeholder="you@brand.com" /></div>
             </div>
-
             <div class="form-row">
-              <div class="field">
-                <label for="company">Company</label>
-                <input class="input" id="company" name="company" type="text" placeholder="Brand name" required />
-              </div>
-              <div class="field">
-                <label for="role">Role</label>
-                <select class="input" id="role" name="role">
-                  <option>Brand / Marketing leader</option>
+              <div class="field"><label for="company">Company</label><input class="input" id="company" type="text" placeholder="Brand name" /></div>
+              <div class="field"><label for="role">Role</label>
+                <select class="input" id="role">
+                  <option>Marketing / brand leader</option>
+                  <option>CMO / VP Marketing</option>
                   <option>PR / Communications</option>
                   <option>Content / SEO</option>
-                  <option>Agency / Partner</option>
                   <option>Founder / Exec</option>
                   <option>Other</option>
                 </select>
               </div>
             </div>
-
-            <div class="field">
-              <label for="cat">Category</label>
-              <select class="input" id="cat" name="cat"></select>
+            <div class="field"><label for="cat">Category</label>
+              <select class="input" id="cat">
+                <option>Automotive &amp; EV</option>
+                <option>Paints &amp; home</option>
+                <option>BFSI &amp; fintech</option>
+                <option>FMCG &amp; packaged goods</option>
+                <option>Real estate &amp; proptech</option>
+                <option>Beauty &amp; personal care</option>
+                <option>Travel &amp; hospitality</option>
+                <option>Another category</option>
+              </select>
             </div>
-
-            <div class="field">
-              <label for="msg">What do you want to find out? <span style="text-transform:none;letter-spacing:0;color:var(--faint)">(optional)</span></label>
-              <textarea class="input" id="msg" name="msg" placeholder="e.g. We're invisible in ChatGPT for our category and don't know why."></textarea>
-            </div>
-
-            <button class="btn primary btn-lg" type="submit">Request my demo <span class="arrow">→</span></button>
+            <button class="btn amber lg" type="submit">Request my demo <span class="arrow">→</span></button>
             <div class="form-fine">No credit card · We reply within one business day</div>
           </form>
         </div>
-
         <div class="demo-success" id="demoSuccess">
-          <span class="ok"><svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M5 13l5 5 11-12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="ok"><svg width="24" height="24" viewBox="0 0 26 26" fill="none"><path d="M5 13l5 5 11-12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           <h3>Request received.</h3>
-          <p id="successMsg">Thanks — we'll scan your category and reply within one business day to book a time.</p>
-          <a class="btn" href="index.html#resources" style="margin-top:8px">Read the playbook meanwhile <span class="arrow">→</span></a>
+          <p id="successMsg">We'll scan your category and reply within one business day to book a time.</p>
+          <a class="btn" href="index.html#resources" style="margin-top:6px">Read the CMO briefing meanwhile <span class="arrow">→</span></a>
         </div>
       </div>
-
     </div>
   </div>
 </section>
 
-<script src="demo-data.js"></script>
-<script src="chrome.js"></script>
+<script src="editorial.js"></script>
 <script>
-  // populate category dropdown
-  (function(){
-    const sel = document.getElementById('cat');
-    if (sel && window.CATEGORIES){
-      CATEGORIES.forEach(c => {
-        const o = document.createElement('option');
-        o.value = c.id; o.textContent = c.label;
-        sel.appendChild(o);
-      });
-      const other = document.createElement('option');
-      other.value = 'other'; other.textContent = 'Another category';
-      sel.appendChild(other);
-    }
-  })();
-
-  // handle submit (client-side demo)
   document.getElementById('bookForm').addEventListener('submit', function(e){
     e.preventDefault();
-    const fn = document.getElementById('fn');
-    const email = document.getElementById('email');
-    const company = document.getElementById('company');
-    let ok = true;
-    [fn, email, company].forEach(f => {
-      if (!f.value.trim()){ f.style.borderColor = 'var(--neg)'; ok = false; }
-      else { f.style.borderColor = ''; }
-    });
-    if (!ok) return;
-    const name = fn.value.trim().split(' ')[0];
-    const form = document.getElementById('demoForm');
-    form.classList.add('submitted');
+    const fn=document.getElementById('fn'), email=document.getElementById('email'), company=document.getElementById('company');
+    let ok=true;
+    [fn,email,company].forEach(f=>{ if(!f.value.trim()){ f.style.borderColor='var(--neg)'; ok=false; } else f.style.borderColor=''; });
+    if(!email.value.includes('@')){ email.style.borderColor='var(--neg)'; ok=false; }
+    if(!ok) return;
+    const name=fn.value.trim().split(' ')[0];
+    document.getElementById('demoForm').classList.add('submitted');
     document.getElementById('successMsg').textContent =
-      `Thanks, ${name} — we'll scan ${company.value.trim()}'s category and reply within one business day to book a time.`;
+      `Thanks, ${name} — we'll scan ${company.value.trim()}'s category and reply within one business day.`;
     document.getElementById('demoSuccess').classList.add('on');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({top:0,behavior:'smooth'});
   });
+  ['fn','email','company'].forEach(id=>document.getElementById(id).addEventListener('input',e=>e.target.style.borderColor=''));
 </script>
 </body>
 </html>
