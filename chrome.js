@@ -87,14 +87,14 @@
 
           const x = c * CW, y = r * CH;
           if (light){
-            ctx.fillStyle = 'rgba(74,52,32,' + (inten * 0.32).toFixed(3) + ')';
+            ctx.fillStyle = 'rgba(44,64,100,' + (inten * 0.32).toFixed(3) + ')';
           } else {
-            // amber, kept close to the background so it reads as a quiet
-            // texture rather than a bright overlay (pulls back from white)
+            // cool signal-blue, kept close to the background so it reads as a
+            // quiet texture rather than a bright overlay
             const ti = Math.pow(inten, 1.7);
-            const rr = Math.round(206 + (244 - 206) * ti);
-            const gg = Math.round(144 + (198 - 144) * ti);
-            const bb = Math.round(100 + (160 - 100) * ti);
+            const rr = Math.round(86 + (150 - 86) * ti);
+            const gg = Math.round(132 + (196 - 132) * ti);
+            const bb = Math.round(190 + (255 - 190) * ti);
             ctx.fillStyle = 'rgba(' + rr + ',' + gg + ',' + bb + ',' + (0.12 + inten * 0.40).toFixed(3) + ')';
           }
           ctx.fillText(glyph, x, y);
@@ -147,8 +147,8 @@
           <span class="brand-word">perceptivity</span>
         </a>
         <div class="nav-links">
-          ${link('index.html#platform','Platform')}
-          ${link('index.html#industries','Industries')}
+          ${link('index.html#simulate','Platform')}
+          ${link('how-it-works.html','How it works')}
           ${link('index.html#resources','Resources')}
           ${link('company.html','Company')}
         </div>
@@ -165,9 +165,9 @@
     <footer class="foot">
       <div class="foot-l">
         <span>© 2026 Perceptivity</span>
-        <a href="index.html#platform">Platform</a>
+        <a href="index.html#simulate">Platform</a>
+        <a href="how-it-works.html">How it works</a>
         <a href="index.html#resources">Resources</a>
-        <a href="index.html#industries">Industries</a>
         <a href="dashboard.html">Sample dashboard</a>
         <a href="company.html">Company</a>
         <a href="demo.html">Book a demo</a>
@@ -181,6 +181,20 @@
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});
   }, { threshold: 0.12, rootMargin: "0px 0px -60px 0px" });
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  // rect-based fallback (IntersectionObserver is throttled in some embeds)
+  function checkReveals(){
+    const h = window.innerHeight || 800;
+    document.querySelectorAll('.reveal:not(.in)').forEach(el=>{
+      const r = el.getBoundingClientRect();
+      if (r.top < h * 0.92 && r.bottom > 0){ el.classList.add('in'); io.unobserve(el); }
+    });
+  }
+  let rTick = false;
+  window.addEventListener('scroll', ()=>{ if(!rTick){ rTick=true; requestAnimationFrame(()=>{ checkReveals(); rTick=false; }); } }, { passive:true });
+  requestAnimationFrame(()=>{ checkReveals(); requestAnimationFrame(checkReveals); });
+  window.addEventListener('load', checkReveals);
+  setTimeout(checkReveals, 400);
+  setTimeout(()=> document.querySelectorAll('.reveal:not(.in)').forEach(el=>el.classList.add('in')), 2600);
 
   // ---- letter-in for [data-letter-in] elements ----
   document.querySelectorAll('[data-letter-in]').forEach(el=>{

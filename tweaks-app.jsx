@@ -5,7 +5,7 @@
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "serif": "newsreader",
   "canvas": "paper",
-  "accent": "amber"
+  "accent": "signal"
 }/*EDITMODE-END*/;
 
 const FONT_LINKS = {
@@ -27,7 +27,7 @@ function applyTweaks(t){
   // canvas
   if (t.canvas === 'paper') r.removeAttribute('data-canvas'); else r.setAttribute('data-canvas', t.canvas);
   // accent
-  if (t.accent === 'amber') r.removeAttribute('data-accent'); else r.setAttribute('data-accent', t.accent);
+  if (t.accent === 'signal') r.removeAttribute('data-accent'); else r.setAttribute('data-accent', t.accent);
 }
 
 function TweaksApp(){
@@ -48,16 +48,16 @@ function TweaksApp(){
       React.createElement(TweakSection, { label: "Canvas" }),
       React.createElement(TweakRadio, {
         label: "Paper tone", value: t.canvas,
-        options: [ { value:'paper', label:'Cream' }, { value:'bone', label:'Bone' } ],
+        options: [ { value:'paper', label:'Slate' }, { value:'bone', label:'Bone' } ],
         onChange: v => setTweak('canvas', v)
       }),
       React.createElement(TweakSection, { label: "Accent" }),
       React.createElement(TweakRadio, {
         label: "Accent colour", value: t.accent,
         options: [
-          { value:'amber', label:'Amber' },
-          { value:'clay',  label:'Clay' },
-          { value:'ink',   label:'Ink' }
+          { value:'signal', label:'Signal' },
+          { value:'azure',  label:'Azure' },
+          { value:'slate',  label:'Slate' }
         ],
         onChange: v => setTweak('accent', v)
       })

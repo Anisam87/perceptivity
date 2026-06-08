@@ -77,7 +77,7 @@
         <div class="foot-col">
           <h5>Get started</h5>
           <a href="demo.html">Book a demo</a>
-          <a href="onboarding.html">Start onboarding</a>
+          <a href="onboarding.html">Get started</a>
           <a href="index.html#faq">FAQ</a>
         </div>
       </div>

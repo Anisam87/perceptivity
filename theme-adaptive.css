@@ -41,39 +41,39 @@ html.theme-transition .atmos-stars{
    ============================================================ */
 html[data-theme="light"]{
   /* surfaces */
-  --void:#2A2033;                /* kept dark: used as a check/catchlight ink */
-  --bg:#F4ECE0;                  /* page cream (also = primary-button text) */
-  --bg2:#EFE6D9;
-  --panel:rgba(255,255,255,.78);
-  --panel2:rgba(255,255,255,.72);
-  --glass:rgba(42,32,52,.045);
+  --void:#1E2738;                /* kept dark: used as a check/catchlight ink */
+  --bg:#EDF1F6;                  /* page cool paper (also = primary-button text) */
+  --bg2:#E3E9F1;
+  --panel:rgba(255,255,255,.80);
+  --panel2:rgba(255,255,255,.74);
+  --glass:rgba(16,21,30,.045);
 
   /* ink */
-  --ink:#241B2E;                 /* deep warm espresso-violet — AAA on cream */
-  --muted:#564B62;               /* secondary */
-  --faint:#6B6076;               /* tertiary — meets AA for small text */
+  --ink:#131A26;                 /* deep cool slate-ink — AAA on cool paper */
+  --muted:#4A5566;               /* secondary */
+  --faint:#65707F;               /* tertiary — meets AA for small text */
 
   /* accents — same hues, deepened so they read as TEXT on light (AA) */
-  --amber:#A55E30;  --amberSoft:rgba(165,94,48,.12);
-  --teal:#256E68;   --tealSoft:rgba(37,110,104,.12);
-  --violet:#6A53A0; --violetSoft:rgba(106,83,160,.12);
-  --peach:#C77B4E;  --dust:#B08A66;
+  --amber:#2A62B0;  --amberSoft:rgba(42,98,176,.12);
+  --teal:#256E78;   --tealSoft:rgba(37,110,120,.12);
+  --violet:#4A56A0; --violetSoft:rgba(74,86,160,.12);
+  --peach:#3F6FB0;  --dust:#6B82A6;
 
   /* status */
   --pos:#1E7344; --neg:#BC4239; --warn:#8F6610;
 
-  /* lines & shadow — warm, soft */
-  --line:rgba(42,28,52,.13); --lineStrong:rgba(42,28,52,.26);
-  --shadow:0 26px 64px -28px rgba(70,48,34,.34);
-  --shadowStrong:0 44px 110px -34px rgba(70,48,34,.40);
+  /* lines & shadow — cool, soft */
+  --line:rgba(20,28,42,.13); --lineStrong:rgba(20,28,42,.26);
+  --shadow:0 26px 64px -28px rgba(28,42,70,.32);
+  --shadowStrong:0 44px 110px -34px rgba(28,42,70,.38);
   --inset:inset 0 1px 0 rgba(255,255,255,.7);
 }
 
 html[data-theme="light"] body{
-  background:#F4ECE0;
+  background:#EDF1F6;
 }
 html[data-theme="light"] ::selection{
-  background:rgba(47,125,119,.22);
+  background:rgba(42,98,176,.20);
   color:var(--ink);
 }
 
@@ -82,11 +82,11 @@ html[data-theme="light"] ::selection{
    ============================================================ */
 html[data-theme="light"] .atmos-bg{
   background:
-    radial-gradient(60vmax 50vmax at 78% 18%, rgba(217,154,108,.30), transparent 58%),
-    radial-gradient(48vmax 42vmax at 88% 30%, rgba(240,188,163,.26), transparent 62%),
-    radial-gradient(70vmax 60vmax at 6% 8%, rgba(155,131,197,.20), transparent 60%),
-    radial-gradient(60vmax 52vmax at 4% 92%, rgba(138,199,194,.18), transparent 60%),
-    linear-gradient(155deg, #FCF7EF 0%, #F6EEE2 44%, #F1E7D8 72%, #ECE0D0 100%);
+    radial-gradient(60vmax 50vmax at 78% 18%, rgba(92,156,230,.28), transparent 58%),
+    radial-gradient(48vmax 42vmax at 88% 30%, rgba(127,178,224,.24), transparent 62%),
+    radial-gradient(70vmax 60vmax at 6% 8%, rgba(140,155,224,.18), transparent 60%),
+    radial-gradient(60vmax 52vmax at 4% 92%, rgba(110,180,210,.16), transparent 60%),
+    linear-gradient(155deg, #FAFCFF 0%, #F1F5FA 44%, #E8EEF6 72%, #DFE7F1 100%);
 }
 html[data-theme="light"] .atmos-stars{ opacity:0; }
 html[data-theme="light"] .atmos-grain{ opacity:.05; }

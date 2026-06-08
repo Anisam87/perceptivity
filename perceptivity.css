@@ -5,21 +5,21 @@
 
 :root{
   /* surfaces */
-  --void:#010109; --bg:#070713; --bg2:#151126;
-  --panel:rgba(11,11,22,.72); --panel2:rgba(23,18,39,.66); --glass:rgba(245,230,215,.055);
+  --void:#060A12; --bg:#080D17; --bg2:#0F1A2B;
+  --panel:rgba(10,16,26,.72); --panel2:rgba(16,26,43,.66); --glass:rgba(210,226,248,.05);
   /* ink */
-  --ink:#FAF1E5;          /* primary text — warmer, brighter cream */
-  --muted:#D7CBD8;        /* secondary — lifted from C0AFC6 for legibility */
-  --faint:#A296A8;        /* tertiary — lifted from 82778B; meets AA on dark */
+  --ink:#EAF0F8;          /* primary text — cool near-white */
+  --muted:#AEBBCE;        /* secondary — cool slate */
+  --faint:#7A8698;        /* tertiary — cool faint */
   /* accents */
-  --amber:#D99A6C; --amberSoft:rgba(217,154,108,.20);
-  --teal:#8AC7C2;  --tealSoft:rgba(138,199,194,.18);
-  --violet:#9B83C5; --violetSoft:rgba(155,131,197,.17);
-  --peach:#F0BCA3; --dust:#E0C7AE;
+  --amber:#5C9CE6; --amberSoft:rgba(92,156,230,.20);
+  --teal:#7FC2D0;  --tealSoft:rgba(127,194,208,.18);
+  --violet:#8C9BE0; --violetSoft:rgba(140,155,224,.17);
+  --peach:#A9C6EE; --dust:#BFCFE6;
   /* status */
   --pos:#8BD2A9; --neg:#E48A8A; --warn:#E5C07B;
   /* lines & shadow */
-  --line:rgba(250,241,229,.16); --lineStrong:rgba(250,241,229,.34);
+  --line:rgba(220,232,250,.15); --lineStrong:rgba(220,232,250,.32);
   --shadow:0 30px 80px -20px rgba(0,0,0,.52);
   --shadowStrong:0 50px 120px -30px rgba(0,0,0,.84);
   --inset:inset 0 1px 0 rgba(255,255,255,.12);
@@ -37,7 +37,7 @@
 html{scroll-behavior:smooth}
 html,body{min-height:100%}
 body{
-  background:#070713;
+  background:#080D17;
   color:var(--ink);
   font-family:var(--fontBody);
   font-size:18px;
@@ -62,11 +62,11 @@ img,svg{display:block;max-width:100%}
 .atmos-bg{
   position:fixed;inset:0;z-index:-2;pointer-events:none;
   background:
-    radial-gradient(60vmax 50vmax at 73% 31%, rgba(217,154,108,.22), transparent 60%),
-    radial-gradient(50vmax 40vmax at 82% 38%, rgba(138,199,194,.16), transparent 65%),
-    radial-gradient(70vmax 60vmax at 8% 12%, rgba(155,131,197,.20), transparent 60%),
-    radial-gradient(60vmax 50vmax at 6% 88%, rgba(240,188,163,.14), transparent 60%),
-    linear-gradient(135deg, #010109 0%, #070713 30%, #151126 65%, #2b2148 100%);
+    radial-gradient(60vmax 50vmax at 73% 31%, rgba(92,156,230,.22), transparent 60%),
+    radial-gradient(50vmax 40vmax at 82% 38%, rgba(127,194,208,.16), transparent 65%),
+    radial-gradient(70vmax 60vmax at 8% 12%, rgba(140,155,224,.20), transparent 60%),
+    radial-gradient(60vmax 50vmax at 6% 88%, rgba(96,150,230,.14), transparent 60%),
+    linear-gradient(135deg, #060A12 0%, #080D17 30%, #0F1A2B 65%, #18263f 100%);
 }
 .atmos-ascii{
   position:fixed;inset:0;z-index:-1;pointer-events:none;
