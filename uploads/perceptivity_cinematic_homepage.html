@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perceptivity — Absolute Truth</title>
+  <style>
+    :root{
+      --black:#000;
+      --white:#fff;
+      --muted:rgba(255,255,255,.62);
+      --faint:rgba(255,255,255,.18);
+      --hair:rgba(255,255,255,.26);
+      --ease:cubic-bezier(.16,1,.3,1);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;background:#000;color:#fff}
+    body{font-family:"Inter", "Helvetica Neue", Arial, sans-serif;background:#000;overflow-x:hidden;letter-spacing:.02em;color:#fff}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:999;background-image:radial-gradient(rgba(255,255,255,.10) .7px, transparent .7px);background-size:5px 5px;mix-blend-mode:screen;opacity:.22}
+    body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:998;background:radial-gradient(circle at 50% 50%, transparent 0 56%, rgba(0,0,0,.86) 100%)}
+    .noise{position:fixed;inset:-40%;pointer-events:none;z-index:1;opacity:.11;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");animation:grain 7s steps(10) infinite}
+    @keyframes grain{0%,100%{transform:translate(0,0)}10%{transform:translate(-5%, -10%)}30%{transform:translate(8%, 7%)}50%{transform:translate(-10%, 5%)}70%{transform:translate(7%, -6%)}}
+
+    .nav{position:fixed;top:0;left:0;right:0;height:84px;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(22px,4vw,64px);border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(18px);background:linear-gradient(to bottom, rgba(0,0,0,.76), rgba(0,0,0,.22))}
+    .brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:white}
+    .mark{width:31px;height:31px;border-radius:50%;position:relative;background:#000;box-shadow:0 0 0 1px rgba(255,255,255,.18)}
+    .mark:before{content:"";position:absolute;inset:-14px;border-radius:50%;background:radial-gradient(circle, rgba(255,255,255,.95) 0 1.5px, transparent 1.7px);background-size:4px 4px;mask-image:radial-gradient(circle, transparent 0 34%, black 37% 73%, transparent 76%);animation:pulse 3.2s var(--ease) infinite}
+    @keyframes pulse{0%,100%{transform:scale(.94);opacity:.42}50%{transform:scale(1.15);opacity:.9}}
+    .wordmark{font-size:12px;letter-spacing:.52em;font-weight:600}
+    .navlinks{display:flex;gap:clamp(20px,4vw,58px);align-items:center;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+    .navlinks a{color:inherit;text-decoration:none;transition:.5s var(--ease)}
+    .navlinks a:hover{color:#fff}
+    .orb-small{width:22px;height:22px;border-radius:50%;border:1px solid rgba(255,255,255,.25);display:grid;place-items:center}.orb-small:after{content:"";width:10px;height:10px;border-radius:50%;background:white;box-shadow:0 0 24px white}
+
+    .hero{min-height:100vh;position:relative;overflow:hidden;padding:130px clamp(22px,5vw,80px) 60px;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;isolation:isolate}
+    .eclipse{position:absolute;left:8vw;top:19vh;width:min(48vw,600px);aspect-ratio:1;border-radius:50%;background:#000;z-index:-1;box-shadow:0 0 0 1px rgba(255,255,255,.1)}
+    .eclipse:before{content:"";position:absolute;inset:-38%;border-radius:50%;background:radial-gradient(circle, rgba(255,255,255,1) 0 1.2px, transparent 1.45px);background-size:5px 5px;mask-image:radial-gradient(circle, transparent 0 28%, black 31% 65%, transparent 72%);animation:halo 13s linear infinite;filter:contrast(1.4)}
+    .eclipse:after{content:"";position:absolute;inset:-8%;border-radius:50%;background:radial-gradient(circle at 64% 50%, rgba(255,255,255,.9), transparent 12%, transparent 100%);mix-blend-mode:screen;filter:blur(10px);opacity:.75}
+    @keyframes halo{to{transform:rotate(360deg)}}
+    .dotfield{position:absolute;inset:auto -10vw -16vh -10vw;height:58vh;z-index:-2;perspective:700px;overflow:hidden}
+    .terrain{position:absolute;left:0;right:0;bottom:-20%;height:100%;background-image:radial-gradient(rgba(255,255,255,.85) .9px, transparent 1.1px);background-size:13px 13px;mask-image:linear-gradient(to top, black 0 35%, rgba(0,0,0,.9) 48%, transparent 82%), radial-gradient(ellipse at 28% 20%, transparent 0 24%, black 25%);transform:rotateX(62deg) translateY(5%);animation:drift 18s linear infinite}
+    .terrain.t2{opacity:.42;background-size:9px 9px;transform:rotateX(66deg) translateY(-6%) scale(1.1);animation-duration:25s}
+    @keyframes drift{to{background-position:0 260px}}
+    .mountains{position:absolute;left:-8vw;right:-8vw;bottom:4vh;height:30vh;z-index:-1;background:radial-gradient(circle, white 0 .8px, transparent 1px);background-size:7px 7px;clip-path:polygon(0 70%, 12% 62%, 22% 28%, 33% 68%, 43% 56%, 52% 80%, 61% 44%, 72% 70%, 84% 37%, 100% 61%, 100% 100%, 0 100%);mask-image:linear-gradient(to top, black, rgba(0,0,0,.82), transparent);opacity:.9;animation:parallax 10s ease-in-out infinite alternate}
+    @keyframes parallax{to{transform:translateY(18px)}}
+
+    .kicker{font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--muted);margin-bottom:24px;overflow:hidden}.kicker span{display:inline-block;animation:revealUp 1.3s var(--ease) both .2s}
+    h1{font-size:clamp(58px,8.6vw,132px);line-height:.9;font-weight:300;letter-spacing:.18em;text-transform:uppercase;max-width:860px;text-wrap:balance}.line{display:block;overflow:hidden}.line span{display:block;animation:revealUp 1.45s var(--ease) both}.line:nth-child(2) span{animation-delay:.18s}.line:nth-child(3) span{animation-delay:.36s}
+    @keyframes revealUp{from{transform:translateY(110%);opacity:0}to{transform:translateY(0);opacity:1}}
+    .hero-copy{align-self:end;max-width:430px;margin-left:auto;padding-bottom:10vh;animation:fadeIn 1.6s var(--ease) .75s both}.hero-copy p{font-size:16px;line-height:1.7;color:var(--muted);margin-bottom:32px}.cta{display:inline-flex;align-items:center;gap:17px;color:white;text-decoration:none;font-size:11px;text-transform:uppercase;letter-spacing:.42em}.cta i{width:32px;height:32px;border-radius:50%;border:1px solid var(--hair);position:relative}.cta i:after{content:"";position:absolute;inset:8px;border-radius:50%;background:white;box-shadow:0 0 26px white}.scroll{position:absolute;left:50%;bottom:32px;display:grid;gap:7px;z-index:8}.scroll i{width:6px;height:6px;border-radius:50%;background:white;animation:scrollDot 1.8s infinite}.scroll i:nth-child(2){animation-delay:.18s}.scroll i:nth-child(3){animation-delay:.36s}@keyframes scrollDot{50%{opacity:.2;transform:translateY(8px)}}@keyframes fadeIn{from{opacity:0;filter:blur(8px);transform:translateY(20px)}to{opacity:1;filter:none;transform:none}}
+
+    section{position:relative;padding:130px clamp(24px,6vw,96px);border-top:1px solid rgba(255,255,255,.08);overflow:hidden}.section-title{font-size:clamp(38px,5.8vw,96px);line-height:1;letter-spacing:.12em;text-transform:uppercase;font-weight:300}.section-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:8vw;align-items:center}.body{color:var(--muted);font-size:17px;line-height:1.9;max-width:610px}.truth-card{min-height:520px;border:1px solid rgba(255,255,255,.15);border-radius:2px;position:relative;overflow:hidden;background:#000}.truth-card:before{content:"";position:absolute;inset:0;background-image:radial-gradient(white .8px, transparent 1px);background-size:8px 8px;mask-image:radial-gradient(circle at 50% 50%, black 0 18%, transparent 55%);animation:scan 9s linear infinite}.truth-card:after{content:"";position:absolute;inset:14%;border-radius:50%;background:#000;box-shadow:0 0 55px 20px rgba(255,255,255,.12) inset, 0 0 0 1px rgba(255,255,255,.14)}@keyframes scan{to{background-position:200px -200px}}
+    .pill-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;border:1px solid rgba(255,255,255,.14);margin-top:54px}.pill{min-height:220px;padding:30px;background:#020202;position:relative;overflow:hidden}.pill:before{content:"";position:absolute;inset:0;background-image:radial-gradient(white .75px, transparent 1px);background-size:10px 10px;opacity:.4;mask-image:linear-gradient(135deg, black, transparent 60%)}.pill h3{font-size:12px;letter-spacing:.35em;text-transform:uppercase;margin-bottom:22px}.pill p{position:relative;color:var(--muted);line-height:1.7;font-size:14px}.final{min-height:90vh;display:grid;place-items:center;text-align:center}.final h2{font-size:clamp(54px,9vw,150px);font-weight:300;line-height:.9;letter-spacing:.14em;text-transform:uppercase}.final .halo-end{position:absolute;width:min(64vw,760px);aspect-ratio:1;border-radius:50%;background:#000;z-index:-1}.final .halo-end:before{content:"";position:absolute;inset:-16%;border-radius:50%;background:radial-gradient(white 0 .8px, transparent 1px);background-size:6px 6px;mask-image:radial-gradient(circle, transparent 0 38%, black 41% 58%, transparent 64%);animation:halo 18s linear infinite reverse}.footer{padding:32px clamp(24px,6vw,96px);display:flex;justify-content:space-between;color:rgba(255,255,255,.45);font-size:10px;letter-spacing:.28em;text-transform:uppercase;border-top:1px solid rgba(255,255,255,.08)}
+    .reveal{opacity:0;transform:translateY(48px);transition:1.2s var(--ease)}.reveal.visible{opacity:1;transform:none}
+    @media(max-width:900px){.hero,.section-grid{grid-template-columns:1fr}.navlinks a{display:none}.hero-copy{margin:60px 0 0;padding-bottom:120px}.eclipse{width:78vw;left:-8vw;top:22vh}.pill-row{grid-template-columns:1fr}.wordmark{letter-spacing:.28em}.footer{display:grid;gap:16px}.section-title{word-break:break-word}}
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+  <nav class="nav">
+    <a class="brand" href="#"><span class="mark"></span><span class="wordmark">PERCEPTIVITY</span></a>
+    <div class="navlinks"><a href="#truth">Truth</a><a href="#method">Method</a><a href="#system">System</a><a href="#contact">Contact</a><span class="orb-small"></span></div>
+  </nav>
+  <main>
+    <section class="hero">
+      <div class="eclipse"></div><div class="mountains"></div><div class="dotfield"><div class="terrain"></div><div class="terrain t2"></div></div>
+      <div>
+        <div class="kicker"><span>Absolute Truth / Pure Minimalism</span></div>
+        <h1><span class="line"><span>See</span></span><span class="line"><span>Truth</span></span><span class="line"><span>As It Is.</span></span></h1>
+      </div>
+      <div class="hero-copy"><p>Perceptivity strips away noise, bias and illusion to reveal how AI understands, recommends and represents your brand across the human internet.</p><a href="#truth" class="cta">Explore <i></i></a></div>
+      <div class="scroll"><i></i><i></i><i></i></div>
+    </section>
+
+    <section id="truth">
+      <div class="section-grid reveal">
+        <div><div class="kicker"><span>01 / Positioning</span></div><h2 class="section-title">No colour.<br>No ornament.<br>No hiding.</h2></div>
+        <div class="body"><p>Perceptivity is built on a single visual law: everything must emerge from black, white and dots. Gradients are not gradients. Shadows are not shadows. Depth is not decoration. Every illusion is constructed from discrete points, just like perception itself.</p></div>
+      </div>
+    </section>
+
+    <section id="method">
+      <div class="section-grid reveal">
+        <div class="truth-card"></div>
+        <div><div class="kicker"><span>02 / Method</span></div><h2 class="section-title">The signal behind the answer.</h2><p class="body">Track what models say, which sources shape them, where hallucinations enter, and how regional language changes brand reality. Perceptivity turns perception into an operating system.</p></div>
+      </div>
+    </section>
+
+    <section id="system">
+      <div class="reveal">
+        <div class="kicker"><span>03 / Product System</span></div><h2 class="section-title">Monitor. Diagnose. Shape.</h2>
+        <div class="pill-row">
+          <div class="pill"><h3>Monitor</h3><p>Capture AI answers across prompts, languages, journeys, regions and models.</p></div>
+          <div class="pill"><h3>Diagnose</h3><p>Map citations, entities, competitors, sentiment, hallucination and source quality.</p></div>
+          <div class="pill"><h3>Shape</h3><p>Deploy corrective content, source strategy and brand graph actions with precision.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="final">
+      <div class="halo-end"></div>
+      <div class="reveal"><div class="kicker"><span>Perceptivity</span></div><h2>Only Truth<br>Remains.</h2></div>
+    </section>
+  </main>
+  <footer class="footer"><span>PERCEPTIVITY / ABSOLUTE TRUTH</span><span>BLACK / WHITE / DOTS</span></footer>
+  <script>
+    const reveals=[...document.querySelectorAll('.reveal')];
+    const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.18});
+    reveals.forEach(r=>io.observe(r));
+    window.addEventListener('scroll',()=>{const y=scrollY;document.documentElement.style.setProperty('--scroll',y);document.querySelector('.eclipse').style.transform=`translateY(${y*.08}px) scale(${1+y/9000})`;document.querySelector('.mountains').style.transform=`translateY(${y*.035}px)`;},{passive:true});
+  </script>
+</body>
+</html>

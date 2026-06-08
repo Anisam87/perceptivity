@@ -236,6 +236,19 @@
   .proof .stat .num{font-family:var(--fontDisplay);font-weight:300;font-size:clamp(40px,5vw,64px);line-height:1;letter-spacing:.01em}
   .proof .stat .lab{font-family:var(--fontMono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:16px;line-height:1.6}
 
+  /* ---------- engines logo wall (inside §03) ---------- */
+  .engines{margin-top:62px}
+  .engines .cap{font-family:var(--fontMono);font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--faint);text-align:center;margin-bottom:26px}
+  .logo-wall{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--line)}
+  .logo-cell{display:grid;place-items:center;min-height:104px;padding:26px 22px;box-shadow:1px 0 0 var(--line),0 1px 0 var(--line)}
+  .logo-cell img{height:23px;width:auto;max-width:100%;opacity:.5;filter:brightness(0) invert(1);transition:opacity .5s var(--ease)}
+  .logo-cell:hover img{opacity:1}
+  @media (max-width:760px){
+    .logo-wall{grid-template-columns:repeat(2,1fr)}
+    .logo-cell{min-height:90px;padding:22px 16px}
+    .logo-cell img{height:20px}
+  }
+
   /* ---------- 04 · THE INDIA EDGE ---------- */
   .india-head{display:grid;grid-template-columns:.9fr 1.1fr;gap:7vw;align-items:center}
   .india-head h2{font-family:var(--fontDisplay);font-weight:300;text-transform:uppercase;font-size:clamp(32px,4.6vw,68px);line-height:1.02;letter-spacing:.06em;text-wrap:balance}
@@ -633,12 +646,29 @@
           <div class="lab">of category research<br>starts with AI</div>
         </div>
         <div class="stat">
-          <div class="num">7+</div>
+          <div class="num">10+</div>
           <div class="lab">answer engines<br>monitored continuously</div>
         </div>
         <div class="stat">
           <div class="num">1</div>
           <div class="lab">defensible number<br>for the board, each quarter</div>
+        </div>
+      </div>
+
+      <!-- engines we monitor -->
+      <div class="engines reveal" data-delay="1">
+        <div class="cap">Monitored continuously across every answer engine that matters</div>
+        <div class="logo-wall">
+          <div class="logo-cell"><img src="assets/logos/chatgpt.svg" alt="ChatGPT" loading="lazy"></div>
+          <div class="logo-cell"><img src="assets/logos/gemini.svg" alt="Google Gemini" loading="lazy"></div>
+          <div class="logo-cell"><img src="assets/logos/google-ai-overviews.svg" alt="Google AI Overviews" loading="lazy"></div>
+          <div class="logo-cell"><img src="assets/logos/perplexity.svg" alt="Perplexity" loading="lazy"></div>
+          <div class="logo-cell"><img src="assets/logos/claude.svg" alt="Claude" loading="lazy"></div>
+          <div class="logo-cell"><img src="assets/logos/copilot.svg" alt="Microsoft Copilot" loading="lazy"></div>
+          <div class="logo-cell"><img src="assets/logos/grok.svg" alt="Grok" loading="lazy"></div>
+          <div class="logo-cell"><img src="assets/logos/meta-ai.svg" alt="Meta AI" loading="lazy"></div>
+          <div class="logo-cell"><img src="assets/logos/amazon-rufus.svg" alt="Amazon Rufus" loading="lazy"></div>
+          <div class="logo-cell"><img src="assets/logos/deepseek.svg" alt="DeepSeek" loading="lazy"></div>
         </div>
       </div>
     </div>
