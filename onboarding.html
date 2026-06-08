@@ -12,7 +12,7 @@
   .ob-wrap{padding:140px 0 80px;min-height:100vh}
   .ob-console{
     position:relative;padding:36px 40px 42px;
-    border-radius:42px;overflow:hidden;
+    border-radius:2px;overflow:hidden;
     max-width:1080px;margin:0 auto;
   }
   .ob-console .scan-line{top:0;animation: scan 5s linear infinite}
@@ -20,17 +20,18 @@
   /* progress */
   .ob-progress{display:flex;align-items:center;gap:18px;margin-bottom:36px}
   .ob-step-num{font-family:var(--fontMono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
-  .ob-track{flex:1;height:2px;background:rgba(245,230,215,.08);border-radius:2px;position:relative;overflow:hidden}
-  .ob-track-fill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,var(--teal),var(--amber));border-radius:2px;transition:width .8s var(--ease)}
+  .ob-track{flex:1;height:1px;background:rgba(255,255,255,.12);border-radius:0;position:relative;overflow:hidden}
+  .ob-track-fill{position:absolute;left:0;top:0;bottom:0;background:#fff;border-radius:0;transition:width .8s var(--ease)}
   .ob-step-label{font-family:var(--fontMono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink)}
 
   /* steps */
   .ob-step{display:none}
   .ob-step.on{display:block;animation: stepIn .6s var(--ease)}
-  @keyframes stepIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  /* transform-only entrance — never gates visibility on the animation completing */
+  @keyframes stepIn{from{transform:translateY(14px)}to{transform:none}}
 
-  .ob-step h2{font-family:var(--fontDisplay);font-size:clamp(34px,4.4vw,52px);font-weight:600;line-height:1;letter-spacing:-0.045em;max-width:18ch;margin-bottom:14px}
-  .ob-step .lede{color:var(--ink);opacity:.84;font-size:18px;max-width:56ch;margin-bottom:36px;line-height:1.55}
+  .ob-step h2{font-family:var(--fontDisplay);font-size:clamp(30px,4vw,48px);font-weight:300;text-transform:uppercase;line-height:1.04;letter-spacing:.05em;max-width:18ch;margin-bottom:16px}
+  .ob-step .lede{color:var(--muted);font-size:17px;max-width:56ch;margin-bottom:36px;line-height:1.7}
 
   .ob-actions{margin-top:42px;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
   .ob-back{font-family:var(--fontMono);font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);background:none;border:none;cursor:pointer}
@@ -40,14 +41,14 @@
   .cat-mini-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:8px}
   @media (max-width:780px){ .cat-mini-grid{grid-template-columns:repeat(2,1fr)} }
   .cat-mini{
-    padding:16px 16px 18px;border-radius:18px;cursor:pointer;
-    background:rgba(7,7,19,.45);border:1px solid var(--line);
-    transition: border-color .25s var(--ease), background .25s var(--ease);
+    padding:16px 16px 18px;border-radius:2px;cursor:none;
+    background:transparent;border:1px solid var(--line);
+    transition: border-color .3s var(--ease), background .3s var(--ease);
   }
   .cat-mini:hover{border-color:var(--lineStrong)}
-  .cat-mini.on{border-color:var(--teal);background:var(--tealSoft)}
+  .cat-mini.on{border-color:#fff;background:rgba(255,255,255,.06)}
   .cat-mini .mono{color:var(--muted);font-size:10px}
-  .cat-mini h5{font-family:var(--fontDisplay);font-size:16px;font-weight:600;line-height:1.15;letter-spacing:-0.02em;color:var(--ink)}
+  .cat-mini h5{font-family:var(--fontDisplay);font-size:15px;font-weight:400;text-transform:uppercase;line-height:1.18;letter-spacing:.03em;color:var(--ink)}
 
   /* === Forms === */
   .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
@@ -62,40 +63,41 @@
     display:grid;place-items:center;color:var(--muted);background:transparent;
     transition:color .2s, border-color .2s;
   }
-  .rival-row .x:hover{color:var(--neg);border-color:var(--neg)}
+  .rival-row .x:hover{color:#fff;border-color:#fff}
   .add-rival{
     align-self:flex-start;margin-top:4px;
-    font-family:var(--fontMono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);
-    padding:8px 14px;border:1px dashed rgba(138,199,194,.4);border-radius:999px;
+    font-family:var(--fontMono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);
+    padding:8px 14px;border:1px dashed var(--line);border-radius:999px;
   }
-  .add-rival:hover{background:var(--tealSoft)}
+  .add-rival:hover{color:#fff;border-color:var(--lineStrong)}
 
   .counter{
-    margin-top:30px;padding:20px 22px;border-radius:18px;
-    background:rgba(7,7,19,.5);border:1px solid var(--line);
+    margin-top:30px;padding:20px 22px;border-radius:2px;
+    background:transparent;border:1px solid var(--line);
     display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;
   }
   .counter .mono{color:var(--muted)}
-  .counter .big{font-family:var(--fontDisplay);font-size:30px;font-weight:600;letter-spacing:-0.035em;color:var(--ink);line-height:1.15;margin-top:6px}
-  .counter .big em{font-style:normal;color:var(--amber);font-weight:600}
+  .counter .big{font-family:var(--fontDisplay);font-size:26px;font-weight:400;letter-spacing:.01em;color:var(--ink);line-height:1.3;margin-top:6px}
+  .counter .big em{font-style:normal;color:#fff;font-weight:500}
 
   /* Step 4 — question picker */
   .qpicker{display:flex;flex-direction:column;gap:8px;margin-top:6px}
   .qoption{
-    padding:14px 16px;border-radius:14px;cursor:pointer;
-    background:rgba(7,7,19,.4);border:1px solid var(--line);
+    padding:14px 16px;border-radius:2px;cursor:none;
+    background:transparent;border:1px solid var(--line);
     display:flex;justify-content:space-between;align-items:center;gap:14px;
-    transition:.2s;
+    transition:.3s;
   }
   .qoption:hover{border-color:var(--lineStrong)}
-  .qoption.on{border-color:var(--teal);background:var(--tealSoft);color:var(--ink)}
-  .qoption .qtxt{font-size:14.5px;color:var(--ink);line-height:1.4;flex:1}
+  .qoption.on{border-color:#fff;background:rgba(255,255,255,.06);color:var(--ink)}
+  .qoption .qtxt{font-size:14.5px;color:var(--muted);line-height:1.45;flex:1}
+  .qoption.on .qtxt{color:var(--ink)}
   .qoption .qcheck{
     width:22px;height:22px;border-radius:50%;border:1px solid var(--lineStrong);
     display:grid;place-items:center;flex-shrink:0;
     transition:.2s;
   }
-  .qoption.on .qcheck{background:var(--teal);border-color:var(--teal);color:var(--void)}
+  .qoption.on .qcheck{background:#fff;border-color:#fff;color:#000}
   .qoption .qcheck svg{opacity:0;transition:opacity .2s}
   .qoption.on .qcheck svg{opacity:1}
   .qcount{
@@ -105,30 +107,29 @@
 
   /* === Step 5 — the scan === */
   .scan-stage{
-    position:relative;height:520px;border-radius:32px;overflow:hidden;
-    background:linear-gradient(160deg, rgba(7,7,19,.75), rgba(23,18,39,.75));
+    position:relative;height:520px;border-radius:2px;overflow:hidden;
+    background:#000;
     border:1px solid var(--line);
   }
   .scan-stage .drift-grid{position:absolute;inset:0;opacity:.5}
   .scan-eye{
     position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-    width:200px;height:200px;border-radius:50%;
-    background:
-      radial-gradient(circle at 50% 50%, transparent 56%, rgba(220,232,250,.18) 57%, transparent 60%),
-      radial-gradient(circle at 50% 50%, transparent 70%, rgba(92,156,230,.32) 71%, transparent 74%),
-      radial-gradient(circle at 50% 50%, transparent 82%, rgba(127,194,208,.22) 83%, transparent 86%);
+    width:220px;height:220px;border-radius:50%;
+    background:radial-gradient(circle, rgba(255,255,255,.95) 0 1.1px, transparent 1.4px);
+    background-size:7px 7px;
+    -webkit-mask-image:radial-gradient(circle, transparent 0 30%, #000 33% 64%, transparent 72%);
+    mask-image:radial-gradient(circle, transparent 0 30%, #000 33% 64%, transparent 72%);
   }
   .scan-eye::before{
-    content:"";position:absolute;inset:34%;border-radius:50%;
-    background:radial-gradient(circle at 38% 38%, var(--ink), var(--peach) 50%, var(--amber) 100%);
-    box-shadow: 0 0 40px rgba(150,196,255,.5);
-    animation: pulse-soft 2s ease-in-out infinite;
+    content:"";position:absolute;inset:38%;border-radius:50%;
+    background:#000;box-shadow:0 0 0 1px rgba(255,255,255,.5), 0 0 30px rgba(255,255,255,.4);
+    animation: pulse-soft 2.4s ease-in-out infinite;
   }
   .scan-sweep{
     position:absolute;left:0;right:0;top:50%;height:1px;
-    background:linear-gradient(90deg,transparent,var(--teal),transparent);
-    box-shadow:0 0 16px var(--teal);
-    animation: stage-sweep 3s ease-in-out infinite;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);
+    box-shadow:none;
+    animation: stage-sweep 3.4s ease-in-out infinite;
   }
   @keyframes stage-sweep{
     0%{top:6%;opacity:0}10%{opacity:1}90%{opacity:1}100%{top:94%;opacity:0}
@@ -138,14 +139,14 @@
     position:absolute;
     display:inline-flex;align-items:center;gap:8px;
     padding:8px 12px;border-radius:999px;
-    background:rgba(7,7,19,.85);border:1px solid var(--line);backdrop-filter:blur(10px);
-    font-family:var(--fontMono);font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);
-    transition: color .4s var(--ease), border-color .4s var(--ease), background .4s var(--ease), box-shadow .4s var(--ease);
+    background:rgba(0,0,0,.6);border:1px solid var(--line);backdrop-filter:blur(10px);
+    font-family:var(--fontMono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);
+    transition: color .4s var(--ease), border-color .4s var(--ease), background .4s var(--ease);
     transform:translate(-50%,-50%);white-space:nowrap;
   }
-  .engine-chip .nd{width:6px;height:6px;border-radius:50%;background:var(--muted);transition:background .4s, box-shadow .4s}
-  .engine-chip.lit{color:var(--ink);border-color:var(--teal);background:var(--tealSoft);box-shadow:0 0 24px rgba(138,199,194,.35)}
-  .engine-chip.lit .nd{background:var(--teal);box-shadow:0 0 10px var(--teal)}
+  .engine-chip .nd{width:5px;height:5px;border-radius:50%;background:var(--muted);transition:background .4s, box-shadow .4s}
+  .engine-chip.lit{color:var(--ink);border-color:#fff;background:rgba(255,255,255,.08)}
+  .engine-chip.lit .nd{background:#fff;box-shadow:0 0 10px rgba(255,255,255,.9)}
 
   .scan-readout{
     position:absolute;left:30px;bottom:24px;right:30px;
@@ -153,14 +154,14 @@
     font-family:var(--fontMono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);
   }
   .scan-readout b{color:var(--ink);font-weight:500}
-  .scan-counter{font-family:var(--fontDisplay);font-size:48px;font-weight:600;letter-spacing:-0.04em;color:var(--ink);line-height:1}
+  .scan-counter{font-family:var(--fontDisplay);font-size:44px;font-weight:300;letter-spacing:.02em;color:var(--ink);line-height:1}
 
   .scan-status{
     position:absolute;left:30px;top:24px;
     font-family:var(--fontMono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink);
     display:flex;align-items:center;gap:10px;
   }
-  .scan-status .dot{background:var(--amber);box-shadow:0 0 12px var(--amber)}
+  .scan-status .dot{background:#fff;box-shadow:0 0 12px rgba(255,255,255,.9)}
 
   .demo-note{
     text-align:center;margin-top:16px;
@@ -169,7 +170,7 @@
 
   @media (max-width:640px){
     .ob-wrap{padding:100px 0 56px}
-    .ob-console{padding:24px 18px 28px;border-radius:28px}
+    .ob-console{padding:24px 18px 28px;border-radius:2px}
     .ob-progress{gap:12px;margin-bottom:26px}
     .ob-step-label{display:none}
     .ob-step h2{font-size:clamp(26px,7.5vw,34px)}

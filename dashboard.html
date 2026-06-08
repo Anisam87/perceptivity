@@ -344,7 +344,67 @@
     .gate-banner{padding:16px 18px}
   }
 </style>
-<link rel="stylesheet" href="theme-adaptive.css">
+<style id="dots-dashboard-override">
+  /* ===== ABSOLUTE TRUTH override: flatten + de-colour the dashboard ===== */
+  .app-bar,.tabs-wrap,.tab,.gate-banner,.module,.kpi-c,.heat-cell,.heat-cell .tip,
+  .claim,.gap,.sim-row,.pipe-col,.qcard,.learn-card,.ba,.learn-card .delta,
+  .confidence-card,.int-card,.bt-src{border-radius:2px !important}
+
+  /* dark panel fills read as black already; only the COLOURED bits need fixing */
+  .tabs-wrap{background:transparent}
+  .tab.on{background:rgba(255,255,255,.08)}
+
+  /* context singularity mark (was warm gradient) */
+  .ctx-eye{background:#000 !important;box-shadow:0 0 0 1px rgba(255,255,255,.2) !important;position:relative;overflow:hidden}
+  .ctx-eye::before{
+    content:"";position:absolute;inset:-30%;border-radius:50%;
+    background:radial-gradient(circle, rgba(255,255,255,.95) 0 1.1px, transparent 1.3px);
+    background-size:4px 4px;
+    -webkit-mask-image:radial-gradient(circle, transparent 0 32%, #000 35% 70%, transparent 76%);
+    mask-image:radial-gradient(circle, transparent 0 32%, #000 35% 70%, transparent 76%);
+  }
+  .ctx-mode.personalized{color:#fff;border-color:var(--lineStrong);background:rgba(255,255,255,.06)}
+  .ctx-mode.sample{color:var(--muted);border-color:var(--line);background:transparent}
+
+  /* gate banner → hairline */
+  .gate-banner{background:transparent !important;border-color:var(--line) !important}
+  .gate-banner .lhs .ico{background:rgba(255,255,255,.08) !important;color:#fff !important}
+
+  /* bars → white fills */
+  .share-row .bar::before{background:rgba(255,255,255,.32) !important}
+  .share-row.me .bar::before{background:rgba(255,255,255,.8) !important}
+  .qcard .impact-bar::before{background:rgba(255,255,255,.6) !important}
+  .bt-src-bar::before{background:rgba(255,255,255,.6) !important}
+
+  /* claim accents → white opacity rails */
+  .claim.positive{border-left-color:rgba(255,255,255,.85) !important}
+  .claim.outdated{border-left-color:rgba(255,255,255,.5) !important}
+  .claim.hallucinated{border-left-color:rgba(255,255,255,.85) !important;background:transparent !important}
+
+  /* coloured text / borders → mono */
+  .sim-row .lift{color:#fff !important}
+  .sim-row .btn-mini:hover{border-color:#fff !important;color:#fff !important}
+  .sim-row.queued .btn-mini{border-color:var(--lineStrong) !important;color:#fff !important}
+  .gap a,.gap button{color:var(--muted)}
+  .gap a:hover,.gap button:hover{color:#fff}
+  .pipe-col.shipped,.pipe-col.measured{border-color:var(--line) !important;background:transparent !important}
+  .qcard .next{color:var(--muted) !important;border-color:var(--line) !important;background:transparent !important}
+  .qcard .next:hover{background:rgba(255,255,255,.06) !important;color:#fff !important}
+  .qcard.just-moved{animation:none !important}
+  .ba.after{border-color:var(--lineStrong) !important;background:transparent !important}
+  .ba.after .mono{color:#fff !important}
+  .learn-card .delta{background:transparent !important;border-color:var(--line) !important}
+  .learn-card .delta .mono{color:#fff !important}
+  .confidence-card{background:transparent !important;border-color:var(--line) !important}
+  .confidence-eye,.conf-eye{background:#000 !important;box-shadow:0 0 0 1px rgba(255,255,255,.2) !important}
+  .int-card.connected .actions button{color:#fff !important;border-color:var(--line) !important;background:transparent !important}
+  .int-card .actions button:hover{border-color:#fff !important;color:#fff !important}
+  .bt-src-act:hover{border-color:#fff !important;color:#fff !important}
+  .tab.on .step-num{color:#fff}
+  /* guarantee active tab content is visible (paneIn can stick at 0 in some engines) */
+  .pane.on{opacity:1 !important;animation:none !important}
+  .reveal{opacity:1 !important;transform:none !important}
+</style>
 <script src="theme.js"></script>
 </head>
 <body>
@@ -656,10 +716,7 @@
     heatRows.appendChild(r);
     data.heatmap[e].forEach((v, ti) => {
       const c = document.createElement('div'); c.className='heat-cell';
-      const accent = v > .7 ? `rgba(92,156,230,${0.18 + v*0.7})`
-                   : v > .5 ? `rgba(127,178,224,${0.14 + v*0.55})`
-                   : v > .3 ? `rgba(140,155,224,${0.14 + v*0.45})`
-                            : `rgba(200,216,240,${0.06 + v*0.3})`;
+      const accent = `rgba(255,255,255,${(0.05 + v*0.82).toFixed(3)})`;
       c.style.background = accent;
       c.innerHTML = `<span class="tip">${e} · ${data.topics[ti]} · ${Math.round(v*100)}%</span>`;
       heatGrid.appendChild(c);
@@ -909,8 +966,8 @@
       renderClaims(true);
       pushBtn.textContent = '✓ Truth pushed';
       pushBtn.classList.remove('primary');
-      pushBtn.style.borderColor = 'rgba(139,210,169,.5)';
-      pushBtn.style.color = 'var(--pos)';
+      pushBtn.style.borderColor = 'rgba(255,255,255,.6)';
+      pushBtn.style.color = '#fff';
       // bump the accuracy KPI
       const acc = document.getElementById('btAcc');
       const accDelta = document.getElementById('btAccDelta');

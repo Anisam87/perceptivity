@@ -13,15 +13,19 @@
   .page-head{padding:150px 0 30px}
   .page-head .kicker{margin-bottom:22px}
   .page-head h1{max-width:18ch}
-  .page-head p{max-width:54ch;margin-top:24px;color:var(--ink);opacity:.85;font-size:21px;line-height:1.55}
+  .page-head p{max-width:54ch;margin-top:24px;color:var(--muted);font-size:19px;line-height:1.8}
+  /* every page heading speaks in the caps system */
+  .shift-card h3,.loop-step h3,.os-card h4,.section-head h2,.cta-final h2{
+    text-transform:uppercase;font-weight:400;letter-spacing:.06em;
+  }
 
   /* SHIFT */
   .shift-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:48px}
   @media (max-width:780px){ .shift-grid{grid-template-columns:1fr} }
   .shift-card{padding:30px 30px 34px}
   .shift-card .kicker{margin-bottom:18px}
-  .shift-card h3{font-family:var(--fontDisplay);font-size:30px;font-weight:600;line-height:1.1;letter-spacing:-0.03em;color:var(--ink);margin-bottom:14px}
-  .shift-statement{margin-top:64px;font-family:var(--fontDisplay);font-weight:600;font-size:clamp(32px,4vw,56px);line-height:1.1;letter-spacing:-0.04em;color:rgba(250,241,229,.5);max-width:28ch}
+  .shift-card h3{font-family:var(--fontDisplay);font-size:27px;font-weight:400;line-height:1.12;letter-spacing:.04em;color:var(--ink);margin-bottom:16px}
+  .shift-statement{margin-top:64px;font-family:var(--fontDisplay);font-weight:300;text-transform:uppercase;font-size:clamp(30px,3.8vw,52px);line-height:1.12;letter-spacing:.06em;color:rgba(255,255,255,.42);max-width:28ch}
   .shift-statement em{font-style:normal;color:var(--ink)}
 
   /* LOOP — sticky */
@@ -29,52 +33,52 @@
   @media (max-width:980px){ .loop-grid{grid-template-columns:1fr;gap:40px} }
   .loop-steps{display:flex;flex-direction:column;gap:120px}
   .loop-step .mono{color:var(--muted);margin-bottom:14px;display:block}
-  .loop-step h3{font-family:var(--fontDisplay);font-size:clamp(32px,4vw,52px);font-weight:600;line-height:.96;letter-spacing:-0.05em;margin-bottom:18px}
-  .loop-step p{max-width:44ch;color:var(--ink);opacity:.85;font-size:19px;line-height:1.55}
-  .loop-viz{margin-top:24px;padding:22px;border-radius:24px;background:rgba(7,7,19,.5);border:1px solid var(--line)}
+  .loop-step h3{font-family:var(--fontDisplay);font-size:clamp(28px,3.6vw,46px);font-weight:300;line-height:1.02;letter-spacing:.05em;margin-bottom:20px}
+  .loop-step p{max-width:44ch;color:var(--muted);font-size:17px;line-height:1.75}
+  .loop-viz{margin-top:24px;padding:22px;border-radius:2px;background:transparent;border:1px solid var(--line)}
   .loop-sticky{position:sticky;top:120px;height:520px;display:flex;align-items:center;justify-content:center}
   .loop-sticky .wormhole{width:380px;height:380px}
-  .loop-sticky .center-word{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--fontDisplay);font-size:42px;font-weight:600;letter-spacing:-0.04em;color:var(--ink);text-align:center;transition:opacity .4s, transform .4s}
+  .loop-sticky .center-word{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--fontDisplay);font-size:30px;font-weight:300;text-transform:uppercase;letter-spacing:.16em;color:var(--ink);text-align:center;transition:opacity .4s, transform .4s}
 
   .v-heat{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-top:10px}
   .v-heat .c{aspect-ratio:1;border-radius:5px;border:1px solid var(--line)}
   .v-rows{display:flex;flex-direction:column;gap:8px}
   .v-row{display:flex;align-items:center;gap:10px;font-family:var(--fontMono);font-size:11.5px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted)}
   .v-row .bar{flex:1;height:7px;border-radius:4px;background:var(--glass);border:1px solid var(--line);position:relative;overflow:hidden}
-  .v-row .bar::before{content:"";position:absolute;inset:0;width:var(--w,40%);background:linear-gradient(90deg,var(--amber),var(--peach))}
+  .v-row .bar::before{content:"";position:absolute;inset:0;width:var(--w,40%);background:rgba(255,255,255,.6)}
   .v-row .lift{color:var(--ink);min-width:54px;text-align:right}
 
   .v-impact{display:flex;flex-direction:column;gap:10px}
   .v-impact .row{display:flex;align-items:center;gap:12px;font-family:var(--fontMono);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted)}
   .v-impact .lbl{flex:0 0 38%}
   .v-impact .bar{flex:1;height:8px;border-radius:5px;background:var(--glass);border:1px solid var(--line);position:relative;overflow:hidden}
-  .v-impact .bar::before{content:"";position:absolute;inset:0;width:var(--w);background:linear-gradient(90deg,var(--teal),var(--violet))}
+  .v-impact .bar::before{content:"";position:absolute;inset:0;width:var(--w);background:rgba(255,255,255,.6)}
   .v-impact .pct{color:var(--ink);min-width:38px;text-align:right}
 
   .v-loop{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .v-loop .card{padding:14px;border-radius:14px;background:rgba(7,7,19,.45);border:1px solid var(--line)}
+  .v-loop .card{padding:14px;border-radius:2px;background:transparent;border:1px solid var(--line)}
   .v-loop .card .mono-sm{margin-bottom:8px}
-  .v-loop .card p{font-size:13.5px;color:var(--ink);line-height:1.45}
-  .v-loop .card.before{opacity:.7}
-  .v-loop .card.after{border-color:rgba(138,199,194,.4)}
+  .v-loop .card p{font-size:13.5px;color:var(--muted);line-height:1.55}
+  .v-loop .card.before{opacity:.55}
+  .v-loop .card.after{border-color:rgba(255,255,255,.4)}
 
   /* OS cards */
   .os-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:48px}
   @media (max-width:900px){ .os-grid{grid-template-columns:1fr} }
   .os-card{padding:32px 30px 36px;min-height:280px;display:flex;flex-direction:column;justify-content:space-between;gap:24px}
-  .os-card h4{font-family:var(--fontDisplay);font-size:26px;font-weight:600;line-height:1.1;letter-spacing:-0.03em;margin-bottom:10px}
-  .os-card p{color:var(--ink);opacity:.78;font-size:16px;line-height:1.55}
+  .os-card h4{font-family:var(--fontDisplay);font-size:24px;font-weight:400;line-height:1.12;letter-spacing:.05em;margin-bottom:12px}
+  .os-card p{color:var(--muted);font-size:15px;line-height:1.7}
   .os-card .num{font-family:var(--fontMono);font-size:12px;letter-spacing:0.14em;color:var(--muted)}
 
   /* final cta */
   .cta-final{padding:64px 48px 70px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:18px;max-width:920px;margin:60px auto 0}
-  .cta-final h2{font-family:var(--fontDisplay);font-size:clamp(40px,5vw,70px);font-weight:600;line-height:.96;letter-spacing:-0.05em;max-width:18ch}
-  .cta-final p{color:var(--ink);opacity:.85;font-size:19px;max-width:42ch;line-height:1.5}
+  .cta-final h2{font-family:var(--fontDisplay);font-size:clamp(38px,4.6vw,64px);font-weight:300;line-height:1.02;letter-spacing:.07em;max-width:18ch}
+  .cta-final p{color:var(--muted);font-size:18px;max-width:42ch;line-height:1.7}
   .cta-final .btn{margin-top:14px}
 
   .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;flex-wrap:wrap;margin-bottom:8px}
-  .section-head h2{font-family:var(--fontDisplay);font-size:clamp(34px,5vw,60px);font-weight:600;line-height:.95;letter-spacing:-0.05em;max-width:20ch}
-  .section-head p{max-width:42ch;color:var(--ink);opacity:.82;font-size:18px;line-height:1.55}
+  .section-head h2{font-family:var(--fontDisplay);font-size:clamp(32px,4.6vw,56px);font-weight:300;line-height:1.0;letter-spacing:.06em;max-width:20ch}
+  .section-head p{max-width:42ch;color:var(--muted);font-size:17px;line-height:1.7}
 
   @media (max-width:980px){
     /* once the loop stacks, the wormhole no longer needs to be pinned tall */
@@ -150,7 +154,7 @@
         <div class="loop-step reveal">
           <span class="mono">Step 01 · Sense</span>
           <h3>See exactly what AI is telling your buyer.</h3>
-          <p>Every engine, every buyer question, every claim made about your brand and your competitors. One heatmap, no guesswork. The first time most CMOs see this, they don't speak for a minute.</p>
+          <p>Every engine, every buyer question, every claim made about your brand and your competitors. One field, no guesswork.</p>
           <div class="loop-viz">
             <div class="mono-sm">VISIBILITY HEATMAP · 7 ENGINES × 6 TOPICS</div>
             <div class="v-heat" id="heatMini"></div>
@@ -195,7 +199,7 @@
             <div class="mono-sm" style="margin-bottom:14px">BEFORE / AFTER · PRIORITY BUYER QUERY</div>
             <div class="v-loop">
               <div class="card before"><div class="mono-sm">BEFORE</div><p>Not named in any engine when buyers asked about ownership experience.</p></div>
-              <div class="card after"><div class="mono-sm" style="color:var(--teal)">AFTER</div><p>Named in 4 of 6 engines. Service trust now a positive signal.</p></div>
+              <div class="card after"><div class="mono-sm">AFTER</div><p>Named in 4 of 6 engines. Service trust now a positive signal.</p></div>
             </div>
           </div>
         </div>
@@ -270,8 +274,7 @@
     sample[e].forEach(v => {
       const c = document.createElement('div');
       c.className = 'c';
-      const color = v > .65 ? `rgba(92,156,230,${v})` : (v > .45 ? `rgba(127,178,224,${v*0.8})` : `rgba(140,155,224,${v*0.6})`);
-      c.style.background = color;
+      c.style.background = `rgba(255,255,255,${(0.06 + v*0.78).toFixed(3)})`;
       heat.appendChild(c);
     });
   });

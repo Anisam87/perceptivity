@@ -3,82 +3,108 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="Book a Perceptivity demo. We'll arrive with your category already scanned across seven answer engines and India's retail-AI surfaces." />
-<title>Book a demo — Perceptivity</title>
+<meta name="description" content="Request a Perceptivity viewing. We arrive with your category already scanned across seven answer engines — black, white, dots, only truth." />
+<title>Contact — Perceptivity</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..500;1,6..72,200..500&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="editorial.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="perceptivity.css">
 <style>
-  .demo{padding:120px 0 90px}
-  .demo-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:56px;align-items:start}
-  @media (max-width:920px){ .demo-grid{grid-template-columns:1fr;gap:40px} }
-  .demo-lhs h1{max-width:14ch}
-  .demo-lhs .lede{margin-top:22px}
-  .demo-scan{margin-top:38px}
-  .scan-list{display:flex;flex-direction:column}
-  .scan-line{display:grid;grid-template-columns:20px 1fr auto;gap:13px;align-items:center;padding:12px 0;border-bottom:1px solid var(--rule);font-family:var(--mono);font-size:12.5px;letter-spacing:0.02em;color:var(--ink-2)}
-  .scan-line:last-child{border-bottom:none}
-  .scan-line .ck{width:18px;height:18px;border-radius:4px;display:grid;place-items:center;background:var(--ink);color:var(--paper)}
-  .scan-line b{color:var(--ink);font-weight:500}
-  .scan-line .st{color:var(--amber-ink)}
-  .demo-meta{margin-top:30px;padding-top:22px;border-top:1px solid var(--rule);display:flex;gap:30px;flex-wrap:wrap}
-  .demo-meta .m .v{font-family:var(--serif);font-size:30px;color:var(--ink);letter-spacing:-0.02em;line-height:1}
-  .demo-meta .m .k{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-3);margin-top:7px}
+  .demo{padding:150px 0 110px}
+  .demo-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:64px;align-items:start}
+  @media (max-width:920px){ .demo-grid{grid-template-columns:1fr;gap:44px} }
 
-  /* form */
-  .demo-form{background:var(--card);border:1px solid var(--rule-2);border-radius:var(--r-lg);padding:32px;box-shadow:0 40px 90px -55px rgba(27,24,19,.4)}
-  .demo-form .fh{font-family:var(--serif);font-size:26px;color:var(--ink);letter-spacing:-0.02em}
-  .demo-form .fs{font-size:14.5px;color:var(--ink-2);margin:8px 0 26px;line-height:1.5}
-  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .demo-lhs h1{max-width:13ch}
+  .demo-lhs .lede{margin-top:24px;color:var(--muted);font-size:18px;line-height:1.8;max-width:48ch}
+
+  /* checklist — flat dot panel, no chrome */
+  .scan-panel{margin-top:42px;border:1px solid var(--line);border-radius:2px;position:relative;overflow:hidden}
+  .scan-panel::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:radial-gradient(rgba(255,255,255,.7) .7px, transparent 1px);
+    background-size:10px 10px;opacity:.05;
+    -webkit-mask-image:radial-gradient(circle at 90% 0%, #000, transparent 70%);
+    mask-image:radial-gradient(circle at 90% 0%, #000, transparent 70%);
+  }
+  .scan-panel .ph{
+    position:relative;display:flex;justify-content:space-between;align-items:center;gap:14px;
+    padding:16px 22px;border-bottom:1px solid var(--line);
+    font-family:var(--fontMono);font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted);
+  }
+  .scan-list{position:relative;padding:6px 22px 12px}
+  .scan-line{
+    display:grid;grid-template-columns:18px 1fr auto;gap:14px;align-items:center;
+    padding:15px 0;border-bottom:1px solid var(--line);
+    font-size:14.5px;color:var(--muted);
+  }
+  .scan-line:last-child{border-bottom:none}
+  .scan-line .ck{width:16px;height:16px;border-radius:50%;display:grid;place-items:center;background:#fff;color:#000}
+  .scan-line b{color:var(--ink);font-weight:500}
+  .scan-line .st{font-family:var(--fontMono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+  .illus{margin-top:14px;font-family:var(--fontMono);font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--faint)}
+
+  .demo-meta{margin-top:34px;padding-top:26px;border-top:1px solid var(--line);display:flex;gap:40px;flex-wrap:wrap}
+  .demo-meta .m .v{font-family:var(--fontDisplay);font-weight:300;font-size:30px;color:var(--ink);letter-spacing:.02em;line-height:1}
+  .demo-meta .m .k{font-family:var(--fontMono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin-top:9px}
+
+  /* form — hairline frame, no fill */
+  .demo-form{border:1px solid var(--line);border-radius:2px;padding:38px 36px 40px;position:relative;overflow:hidden}
+  .demo-form::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:radial-gradient(rgba(255,255,255,.7) .7px, transparent 1px);
+    background-size:10px 10px;opacity:.05;
+    -webkit-mask-image:radial-gradient(circle at 12% 0%, #000, transparent 64%);
+    mask-image:radial-gradient(circle at 12% 0%, #000, transparent 64%);
+  }
+  .demo-form>*{position:relative}
+  .demo-form .fh{font-family:var(--fontDisplay);font-weight:300;text-transform:uppercase;font-size:24px;color:var(--ink);letter-spacing:.05em}
+  .demo-form .fs{font-size:14px;color:var(--muted);margin:12px 0 30px;line-height:1.6}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:22px}
   @media (max-width:520px){ .form-row{grid-template-columns:1fr} }
-  .demo-form .btn{width:100%;margin-top:6px}
-  .form-fine{margin-top:14px;font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-4);text-align:center;line-height:1.7}
-  .demo-success{display:none;flex-direction:column;gap:14px;text-align:center;align-items:center;padding:30px 10px}
+  .demo-form .field{margin-bottom:22px}
+  .demo-form .btn{width:100%;margin-top:10px}
+  .form-fine{margin-top:16px;font-family:var(--fontMono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);text-align:center;line-height:1.9}
+  .demo-success{display:none;flex-direction:column;gap:16px;text-align:center;align-items:center;padding:24px 6px}
   .demo-success.on{display:flex}
-  .demo-success .ok{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:var(--paper)}
-  .demo-success h3{font-family:var(--serif);font-size:26px;color:var(--ink);letter-spacing:-0.02em}
-  .demo-success p{color:var(--ink-2);font-size:15.5px;line-height:1.55;max-width:40ch}
+  .demo-success .ok{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:#fff;color:#000}
+  .demo-success h3{font-family:var(--fontDisplay);font-weight:300;text-transform:uppercase;font-size:24px;color:var(--ink);letter-spacing:.05em}
+  .demo-success p{color:var(--muted);font-size:15px;line-height:1.7;max-width:40ch}
   .demo-form.submitted .demo-form-body{display:none}
-  @media (max-width:640px){ .demo{padding:92px 0 64px} .demo-form{padding:24px} }
+  @media (max-width:640px){ .demo{padding:116px 0 72px} .demo-form{padding:26px 22px 28px} }
 </style>
 </head>
 <body>
 
 <section class="demo">
-  <div class="wrap">
+  <div class="container">
     <div class="demo-grid">
       <div class="demo-lhs">
-        <div class="kicker reveal"><span class="ln"></span> Book a demo</div>
-        <h1 class="display d-lg reveal" data-d="1" style="margin-top:20px">We'll arrive with your category <span class="amber">already scanned.</span></h1>
-        <p class="lede reveal" data-d="2">No generic pitch. A 30-minute walkthrough on your brand and your rivals — across seven engines and India's retail-AI surfaces — with the read already done before we meet.</p>
+        <div class="kicker reveal">Request a viewing</div>
+        <h1 class="display-lg reveal" data-delay="1" style="margin-top:22px">We arrive with your category already scanned.</h1>
+        <p class="lede reveal" data-delay="2">A 30-minute walkthrough on your brand and your rivals — across seven engines — with the read already done before we meet.</p>
 
-        <div class="demo-scan reveal" data-d="3">
-          <div class="term">
-            <div class="term-bar"><span class="ttl"><span class="dot"></span>What's on the table when we call</span><span class="meta">Recorded preview</span></div>
-            <div class="term-body" style="padding:6px 18px">
-              <div class="scan-list">
-                <div class="scan-line"><span class="ck"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.6l3 3L10 1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Your <b>answer share</b> vs named rivals, per engine</span><span class="st">ready</span></div>
-                <div class="scan-line"><span class="ck"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.6l3 3L10 1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>The <b>hallucinations</b> &amp; stale claims, mapped to engines</span><span class="st">ready</span></div>
-                <div class="scan-line"><span class="ck"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.6l3 3L10 1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Hinglish &amp; regional-language <b>answer graph</b></span><span class="st">ready</span></div>
-                <div class="scan-line"><span class="ck"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.6l3 3L10 1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Three <b>forecasted moves</b> most likely to shift the answer</span><span class="st">ready</span></div>
-              </div>
-            </div>
+        <div class="scan-panel reveal" data-delay="3">
+          <div class="ph"><span>On the table when we meet</span><span>Recorded preview</span></div>
+          <div class="scan-list">
+            <div class="scan-line"><span class="ck"><svg width="10" height="8" viewBox="0 0 11 9" fill="none"><path d="M1 4.6l3 3L10 1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Your <b>answer share</b> vs named rivals, per engine</span><span class="st">ready</span></div>
+            <div class="scan-line"><span class="ck"><svg width="10" height="8" viewBox="0 0 11 9" fill="none"><path d="M1 4.6l3 3L10 1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>The <b>hallucinations</b> &amp; stale claims, mapped to engines</span><span class="st">ready</span></div>
+            <div class="scan-line"><span class="ck"><svg width="10" height="8" viewBox="0 0 11 9" fill="none"><path d="M1 4.6l3 3L10 1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Regional-language <b>answer graph</b></span><span class="st">ready</span></div>
+            <div class="scan-line"><span class="ck"><svg width="10" height="8" viewBox="0 0 11 9" fill="none"><path d="M1 4.6l3 3L10 1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Three <b>forecasted moves</b> most likely to shift the answer</span><span class="st">ready</span></div>
           </div>
-          <p class="illus" style="margin-top:14px">Illustrative · we build your real read from your category before the call</p>
         </div>
+        <p class="illus">Illustrative · we build your real read before the call</p>
 
-        <div class="demo-meta reveal" data-d="4">
-          <div class="m"><div class="v">7 + retail</div><div class="k">Engines &amp; surfaces</div></div>
+        <div class="demo-meta reveal" data-delay="4">
+          <div class="m"><div class="v">7</div><div class="k">Engines</div></div>
           <div class="m"><div class="v">30 min</div><div class="k">Walkthrough</div></div>
           <div class="m"><div class="v">&lt; 1 day</div><div class="k">To reply</div></div>
         </div>
       </div>
 
       <!-- form -->
-      <div class="demo-form reveal" data-d="2" id="demoForm">
+      <div class="demo-form reveal" data-delay="2" id="demoForm">
         <div class="demo-form-body">
-          <div class="fh">Tell us about your brand.</div>
+          <div class="fh">Tell us about your brand</div>
           <div class="fs">Five fields. We'll do the scanning.</div>
           <form id="bookForm" novalidate>
             <div class="form-row">
@@ -110,33 +136,33 @@
                 <option>Another category</option>
               </select>
             </div>
-            <button class="btn amber lg" type="submit">Request my demo <span class="arrow">→</span></button>
+            <button class="btn primary btn-lg" type="submit">Request a viewing <span class="arrow">→</span></button>
             <div class="form-fine">No credit card · We reply within one business day</div>
           </form>
         </div>
         <div class="demo-success" id="demoSuccess">
-          <span class="ok"><svg width="24" height="24" viewBox="0 0 26 26" fill="none"><path d="M5 13l5 5 11-12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <h3>Request received.</h3>
+          <span class="ok"><svg width="22" height="22" viewBox="0 0 26 26" fill="none"><path d="M5 13l5 5 11-12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <h3>Request received</h3>
           <p id="successMsg">We'll scan your category and reply within one business day to book a time.</p>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:6px">
-            <a class="btn amber" href="onboarding.html">Get started now <span class="arrow">→</span></a>
-            <a class="btn" href="index.html#resources">Read the CMO briefing</a>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:8px">
+            <a class="btn primary" href="onboarding.html">Enter now <span class="arrow">→</span></a>
+            <a class="btn" href="how-it-works.html">See the method</a>
           </div>
-          <p class="form-fine" style="margin-top:14px">Don't want to wait for the call? Build your workspace and see your read now.</p>
+          <p class="form-fine" style="margin-top:16px">Don't want to wait? Enter the observatory and see your read now.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<script src="editorial.js"></script>
+<script src="chrome.js"></script>
 <script>
   document.getElementById('bookForm').addEventListener('submit', function(e){
     e.preventDefault();
     const fn=document.getElementById('fn'), email=document.getElementById('email'), company=document.getElementById('company');
     let ok=true;
-    [fn,email,company].forEach(f=>{ if(!f.value.trim()){ f.style.borderColor='var(--neg)'; ok=false; } else f.style.borderColor=''; });
-    if(!email.value.includes('@')){ email.style.borderColor='var(--neg)'; ok=false; }
+    [fn,email,company].forEach(f=>{ if(!f.value.trim()){ f.style.borderBottomColor='#fff'; ok=false; } else f.style.borderBottomColor=''; });
+    if(!email.value.includes('@')){ email.style.borderBottomColor='#fff'; ok=false; }
     if(!ok) return;
     const name=fn.value.trim().split(' ')[0];
     document.getElementById('demoForm').classList.add('submitted');
@@ -145,7 +171,7 @@
     document.getElementById('demoSuccess').classList.add('on');
     window.scrollTo({top:0,behavior:'smooth'});
   });
-  ['fn','email','company'].forEach(id=>document.getElementById(id).addEventListener('input',e=>e.target.style.borderColor=''));
+  ['fn','email','company'].forEach(id=>document.getElementById(id).addEventListener('input',e=>e.target.style.borderBottomColor=''));
 </script>
 </body>
 </html>

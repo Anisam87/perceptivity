@@ -3,482 +3,1255 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="Perceptivity is the India-first answer-engine platform. See the brand AI recommends instead of you, forecast the lift of a campaign before you spend, and prove it — across ChatGPT, Perplexity, Gemini, Claude, Google AIO, and India's retail-AI surfaces." />
-<title>Perceptivity — See the brand AI recommends instead of you</title>
+<meta name="description" content="Perceptivity. More of your buyers now ask AI than search — and it names one brand. See what AI says about you, and shape the answer. Monitor, diagnose, shape." />
+<title>Perceptivity — Be the brand AI names</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..500;1,6..72,200..500&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="editorial.css">
-<link rel="stylesheet" href="home-editorial.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="perceptivity.css">
+<style>
+  /* ============ HOMEPAGE — bespoke dot scenes, board-direct ============ */
+  main{display:block}
+
+  /* legibility: home copy runs slightly brighter + larger than global muted */
+  .scene .body p,.hero-copy p{color:rgba(255,255,255,.74)}
+
+  /* scroll-linked section reveals — JS sets opacity/transform per frame, so no CSS transition */
+  main .reveal{
+    opacity:0;transform:translateY(46px);filter:none;
+    transition:none;will-change:opacity,transform;
+  }
+  main .reveal.in{opacity:1;transform:none;filter:none}
+  main .reveal[data-delay="1"]{transition-delay:0s}
+  main .reveal[data-delay="2"]{transition-delay:0s}
+
+  /* scroll-scrubbed text — words brighten / embolden as the line is read */
+  [data-scrub]{--w-base:rgba(255,255,255,.18)}
+  [data-scrub] .w{color:var(--w-base);transition:color .25s linear, text-shadow .4s linear}
+  [data-scrub] .w.hot{font-weight:400}
+
+  /* tweakable accent (default pure white = brand-neutral) */
+  .hero-copy .stat{color:var(--accent,#fff)}
+  .bb-a .brandname{color:var(--accent,#fff)}
+  .kicker::before{background:var(--accent,#fff)}
+  .lchip.on{background:var(--accent,#fff);border-color:var(--accent,#fff)}
+  .dot{background:var(--accent,#fff)}
+
+  /* motion off — jump every animation/transition to its end state, hold still */
+  html[data-motion="off"] *,
+  html[data-motion="off"] *::before,
+  html[data-motion="off"] *::after{
+    animation-duration:.001ms!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important;transition-delay:0ms!important;
+  }
+  html[data-motion="off"] main .reveal{opacity:1!important;transform:none!important;filter:none!important}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:100vh;position:relative;overflow:hidden;isolation:isolate;
+    display:grid;grid-template-columns:1.1fr .9fr;align-items:center;
+    padding:120px clamp(22px,5vw,80px) 60px;
+  }
+  .singularity{
+    position:absolute;left:6vw;top:50%;transform:translateY(calc(-50% + var(--py,0px)));
+    width:min(50vw,620px);aspect-ratio:1;border-radius:50%;z-index:-1;
+    background:#000;box-shadow:0 0 0 1px rgba(255,255,255,.10);will-change:transform;
+  }
+  .singularity::before{
+    content:"";position:absolute;inset:-34%;border-radius:50%;
+    background:radial-gradient(circle, rgba(255,255,255,1) 0 1.2px, transparent 1.5px);
+    background-size:6px 6px;
+    -webkit-mask-image:radial-gradient(circle, transparent 0 30%, #000 33% 66%, transparent 74%);
+    mask-image:radial-gradient(circle, transparent 0 30%, #000 33% 66%, transparent 74%);
+    animation:halo 30s linear infinite;filter:contrast(1.3);
+  }
+  .singularity::after{
+    content:"";position:absolute;inset:-6%;border-radius:50%;
+    background:radial-gradient(circle at 62% 46%, rgba(255,255,255,.9), transparent 9%);
+    mix-blend-mode:screen;opacity:.5;
+  }
+  @keyframes halo{to{transform:rotate(360deg)}}
+
+  .hero-terrain{position:absolute;inset:auto -12vw -12vh -12vw;height:54vh;z-index:-2;overflow:hidden}
+  .hero-terrain i{
+    position:absolute;left:0;right:0;bottom:-18%;height:100%;
+    background-image:radial-gradient(rgba(255,255,255,.85) .9px, transparent 1.1px);
+    background-size:13px 13px;
+    -webkit-mask-image:linear-gradient(to top, #000 0 32%, rgba(0,0,0,.85) 50%, transparent 84%);
+    mask-image:linear-gradient(to top, #000 0 32%, rgba(0,0,0,.85) 50%, transparent 84%);
+    transform:perspective(700px) rotateX(62deg) translateY(4%);
+    animation:terrain 20s linear infinite;
+  }
+  .hero-terrain i.t2{opacity:.4;background-size:9px 9px;transform:perspective(700px) rotateX(66deg) translateY(-6%) scale(1.12);animation-duration:30s}
+  @keyframes terrain{to{background-position:0 260px}}
+
+  .hero-head{position:relative}
+  .hero h1{
+    font-family:var(--fontDisplay);font-weight:300;text-transform:uppercase;
+    font-size:clamp(52px,7.6vw,116px);line-height:.92;letter-spacing:.12em;
+    max-width:13ch;text-wrap:balance;
+  }
+  .hero h1 .line{display:block;overflow:hidden}
+  .hero h1 .line span{display:block}
+  .hero.lit h1 .line span{animation:rise 1.5s var(--ease) both}
+  .hero.lit h1 .line:nth-child(2) span{animation-delay:.16s}
+  @keyframes rise{from{transform:translateY(112%);opacity:0}to{transform:translateY(0);opacity:1}}
+  .hero .kicker{margin-bottom:30px}
+  .hero.lit .kicker{animation:fade 1.4s var(--ease) .2s both}
+
+  .hero-copy{align-self:end;max-width:420px;margin-left:auto;padding-bottom:11vh}
+  .hero.lit .hero-copy{animation:fade 1.6s var(--ease) .8s both}
+  .hero-copy p{font-size:18px;line-height:1.72;margin-bottom:30px;text-wrap:pretty}
+  .hero-copy p .stat{color:#fff;font-weight:500}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+  @keyframes fade{from{opacity:0;transform:translateY(22px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+
+  .scrollcue{position:absolute;left:50%;bottom:30px;transform:translateX(-50%);display:grid;gap:7px;justify-items:center;z-index:5}
+  .scrollcue i{width:5px;height:5px;border-radius:50%;background:#fff;animation:cue 1.8s infinite}
+  .scrollcue i:nth-child(2){animation-delay:.18s}.scrollcue i:nth-child(3){animation-delay:.36s}
+  @keyframes cue{50%{opacity:.2;transform:translateY(8px)}}
+
+  /* ---------- SECTION SHELL ---------- */
+  .scene{position:relative;padding:clamp(96px,13vw,176px) 0;border-top:1px solid rgba(255,255,255,.08);overflow:hidden}
+  .scene-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:7vw;align-items:center}
+  .scene h2{
+    font-family:var(--fontDisplay);font-weight:300;text-transform:uppercase;
+    font-size:clamp(32px,4.6vw,68px);line-height:1.02;letter-spacing:.06em;text-wrap:balance;
+  }
+  .scene .body p{font-size:18px;line-height:1.75}
+
+  /* the shift — old funnel vs new funnel */
+  .shift-cards{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:60px}
+  .shift-card{position:relative;border:1px solid var(--line);border-radius:2px;padding:34px 32px 36px;overflow:hidden}
+  .shift-card .dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.85) .8px,transparent 1px);background-size:12px 12px;opacity:.22;-webkit-mask-image:linear-gradient(150deg,#000,transparent 62%);mask-image:linear-gradient(150deg,#000,transparent 62%)}
+  .shift-card .lab{position:relative;font-family:var(--fontMono);font-size:10px;letter-spacing:.30em;text-transform:uppercase;color:var(--faint);margin-bottom:18px}
+  .shift-card h3{position:relative;font-family:var(--fontDisplay);font-weight:400;text-transform:uppercase;letter-spacing:.04em;font-size:clamp(22px,2.4vw,30px);line-height:1.1;margin-bottom:16px}
+  .shift-card p{position:relative;color:rgba(255,255,255,.66);font-size:15.5px;line-height:1.7}
+  .shift-card.new{border-color:rgba(255,255,255,.4)}
+  .shift-statement{
+    margin-top:56px;font-family:var(--fontDisplay);font-weight:300;text-transform:uppercase;
+    font-size:clamp(26px,3.4vw,46px);line-height:1.16;letter-spacing:.05em;
+    color:rgba(255,255,255,.4);max-width:30ch;text-wrap:balance;
+  }
+  .shift-statement em{font-style:normal;color:#fff}
+
+  /* black box — questions enter, answers emerge from dots */
+  .blackbox{position:relative;min-height:520px;display:grid;place-items:center;border:1px solid var(--line);border-radius:2px;overflow:hidden}
+  .blackbox .ring{
+    position:absolute;width:74%;aspect-ratio:1;border-radius:50%;
+    background:radial-gradient(circle, rgba(255,255,255,.95) 0 1.1px, transparent 1.4px);
+    background-size:9px 9px;
+    -webkit-mask-image:radial-gradient(circle, transparent 0 36%, #000 39% 58%, transparent 66%);
+    mask-image:radial-gradient(circle, transparent 0 36%, #000 39% 58%, transparent 66%);
+    animation:halo 26s linear infinite reverse;
+  }
+  .blackbox .qa{position:relative;text-align:center;padding:0 30px;max-width:24ch;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  /* soft well behind the text so it stays legible over the dot ring */
+  .blackbox .qa::before{
+    content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:128%;height:74%;border-radius:50%;z-index:-1;
+    background:radial-gradient(ellipse at center, #000 0 42%, rgba(0,0,0,.82) 60%, transparent 78%);
+  }
+  .bb-q{font-family:var(--fontMono);font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;text-wrap:balance}
+  .bb-a{font-family:var(--fontDisplay);font-weight:300;text-transform:uppercase;letter-spacing:.05em;font-size:clamp(21px,2.5vw,30px);line-height:1.14;min-height:2.4em;text-wrap:balance;display:flex;align-items:center;justify-content:center}
+  .bb-a .ans{display:inline}
+  .bb-a span{opacity:0;animation:emerge .9s var(--ease) forwards}
+  .bb-a .brandname{color:#fff}
+  @keyframes emerge{from{opacity:0;filter:blur(7px)}to{opacity:1;filter:none}}
+
+  /* ---------- HOW IT WORKS: system + method combined ---------- */
+  .hiw{position:relative;padding:clamp(96px,13vw,176px) 0;border-top:1px solid rgba(255,255,255,.08);overflow:hidden}
+  .hiw-head{display:grid;grid-template-columns:.95fr 1.05fr;gap:6vw;align-items:end}
+  .hiw-head h2{font-family:var(--fontDisplay);font-weight:300;text-transform:uppercase;font-size:clamp(32px,4.6vw,68px);line-height:1.02;letter-spacing:.06em}
+  .hiw-head p{color:rgba(255,255,255,.74);font-size:18px;line-height:1.75;max-width:42ch}
+
+  /* three capabilities */
+  .instruments{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;border:1px solid var(--line);margin-top:60px}
+  .inst{position:relative;min-height:300px;padding:34px;overflow:hidden}
+  .inst+.inst{box-shadow:-1px 0 0 var(--line)}
+  .inst .dots{
+    position:absolute;inset:0;
+    background-image:radial-gradient(rgba(255,255,255,.85) .8px, transparent 1px);
+    background-size:11px 11px;opacity:.30;
+    -webkit-mask-image:linear-gradient(150deg, #000, transparent 64%);
+    mask-image:linear-gradient(150deg, #000, transparent 64%);
+  }
+  .inst .n{position:absolute;top:34px;right:34px;font-family:var(--fontMono);font-size:10px;letter-spacing:.2em;color:var(--faint)}
+  .inst h3{position:relative;font-family:var(--fontDisplay);font-weight:400;text-transform:uppercase;letter-spacing:.05em;font-size:24px;margin-bottom:16px}
+  .inst p{position:relative;color:rgba(255,255,255,.66);font-size:15px;line-height:1.72;max-width:34ch}
+
+  /* operating rhythm — sense / simulate / act / learn */
+  .rhythm-intro{margin-top:96px;display:flex;align-items:flex-end;justify-content:space-between;gap:30px;flex-wrap:wrap}
+  .rhythm-intro h3{font-family:var(--fontDisplay);font-weight:300;text-transform:uppercase;font-size:clamp(26px,3.2vw,46px);line-height:1.02;letter-spacing:.06em;max-width:18ch}
+  .rhythm-intro p{color:rgba(255,255,255,.74);font-size:16.5px;line-height:1.7;max-width:38ch}
+
+  /* moving dot track */
+  .track{position:relative;height:1px;margin:42px 0 0;background:rgba(255,255,255,.12);overflow:visible}
+  .track .pip{position:absolute;top:50%;width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 16px rgba(255,255,255,.9);transform:translate(-50%,-50%);animation:track-run 8s linear infinite}
+  @keyframes track-run{0%{left:0}100%{left:100%}}
+
+  .rhythm{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;border:1px solid var(--line);border-top:none;margin-top:0}
+  .step{position:relative;padding:34px 28px 36px;min-height:330px;display:flex;flex-direction:column;overflow:hidden}
+  .step+.step{box-shadow:-1px 0 0 var(--line)}
+  .step .sdots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.8) .8px,transparent 1px);background-size:11px 11px;opacity:.16;-webkit-mask-image:linear-gradient(180deg,transparent,#000);mask-image:linear-gradient(180deg,transparent,#000)}
+  .step .idx{position:relative;font-family:var(--fontMono);font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+  .step h4{position:relative;font-family:var(--fontDisplay);font-weight:400;text-transform:uppercase;letter-spacing:.04em;font-size:21px;line-height:1.08;margin-bottom:14px}
+  .step p{position:relative;color:rgba(255,255,255,.64);font-size:14px;line-height:1.62}
+  .step .viz{position:relative;margin-top:auto;padding-top:24px}
+
+  /* mini visuals */
+  .viz-bars{display:flex;flex-direction:column;gap:9px}
+  .viz-bars .row{display:flex;align-items:center;gap:10px;font-family:var(--fontMono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .viz-bars .row .bar{flex:1;height:6px;border-radius:4px;background:rgba(255,255,255,.06);border:1px solid var(--line);position:relative;overflow:hidden}
+  .viz-bars .row .bar::before{content:"";position:absolute;left:0;top:0;bottom:0;width:0;background:rgba(255,255,255,.7);transition:width 1.3s var(--ease) .2s}
+  .reveal.in .viz-bars .row .bar::before{width:var(--w,40%)}
+  .viz-bars .row .lift{min-width:46px;text-align:right;color:#fff}
+
+  .viz-heat{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+  .viz-heat .c{aspect-ratio:1;border-radius:3px;border:1px solid var(--line);background:rgba(255,255,255,.05);opacity:0;transition:opacity .5s var(--ease),background .6s var(--ease)}
+  .reveal.in .viz-heat .c{opacity:1}
+
+  .viz-queue{display:flex;flex-direction:column;gap:9px}
+  .viz-queue .q{display:flex;align-items:center;gap:11px;font-family:var(--fontMono);font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+  .viz-queue .q .d{width:6px;height:6px;border-radius:50%;border:1px solid var(--lineStrong);flex:0 0 auto;position:relative}
+  .viz-queue .q.done .d{background:#fff;border-color:#fff;box-shadow:0 0 12px rgba(255,255,255,.7)}
+
+  .viz-ba{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .viz-ba .col{border:1px solid var(--line);border-radius:2px;padding:12px}
+  .viz-ba .col.after{border-color:rgba(255,255,255,.4)}
+  .viz-ba .col .t{font-family:var(--fontMono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+  .viz-ba .col .big{font-family:var(--fontDisplay);font-weight:300;font-size:30px;line-height:1;letter-spacing:.02em}
+  .viz-ba .col.before .big{color:rgba(255,255,255,.42)}
+
+  /* board proof strip */
+  .proof{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;border:1px solid var(--line);margin-top:60px}
+  .proof .stat{position:relative;padding:40px 30px;text-align:center}
+  .proof .stat+.stat{box-shadow:-1px 0 0 var(--line)}
+  .proof .stat .num{font-family:var(--fontDisplay);font-weight:300;font-size:clamp(40px,5vw,64px);line-height:1;letter-spacing:.01em}
+  .proof .stat .lab{font-family:var(--fontMono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:16px;line-height:1.6}
+
+  /* ---------- 04 · THE INDIA EDGE ---------- */
+  .india-head{display:grid;grid-template-columns:.9fr 1.1fr;gap:7vw;align-items:center}
+  .india-head h2{font-family:var(--fontDisplay);font-weight:300;text-transform:uppercase;font-size:clamp(32px,4.6vw,68px);line-height:1.02;letter-spacing:.06em;text-wrap:balance}
+  .india-head .body p{font-size:18px;line-height:1.75;color:rgba(255,255,255,.74)}
+  .india-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:1px;border:1px solid var(--line);margin-top:60px}
+  .india-points{display:grid;grid-template-rows:repeat(3,1fr)}
+  .ipoint{position:relative;padding:30px 34px;display:flex;gap:22px;align-items:flex-start}
+  .ipoint+.ipoint{box-shadow:0 -1px 0 var(--line)}
+  .ipoint .ix{font-family:var(--fontMono);font-size:10px;letter-spacing:.2em;color:var(--faint);padding-top:5px;flex:0 0 24px}
+  .ipoint h4{font-family:var(--fontDisplay);font-weight:400;text-transform:uppercase;letter-spacing:.04em;font-size:19px;margin-bottom:9px}
+  .ipoint p{color:rgba(255,255,255,.64);font-size:14.5px;line-height:1.65;max-width:46ch}
+  /* language panel — autonyms cycling through highlight */
+  .langs{position:relative;box-shadow:-1px 0 0 var(--line);padding:34px;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+  .langs .ldots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.8) .8px,transparent 1px);background-size:11px 11px;opacity:.16;-webkit-mask-image:radial-gradient(circle at 70% 30%,#000,transparent 72%);mask-image:radial-gradient(circle at 70% 30%,#000,transparent 72%)}
+  .langs .lcap{position:relative;font-family:var(--fontMono);font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted);margin-bottom:20px}
+  .lchips{position:relative;display:flex;flex-wrap:wrap;gap:10px}
+  .lchip{font-family:var(--fontDisplay);font-size:19px;font-weight:400;letter-spacing:.02em;color:rgba(255,255,255,.32);padding:8px 15px;border:1px solid var(--line);border-radius:999px;transition:color .5s var(--ease),border-color .5s var(--ease),background .5s var(--ease)}
+  .lchip.on{color:#000;background:#fff;border-color:#fff}
+  .langs .lquery{position:relative;margin-top:26px;font-family:var(--fontMono);font-size:12px;letter-spacing:.04em;color:var(--muted);min-height:1.6em}
+  .langs .lquery b{color:#fff;font-weight:500}
+  .india-moat{margin-top:54px;font-family:var(--fontDisplay);font-weight:300;text-transform:uppercase;font-size:clamp(24px,3vw,42px);line-height:1.16;letter-spacing:.05em;color:rgba(255,255,255,.42);max-width:30ch;text-wrap:balance}
+  .india-moat em{font-style:normal;color:#fff}
+
+  /* ---------- 05 · THE TEAM / TRUST ---------- */
+  .trust-head{display:grid;grid-template-columns:.95fr 1.05fr;gap:6vw;align-items:end}
+  .trust-head h2{font-family:var(--fontDisplay);font-weight:300;text-transform:uppercase;font-size:clamp(32px,4.6vw,68px);line-height:1.02;letter-spacing:.06em;text-wrap:balance}
+  .trust-head p{color:rgba(255,255,255,.74);font-size:18px;line-height:1.75;max-width:44ch}
+  .pedigree{display:flex;flex-wrap:wrap;gap:10px;margin-top:44px}
+  .pedigree .tag{font-family:var(--fontMono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:10px 16px}
+  .trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;border:1px solid var(--line);margin-top:30px}
+  .tcard{position:relative;padding:34px;min-height:230px;display:flex;flex-direction:column;overflow:hidden}
+  .tcard+.tcard{box-shadow:-1px 0 0 var(--line)}
+  .tcard .tdots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.8) .8px,transparent 1px);background-size:11px 11px;opacity:.14;-webkit-mask-image:linear-gradient(160deg,#000,transparent 66%);mask-image:linear-gradient(160deg,#000,transparent 66%)}
+  .tcard .tn{position:relative;font-family:var(--fontMono);font-size:10px;letter-spacing:.2em;color:var(--faint);margin-bottom:auto}
+  .tcard h4{position:relative;font-family:var(--fontDisplay);font-weight:400;text-transform:uppercase;letter-spacing:.04em;font-size:21px;margin:26px 0 12px}
+  .tcard p{position:relative;color:rgba(255,255,255,.64);font-size:14.5px;line-height:1.65}
+
+  /* ---------- 02 · real example cards ---------- */
+  .examples{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:60px}
+  .excard{position:relative;border:1px solid var(--line);border-radius:2px;padding:26px 26px 24px;display:flex;flex-direction:column;overflow:hidden}
+  .excard .exdots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.8) .8px,transparent 1px);background-size:12px 12px;opacity:.13;-webkit-mask-image:linear-gradient(160deg,#000,transparent 64%);mask-image:linear-gradient(160deg,#000,transparent 64%)}
+  .excard .extag{position:relative;display:inline-flex;align-items:center;gap:9px;align-self:flex-start;font-family:var(--fontMono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:6px 12px;margin-bottom:22px}
+  .excard .extag::before{content:"";width:5px;height:5px;border-radius:50%;background:#fff}
+  .excard .exl{position:relative;font-family:var(--fontMono);font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--faint);margin-bottom:8px}
+  .excard .exq{position:relative;font-size:16.5px;line-height:1.4;color:#fff;margin-bottom:18px}
+  .excard .exa{position:relative;font-size:14.5px;line-height:1.6;color:rgba(255,255,255,.6);padding-left:14px;border-left:1px solid var(--lineStrong)}
+  .excard .exa b{color:#fff;font-weight:500}
+  .excard .excost{position:relative;margin-top:22px;padding-top:18px;border-top:1px solid var(--line);font-family:var(--fontMono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:flex;gap:9px}
+  .excard .excost::before{content:"\2192";color:#fff}
+
+  /* ---------- 06 · the brief (newsletter) ---------- */
+  .brief{position:relative;border-top:1px solid rgba(255,255,255,.08);padding:clamp(96px,13vw,176px) 0;overflow:hidden}
+  .brief-card{position:relative;border:1px solid var(--line);border-radius:2px;padding:clamp(38px,5vw,64px);display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(40px,5vw,72px);align-items:center;overflow:hidden}
+  .brief-card .bdots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.8) .8px,transparent 1px);background-size:11px 11px;opacity:.14;-webkit-mask-image:radial-gradient(circle at 88% 12%,#000,transparent 66%);mask-image:radial-gradient(circle at 88% 12%,#000,transparent 66%)}
+  .brief-l{position:relative}
+  .brief-l .kicker{margin-bottom:20px}
+  .brief-l h2{font-family:var(--fontDisplay);font-weight:300;text-transform:uppercase;font-size:clamp(34px,4.4vw,60px);line-height:.98;letter-spacing:.06em}
+  .brief-l .lede{color:rgba(255,255,255,.74);font-size:17px;line-height:1.7;max-width:42ch;margin-top:20px}
+  .brief-form{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+  .brief-form .input{flex:1;min-width:200px}
+  .brief-form .btn{flex:0 0 auto}
+  .brief-note{font-family:var(--fontMono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin-top:18px}
+  .brief-done{display:none;margin-top:30px;font-family:var(--fontDisplay);font-weight:300;text-transform:uppercase;letter-spacing:.05em;font-size:22px;color:#fff}
+  .brief.sent .brief-form,.brief.sent .brief-note{display:none}
+  .brief.sent .brief-done{display:block}
+  .issues{position:relative;border-left:1px solid var(--line);padding-left:30px}
+  .issues .ic{font-family:var(--fontMono);font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--faint);margin-bottom:22px}
+  .issue{display:block;padding:16px 0;border-bottom:1px solid var(--line)}
+  .issue:first-of-type{border-top:1px solid var(--line)}
+  .issue .num{font-family:var(--fontMono);font-size:9.5px;letter-spacing:.18em;color:var(--muted)}
+  .issue .it{font-size:15.5px;line-height:1.4;color:rgba(255,255,255,.82);margin-top:7px;transition:color .4s var(--ease)}
+  .issue:hover .it{color:#fff}
+
+  /* ---------- 04 · the engine: persona models + brand knowledge graph ---------- */
+  .feat{display:grid;grid-template-columns:1fr 1fr;gap:6vw;align-items:center;margin-top:62px}
+  .feat+.feat{margin-top:34px;padding-top:62px;border-top:1px solid rgba(255,255,255,.08)}
+  .feat-viz{position:relative;min-height:380px;border:1px solid var(--line);border-radius:2px;overflow:hidden;display:grid;place-items:center}
+  .feat.rev .feat-viz{order:-1}
+  .feat-txt .kicker{margin-bottom:18px}
+  .feat-txt h3{font-family:var(--fontDisplay);font-weight:300;text-transform:uppercase;letter-spacing:.05em;font-size:clamp(26px,3vw,42px);line-height:1.05;margin-bottom:18px;text-wrap:balance}
+  .feat-txt p{color:rgba(255,255,255,.74);font-size:17px;line-height:1.7;max-width:46ch}
+  .feat-list{margin-top:24px;display:flex;flex-direction:column;gap:12px}
+  .feat-list li{position:relative;padding-left:22px;color:rgba(255,255,255,.66);font-size:14.5px;line-height:1.5}
+  .feat-list li::before{content:"";position:absolute;left:0;top:.6em;width:6px;height:6px;border-radius:50%;background:var(--accent,#fff)}
+
+  /* persona field — a population of dots with one target segment lit */
+  .personas .pdots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.85) .9px,transparent 1.1px);background-size:13px 13px;opacity:.30;-webkit-mask-image:radial-gradient(circle at 50% 47%, #000 28%, transparent 80%);mask-image:radial-gradient(circle at 50% 47%, #000 28%, transparent 80%)}
+  .personas .ptarget{position:absolute;top:47%;left:50%;width:48%;aspect-ratio:1;border-radius:50%;
+    background-image:radial-gradient(rgba(255,255,255,1) 0 1.35px, transparent 1.7px);background-size:11px 11px;
+    -webkit-mask-image:radial-gradient(circle, #000 0 50%, transparent 60%);mask-image:radial-gradient(circle, #000 0 50%, transparent 60%);
+    box-shadow:0 0 0 1px rgba(255,255,255,.16) inset;transform:translate(-50%,-50%) scale(1);animation:ppulse 4.5s var(--ease) infinite}
+  @keyframes ppulse{0%,100%{transform:translate(-50%,-50%) scale(.93);opacity:.72}50%{transform:translate(-50%,-50%) scale(1.05);opacity:1}}
+  .personas .pnum{position:relative;text-align:center;z-index:1}
+  .personas .pnum .big{display:block;font-family:var(--fontDisplay);font-weight:300;font-size:clamp(46px,6vw,76px);line-height:1;letter-spacing:.02em}
+  .personas .pnum .cap{display:block;margin-top:13px;font-family:var(--fontMono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+
+  /* knowledge graph — dotted connectors flowing into a brand core */
+  .ggraph{width:80%;max-width:344px;height:auto;overflow:visible}
+  .ggraph .gline{stroke:rgba(255,255,255,.42);stroke-width:1.2;stroke-linecap:round;stroke-dasharray:1 7;animation:gflow 5s linear infinite}
+  .ggraph .gnode{fill:#fff;animation:gpulse 3.6s ease-in-out infinite}
+  .ggraph .n2{animation-delay:.4s}.ggraph .n3{animation-delay:.8s}.ggraph .n4{animation-delay:1.2s}.ggraph .n5{animation-delay:1.6s}
+  .ggraph .gcore{fill:var(--accent,#fff)}
+  .ggraph .glabel{fill:rgba(255,255,255,.52);font-family:var(--fontMono);font-size:9px;letter-spacing:.16em}
+  .ggraph .gbrand{fill:#fff;font-size:10px;letter-spacing:.22em}
+  @keyframes gpulse{0%,100%{opacity:.4}50%{opacity:1}}
+  @keyframes gflow{to{stroke-dashoffset:-16}}
+
+  /* final — own the answer */
+  .final{position:relative;min-height:92vh;display:grid;place-items:center;text-align:center;overflow:hidden;border-top:1px solid rgba(255,255,255,.08)}
+  .final-halo{position:absolute;width:min(66vw,780px);aspect-ratio:1;border-radius:50%;z-index:-1}
+  .final-halo::before{
+    content:"";position:absolute;inset:-14%;border-radius:50%;
+    background:radial-gradient(circle, rgba(255,255,255,.95) 0 .9px, transparent 1.2px);
+    background-size:6px 6px;
+    -webkit-mask-image:radial-gradient(circle, transparent 0 39%, #000 42% 56%, transparent 62%);
+    mask-image:radial-gradient(circle, transparent 0 39%, #000 42% 56%, transparent 62%);
+    animation:halo 34s linear infinite;
+  }
+  .final h2{
+    font-family:var(--fontDisplay);font-weight:300;text-transform:uppercase;
+    font-size:clamp(40px,6.2vw,100px);line-height:1.02;letter-spacing:.08em;
+  }
+  .final .beyond{display:block;color:var(--faint);font-size:clamp(12px,1.4vw,16px);letter-spacing:.30em;margin-bottom:30px}
+  .final .sub{color:rgba(255,255,255,.74);font-size:18px;line-height:1.7;max-width:44ch;margin:28px auto 0}
+  .final-cta{margin-top:42px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+
+  @media (max-width:980px){
+    .hiw-head{grid-template-columns:1fr;gap:24px}
+    .rhythm{grid-template-columns:1fr 1fr}
+    .step+.step{box-shadow:none}
+    .rhythm{gap:1px}
+    .india-head,.trust-head{grid-template-columns:1fr;gap:24px}
+    .india-grid{grid-template-columns:1fr}
+    .langs{box-shadow:0 -1px 0 var(--line)}
+    .trust-grid{grid-template-columns:1fr}
+    .tcard{min-height:0}
+    .tcard+.tcard{box-shadow:0 -1px 0 var(--line)}
+    .examples{grid-template-columns:1fr}
+    .brief-card{grid-template-columns:1fr;gap:40px}
+    .issues{border-left:none;padding-left:0}
+    .feat{grid-template-columns:1fr;gap:30px}
+    .feat.rev .feat-viz{order:0}
+    .feat-viz{min-height:300px}
+  }
+  @media (max-width:900px){
+    .hero,.scene-grid{grid-template-columns:1fr}
+    .hero-copy{margin:54px 0 0;padding-bottom:120px;max-width:520px}
+    .singularity{left:50%;transform:translate(-50%,-50%);top:34%;width:80vw}
+    .instruments{grid-template-columns:1fr}
+    .inst+.inst{box-shadow:0 -1px 0 var(--line)}
+    .shift-cards{grid-template-columns:1fr}
+    .proof{grid-template-columns:1fr}
+    .proof .stat+.stat{box-shadow:0 -1px 0 var(--line)}
+  }
+  @media (max-width:560px){
+    .rhythm{grid-template-columns:1fr}
+    .step{min-height:0;padding:30px 26px 32px}
+    .hero{padding:104px 22px 80px}
+    .hero h1{font-size:clamp(34px,10.5vw,66px);letter-spacing:.02em;max-width:none}
+    .hero-copy{padding-bottom:0;max-width:none}
+    .hero-copy p{font-size:16.5px;line-height:1.7}
+    .hero-cta{flex-direction:column;align-items:stretch}
+    .hero-cta .btn{width:100%}
+    .scrollcue{display:none}
+    .scene{padding:78px 0}
+    .scene h2,.hiw-head h2{font-size:clamp(30px,8.4vw,40px);letter-spacing:.04em}
+    .scene .body p,.hero-copy p{color:rgba(255,255,255,.78)}
+    .scene .scene-grid{gap:30px}
+    .shift-statement{font-size:clamp(24px,7vw,32px);margin-top:40px;max-width:none}
+    .blackbox{min-height:380px}
+    .bb-a{font-size:clamp(22px,7vw,30px)}
+    .hiw{padding:78px 0}
+    .rhythm-intro{margin-top:64px;gap:18px}
+    .track{margin-top:32px}
+    .proof .stat{padding:32px 24px}
+    .proof .stat .num{font-size:clamp(38px,12vw,52px)}
+    .final{min-height:78vh}
+    .final h2{font-size:clamp(42px,15vw,68px)}
+    .final .sub{font-size:16.5px}
+    .final-cta{flex-direction:column;align-items:stretch;width:100%;max-width:300px;margin-left:auto;margin-right:auto}
+    .final-cta .btn{width:100%}
+    .india-head h2,.trust-head h2{font-size:clamp(30px,8.4vw,40px);letter-spacing:.04em}
+    .india-moat{font-size:clamp(24px,7vw,32px);margin-top:40px;max-width:none}
+    .ipoint{padding:24px 26px;gap:16px}
+    .langs{padding:28px 26px}
+    .lchip{font-size:17px;padding:7px 13px}
+    .pedigree{margin-top:32px}
+    .tcard{padding:28px 26px}
+    .brief{padding:78px 0}
+    .brief-form .btn{width:100%}
+  }
+</style>
 </head>
 <body>
+<main>
 
-<!-- ============================================================
-     01 · HERO — the fear, made personal (the one void moment)
-     ============================================================ -->
-<header class="hero" id="top">
-  <div class="hero-glow" aria-hidden="true"></div>
-  <div class="hero-grain" aria-hidden="true"></div>
-  <div class="wrap on-void">
-    <div class="hero-grid">
-      <div>
-        <div class="kicker on-dark reveal"><span class="ln"></span> India-first answer-engine optimisation</div>
-        <h1 class="display d-xxl reveal" data-d="1" style="margin-top:22px;max-width:15ch">AI names one brand in your category. <span class="amber">Is it yours?</span></h1>
-        <p class="hero-sub reveal" data-d="2">Across ChatGPT, Gemini, Perplexity, Google AI Overviews and India's retail-AI surfaces, Perceptivity shows you the answer AI gives — then helps you change it.</p>
-        <div class="hero-cta reveal" data-d="3">
-          <a class="btn amber lg" href="onboarding.html">Get started <span class="arrow">→</span></a>
-          <a class="btn lg" href="demo.html">Book a demo</a>
-        </div>
-        <div class="hero-meta reveal" data-d="4">
-          <div class="m"><div class="v">7 engines + retail AI</div><div class="k">Coverage</div></div>
-          <div class="m"><div class="v">Refreshed daily</div><div class="k">Cadence</div></div>
-          <div class="m"><div class="v">India-first</div><div class="k">Answer graph</div></div>
-        </div>
-      </div>
-
-      <!-- brand probe -->
-      <div class="brand-probe reveal" data-d="2">
-        <div class="probe-bar"><span class="dot"></span> Ask an answer engine about your category</div>
-        <form class="probe-input-row" id="probeForm">
-          <label class="probe-field">
-            <span class="q">brand</span>
-            <input id="probeInput" type="text" placeholder="Type your brand…" autocomplete="off" spellcheck="false" />
-          </label>
-          <button class="probe-go" type="submit">Reveal</button>
-        </form>
-        <div class="probe-answer" id="probeAnswer"></div>
+  <!-- ============ HERO ============ -->
+  <section class="hero" data-screen-label="Hero">
+    <div class="singularity"></div>
+    <div class="hero-terrain"><i></i><i class="t2"></i></div>
+    <div class="hero-head">
+      <div class="kicker">The AI answer layer</div>
+      <h1>
+        <span class="line"><span>Be the brand</span></span>
+        <span class="line"><span>AI names</span></span>
+      </h1>
+    </div>
+    <div class="hero-copy">
+      <p>Your buyers now ask AI, not a search bar. It reads the category and hands them <span class="stat">one</span> recommendation. <span class="stat">Perceptivity</span> shows you exactly what AI says about your brand — and gives you the system to change it.</p>
+      <div class="hero-cta">
+        <a class="btn primary btn-lg" href="demo.html">See your category <span class="arrow">→</span></a>
+        <a class="btn btn-lg" href="#how">How it works</a>
       </div>
     </div>
+    <div class="scrollcue" aria-hidden="true"><i></i><i></i><i></i></div>
+  </section>
 
-    <div class="hero-foot">
-      <span class="mono">A recorded answer · not a live API call</span>
-      <span class="mono">Scroll — see what AI says about you ↓</span>
-    </div>
-  </div>
-</header>
-
-<!-- ============================================================
-     02 · SENSE — the daily reality (what AI says about you now)
-     ============================================================ -->
-<section class="section" id="sense">
-  <div class="wrap">
-    <div class="sec-split">
-      <div class="sec-head reveal">
-        <div class="kicker"><span class="idx">02</span><span class="ln"></span> Sense · the daily reality</div>
-        <h2 class="display d-lg">See the answer AI gives — every morning.</h2>
-        <p class="sec-lede body">We run your buyer questions against every engine, daily, in the languages and on the surfaces your buyers actually use. You wake up to what AI said overnight: who got named, who got cited, and what changed.</p>
+  <!-- ============ 01 · THE SHIFT ============ -->
+  <section class="scene" id="shift" data-screen-label="01 The Shift">
+    <div class="container">
+      <div class="scene-grid reveal">
+        <div>
+          <div class="kicker">01 / The shift</div>
+          <h2>The funnel collapsed into a single answer.</h2>
+        </div>
+        <div class="body">
+          <p>Buyers used to compare ten options. Now they ask one question and act on one reply. If your brand isn't in that answer, the journey never reaches you — and you never see it happen.</p>
+        </div>
       </div>
-      <div class="reveal" data-d="1">
-        <div class="contrast-note">
-          <span class="mono" style="color:var(--amber-ink)">today</span>
-          <span>Most brands learn they've dropped out of the answer <b>weeks late</b>, from a dip in pipeline. Sense makes it a <b>daily</b> signal — the morning a rival takes your place, you see it.</span>
+
+      <div class="shift-cards">
+        <div class="shift-card reveal">
+          <div class="dots"></div>
+          <div class="lab">The old funnel</div>
+          <h3>Ten blue links</h3>
+          <p>Buyers compared brands themselves. Your media, SEO and reviews competed in plain sight. You optimised the page.</p>
+        </div>
+        <div class="shift-card new reveal" data-delay="1">
+          <div class="dots"></div>
+          <div class="lab">The new funnel</div>
+          <h3>One named brand</h3>
+          <p>An AI reads the category for them and returns a single verdict. Miss it and your funnel never starts. Now you optimise the answer.</p>
+        </div>
+      </div>
+
+      <p class="shift-statement reveal" data-scrub data-delay="2">Roughly a third of category research now starts with an AI assistant. <em>If you can't see what it says about you, a third of your demand is being decided in the dark.</em></p>
+    </div>
+  </section>
+
+  <!-- ============ 02 · THE BLIND SPOT ============ -->
+  <section class="scene" id="blindspot" data-screen-label="02 The Blind Spot">
+    <div class="container">
+      <div class="scene-grid reveal">
+        <div class="blackbox" data-drift="0.05">
+          <div class="ring"></div>
+          <div class="qa">
+            <div class="bb-q" id="bbQ">A buyer asks</div>
+            <div class="bb-a" id="bbA"></div>
+          </div>
+        </div>
+        <div>
+          <div class="kicker">02 / The blind spot</div>
+          <h2>You can't see it happen. Your buyers can.</h2>
+          <div class="body">
+            <p style="margin-top:26px">Right now, a model is deciding which brand to name, which to skip, and which to call second-best — in words you never wrote, to buyers you'll never meet. You don't get a report. You just lose the deal. Here's what it looks like in the wild:</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="examples reveal" data-delay="1">
+        <div class="excard">
+          <div class="exdots"></div>
+          <span class="extag">Left out</span>
+          <div class="exl">Buyer asks</div>
+          <div class="exq">“Best running shoes for flat feet?”</div>
+          <div class="exa">Names three competitors in a tidy list. <b>Your brand never comes up.</b></div>
+          <div class="excost">Out of the shortlist before you knew there was one</div>
+        </div>
+        <div class="excard">
+          <div class="exdots"></div>
+          <span class="extag">Out of date</span>
+          <div class="exl">Buyer asks</div>
+          <div class="exq">“Is there a no-fee version of this card?”</div>
+          <div class="exa">“It still carries an annual fee.” <b>You dropped that fee a year ago.</b></div>
+          <div class="excost">Judged on a you that no longer exists</div>
+        </div>
+        <div class="excard">
+          <div class="exdots"></div>
+          <span class="extag">Out-positioned</span>
+          <div class="exl">Buyer asks</div>
+          <div class="exq">“Your brand or the rival — which is better?”</div>
+          <div class="exa">“Most reviewers prefer the rival for value.” <b>In your own comparison.</b></div>
+          <div class="excost">Your competitor recommended on your home turf</div>
         </div>
       </div>
     </div>
+  </section>
 
-    <div class="sim-grid">
-      <!-- left: terminal — who AI names first -->
-      <div class="reveal">
-        <div class="mono" style="margin-bottom:14px">Answer share · “best premium SUV” · last 30 days</div>
-        <div class="term">
-          <div class="term-bar"><span class="ttl"><span class="dot"></span>Who AI names first</span><span class="meta">7 engines · India</span></div>
-          <div class="term-body">
-            <div class="bars">
-              <div class="bar-row"><span class="nm">Toyota</span><span class="track"><span class="fill amber" style="width:74%"></span></span><span class="val">28%</span></div>
-              <div class="bar-row"><span class="nm">Tata Motors</span><span class="track"><span class="fill violet" style="width:58%"></span></span><span class="val">22%</span></div>
-              <div class="bar-row"><span class="nm">Mahindra</span><span class="track"><span class="fill you" style="width:50%"></span></span><span class="val you">19%</span></div>
-              <div class="bar-row"><span class="nm">Hyundai</span><span class="track"><span class="fill" style="width:34%"></span></span><span class="val">13%</span></div>
-              <div class="bar-row"><span class="nm">Not named</span><span class="track"><span class="fill neg" style="width:46%"></span></span><span class="val">18%</span></div>
+  <!-- ============ 03 · HOW IT WORKS (system + method) ============ -->
+  <section class="hiw" id="how" data-screen-label="03 How It Works">
+    <div class="container">
+      <div class="hiw-head reveal">
+        <div>
+          <div class="kicker">03 / How it works</div>
+          <h2 id="system">One system for the answer layer.</h2>
+        </div>
+        <p>Not another dashboard of vanity metrics — the instrument to see what AI says about you, understand why, and change it. Monitor. Diagnose. Shape.</p>
+      </div>
+
+      <!-- three capabilities -->
+      <div class="instruments reveal" data-delay="1">
+        <div class="inst">
+          <span class="n">I</span>
+          <div class="dots"></div>
+          <h3>Monitor</h3>
+          <p>Track what AI tells buyers about you across every major model, prompt, region and language — continuously, not once a quarter.</p>
+        </div>
+        <div class="inst">
+          <span class="n">II</span>
+          <div class="dots"></div>
+          <h3>Diagnose</h3>
+          <p>Map the citations, sources, competitors and claims behind every answer. Know exactly why you're named — or missed.</p>
+        </div>
+        <div class="inst">
+          <span class="n">III</span>
+          <div class="dots"></div>
+          <h3>Shape</h3>
+          <p>Deploy the content and source moves that change the answer, then watch your visibility move in the data.</p>
+        </div>
+      </div>
+
+      <!-- operating rhythm: method -->
+      <div class="rhythm-intro reveal" id="method">
+        <h3>A measurable operating cadence.</h3>
+        <p>Four disciplined steps, run every quarter. Each cycle tightens the forecast and converts brand investment into an outcome your board and CFO can evaluate with confidence.</p>
+      </div>
+
+      <div class="track reveal" data-delay="1" aria-hidden="true"><span class="pip"></span></div>
+
+      <div class="rhythm reveal" data-delay="1">
+        <div class="step">
+          <div class="sdots"></div>
+          <div class="idx">Step 01 · Sense</div>
+          <h4>See what AI says today</h4>
+          <p>Every engine, every buyer question, every claim — one field, no guesswork.</p>
+          <div class="viz">
+            <div class="viz-heat" id="heatMini"></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sdots"></div>
+          <div class="idx">Step 02 · Simulate</div>
+          <h4>Forecast the lift first</h4>
+          <p>Score each campaign for expected lift before you brief the agency. Forecast, then commit.</p>
+          <div class="viz">
+            <div class="viz-bars">
+              <div class="row"><span style="flex:1">Tier-1 citation</span><div class="bar" style="--w:78%"></div><span class="lift">+3.8</span></div>
+              <div class="row"><span style="flex:1">Comparison piece</span><div class="bar" style="--w:48%"></div><span class="lift">+2.4</span></div>
+              <div class="row"><span style="flex:1">Page refresh</span><div class="bar" style="--w:24%"></div><span class="lift">+1.1</span></div>
             </div>
           </div>
         </div>
-        <p class="illus" style="margin-top:16px">Illustrative worked example · Mahindra, automotive · model outputs, not a live API call</p>
-      </div>
-
-      <!-- right: what Sense watches -->
-      <div class="reveal" data-d="1">
-        <div class="sim-flow">
-          <div class="sim-step">
-            <span class="si">SoV</span>
-            <div><div class="st">Share of voice &amp; position</div><div class="sd">Who gets named, who gets cited, and where you rank on every buyer question — engine by engine.</div></div>
-          </div>
-          <div class="sim-step">
-            <span class="si">Lang</span>
-            <div><div class="st">Languages &amp; surfaces</div><div class="sd">English, Hinglish and regional languages — plus India's retail-AI surfaces, not just the English web.</div></div>
-          </div>
-          <div class="sim-step">
-            <span class="si">Δ</span>
-            <div><div class="st">Overnight change alerts</div><div class="sd">The moment a model update or a rival's move shifts your answer, it lands in Slack and email.</div></div>
-          </div>
-          <div class="sim-step">
-            <span class="si">Why</span>
-            <div><div class="st">Diagnose · why AI says it</div><div class="sd">Trace each answer back to its sources and citations — and the stale claims or conflicts driving it.</div></div>
+        <div class="step">
+          <div class="sdots"></div>
+          <div class="idx">Step 03 · Act</div>
+          <h4>One priority queue</h4>
+          <p>Your team, agencies and partners — owners, budgets and deadlines on every move.</p>
+          <div class="viz">
+            <div class="viz-queue">
+              <div class="q done"><span class="d"></span>Knowledge graph fix</div>
+              <div class="q done"><span class="d"></span>Comparison rewrite</div>
+              <div class="q"><span class="d"></span>Trusted-source placement</div>
+              <div class="q"><span class="d"></span>Review-site cleanup</div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     02 · THE SIMULATE WEDGE — lead with the differentiator
-     ============================================================ -->
-<section class="section" id="simulate">
-  <div class="wrap">
-    <div class="sec-split">
-      <div class="sec-head reveal">
-        <div class="kicker"><span class="idx">03</span><span class="ln"></span> Simulate · the differentiator</div>
-        <h2 class="display d-lg">Know what works before you spend a rupee.</h2>
-        <p class="sec-lede body">Tell us the campaign you're weighing — a comparison article, a PR placement, a schema fix. We forecast the visibility lift, per engine, before you commit budget. Then we measure predicted against actual, and the model compounds.</p>
-      </div>
-      <div class="reveal" data-d="1">
-        <div class="contrast-note">
-          <span class="mono" style="color:var(--amber-ink)">vs.</span>
-          <span>Monitoring tools tell you what AI <b>said yesterday</b>. That's the easy half. Perceptivity tells you what your next campaign will change — <b>before you spend</b> — then proves it.</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="sim-grid">
-      <!-- left: the forecast flow -->
-      <div class="reveal">
-        <div class="mono" style="margin-bottom:14px">The campaign under test</div>
-        <div class="sim-flow">
-          <div class="sim-step">
-            <span class="si">01</span>
-            <div><div class="st">Forecast</div><div class="sd">“Publish a category reliability comparison + correct two outdated pricing claims.” Model returns a per-engine lift estimate.</div></div>
-          </div>
-          <div class="sim-step">
-            <span class="si">02</span>
-            <div><div class="st">Wait <span id="simWindow">12 days</span></div><div class="sd">Predicted time-to-impact. We keep querying daily so you watch the answer move in real time.</div></div>
-          </div>
-          <div class="sim-step">
-            <span class="si">03</span>
-            <div><div class="st">Measure vs. predicted</div><div class="sd">The gap recalibrates the next forecast. Accuracy compounds, campaign after campaign.</div></div>
+        <div class="step">
+          <div class="sdots"></div>
+          <div class="idx">Step 04 · Learn</div>
+          <h4>Prove what moved</h4>
+          <p>Predicted vs actual lift after every action. Defend the budget with hard numbers.</p>
+          <div class="viz">
+            <div class="viz-ba">
+              <div class="col before"><div class="t">Before</div><div class="big">0/6</div></div>
+              <div class="col after"><div class="t">After</div><div class="big">4/6</div></div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- right: terminal -->
-      <div class="reveal" data-d="1">
-        <div class="term sim-bars">
-          <div class="term-bar">
-            <span class="ttl"><span class="dot"></span>Predicted lift · per engine</span>
-            <span class="meta">Model output</span>
+      <!-- board proof strip -->
+      <div class="proof reveal" data-delay="1">
+        <div class="stat">
+          <div class="num">~⅓</div>
+          <div class="lab">of category research<br>starts with AI</div>
+        </div>
+        <div class="stat">
+          <div class="num">7+</div>
+          <div class="lab">answer engines<br>monitored continuously</div>
+        </div>
+        <div class="stat">
+          <div class="num">1</div>
+          <div class="lab">defensible number<br>for the board, each quarter</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 04 · THE ENGINE (persona models + knowledge graph) ============ -->
+  <section class="hiw" id="engine" data-screen-label="04 The Engine">
+    <div class="container">
+      <div class="hiw-head reveal">
+        <div>
+          <div class="kicker">04 / The engine</div>
+          <h2 id="models">Two engines behind every answer.</h2>
+        </div>
+        <p>What turns "what AI says" into "who it's saying it to — and exactly what to fix." A persona model tuned to India, and a living map of your brand's reputation.</p>
+      </div>
+
+      <!-- persona models -->
+      <div class="feat reveal">
+        <div class="feat-viz personas">
+          <div class="pdots"></div>
+          <div class="ptarget"></div>
+          <div class="pnum"><span class="big">8,000+</span><span class="cap">Indian consumer personas</span></div>
+        </div>
+        <div class="feat-txt">
+          <div class="kicker">Persona models</div>
+          <h3>8,000+ personas, modelled on India.</h3>
+          <p>Our models simulate 8,000+ consumer personas across Indian demographics and psychographics — age, income, language, region, values, media habits. So you don't react to a generic average; you measure, plan and act on the precise segment that drives your brand.</p>
+          <ul class="feat-list">
+            <li>Measure perception segment by segment</li>
+            <li>Plan against the personas that actually buy</li>
+            <li>Act where it moves your real target consumer</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- brand knowledge graph -->
+      <div class="feat rev reveal">
+        <div class="feat-txt">
+          <div class="kicker">Brand knowledge graph</div>
+          <h3>A living map of how AI sees you.</h3>
+          <p>Every entity, source, competitor and claim shaping your brand in AI — connected into one graph. See what the models believe about you and why, then manage perception with precision: correct the right node, and the answer moves with it.</p>
+          <ul class="feat-list">
+            <li>Every citation, rival and claim, linked</li>
+            <li>Pinpoint the source distorting your perception</li>
+            <li>Fix one node, shift the answer at scale</li>
+          </ul>
+        </div>
+        <div class="feat-viz graph">
+          <svg class="ggraph" viewBox="0 0 340 300" aria-hidden="true">
+            <line class="gline" x1="170" y1="150" x2="56" y2="64"></line>
+            <line class="gline" x1="170" y1="150" x2="300" y2="74"></line>
+            <line class="gline" x1="170" y1="150" x2="306" y2="198"></line>
+            <line class="gline" x1="170" y1="150" x2="82" y2="236"></line>
+            <line class="gline" x1="170" y1="150" x2="190" y2="252"></line>
+            <circle class="gnode n1" cx="56" cy="64" r="4.5"></circle>
+            <circle class="gnode n2" cx="300" cy="74" r="4.5"></circle>
+            <circle class="gnode n3" cx="306" cy="198" r="4.5"></circle>
+            <circle class="gnode n4" cx="82" cy="236" r="4.5"></circle>
+            <circle class="gnode n5" cx="190" cy="252" r="4.5"></circle>
+            <circle class="gnode gcore" cx="170" cy="150" r="9"></circle>
+            <text class="glabel" x="56" y="50" text-anchor="middle">SOURCES</text>
+            <text class="glabel" x="300" y="60" text-anchor="middle">REVIEWS</text>
+            <text class="glabel" x="306" y="218" text-anchor="middle">RIVALS</text>
+            <text class="glabel" x="82" y="256" text-anchor="middle">PRESS</text>
+            <text class="glabel" x="190" y="272" text-anchor="middle">CLAIMS</text>
+            <text class="glabel gbrand" x="170" y="128" text-anchor="middle">YOUR BRAND</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 05 · THE INDIA EDGE ============ -->
+  <section class="hiw" id="india" data-screen-label="05 India">
+    <div class="container">
+      <div class="india-head reveal">
+        <div>
+          <div class="kicker">05 / India</div>
+          <h2>Indian consumers don't ask in english</h2>
+        </div>
+        <div class="body">
+          <p>They ask in Hindi, Tamil, Hinglish — across a dozen languages and one of the world's fastest-growing bases of AI users. The answer they get is shaped by sources you've never audited, and it's often wrong about you. Most tools only watch the English web, so you're the last to know.</p>
+        </div>
+      </div>
+
+      <div class="india-grid reveal" data-delay="1">
+        <div class="india-points">
+          <div class="ipoint">
+            <span class="ix">i</span>
+            <div>
+              <h4>See what your real market sees</h4>
+              <p>We read the AI answer in the languages your buyers actually use — Hindi, Tamil, Bengali, Marathi, Telugu, Hinglish — not just the English version you'd assume.</p>
+            </div>
           </div>
-          <div class="term-body">
-            <div class="bars" id="simBars"></div>
-            <div class="sim-legend"><span><i class="p"></i>Predicted</span><span><i class="m"></i>Measured (actual)</span></div>
+          <div class="ipoint">
+            <span class="ix">ii</span>
+            <div>
+              <h4>This is where it gets you wrong</h4>
+              <p>Models know far less about Indian brands, pricing and categories — so this is exactly where they misname, skip or mis-rank you. The biggest gaps hide here.</p>
+            </div>
+          </div>
+          <div class="ipoint">
+            <span class="ix">iii</span>
+            <div>
+              <h4>Fix the sources India trusts</h4>
+              <p>We map the Indian publishers, reviews and creators the models actually cite — so you know what's shaping the answer, and exactly what to fix.</p>
+            </div>
           </div>
         </div>
-        <div class="sim-result">
-          <div class="sim-cell"><div class="k">Predicted net</div><div class="v">+3.2pp</div><div class="s" id="simPred" style="display:none"></div><div class="s">answer share</div></div>
-          <div class="sim-cell"><div class="k">Measured net</div><div class="v pos" id="simMeas">+2.9pp</div><div class="s">answer share</div></div>
-          <div class="sim-cell"><div class="k">Forecast error</div><div class="v" id="simErr">0.3pp</div><div class="s">below ±8% target</div></div>
-        </div>
-        <p class="illus" style="margin-top:16px">Illustrative worked example · Mahindra, automotive · all figures are model outputs</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     03 · AUTHOR THE ANSWER — the showpiece
-     ============================================================ -->
-<section class="section author-sec rule-top" id="author">
-  <div class="wrap">
-    <div class="sec-split">
-      <div class="sec-head reveal">
-        <div class="kicker"><span class="idx">04</span><span class="ln"></span> Source of truth · accuracy &amp; control</div>
-        <h2 class="display d-lg">Don't just watch the answer. <em>Author</em> it.</h2>
-      </div>
-      <p class="sec-lede body reveal" data-d="1">Feed the engine your canonical truth — pricing, approved claims, spec sheets, positioning. It stops guessing and starts quoting you. Toggle a source off to watch the answer drift back to hallucination and a rival's framing.</p>
-    </div>
-
-    <div class="author-panel reveal" data-d="1" style="margin-top:48px">
-      <div class="author-left">
-        <div class="author-sub"><span class="mono">Your source of truth</span><span class="mono" id="authCount">5 / 5 synced</span></div>
-        <div id="authSources"></div>
-        <p class="author-hint">↑ Toggle a source off to see what the engine says when it can't see your truth.</p>
-      </div>
-      <div class="author-right">
-        <div class="auth-ans-bar">
-          <span class="auth-eng"><span class="dot"></span>ChatGPT · live answer</span>
-          <span class="auth-acc good" id="authAcc">Accuracy 100%</span>
-        </div>
-        <div class="auth-query" id="authQuery"></div>
-        <div class="auth-answer" id="authAnswer"></div>
-        <div class="auth-ans-foot">
-          <span>Grounded in your truth</span>
-          <span><b id="authErr">0</b> errors</span>
-        </div>
-      </div>
-    </div>
-    <p class="illus" style="margin-top:18px">Illustrative · Mahindra XUV700 worked example · demonstrates the grounding mechanic, not a live query</p>
-  </div>
-</section>
-
-<!-- ============================================================
-     04 · INDIA ANSWER LAYER + RETAIL-AI SURFACES (the moat)
-     ============================================================ -->
-<section class="section india-sec rule-top" id="india">
-  <div class="wrap">
-    <div class="sec-split">
-      <div class="sec-head reveal">
-        <div class="kicker"><span class="idx">05</span><span class="ln"></span> The India answer layer</div>
-        <h2 class="display d-lg">Built for how India actually asks.</h2>
-      </div>
-      <p class="sec-lede body reveal" data-d="1">Buyers ask in Hinglish, Hindi, Tamil, Bangla and Marathi — and they buy on surfaces no monitoring tool watches: Amazon Rufus, Flipkart's assistant, Blinkit. We model the answer graph in the languages and on the surfaces your buyers actually use.</p>
-    </div>
-
-    <div class="india-grid">
-      <div class="reveal">
-        <div class="term">
-          <div class="term-bar"><span class="ttl"><span class="dot"></span>Answer share by query language</span><span class="meta">Illustrative</span></div>
-          <div class="term-body" style="padding-top:6px;padding-bottom:6px">
-            <div id="vernBars"></div>
+        <div class="langs">
+          <div class="ldots"></div>
+          <div class="lcap">A buyer asks — in</div>
+          <div class="lchips" id="lchips">
+            <span class="lchip">English</span>
+            <span class="lchip">हिंदी</span>
+            <span class="lchip">தமிழ்</span>
+            <span class="lchip">বাংলা</span>
+            <span class="lchip">मराठी</span>
+            <span class="lchip">తెలుగు</span>
+            <span class="lchip">ಕನ್ನಡ</span>
+            <span class="lchip">Hinglish</span>
           </div>
+          <div class="lquery" id="lquery"></div>
         </div>
       </div>
-      <div class="reveal" data-d="1">
-        <div class="mono" style="color:var(--cream-3);margin-bottom:14px">Retail-AI surfaces · the moat</div>
-        <div class="retail-cards" id="retailCards"></div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ============================================================
-     05 · ONE PROOF BLOCK (real result — placeholder for now)
-     ============================================================ -->
-<section class="section rule-top" id="proof">
-  <div class="wrap">
-    <div class="proof">
-      <div class="sec-head reveal">
-        <div class="kicker"><span class="idx">06</span><span class="ln"></span> Proof</div>
-        <h2 class="display d-md">One result, shown in full.</h2>
-        <p class="body" style="margin-top:8px;max-width:42ch">Not a wall of logos — a single worked example from the paints category. We'll replace it with a verified, named design-partner result at launch. <span class="ph">Pending a genuine result</span></p>
-        <p class="illus" style="margin-top:20px">Illustrative · anonymised paints brand · figures are model outputs, not a verified result</p>
+      <p class="india-moat reveal" data-scrub data-delay="1">Every global tool watches the English web. <em>We watch the answer in the languages your market actually buys in.</em></p>
+    </div>
+  </section>
+
+  <!-- ============ 05 · THE TEAM / TRUST ============ -->
+  <section class="scene" id="team" data-screen-label="06 The Team">
+    <div class="container">
+      <div class="trust-head reveal">
+        <div>
+          <div class="kicker">06 / Who's behind it</div>
+          <h2>We've been on both sides of the answer.</h2>
+        </div>
+        <p>Perceptivity is built by marketers who've carried the number in brutally competitive categories — and engineers from the search and recommendation teams that decide which brand an answer names. We know how the answer is made, because we helped make it.</p>
       </div>
-      <div class="proof-card reveal" data-d="1">
-        <blockquote class="proof-quote">“When architects asked AI for premium exterior finishes, we simply weren't in the answer. One quarter of authoring our truth, and we were first-named in four of seven engines.”</blockquote>
-        <div class="proof-attr">— VP Marketing · national paints brand · India</div>
-        <div class="proof-metrics">
-          <div class="proof-metric"><div class="k">Answer share, before → after</div><div class="v">9% → 31%</div></div>
-          <div class="proof-metric"><div class="k">Window</div><div class="v">12 wks</div></div>
+
+      <div class="pedigree reveal" data-delay="1">
+        <span class="tag">Ex-FAANG engineering</span>
+        <span class="tag">Search &amp; recommendation</span>
+        <span class="tag">Brand &amp; growth leadership</span>
+        <span class="tag">Billions of queries shipped</span>
+      </div>
+
+      <div class="trust-grid reveal" data-delay="1">
+        <div class="tcard">
+          <div class="tdots"></div>
+          <span class="tn">01</span>
+          <h4>We've sat in your seat</h4>
+          <p>Marketers who briefed the agencies, carried the pipeline number and defended the brand budget in the boardroom. Your pressure is one we've lived.</p>
+        </div>
+        <div class="tcard">
+          <div class="tdots"></div>
+          <span class="tn">02</span>
+          <h4>We built the engines</h4>
+          <p>Engineers from FAANG-scale search and recommendation teams — the very systems that now choose which brand gets named, and why.</p>
+        </div>
+        <div class="tcard">
+          <div class="tdots"></div>
+          <span class="tn">03</span>
+          <h4>We obsess over the answer</h4>
+          <p>We reverse-engineer how models weigh sources, so your place in the answer is earned by design — not left to luck.</p>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ============================================================
-     06 · OPERATORS — anonymous but specific
-     ============================================================ -->
-<section class="section operators-sec" id="operators">
-  <div class="wrap">
-    <div class="sec-split">
-      <div class="sec-head reveal">
-        <div class="kicker"><span class="idx">07</span><span class="ln"></span> The operators behind it</div>
-        <h2 class="display d-lg">Built by people who've sat in the chair.</h2>
-      </div>
-      <p class="sec-lede body reveal" data-d="1">Built by operators who have run nine-figure consumer-brand P&amp;Ls across 13+ markets — people who've sat in the CMO's chair in India, not analysts watching from the outside.</p>
-    </div>
-    <div class="op-grid reveal" data-d="1">
-      <div class="op-cell"><div class="v">9-figure</div><div class="k">Consumer-brand P&amp;Ls run, first-hand</div></div>
-      <div class="op-cell"><div class="v">13+</div><div class="k">Markets operated across, India at the centre</div></div>
-      <div class="op-cell"><div class="v">In the chair</div><div class="k">CMO-side operators, not outside analysts</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     07 · THE LOOP — one clean diagram
-     ============================================================ -->
-<section class="section rule-top" id="loop">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="kicker"><span class="idx">08</span><span class="ln"></span> The loop</div>
-      <h2 class="display d-lg" style="max-width:18ch">Sense, Simulate, Act, Learn — one loop that compounds.</h2>
-    </div>
-    <div class="loop-grid reveal" data-d="1" id="loopGrid"></div>
-    <p class="illus" style="margin-top:18px">Run every quarter · each cycle sharpens the next forecast</p>
-  </div>
-</section>
-
-<!-- ============================================================
-     08 · ENTERPRISE & SECURITY — honest, dated
-     ============================================================ -->
-<section class="section security-sec" id="security">
-  <div class="wrap">
-    <div class="sec-split">
-      <div class="sec-head reveal">
-        <div class="kicker"><span class="idx">09</span><span class="ln"></span> Enterprise &amp; security</div>
-        <h2 class="display d-lg">Procurement-ready. Stated honestly.</h2>
-      </div>
-      <p class="sec-lede body reveal" data-d="1">Route this page to InfoSec. No “passed with ease” — just the real status, with a date. Your data stays in your own tenant and is never used to train anything for anyone else.</p>
-    </div>
-    <div class="sec-table reveal" data-d="1">
-      <table>
-        <thead><tr><th>Control</th><th>Status</th><th>Detail</th></tr></thead>
-        <tbody id="secRows"></tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     09 · RESOURCES / CMO briefing — no form wall
-     ============================================================ -->
-<section class="section rule-top" id="resources">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="kicker"><span class="idx">10</span><span class="ln"></span> CMO briefing</div>
-      <h2 class="display d-lg" style="max-width:20ch">Field notes for marketing leaders, free to read.</h2>
-    </div>
-
-    <!-- flagship: B2A essay -->
-    <article class="res-feature reveal" data-d="1">
-      <div class="res-feature-body">
-        <span class="tag amber flag"><span class="dot"></span>Flagship essay</span>
-        <h3 class="display">Selling to the agent: the Business-to-Agent shift.</h3>
-        <p class="body">Buyers now let AI agents evaluate, shortlist and act for them. The brands that win sell to the agent as deliberately as they sell to the human. What changes for go-to-market when the customer is a model — and how to make visibility convertible.</p>
-        <a class="btn" href="#resources" style="margin-top:24px">Read the essay <span class="arrow">→</span></a>
-      </div>
-      <div class="res-img" style="overflow:hidden"><img src="assets/b2a-essay.png" alt="An answer graph: many buyer queries converging through a single AI agent into one recommended answer" style="width:100%;height:100%;min-height:260px;object-fit:cover;display:block" /></div>
-    </article>
-
-    <div class="res-grid reveal" data-d="1">
-      <a class="res-card" href="#resources">
-        <span class="rc-cat">Strategy</span>
-        <h4>AEO vs GEO vs SEO: where to spend in 2026</h4>
-        <p>Rank 6 on Google shows up nowhere in an AI answer. How the disciplines differ — and what actually compounds.</p>
-        <div class="rc-read"><span>Guide</span><span>11 min →</span></div>
-      </a>
-      <a class="res-card" href="#resources">
-        <span class="rc-cat">Product</span>
-        <h4>Brand verification for AI channels</h4>
-        <p>When an engine repeats a wrong price or a rival's framing, it costs revenue. How we detect and correct it.</p>
-        <div class="rc-read"><span>Field note</span><span>7 min →</span></div>
-      </a>
-      <a class="res-card" href="#resources">
-        <span class="rc-cat">India</span>
-        <h4>The retail-AI surfaces nobody is tracking</h4>
-        <p>Rufus, Flipkart's assistant, Blinkit. Where Indian purchase decisions are increasingly made — and lost.</p>
-        <div class="rc-read"><span>Briefing</span><span>9 min →</span></div>
-      </a>
-    </div>
-
-    <!-- briefing signup — no form wall -->
-    <div class="briefing reveal" data-d="1">
-      <div>
-        <h3 class="display">The CMO briefing, every two weeks.</h3>
-        <p>Engine updates, category teardowns and one move you can make this week. No form wall — read everything above without an email.</p>
-      </div>
-      <div>
-        <form class="brief-form" id="briefForm" novalidate>
-          <input class="input" id="briefEmail" type="email" placeholder="you@brand.com" aria-label="Work email" />
-          <button class="btn primary" type="submit">Subscribe</button>
-        </form>
-        <div class="brief-done" id="briefDone">✓ You're in — first briefing lands soon.</div>
+  <!-- ============ 06 · THE BRIEF (newsletter) ============ -->
+  <section class="brief" id="brief" data-screen-label="07 The Brief">
+    <div class="container">
+      <div class="brief-card reveal">
+        <div class="bdots"></div>
+        <div class="brief-l">
+          <div class="kicker">07 / The brief</div>
+          <h2>Machine&nbsp;Readable</h2>
+          <p class="lede">A weekly brief for marketing leaders on the answer economy — what AI is saying about brands, and what the sharpest teams are doing about it. Five minutes, every Tuesday.</p>
+          <form class="brief-form" id="briefForm" novalidate>
+            <input class="input" type="email" id="briefEmail" placeholder="you@company.com" autocomplete="email" aria-label="Work email" required />
+            <button class="btn primary" type="submit">Subscribe <span class="arrow">→</span></button>
+          </form>
+          <div class="brief-note">Free · On Substack · No fluff · Unsubscribe anytime</div>
+          <div class="brief-done" id="briefDone">You're in. First issue lands Tuesday.</div>
+        </div>
+        <div class="issues">
+          <div class="ic">Recent issues</div>
+          <a class="issue" href="#brief">
+            <span class="num">№ 014</span>
+            <div class="it">Your best-performing keyword is now a prompt. Here's how to win it.</div>
+          </a>
+          <a class="issue" href="#brief">
+            <span class="num">№ 013</span>
+            <div class="it">The six sources ChatGPT trusts most in your category.</div>
+          </a>
+          <a class="issue" href="#brief">
+            <span class="num">№ 012</span>
+            <div class="it">Share of model: the metric missing from your 2026 plan.</div>
+          </a>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ============================================================
-     10 · FAQ
-     ============================================================ -->
-<section class="section rule-top" id="faq">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="kicker"><span class="idx">11</span><span class="ln"></span> Questions</div>
-      <h2 class="display d-lg">Before you book.</h2>
+  <!-- ============ 07 · OWN THE ANSWER ============ -->
+  <section class="final" id="truth" data-screen-label="08 Own The Answer">
+    <div class="final-halo" data-drift="0.06"></div>
+    <div class="reveal">
+      <span class="beyond">Beyond SEO · Beyond search · Beyond opinion</span>
+      <h2>Own<br>the answer</h2>
+      <p class="sub">See what AI is telling your buyers about your brand this week. A 30-minute walkthrough — your category already scanned.</p>
+      <div class="final-cta">
+        <a class="btn primary btn-lg" href="demo.html">Book a walkthrough <span class="arrow">→</span></a>
+        <a class="btn btn-lg" href="onboarding.html">Get started</a>
+      </div>
     </div>
-    <div class="faq-list reveal" data-d="1">
-      <details class="faq">
-        <summary>What's the difference between SEO and AEO/GEO?<span class="pl"></span></summary>
-        <div class="a">SEO optimises for a list of ten blue links. AEO and GEO optimise for a single AI-generated answer. When a buyer asks ChatGPT or Gemini, the engine reads the web, forms a verdict, and names one brand. Rank 6 on Google doesn't appear in that answer at all.</div>
-      </details>
-      <details class="faq">
-        <summary>How is this different from AEO monitoring tools?<span class="pl"></span></summary>
-        <div class="a">Monitoring tools report that AI mentioned you — a lagging signal. Perceptivity forecasts which campaign will change the answer before you commit budget (Simulate), routes the work with owners and partners (Act), then measures predicted vs actual lift (Learn). The full loop, not half of it.</div>
-      </details>
-      <details class="faq">
-        <summary>Why India-first?<span class="pl"></span></summary>
-        <div class="a">Because the answer graph is local. Indian buyers ask in Hinglish and regional languages, and they decide on surfaces — Amazon Rufus, Flipkart, Blinkit — that global tools ignore. Our category depth and surface coverage run deepest in India. We expand market by market from there.</div>
-      </details>
-      <details class="faq">
-        <summary>Are the numbers on this site real?<span class="pl"></span></summary>
-        <div class="a">No — every metric in the worked examples is a labelled model output. Real Indian brands appear for context only, to demonstrate the mechanic; nothing here is a statement of fact about any brand. Real results appear in the proof block, and only once we have a genuine design-partner outcome to publish.</div>
-      </details>
-      <details class="faq">
-        <summary>How do you handle our data?<span class="pl"></span></summary>
-        <div class="a">Your content, campaigns and outcomes live in your own tenant, encrypted at rest and in transit, and are never used to improve another customer's results. SSO and full audit logs are available; SOC 2 Type II is in progress with a Q4 2026 target.</div>
-      </details>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- ============================================================
-     FINAL CTA
-     ============================================================ -->
-<section class="final-cta" id="cta">
-  <div class="wrap">
-    <div class="kicker reveal"><span class="ln"></span> Ready when you are</div>
-    <h2 class="display d-xl reveal" data-d="1">We'll arrive with your category <span class="amber">already scanned.</span></h2>
-    <p class="lede reveal" data-d="2" style="color:var(--cream-2)">A 30-minute walkthrough on your brand and your rivals, across every engine that matters. Walk away knowing exactly where you stand.</p>
-    <div class="cta-row reveal" data-d="3">
-      <a class="btn amber lg" href="onboarding.html">Get started <span class="arrow">→</span></a>
-      <a class="btn lg" href="demo.html">Book a demo</a>
-    </div>
-    <div class="cta-paths reveal" data-d="3">
-      <span><b>Get started</b> — build your workspace and see your brand-specific read in minutes, free.</span>
-      <span class="cta-or">or</span>
-      <span><b>Book a demo</b> — we scan your category first and walk your team through it live.</span>
-    </div>
-    <div class="sandbox-note reveal" data-d="3">This site is an interactive preview — answers shown are recorded, not live API calls.</div>
-  </div>
-</section>
+</main>
 
-<script src="site-data.js"></script>
-<script src="editorial.js"></script>
-<script src="ascii-field.js"></script>
-<script src="home.js"></script>
+<script src="demo-data.js"></script>
+<script src="chrome.js"></script>
 <script>
-  // loop diagram
+  /* ---- scroll engine: additive parallax + scrubbed text + visual drift ---- */
   (function(){
-    const g = document.getElementById('loopGrid'); if (!g || !window.SITE) return;
-    const arrow = '<svg class="arrow-c" viewBox="0 0 14 14" fill="none"><path d="M2 7h9M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-    SITE.loop.forEach((s,i)=>{
-      const step = document.createElement('div');
-      step.className = 'loop-step' + (s.diff ? ' diff' : '');
-      step.innerHTML = '<span class="ix">'+String(i+1).padStart(2,'0')+'</span><h3>'+s.k+'</h3><p>'+s.d+'</p>'+
-        (i < SITE.loop.length-1 ? arrow : '');
-      g.appendChild(step);
+    const clamp = (v,a,b)=>v<a?a:v>b?b:v;
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // additive parallax on the hero singularity — keeps its translateY(-50%) centring
+    const singular = document.querySelector('.singularity');
+
+    // gentle drift on scene visuals as they pass through the viewport
+    const drifters = [...document.querySelectorAll('[data-drift]')];
+
+    // split scrubbed lines into word spans (preserves <em> as .hot words)
+    function wrapWords(el){
+      const frag = [];
+      el.childNodes.forEach(node=>{
+        const hot = node.nodeType === 1 && node.tagName === 'EM';
+        (node.textContent || '').split(/(\s+)/).forEach(tok=>{
+          if (tok === '') return;
+          if (/^\s+$/.test(tok)){ frag.push(document.createTextNode(tok)); return; }
+          const s = document.createElement('span');
+          s.className = 'w' + (hot ? ' hot' : '');
+          s.textContent = tok;
+          frag.push(s);
+        });
+      });
+      el.textContent = '';
+      frag.forEach(n=>el.appendChild(n));
+      return [...el.querySelectorAll('.w')];
+    }
+    const scrubs = [...document.querySelectorAll('[data-scrub]')].map(el=>({ el, words: wrapWords(el) }));
+
+    // ---- scroll-linked section reveals (reversible scrub of opacity + lift) ----
+    // grids expand into their cards so they stagger; everything else animates as a block.
+    const EXPAND = '.examples,.instruments,.rhythm,.proof,.trust-grid';
+    const expandEls = [...document.querySelectorAll(EXPAND)];
+    expandEls.forEach(c=>{ c.style.opacity = '1'; c.style.transform = 'none'; c.style.filter = 'none'; });
+    const saItems = [];
+    expandEls.forEach(c=>[...c.children].forEach((ch, i)=>saItems.push({ el: ch, d: i })));
+    document.querySelectorAll('main .reveal').forEach(el=>{
+      if (expandEls.includes(el)) return;                 // expanded into children above
+      if (el.parentElement && expandEls.includes(el.parentElement)) return;
+      saItems.push({ el, d: 0 });
+    });
+    // start hidden so nothing flashes un-animated before the first frame
+    saItems.forEach(({el})=>{ el.style.willChange = 'opacity, transform'; el.style.opacity = '0'; });
+
+    const easeOut = t => 1 - Math.pow(1 - t, 3);
+    function saAt(el, d){
+      const r = el.getBoundingClientRect();
+      const vh = innerHeight;
+      const start = vh * 0.94, end = vh * 0.42;            // travel band for the lift
+      const p = (start - r.top) / (start - end) - d * 0.07; // later cards trail slightly
+      return clamp(p, 0, 1);
+    }
+    function paintSA(){
+      saItems.forEach(({el, d})=>{
+        const p = easeOut(saAt(el, d));
+        el.style.opacity = p.toFixed(3);
+        el.style.transform = `translate3d(0, ${((1 - p) * 46).toFixed(1)}px, 0)`;
+      });
+    }
+    function showSA(){
+      expandEls.forEach(c=>{ c.style.opacity = '1'; });
+      saItems.forEach(({el})=>{ el.style.opacity = '1'; el.style.transform = 'none'; });
+    }
+
+    function frame(){
+      const y = scrollY, vh = innerHeight, wide = innerWidth > 900;
+
+      // motion off: hold everything still and show scrubbed lines fully lit
+      if (document.documentElement.dataset.motion === 'off'){
+        if (singular) singular.style.setProperty('--py', '0px');
+        drifters.forEach(el=>{ el.style.transform = 'none'; });
+        showSA();
+        scrubs.forEach(({words})=>words.forEach(w=>{
+          w.style.color = w.classList.contains('hot') ? '#fff' : 'rgba(255,255,255,.72)';
+          w.style.textShadow = 'none';
+        }));
+        return;
+      }
+
+      if (singular) singular.style.setProperty('--py', wide ? (y * 0.08).toFixed(1) + 'px' : '0px');
+
+      paintSA();
+
+      drifters.forEach(el=>{
+        const k = parseFloat(el.dataset.drift) || 0.04;
+        const r = el.getBoundingClientRect();
+        const mid = (r.top + r.height/2) - vh/2;      // distance from viewport centre
+        el.style.transform = `translateY(${(-mid * k).toFixed(1)}px)`;
+      });
+
+      scrubs.forEach(({el, words})=>{
+        const r = el.getBoundingClientRect();
+        // 0 as the line enters from the bottom → 1 once it has risen past centre
+        const p = clamp((vh * 0.86 - r.top) / (vh * 0.5), 0, 1);
+        const N = words.length;
+        words.forEach((w,i)=>{
+          const local = clamp(p * (N + 5) - i, 0, 1);
+          const hot = w.classList.contains('hot');
+          const a = (0.18 + (hot ? 0.82 : 0.64) * local).toFixed(3);
+          w.style.color = `rgba(255,255,255,${a})`;
+          w.style.textShadow = (hot && local > 0.55) ? '0 0 22px rgba(255,255,255,.35)' : 'none';
+        });
+      });
+    }
+
+    if (reduce){
+      // reduced motion: show everything fully, skip parallax + scrub churn
+      showSA();
+      scrubs.forEach(({words})=>words.forEach(w=>{ w.style.color = w.classList.contains('hot') ? '#fff' : 'rgba(255,255,255,.7)'; }));
+    } else {
+      let tick = false;
+      addEventListener('scroll', ()=>{ if(!tick){ tick = true; requestAnimationFrame(()=>{ frame(); tick = false; }); } }, { passive:true });
+      addEventListener('resize', frame, { passive:true });
+      frame();
+    }
+  })();
+
+  /* light the hero entrance only once the animation clock is alive —
+     base state is already visible, so a stalled clock never blanks it */
+  (function(){
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
+    requestAnimationFrame(()=>requestAnimationFrame(()=>hero.classList.add('lit')));
+  })();
+
+  /* black box: buyer questions resolve into a single named answer */
+  (function(){
+    const QA = [
+      ["“Which EV should I buy in India?”", "It names ", "one brand"],
+      ["“What is the safest family SUV?”", "It names ", "one brand"],
+      ["“Best skincare for humid climates?”", "It names ", "one brand"],
+      ["“Which bank for a first credit card?”", "It names ", "one brand"],
+    ];
+    const qEl = document.getElementById('bbQ');
+    const aEl = document.getElementById('bbA');
+    if (!qEl || !aEl) return;
+    let i = 0;
+    function play(){
+      const [q, lead, brand] = QA[i % QA.length];
+      qEl.textContent = q;
+      aEl.innerHTML = '';
+      const ans = document.createElement('span');
+      ans.className = 'ans';
+      const full = lead + brand;
+      [...full].forEach((ch, k)=>{
+        const s = document.createElement('span');
+        // real spaces stay breakable so words never overflow / clip
+        s.textContent = ch;
+        if (k >= lead.length && ch !== ' ') s.className = 'brandname';
+        s.style.animationDelay = (300 + k*26) + 'ms';
+        ans.appendChild(s);
+      });
+      aEl.appendChild(ans);
+      i++;
+      setTimeout(play, 3400);
+    }
+    play();
+  })();
+
+  /* Sense viz: mini heatmap built from demo data, lit on reveal */
+  (function(){
+    const heat = document.getElementById('heatMini');
+    if (!heat || typeof DEMO === 'undefined' || typeof ENGINES === 'undefined') return;
+    const sample = DEMO.auto.heatmap;
+    const cells = [];
+    ENGINES.forEach(e => {
+      (sample[e] || []).forEach(v => {
+        const c = document.createElement('div');
+        c.className = 'c';
+        c.dataset.v = v;
+        heat.appendChild(c);
+        cells.push(c);
+      });
+    });
+    // light them progressively when the section reveals
+    const card = heat.closest('.reveal');
+    const lite = () => cells.forEach((c, i) => {
+      setTimeout(() => {
+        c.style.background = `rgba(255,255,255,${(0.06 + (+c.dataset.v) * 0.8).toFixed(3)})`;
+      }, 200 + i * 14);
+    });
+    if (card){
+      const mo = new MutationObserver(() => { if (card.classList.contains('in')){ lite(); mo.disconnect(); } });
+      mo.observe(card, { attributes:true, attributeFilter:['class'] });
+      if (card.classList.contains('in')) lite();
+    } else lite();
+  })();
+
+  /* India: cycle the highlighted language + a matching buyer query */
+  (function(){
+    const chips = [...document.querySelectorAll('#lchips .lchip')];
+    const qEl = document.getElementById('lquery');
+    if (!chips.length || !qEl) return;
+    // romanised queries kept legible for any reader; one Devanagari example
+    const Q = [
+      'EN — “Best EV to buy in India?”',
+      'HI — “सबसे अच्छी फैमिली SUV कौन सी है?”',
+      'TA — “Best phone under ₹20,000?”',
+      'BN — “Top health insurance plan?”',
+      'MR — “Best home loan rate?”',
+      'TE — “Which laptop for students?”',
+      'KN — “Safest small car?”',
+      'Hinglish — “Konsa credit card best hai?”',
+    ];
+    let i = 0;
+    function tick(){
+      chips.forEach((c,k)=>c.classList.toggle('on', k === i % chips.length));
+      const text = Q[i % Q.length];
+      const dash = text.indexOf('—');
+      qEl.innerHTML = '<b>' + text.slice(0, dash).trim() + '</b> ' + text.slice(dash + 1).trim();
+      i++;
+      setTimeout(tick, 1800);
+    }
+    tick();
+  })();
+
+  /* The Brief: lightweight subscribe handshake (no backend) */
+  (function(){
+    const form = document.getElementById('briefForm');
+    const email = document.getElementById('briefEmail');
+    if (!form) return;
+    form.addEventListener('submit', e=>{
+      e.preventDefault();
+      const v = (email.value || '').trim();
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){ email.focus(); return; }
+      document.querySelector('.brief').classList.add('sent');
     });
   })();
 
-  // briefing signup
+  /* ============ TWEAKS — vanilla panel speaking the host edit-mode protocol ============ */
   (function(){
-    const f = document.getElementById('briefForm'); if (!f) return;
-    const email = document.getElementById('briefEmail');
-    f.addEventListener('submit', e=>{
-      e.preventDefault();
-      const v = email.value.trim();
-      if (!v || !v.includes('@')){ email.style.borderColor='var(--neg)'; email.focus(); return; }
-      f.style.display='none';
-      document.getElementById('briefDone').classList.add('on');
+    const DEFAULTS = /*EDITMODE-BEGIN*/{
+      "typeface": "Space Grotesk",
+      "heroLine1": "Be the brand",
+      "heroLine2": "AI names",
+      "indiaHeadline": "Indian consumers don't ask in english",
+      "accent": "#ffffff",
+      "dotField": 6,
+      "motion": true
+    }/*EDITMODE-END*/;
+    const T = Object.assign({}, DEFAULTS);
+
+    const FONTS = ['Default','Raleway','Oswald','Roboto','Rubik','Space Grotesk','Dosis'];
+    function applyFont(){
+      const r = document.documentElement.style;
+      if (T.typeface === 'Default'){ r.removeProperty('--fontDisplay'); r.removeProperty('--fontBody'); }
+      else {
+        const stack = "'" + T.typeface + "', 'Inter', 'Helvetica Neue', Arial, sans-serif";
+        r.setProperty('--fontDisplay', stack);
+        r.setProperty('--fontBody', stack);
+      }
+    }
+    function apply(){
+      applyFont();
+      const l1 = document.querySelector('.hero h1 .line:nth-child(1) span');
+      const l2 = document.querySelector('.hero h1 .line:nth-child(2) span');
+      if (l1) l1.textContent = T.heroLine1;
+      if (l2) l2.textContent = T.heroLine2;
+      const ih = document.querySelector('#india .india-head h2');
+      if (ih) ih.textContent = T.indiaHeadline;
+      const rs = document.documentElement.style;
+      rs.setProperty('--accent', T.accent);
+      rs.setProperty('--dot-screen', (Math.max(0, Math.min(60, T.dotField)) / 100).toFixed(3));
+      document.documentElement.dataset.motion = T.motion ? 'on' : 'off';
+      window.dispatchEvent(new Event('scroll'));
+    }
+    function persist(key, val){
+      T[key] = val; apply();
+      try { window.parent.postMessage({ type:'__edit_mode_set_keys', edits:{ [key]: val } }, '*'); } catch(e){}
+    }
+    apply();
+
+    /* ---- panel UI ---- */
+    const STYLE = `
+      .pvt{position:fixed;right:16px;bottom:16px;z-index:2147483646;width:266px;max-height:calc(100vh - 32px);
+        display:none;flex-direction:column;cursor:auto;
+        background:rgba(250,249,247,.84);color:#1a1814;
+        -webkit-backdrop-filter:blur(22px) saturate(160%);backdrop-filter:blur(22px) saturate(160%);
+        border:.5px solid rgba(255,255,255,.6);border-radius:14px;
+        box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 14px 44px rgba(0,0,0,.26);
+        font:12px/1.4 ui-sans-serif,system-ui,-apple-system,sans-serif;overflow:hidden}
+      .pvt.open{display:flex}
+      .pvt *{cursor:auto}
+      .pvt-hd{display:flex;align-items:center;justify-content:space-between;padding:11px 9px 11px 14px;cursor:move;user-select:none}
+      .pvt-hd b{font-size:12.5px;font-weight:600;letter-spacing:.01em}
+      .pvt-x{border:0;background:transparent;color:rgba(0,0,0,.5);width:22px;height:22px;border-radius:6px;font-size:13px;line-height:1;cursor:pointer}
+      .pvt-x:hover{background:rgba(0,0,0,.07);color:#000}
+      .pvt-bd{padding:2px 14px 14px;display:flex;flex-direction:column;gap:11px;overflow-y:auto;overflow-x:hidden}
+      .pvt-bd::-webkit-scrollbar{width:8px}
+      .pvt-bd::-webkit-scrollbar-thumb{background:rgba(0,0,0,.16);border-radius:4px;border:2px solid transparent;background-clip:content-box}
+      .pvt-sec{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(0,0,0,.42);padding-top:9px}
+      .pvt-sec.first{padding-top:2px}
+      .pvt-row{display:flex;flex-direction:column;gap:6px}
+      .pvt-row.h{flex-direction:row;align-items:center;justify-content:space-between}
+      .pvt-lbl{font-weight:500;color:rgba(0,0,0,.72);display:flex;justify-content:space-between;align-items:baseline}
+      .pvt-lbl .v{color:rgba(0,0,0,.45);font-variant-numeric:tabular-nums;font-weight:400}
+      .pvt-field{box-sizing:border-box;width:100%;height:28px;padding:0 9px;border:.5px solid rgba(0,0,0,.12);border-radius:7px;background:rgba(255,255,255,.7);color:inherit;font:inherit;outline:none;cursor:text}
+      .pvt-field:focus{border-color:rgba(0,0,0,.3);background:#fff}
+      select.pvt-field{cursor:pointer;-webkit-appearance:none;appearance:none;padding-right:22px;
+        background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='rgba(0,0,0,.5)' d='M0 0h10L5 6z'/></svg>");
+        background-repeat:no-repeat;background-position:right 9px center}
+      .pvt-slider{width:100%;height:4px;-webkit-appearance:none;appearance:none;border-radius:9px;background:rgba(0,0,0,.14);outline:none;cursor:pointer;margin:5px 0}
+      .pvt-slider::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:#fff;border:.5px solid rgba(0,0,0,.15);box-shadow:0 1px 3px rgba(0,0,0,.25);cursor:pointer}
+      .pvt-slider::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:#fff;border:.5px solid rgba(0,0,0,.15);box-shadow:0 1px 3px rgba(0,0,0,.25);cursor:pointer}
+      .pvt-chips{display:flex;gap:6px}
+      .pvt-chip{flex:1;height:30px;border-radius:7px;border:.5px solid rgba(0,0,0,.18);cursor:pointer;position:relative;box-shadow:0 1px 2px rgba(0,0,0,.08);transition:transform .12s,box-shadow .12s}
+      .pvt-chip:hover{transform:translateY(-1px)}
+      .pvt-chip[data-on="1"]{box-shadow:0 0 0 2px #1a1814,0 1px 2px rgba(0,0,0,.12)}
+      .pvt-tog{position:relative;width:34px;height:19px;border:0;border-radius:999px;background:rgba(0,0,0,.18);cursor:pointer;padding:0;transition:background .15s}
+      .pvt-tog[data-on="1"]{background:#1a1814}
+      .pvt-tog i{position:absolute;top:2px;left:2px;width:15px;height:15px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .15s}
+      .pvt-tog[data-on="1"] i{transform:translateX(15px)}
+    `;
+    const st = document.createElement('style'); st.textContent = STYLE; document.head.appendChild(st);
+
+    const root = document.createElement('div');
+    root.className = 'pvt'; root.setAttribute('data-omelette-chrome','');
+    root.innerHTML = '<div class="pvt-hd"><b>Tweaks</b><button class="pvt-x" aria-label="Close tweaks">✕</button></div><div class="pvt-bd"></div>';
+    const bd = root.querySelector('.pvt-bd');
+
+    let firstSec = true;
+    const sec = (label)=>{ const d=document.createElement('div'); d.className='pvt-sec'+(firstSec?' first':''); firstSec=false; d.textContent=label; bd.appendChild(d); };
+    function textRow(label, key){
+      const row=document.createElement('div'); row.className='pvt-row';
+      const l=document.createElement('div'); l.className='pvt-lbl'; l.innerHTML='<span>'+label+'</span>'; row.appendChild(l);
+      const inp=document.createElement('input'); inp.className='pvt-field'; inp.type='text'; inp.value=T[key];
+      inp.addEventListener('input', ()=>persist(key, inp.value));
+      row.appendChild(inp); bd.appendChild(row);
+    }
+    function selectRow(label, key, opts){
+      const row=document.createElement('div'); row.className='pvt-row';
+      const l=document.createElement('div'); l.className='pvt-lbl'; l.innerHTML='<span>'+label+'</span>'; row.appendChild(l);
+      const sel=document.createElement('select'); sel.className='pvt-field';
+      opts.forEach(o=>{ const op=document.createElement('option'); op.value=o; op.textContent=o; if(o===T[key]) op.selected=true; sel.appendChild(op); });
+      sel.addEventListener('change', ()=>persist(key, sel.value));
+      row.appendChild(sel); bd.appendChild(row);
+    }
+    function sliderRow(label, key, min, max, unit){
+      const row=document.createElement('div'); row.className='pvt-row';
+      const l=document.createElement('div'); l.className='pvt-lbl'; l.innerHTML='<span>'+label+'</span><span class="v">'+T[key]+(unit||'')+'</span>'; row.appendChild(l);
+      const inp=document.createElement('input'); inp.type='range'; inp.className='pvt-slider'; inp.min=min; inp.max=max; inp.value=T[key];
+      inp.addEventListener('input', ()=>{ l.querySelector('.v').textContent=inp.value+(unit||''); persist(key, Number(inp.value)); });
+      row.appendChild(inp); bd.appendChild(row);
+    }
+    function colorRow(label, key, opts){
+      const row=document.createElement('div'); row.className='pvt-row';
+      const l=document.createElement('div'); l.className='pvt-lbl'; l.innerHTML='<span>'+label+'</span>'; row.appendChild(l);
+      const wrap=document.createElement('div'); wrap.className='pvt-chips';
+      opts.forEach(c=>{ const b=document.createElement('button'); b.className='pvt-chip'; b.style.background=c; b.title=c;
+        b.dataset.on = (c.toLowerCase()===String(T[key]).toLowerCase()) ? '1':'0';
+        b.addEventListener('click', ()=>{ persist(key, c); [...wrap.children].forEach(ch=>ch.dataset.on=(ch===b)?'1':'0'); });
+        wrap.appendChild(b); });
+      row.appendChild(wrap); bd.appendChild(row);
+    }
+    function toggleRow(label, key){
+      const row=document.createElement('div'); row.className='pvt-row h';
+      const l=document.createElement('div'); l.className='pvt-lbl'; l.innerHTML='<span>'+label+'</span>'; row.appendChild(l);
+      const b=document.createElement('button'); b.className='pvt-tog'; b.dataset.on=T[key]?'1':'0'; b.innerHTML='<i></i>';
+      b.addEventListener('click', ()=>{ const nv=!(b.dataset.on==='1'); b.dataset.on=nv?'1':'0'; persist(key, nv); });
+      row.appendChild(b); bd.appendChild(row);
+    }
+
+    sec('Type');   selectRow('Typeface','typeface', FONTS);
+    sec('Copy');   textRow('Hero line 1','heroLine1'); textRow('Hero line 2','heroLine2'); textRow('India headline','indiaHeadline');
+    sec('Look');   colorRow('Accent','accent', ['#ffffff','#E6A36B','#6BA8E6','#6BE6A8']); sliderRow('Dot field','dotField',0,45,'%');
+    sec('Motion'); toggleRow('Animations','motion');
+
+    document.body.appendChild(root);
+
+    /* drag by header */
+    const hd = root.querySelector('.pvt-hd');
+    hd.addEventListener('mousedown', e=>{
+      const r = root.getBoundingClientRect();
+      const sx=e.clientX, sy=e.clientY, sr=innerWidth-r.right, sb=innerHeight-r.bottom;
+      const mv = ev=>{ root.style.right=Math.max(8, sr-(ev.clientX-sx))+'px'; root.style.bottom=Math.max(8, sb-(ev.clientY-sy))+'px'; };
+      const up = ()=>{ removeEventListener('mousemove',mv); removeEventListener('mouseup',up); };
+      addEventListener('mousemove',mv); addEventListener('mouseup',up);
     });
-    email.addEventListener('input', ()=> email.style.borderColor='');
+
+    /* host edit-mode protocol */
+    const open = ()=>root.classList.add('open');
+    const close = ()=>root.classList.remove('open');
+    root.querySelector('.pvt-x').addEventListener('click', ()=>{ close(); try{ window.parent.postMessage({type:'__edit_mode_dismissed'},'*'); }catch(e){} });
+    window.addEventListener('message', e=>{ const t=e&&e.data&&e.data.type; if(t==='__activate_edit_mode') open(); else if(t==='__deactivate_edit_mode') close(); });
+    try{ window.parent.postMessage({type:'__edit_mode_available'},'*'); }catch(e){}
   })();
 </script>
-
-<!-- Tweaks panel (serif / canvas / accent) -->
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-<script type="text/babel" src="tweaks-panel.jsx"></script>
-<script type="text/babel" src="tweaks-app.jsx"></script>
 </body>
 </html>
