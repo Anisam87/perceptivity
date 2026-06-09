@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sign in — Perceptivity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="perceptivity.css">
+<style>
+  .auth{min-height:100vh;display:grid;place-items:center;padding:120px 22px 80px;position:relative}
+  .auth-card{
+    width:100%;max-width:440px;position:relative;z-index:2;
+    border:1px solid var(--line);border-radius:2px;padding:46px 42px 40px;
+    background:rgba(0,0,0,.4);
+  }
+  .auth-card::before{
+    content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+    background-image:radial-gradient(rgba(255,255,255,.7) .7px, transparent 1px);
+    background-size:9px 9px;opacity:.05;
+    -webkit-mask-image:radial-gradient(circle at 82% 0%, #000, transparent 68%);
+    mask-image:radial-gradient(circle at 82% 0%, #000, transparent 68%);
+  }
+  .auth-card>*{position:relative;z-index:1}
+  .auth-mark{display:flex;align-items:center;gap:14px;margin-bottom:34px}
+  .auth-mark .eye-mark{width:34px;height:34px}
+  .auth-mark .w{font-family:var(--fontDisplay);text-transform:uppercase;font-size:12px;letter-spacing:.5em;font-weight:600;color:var(--ink)}
+  .auth-kicker{margin-bottom:14px}
+  .auth-card h1{
+    font-family:var(--fontDisplay);text-transform:uppercase;font-weight:300;
+    font-size:30px;line-height:1.04;letter-spacing:.06em;color:var(--ink);
+  }
+  .auth-card .sub{color:var(--muted);font-size:14px;line-height:1.6;margin-top:14px}
+  .auth-form{margin-top:32px;display:flex;flex-direction:column;gap:24px}
+  .auth-form .btn{width:100%;margin-top:6px}
+  .auth-err{
+    display:none;align-items:center;gap:10px;
+    font-family:var(--fontMono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ink);padding:12px 14px;border:1px solid var(--lineStrong);border-radius:2px;
+  }
+  .auth-err.on{display:flex}
+  .auth-err .d{width:6px;height:6px;border-radius:50%;background:#fff;flex:0 0 auto}
+  .auth-hint{
+    margin-top:26px;padding-top:20px;border-top:1px dashed var(--line);
+    font-family:var(--fontMono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);
+    display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  }
+  .auth-hint b{color:var(--muted);font-weight:500}
+  .auth-foot{margin-top:22px;text-align:center;font-family:var(--fontMono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+  .auth-foot a{color:var(--muted)}
+  .auth-foot a:hover{color:#fff}
+  .reveal-on{animation:authIn .8s var(--ease) both}
+  @keyframes authIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+</style>
+<script src="theme.js"></script>
+</head>
+<body>
+
+<section class="auth">
+  <div class="auth-card">
+    <div class="auth-mark">
+      <span class="eye-mark"></span>
+      <span class="w">Perceptivity</span>
+    </div>
+
+    <span class="kicker auth-kicker">Operator console</span>
+    <h1>Sign in to the<br>answer layer</h1>
+    <p class="sub">Access the VinFast perception workspace — audience, knowledge graph, content orchestration and measurement.</p>
+
+    <div class="auth-err" id="authErr"><span class="d"></span><span id="authErrMsg">Invalid credentials. Try again.</span></div>
+
+    <form class="auth-form" id="loginForm" novalidate>
+      <div class="field">
+        <label for="user">Username</label>
+        <input class="input" id="user" type="text" autocomplete="username" placeholder="admin" autocapitalize="off" spellcheck="false" />
+      </div>
+      <div class="field">
+        <label for="pass">Password</label>
+        <input class="input" id="pass" type="password" autocomplete="current-password" placeholder="••••••" />
+      </div>
+      <button class="btn primary btn-lg" type="submit">Enter workspace <span class="arrow">→</span></button>
+    </form>
+
+    <div class="auth-hint">
+      <span>Demo access</span>
+      <span><b>admin</b> &nbsp;/&nbsp; <b>admin</b></span>
+    </div>
+    <div class="auth-foot">Secured workspace · <a href="index.html">Back to site</a></div>
+  </div>
+</section>
+
+<script src="demo-data.js"></script>
+<script src="chrome.js"></script>
+<script>
+  (function(){
+    const form = document.getElementById('loginForm');
+    const user = document.getElementById('user');
+    const pass = document.getElementById('pass');
+    const err  = document.getElementById('authErr');
+    const errMsg = document.getElementById('authErrMsg');
+
+    function fail(msg){
+      errMsg.textContent = msg;
+      err.classList.add('on');
+      [user,pass].forEach(f=>{ f.style.borderBottomColor = 'rgba(255,255,255,.8)'; });
+    }
+    [user,pass].forEach(f=>f.addEventListener('input',()=>{ f.style.borderBottomColor=''; err.classList.remove('on'); }));
+
+    form.addEventListener('submit', e=>{
+      e.preventDefault();
+      const u = user.value.trim().toLowerCase();
+      const p = pass.value;
+      if (u === 'admin' && p === 'admin'){
+        // grant session + seed VinFast as the active brand
+        try {
+          PCV.set({ auth:true, operator:'admin', brand:'VinFast', category:'auto', brandComplete:true,
+                    markets:['India','Metros'] });
+          sessionStorage.setItem('pcv_auth','1');
+        } catch(_){}
+        const btn = form.querySelector('button');
+        btn.textContent = 'Authenticated ✓';
+        btn.classList.remove('primary');
+        btn.style.borderColor = 'rgba(255,255,255,.6)';
+        setTimeout(()=>{ location.href = 'workflow.html'; }, 480);
+      } else {
+        fail(u || p ? 'Invalid credentials. Use admin / admin.' : 'Enter your username and password.');
+      }
+    });
+
+    // prefill convenience for the demo
+    user.value = 'admin';
+    setTimeout(()=>pass.focus(), 300);
+  })();
+</script>
+</body>
+</html>

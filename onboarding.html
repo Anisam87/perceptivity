@@ -344,6 +344,7 @@
 
 <script src="demo-data.js"></script>
 <script src="chrome.js"></script>
+<script src="lead.js"></script>
 <script>
   // ---- read category from URL or storage ----
   const params = new URLSearchParams(location.search);
@@ -398,6 +399,18 @@
       const markets = [...document.querySelectorAll('#markets .chip.on')].map(c => c.dataset.m);
       const questions = [...document.querySelectorAll('#qpicker .qoption.on')].map(q => q.dataset.q);
       PCV.set({ markets, questions, brandComplete: true });
+      // onboarding complete — email the full lead to aniket@tryperceptivity.com
+      const L = PCV.get();
+      PerceptivityLead.send({
+        Name: L.name,
+        Email: L.email,
+        Role: L.role,
+        Brand: L.brand,
+        Category: L.category,
+        Competitors: L.competitors,
+        Markets: markets,
+        Questions: questions
+      }, { subject: 'New onboarding lead — ' + (L.brand || L.email || 'Perceptivity') });
     }
     setStep(Math.min(STEPS.length, step + 1));
   }));

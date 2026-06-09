@@ -33,6 +33,7 @@
           ${link('demo.html','Contact')}
         </div>
         <div class="nav-actions">
+          <a class="nav-link" href="login.html">Sign in</a>
           <a class="btn ghost" href="onboarding.html">Enter</a>
           <span class="orb-small" aria-hidden="true"></span>
         </div>
@@ -48,6 +49,7 @@
         <a href="index.html#how">How it works</a>
         <a href="company.html">Company</a>
         <a href="demo.html">Contact</a>
+        <a href="login.html">Sign in</a>
       </div>
       <div>Black / White / Dots</div>
     </footer>`;

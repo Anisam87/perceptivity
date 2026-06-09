@@ -156,6 +156,7 @@
 </section>
 
 <script src="chrome.js"></script>
+<script src="lead.js"></script>
 <script>
   document.getElementById('bookForm').addEventListener('submit', function(e){
     e.preventDefault();
@@ -165,6 +166,14 @@
     if(!email.value.includes('@')){ email.style.borderBottomColor='#fff'; ok=false; }
     if(!ok) return;
     const name=fn.value.trim().split(' ')[0];
+    // email this lead to aniket@tryperceptivity.com
+    PerceptivityLead.send({
+      Name: fn.value.trim(),
+      Email: email.value.trim(),
+      Company: company.value.trim(),
+      Role: document.getElementById('role').value,
+      Category: document.getElementById('cat').value
+    }, { subject: 'New demo request — ' + company.value.trim() });
     document.getElementById('demoForm').classList.add('submitted');
     document.getElementById('successMsg').textContent =
       `Thanks, ${name} — we'll scan ${company.value.trim()}'s category and reply within one business day.`;

@@ -105,9 +105,18 @@
   .hero .kicker{margin-bottom:30px}
   .hero.lit .kicker{animation:fade 1.4s var(--ease) .2s both}
 
-  .hero-copy{align-self:end;max-width:420px;margin-left:auto;padding-bottom:11vh}
+  .hero-copy{position:relative;align-self:end;max-width:420px;margin-left:auto;padding-bottom:11vh}
+  /* soft, edge-fading scrim lifts the copy off the dot field without looking like a card */
+  .hero-copy::before{
+    content:"";position:absolute;z-index:-1;inset:-30px -40px -34px -44px;
+    background:radial-gradient(118% 96% at 72% 46%, rgba(0,0,0,.92) 0%, rgba(0,0,0,.8) 42%, rgba(0,0,0,0) 80%);
+    -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);
+    -webkit-mask:radial-gradient(118% 96% at 72% 46%, #000 46%, transparent 82%);
+    mask:radial-gradient(118% 96% at 72% 46%, #000 46%, transparent 82%);
+    pointer-events:none;
+  }
   .hero.lit .hero-copy{animation:fade 1.6s var(--ease) .8s both}
-  .hero-copy p{font-size:18px;line-height:1.72;margin-bottom:30px;text-wrap:pretty}
+  .hero-copy p{font-size:18px;line-height:1.72;margin-bottom:30px;text-wrap:pretty;color:rgba(255,255,255,.9);text-shadow:0 1px 16px rgba(0,0,0,.6)}
   .hero-copy p .stat{color:#fff;font-weight:500}
   .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
   @keyframes fade{from{opacity:0;transform:translateY(22px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
@@ -893,6 +902,7 @@
 
 <script src="demo-data.js"></script>
 <script src="chrome.js"></script>
+<script src="lead.js"></script>
 <script>
   /* ---- scroll engine: additive parallax + scrubbed text + visual drift ---- */
   (function(){
@@ -1121,6 +1131,8 @@
       e.preventDefault();
       const v = (email.value || '').trim();
       if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){ email.focus(); return; }
+      PerceptivityLead.send({ Email: v, List: 'Machine Readable — weekly brief' },
+                            { subject: 'New brief subscriber — ' + v });
       document.querySelector('.brief').classList.add('sent');
     });
   })();
