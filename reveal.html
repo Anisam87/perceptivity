@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Perceptivity — see what AI says about you</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+Devanagari:wght@400;500&family=Noto+Sans+Tamil:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="perceptivity.css">
+<style>
+  body.reveal-body{cursor:none;min-height:100vh;display:flex;flex-direction:column}
+
+  /* top control bar */
+  .rtop{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:18px;
+    padding:16px clamp(18px,4vw,40px);background:linear-gradient(to bottom,rgba(0,0,0,.9),transparent);}
+  .rtop .brand{display:flex;align-items:center;gap:12px}
+  .rtop .eye-mark{width:26px;height:26px}
+  .rtop .bw{font-family:var(--fontDisplay);font-size:11px;letter-spacing:.42em;text-transform:uppercase;font-weight:600}
+  .frame-toggle{display:flex;gap:0;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+  .frame-toggle button{padding:9px 16px;font-family:var(--fontMono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);transition:.3s}
+  .frame-toggle button.on{background:#fff;color:#000}
+  .rtop .skip{font-family:var(--fontMono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:9px 15px;transition:.3s}
+  .rtop .skip:hover{color:#fff;border-color:#fff}
+
+  /* stage that holds the device */
+  .stage{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:92px clamp(16px,4vw,40px) 60px;position:relative}
+  .singularity-bg{position:fixed;left:50%;top:42%;transform:translate(-50%,-50%);width:min(70vw,720px);aspect-ratio:1;border-radius:50%;z-index:-1;pointer-events:none}
+  .singularity-bg::before{content:"";position:absolute;inset:-12%;border-radius:50%;
+    background:radial-gradient(circle, rgba(255,255,255,.9) 0 1px, transparent 1.3px);background-size:6px 6px;
+    -webkit-mask-image:radial-gradient(circle, transparent 0 40%, #000 43% 56%, transparent 62%);
+    mask-image:radial-gradient(circle, transparent 0 40%, #000 43% 56%, transparent 62%);
+    animation:halo-spin 40s linear infinite;opacity:.55}
+
+  /* the device */
+  .device{width:100%;max-width:1080px}
+  .device.mobile{max-width:404px}
+  .dev-chrome{display:none}
+  /* mobile bezel */
+  .device.mobile .dev-bezel{border:1px solid var(--lineStrong);border-radius:42px;padding:12px;position:relative;background:#000}
+  .device.mobile .dev-notch{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:120px;height:26px;background:#000;border-radius:0 0 16px 16px;border:1px solid var(--line);border-top:none;z-index:3}
+  .device.mobile .dev-screen{border-radius:32px;overflow:hidden;border:1px solid var(--line);min-height:760px}
+  /* desktop chrome */
+  .device.desktop .dev-bezel{border:1px solid var(--lineStrong);border-radius:6px;overflow:hidden}
+  .device.desktop .dev-chrome{display:flex;align-items:center;gap:14px;padding:13px 18px;border-bottom:1px solid var(--line)}
+  .device.desktop .dev-dots{display:flex;gap:7px}
+  .device.desktop .dev-dots i{width:9px;height:9px;border-radius:50%;border:1px solid var(--lineStrong)}
+  .device.desktop .dev-url{flex:1;font-family:var(--fontMono);font-size:10px;letter-spacing:.1em;color:var(--faint);text-align:center}
+  .device.desktop .dev-notch{display:none}
+  .device.desktop .dev-screen{min-height:auto}
+
+  /* screen content */
+  .scr{padding:clamp(26px,4vw,52px) clamp(22px,4vw,56px) clamp(34px,5vw,64px);position:relative}
+  .device.desktop .scr{display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(30px,4vw,64px);align-items:start}
+  .device.desktop .ask-side{position:sticky;top:30px}
+
+  /* ===== A · ASK ===== */
+  .eyebrow{font-family:var(--fontMono);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);display:inline-flex;align-items:center;gap:11px;margin-bottom:22px}
+  .eyebrow::before{content:"";width:5px;height:5px;border-radius:50%;background:#fff;box-shadow:0 0 12px #fff}
+  .ask-h{font-family:var(--fontDisplay);font-weight:300;text-transform:uppercase;font-size:clamp(28px,4.6vw,46px);line-height:1.0;letter-spacing:.05em;text-wrap:balance}
+  .ask-sub{color:var(--muted);font-size:15px;line-height:1.7;margin-top:18px;max-width:42ch}
+  .ask-box{margin-top:28px;border:1px solid var(--lineStrong);border-radius:2px;overflow:hidden}
+  .ask-q{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid var(--line)}
+  .ask-q .qd{width:6px;height:6px;border-radius:50%;background:#fff;flex:0 0 auto;box-shadow:0 0 10px #fff}
+  .ask-q input{flex:1;background:transparent;border:none;color:var(--ink);font-size:15px;letter-spacing:.01em}
+  .ask-q input::placeholder{color:var(--faint)}
+  .ask-meta{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 18px;font-family:var(--fontMono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+  .ask-cta{width:100%;height:54px;background:#fff;color:#000;font-family:var(--fontMono);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:12px;transition:.3s}
+  .ask-cta:hover{opacity:.85}
+  .ask-cta .arrow{transition:transform .4s var(--ease)}
+  .ask-cta:hover .arrow{transform:translateX(5px)}
+  .ask-langtog{display:inline-flex;gap:0;border:1px solid var(--line);border-radius:999px;overflow:hidden;margin-top:18px}
+  .ask-langtog button{padding:7px 13px;font-family:var(--fontMono);font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);transition:.3s}
+  .ask-langtog button.on{background:rgba(255,255,255,.1);color:#fff}
+
+  /* ===== B · REVEAL ===== */
+  .reveal-side{min-height:1px}
+  .reveal-wrap{display:none}
+  .reveal-wrap.on{display:block}
+  .device.mobile .reveal-wrap{margin-top:34px}
+  .rv-lead{font-family:var(--fontMono);font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+  .rv-lead .scanline{flex:1;height:1px;background:linear-gradient(90deg,rgba(255,255,255,.4),transparent)}
+
+  .ans-card{border:1px solid var(--line);border-radius:2px;padding:18px 20px;margin-bottom:12px;position:relative;transform:translateY(14px);transition:transform .6s var(--ease)}
+  .ans-card.in{transform:none}
+  .ans-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px}
+  .ans-engine{font-family:var(--fontMono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);display:flex;align-items:center;gap:9px}
+  .ans-engine .ed{width:6px;height:6px;border-radius:50%;background:#fff;flex:0 0 auto}
+  .ans-flags{display:flex;gap:6px;flex-wrap:wrap}
+  .ans-flag{font-family:var(--fontMono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:4px 9px}
+  .ans-text{font-size:15px;line-height:1.62;color:rgba(255,255,255,.78)}
+  .ans-text b{color:#fff;font-weight:500;border-bottom:1px solid rgba(255,255,255,.4)}
+  .ans-text.indic{font-family:'Noto Sans Devanagari','Inter',sans-serif}
+  .ans-gloss{font-size:12.5px;line-height:1.55;color:var(--faint);margin-top:11px;padding-top:11px;border-top:1px dashed var(--line)}
+  .tamil{font-family:'Noto Sans Tamil','Inter',sans-serif}
+
+  .verdict{margin-top:22px;border-left:1px solid var(--lineStrong);padding:4px 0 4px 20px;font-family:var(--fontDisplay);font-weight:300;text-transform:uppercase;font-size:clamp(17px,2.2vw,23px);line-height:1.32;letter-spacing:.03em;color:rgba(255,255,255,.5);text-wrap:balance;transform:translateY(10px);transition:transform .8s var(--ease)}
+  .verdict.in{transform:none}
+  .verdict em{font-style:normal;color:#fff}
+
+  /* ===== C · CAPTURE ===== */
+  .capture{margin-top:30px;border:1px solid var(--line);border-radius:2px;padding:24px;transform:translateY(12px);transition:transform .6s var(--ease)}
+  .capture.in{transform:none}
+  .cap-h{font-family:var(--fontDisplay);font-weight:300;text-transform:uppercase;font-size:21px;letter-spacing:.04em;line-height:1.1}
+  .cap-sub{color:var(--muted);font-size:13.5px;line-height:1.6;margin-top:10px}
+  .cap-field{margin-top:20px}
+  .cap-field label{display:block;font-family:var(--fontMono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+  .cap-field input{width:100%;background:transparent;border:none;border-bottom:1px solid var(--line);padding:10px 2px;color:var(--ink);font-size:15px;transition:border-color .3s}
+  .cap-field input:focus{border-bottom-color:#fff}
+  .rivals{display:flex;flex-wrap:wrap;gap:9px;margin-top:6px}
+  .rival{font-family:var(--fontMono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:9px 14px;transition:.3s}
+  .rival.on{background:#fff;color:#000;border-color:#fff}
+  .cap-cta{width:100%;height:50px;background:#fff;color:#000;font-family:var(--fontMono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:24px;transition:.3s}
+  .cap-cta:hover{opacity:.85}
+  .cap-fine{font-family:var(--fontMono);font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);text-align:center;margin-top:14px;line-height:1.8}
+
+  .cap-done{display:none;flex-direction:column;align-items:center;text-align:center;gap:16px;padding:14px 4px}
+  .cap-done.on{display:flex}
+  .cap-done .ok{width:52px;height:52px;border-radius:50%;border:1px solid #fff;display:grid;place-items:center}
+  .cap-done h3{font-family:var(--fontDisplay);font-weight:300;text-transform:uppercase;font-size:22px;letter-spacing:.04em}
+  .cap-done p{color:var(--muted);font-size:13.5px;line-height:1.65;max-width:38ch}
+  .capture.sent .cap-body{display:none}
+
+  @media (max-width:520px){
+    .rtop .skip{display:none}
+    .ask-h{font-size:clamp(26px,8vw,34px)}
+  }
+</style>
+</head>
+<body class="reveal-body">
+
+<div class="rtop">
+  <a class="brand" href="index.html"><span class="eye-mark"></span><span class="bw">Perceptivity</span></a>
+  <div class="frame-toggle" id="frameToggle">
+    <button data-f="mobile" class="on">Mobile</button>
+    <button data-f="desktop">Desktop</button>
+  </div>
+  <a class="skip" href="product.html">Open workspace →</a>
+</div>
+
+<div class="singularity-bg"></div>
+
+<div class="stage">
+  <div class="device mobile" id="device">
+    <div class="dev-bezel">
+      <div class="dev-notch"></div>
+      <div class="dev-chrome"><div class="dev-dots"><i></i><i></i><i></i></div><div class="dev-url">perceptivity.ai</div></div>
+      <div class="dev-screen">
+        <div class="scr">
+
+          <!-- A · ASK -->
+          <div class="ask-side">
+            <span class="eyebrow">See what AI tells your buyers</span>
+            <h1 class="ask-h">Type your brand. Read the answer your buyers get.</h1>
+            <p class="ask-sub">Most of your category now starts with an AI assistant — not a search bar. It reads the segment and names one brand. Here's what it says.</p>
+
+            <div class="ask-box">
+              <div class="ask-q"><span class="qd"></span><input id="brandInput" value="VinFast" aria-label="Your brand"></div>
+              <div class="ask-q" style="border-bottom:none"><span class="qd" style="opacity:.4"></span><input id="queryInput" value="Best electric SUV under ₹25 lakh in India?" aria-label="Buyer question"></div>
+            </div>
+            <div class="ask-langtog" id="langTog">
+              <button data-l="en" class="on">English</button>
+              <button data-l="hi">Hinglish</button>
+            </div>
+            <div class="ask-meta"><span>India · Metros + Tier-1</span><span>7 answer engines</span></div>
+            <button class="ask-cta" id="askCta">Show me the answer <span class="arrow">→</span></button>
+          </div>
+
+          <!-- B · REVEAL  +  C · CAPTURE -->
+          <div class="reveal-side">
+            <div class="reveal-wrap" id="revealWrap">
+              <div class="rv-lead">The same question · every engine <span class="scanline"></span></div>
+              <div id="ansList"></div>
+              <p class="verdict" id="verdict"></p>
+
+              <div class="capture" id="capture">
+                <div class="cap-body">
+                  <div class="cap-h">See your full picture</div>
+                  <p class="cap-sub">We'll scan your category across all seven engines and show you exactly where the answer goes wrong — and what moves it.</p>
+                  <div class="cap-field"><label>Work email</label><input id="emailInput" type="email" placeholder="you@brand.com"></div>
+                  <div class="cap-field"><label>Your three biggest rivals</label>
+                    <div class="rivals" id="rivals"></div>
+                  </div>
+                  <button class="cap-cta" id="capCta">Scan my category <span class="arrow">→</span></button>
+                  <p class="cap-fine">No card · illustrative reveal · first scan in minutes</p>
+                </div>
+                <div class="cap-done" id="capDone">
+                  <div class="ok"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9.5l4 4 8-9" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  <h3>Your scan is queued</h3>
+                  <p>We're reading your category across seven engines now. Step into the workspace to see the operating picture.</p>
+                  <a class="btn primary btn-lg" href="product.html">Open the workspace →</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="app-data.js"></script>
+<script>
+(function(){
+  const A = window.APP;
+  const $ = s=>document.querySelector(s);
+
+  /* custom cursor */
+  (function(){
+    if (matchMedia('(hover:none)').matches){ document.body.style.cursor='auto'; return; }
+    const dot=document.createElement('div'); dot.className='cursor-dot';
+    const ring=document.createElement('div'); ring.className='cursor-ring';
+    document.body.append(dot,ring);
+    let mx=innerWidth/2,my=innerHeight/2,rx=mx,ry=my,shown=false;
+    addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.transform=`translate(${mx}px,${my}px) translate(-50%,-50%)`;if(!shown){shown=true;dot.style.opacity=ring.style.opacity=1;}},{passive:true});
+    (function f(){rx+=(mx-rx)*.16;ry+=(my-ry)*.16;ring.style.transform=`translate(${rx}px,${ry}px) translate(-50%,-50%)`;requestAnimationFrame(f);})();
+    const hot='a,button,input,.rival';
+    addEventListener('mouseover',e=>{if(e.target.closest(hot))ring.classList.add('hot');});
+    addEventListener('mouseout',e=>{if(e.target.closest(hot))ring.classList.remove('hot');});
+  })();
+
+  /* framing toggle */
+  const device=$('#device');
+  $('#frameToggle').addEventListener('click',e=>{
+    const b=e.target.closest('button'); if(!b) return;
+    document.querySelectorAll('#frameToggle button').forEach(x=>x.classList.toggle('on',x===b));
+    device.classList.toggle('mobile', b.dataset.f==='mobile');
+    device.classList.toggle('desktop', b.dataset.f==='desktop');
+  });
+
+  /* language toggle (English / Hinglish query) */
+  let lang='en';
+  $('#langTog').addEventListener('click',e=>{
+    const b=e.target.closest('button'); if(!b) return;
+    document.querySelectorAll('#langTog button').forEach(x=>x.classList.toggle('on',x===b));
+    lang=b.dataset.l;
+    $('#queryInput').value = lang==='hi' ? A.aha.hinglishQuery : A.aha.query;
+  });
+
+  /* rivals chips */
+  const rivalOpts=['Tata Curvv EV','Mahindra BE 6','MG Windsor','Hyundai Creta EV','BYD Atto 3'];
+  const rivalsEl=$('#rivals'); const picked=new Set(['Tata Curvv EV','Mahindra BE 6','MG Windsor']);
+  function paintRivals(){
+    rivalsEl.innerHTML = rivalOpts.map(r=>`<button class="rival ${picked.has(r)?'on':''}" data-r="${r}">${r}</button>`).join('');
+    rivalsEl.querySelectorAll('.rival').forEach(b=>b.addEventListener('click',()=>{
+      const r=b.dataset.r;
+      if(picked.has(r)) picked.delete(r);
+      else { if(picked.size>=3){ const first=[...picked][0]; picked.delete(first);} picked.add(r); }
+      paintRivals();
+    }));
+  }
+  paintRivals();
+
+  /* the reveal */
+  let revealed=false;
+  $('#askCta').addEventListener('click',()=>{
+    if(revealed){ $('#capture').scrollIntoView?.({behavior:'smooth'}); return; }
+    revealed=true;
+    const wrap=$('#revealWrap'); wrap.classList.add('on');
+    const list=$('#ansList'); list.innerHTML='';
+    A.aha.answers.forEach((a,i)=>{
+      const flags=[];
+      if(a.omits) flags.push('omits you');
+      if(a.stale) flags.push('outdated');
+      if(a['false']) flags.push('false claim');
+      const card=document.createElement('div');
+      card.className='ans-card';
+      const indic = a.lang==='Tamil' ? 'tamil' : (a.lang==='Hinglish'?'':'');
+      card.innerHTML=`
+        <div class="ans-top">
+          <span class="ans-engine"><span class="ed"></span>${a.engine}${a.lang!=='en'?' · '+a.lang:''}</span>
+          <span class="ans-flags">${flags.map(f=>`<span class="ans-flag">${f}</span>`).join('')}</span>
+        </div>
+        <div class="ans-text ${indic}">${a.text}</div>
+        ${a.gloss?`<div class="ans-gloss">${a.gloss}</div>`:''}`;
+      list.appendChild(card);
+      setTimeout(()=>card.classList.add('in'), 180 + i*420);
+    });
+    const v=$('#verdict');
+    v.innerHTML = A.aha.verdict.replace('You never get a report. You just lose the deal.','<em>You never get a report. You just lose the deal.</em>');
+    setTimeout(()=>v.classList.add('in'), 180 + A.aha.answers.length*420 + 200);
+    setTimeout(()=>$('#capture').classList.add('in'), 180 + A.aha.answers.length*420 + 500);
+    $('#askCta').innerHTML='Jump to my scan <span class="arrow">↓</span>';
+  });
+
+  /* capture submit */
+  $('#capCta').addEventListener('click',()=>{
+    $('#capture').classList.add('sent');
+    $('#capDone').classList.add('on');
+  });
+})();
+</script>
+</body>
+</html>

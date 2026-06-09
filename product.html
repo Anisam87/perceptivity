@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Perceptivity — VinFast workspace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="perceptivity.css">
+<link rel="stylesheet" href="product.css">
+</head>
+<body class="app-body">
+
+<div class="app-shell">
+
+  <!-- ============ THE ONE NAV ============ -->
+  <nav class="rail">
+    <a class="rail-brand" href="index.html" aria-label="Perceptivity">
+      <span class="rail-mark"></span>
+      <span class="rail-word">Perceptivity</span>
+    </a>
+
+    <div class="rail-sect">The loop</div>
+    <button class="nav-item on" data-view="home"><span class="ni-step">01</span>Sense<span class="ni-dot live"></span></button>
+    <button class="nav-item" data-view="graph"><span class="ni-step">02</span>Map<span class="ni-dot live"></span></button>
+    <button class="nav-item" data-view="diagnose"><span class="ni-step">03</span>Diagnose<span class="ni-dot live"></span></button>
+    <button class="nav-item" data-view="prove"><span class="ni-step">05</span>Prove<span class="ni-dot live"></span></button>
+    <button class="nav-item" data-view="learn"><span class="ni-step">06</span>Learn<span class="ni-dot live"></span></button>
+
+    <div class="rail-sect">Shared</div>
+    <button class="nav-item" data-view="integrations"><span class="ni-step">·</span>Integrations</button>
+
+    <div class="rail-foot">
+      <div class="legend">
+        <span><i class="live"></i> Live today</span>
+        <span><i class="road"></i> Roadmap · human-gated</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============ MAIN ============ -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="tb-ctx">
+        <div class="tb-eye"></div>
+        <div>
+          <div class="tb-name">VinFast</div>
+          <div class="tb-cat">
+            <span>Automotive &amp; EV · India · Metros + Tier-1</span>
+            <span class="tb-mode">● Live workspace</span>
+          </div>
+        </div>
+      </div>
+      <div class="tb-right">
+        <button class="tb-board" data-view="home" type="button">
+          <div>
+            <div class="bn" id="tbBoard">47<small>/100</small></div>
+            <div class="bl">Share of Model</div>
+          </div>
+        </button>
+        <span class="tb-scan"><span class="dot"></span> Scanned 12m ago · 7 engines</span>
+      </div>
+    </div>
+
+    <!-- VIEWS (populated by product.js) -->
+    <section class="view on" data-view="home" id="view-home"></section>
+    <section class="view" data-view="graph" id="view-graph"></section>
+    <section class="view" data-view="diagnose" id="view-diagnose"></section>
+    <section class="view" data-view="prove" id="view-prove"></section>
+    <section class="view" data-view="learn" id="view-learn"></section>
+    <section class="view" data-view="integrations" id="view-integrations"></section>
+
+  </div>
+</div>
+
+<!-- ============ SHAPE MODE (launched from a gap) ============ -->
+<div class="shape" id="shape">
+  <div class="shape-bar">
+    <div class="shape-ctx">
+      <div class="tb-eye"></div>
+      <div>
+        <div class="lab">Shape · campaign engine · launched from a gap</div>
+        <div class="gt" id="shapeGap">—</div>
+      </div>
+    </div>
+    <button class="shape-close" id="shapeClose" type="button">Save &amp; close ✕</button>
+  </div>
+
+  <div class="srail" id="srail"></div>
+
+  <div class="shape-body" id="shapeBody"></div>
+</div>
+
+<!-- ============ RATIONALE DRAWER ============ -->
+<div class="why-scrim" id="whyScrim"></div>
+<aside class="why" id="why">
+  <div class="why-head">
+    <span class="why-k">Why this works · UX / conversion</span>
+    <button class="why-x" id="whyClose" type="button">Close ✕</button>
+  </div>
+  <h2 id="whyTitle">Rationale</h2>
+  <p id="whyBody"></p>
+</aside>
+
+<script src="app-data.js"></script>
+<script src="product.js"></script>
+</body>
+</html>
