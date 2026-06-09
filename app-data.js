@@ -296,6 +296,72 @@ window.APP = (function(){
   ];
 
   /* ============================================================
+     CREATIVE STUDIO — visual ads generated from brand imagery,
+     grounded to the gap. The "Create" stage of the loop.
+     ============================================================ */
+  const creative = {
+    brief:{
+      objective:"Make VinFast's India service + charging footprint unmissable — to buyers and to the models that answer them.",
+      mustSay:[
+        "Authorised service in 14 cities",
+        "Mobile service + 24×7 roadside assist",
+        "CCS2 + partner DC fast-charging",
+        "Outright purchase — no lease lock-in"
+      ],
+      kit:"VinFast red + chrome · VINFAST wordmark · confident, plain, no superlatives"
+    },
+    variants:[
+      { id:"cr_display", format:"Display", spec:"1200 × 900", channel:"Google Demand Gen",
+        img:"assets/ads/vf7-highway.png", lang:"en",
+        kicker:"VINFAST VF7",
+        headline:"Service in 14 cities.\nCharge anywhere.",
+        sub:"Authorised centres, mobile service and CCS2 fast-charging across India.",
+        cta:"Find your nearest centre",
+        onbrand:true, grounded:true, groundsNode:"service" },
+      { id:"cr_social", format:"Social", spec:"1 : 1", channel:"Meta Advantage+",
+        img:"assets/ads/vf6-city.png", lang:"Hinglish",
+        kicker:"VINFAST VF6",
+        headline:"Service ab 14\ncities mein.",
+        sub:"Ghar pe mobile service. Highway pe 24×7 roadside assist.",
+        cta:"Book a test drive",
+        onbrand:true, grounded:true, groundsNode:"service" },
+      { id:"cr_story", format:"Story", spec:"9 : 16", channel:"Shorts / Reels",
+        img:"assets/ads/vf7-highway.png", lang:"en",
+        kicker:"OWN THE ROAD",
+        headline:"14 cities.\nZero range anxiety.",
+        sub:"VF7 · CCS2 fast-charge · 5-min roadside SLA",
+        cta:"Explore the VF7",
+        onbrand:false, grounded:true, groundsNode:"service",
+        flag:"\u201CZero range anxiety\u201D is not in the approved claims library — revise or route to legal." }
+    ]
+  };
+
+  /* ============================================================
+     PUBLISH — channel push for approved creative
+     ============================================================ */
+  const channels = [
+    { id:"owned",  name:"Owned page + FAQ schema", kind:"Owned · grounds the model", reach:"models read it",
+      budget:"—", creative:"cr_display", live:true, must:true,
+      note:"The grounding move. Publishes structured service facts the engines parse on the next scan." },
+    { id:"google", name:"Google Demand Gen", kind:"Paid · in-market EV", reach:"3.1M", budget:"\u20B98.0L",
+      creative:"cr_display", live:false,
+      note:"In-market auto + EV-intent audiences, Metros + Tier-1." },
+    { id:"meta",   name:"Meta Advantage+", kind:"Paid social", reach:"2.4M", budget:"\u20B96.5L",
+      creative:"cr_social", live:false,
+      note:"Hinglish creative to first-EV switchers and tech-forward enthusiasts." },
+    { id:"earned", name:"Auto-press explainer", kind:"Earned · vetted partner", reach:"1.2M", budget:"\u20B93.0L",
+      creative:null, live:false, queued:true,
+      note:"Ownership + service explainer placed with a publication the models cite." }
+  ];
+
+  /* per-channel measured delivery (Measure stage inside Shape) */
+  const channelResult = [
+    { id:"owned",  name:"Owned page + schema", metric:"Re-grounded service node", value:"22% → 71%", sub:"engines describing coverage" },
+    { id:"google", name:"Google Demand Gen", metric:"Centre-finder sessions", value:"18,400", sub:"\u20B943 cost / session" },
+    { id:"meta",   name:"Meta Advantage+", metric:"Test-drive bookings", value:"612", sub:"\u20B91,062 cost / booking" }
+  ];
+
+  /* ============================================================
      A–C · INSTANT-AHA — one real-feeling answer, then the reveal
      ============================================================ */
   const aha = {
@@ -332,6 +398,6 @@ window.APP = (function(){
   return {
     ENGINES, board, tiles, topics, heatmap, answerShare, claims,
     graph, gaps, audience, drafts, experiment, measure, record, campaigns,
-    integrations, aha, rationale
+    integrations, creative, channels, channelResult, aha, rationale
   };
 })();

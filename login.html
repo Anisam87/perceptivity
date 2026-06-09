@@ -64,7 +64,7 @@
 
     <span class="kicker auth-kicker">Operator console</span>
     <h1>Sign in to the<br>answer layer</h1>
-    <p class="sub">Access the VinFast perception workspace — audience, knowledge graph, content orchestration and measurement.</p>
+    <p class="sub">Access the VinFast perception workspace — the brand graph, diagnosis, the Shape engine, and proof.</p>
 
     <div class="auth-err" id="authErr"><span class="d"></span><span id="authErrMsg">Invalid credentials. Try again.</span></div>
 
@@ -120,7 +120,7 @@
         btn.textContent = 'Authenticated ✓';
         btn.classList.remove('primary');
         btn.style.borderColor = 'rgba(255,255,255,.6)';
-        setTimeout(()=>{ location.href = 'workflow.html'; }, 480);
+        setTimeout(()=>{ location.href = 'product.html'; }, 480);
       } else {
         fail(u || p ? 'Invalid credentials. Use admin / admin.' : 'Enter your username and password.');
       }

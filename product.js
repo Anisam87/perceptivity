@@ -259,10 +259,79 @@ RENDER.diagnose=function(){
 };
 
 /* ============================================================
-   G–H · SHAPE MODE — gap → audience → brief → review gate → live
+   SHAPE (nav home) — the campaign engine: hosts the loop
    ============================================================ */
-const STAGES=['Gap','Audience','Brief','Review','Live'];
-let curGap=null, curStage=0, gateState={};
+const LOOP=['Listen','Create','Review','Publish','Measure'];
+const LOOP_DESC=['what AI says','grounded ads','human gate','channels','lift'];
+RENDER.shape=function(){
+  const spine=LOOP.map((s,i)=>`<div class="loopnode"><span class="dotc"></span><span class="ld">${s}</span><span class="ll">${LOOP_DESC[i]}</span></div>`).join('');
+  const stageMap={ c_service:4, c_resale:2, c_price:0 };
+  const camps=A.campaigns.map(c=>{
+    const si=stageMap[c.id]!=null?stageMap[c.id]:0;
+    const prog=LOOP.map((s,i)=>`<span class="cl-node ${i<=si?'on':''}"></span>`).join('');
+    return `<button class="camp" data-open="${c.gap}" data-stage="${si}">
+      <span class="cs"><span class="dot"></span>${c.stage}</span>
+      <span class="ct">${c.title}</span>
+      <div class="camp-loop">${prog}</div>
+      <span class="cl">${c.lift} · at ${LOOP[si]}</span>
+    </button>`;
+  }).join('');
+  const gaps=A.gaps.map(g=>`<div class="gap-row">
+    <div class="gr-main"><div class="gr-t">${g.title}</div><div class="gr-m">Node <b>${g.node}</b> · +${g.lift}pp forecast · ${g.conf} confidence · ${g.queryShare} of queries</div></div>
+    <button class="btn-sm primary" data-open="${g.id}" data-stage="0">Shape this gap →</button></div>`).join('');
+
+  $('#view-shape').innerHTML =
+    vhead('Shape · the campaign engine','Shape', 'The execution loop, always launched from a diagnosed gap — never a parallel site. Listen to what AI says, create grounded creative, gate it, publish, and measure the lift. One re-enterable system.', 'shape',`<span class="pill live">Live</span>`)+
+    `<div class="mod" style="margin-bottom:22px">
+      <div class="mod-head"><div><span class="kicker">The loop</span><h3 style="margin-top:10px">Listen → Create → Review → Publish → Measure</h3></div>
+        <span class="pill road">Autonomous publishing · roadmap</span></div>
+      <div class="loopline">${spine}</div>
+      <div class="mod-foot">Every campaign runs this spine. The human review gate sits between Create and Publish — controlled quality, grounded to the graph.</div>
+    </div>
+
+    <div class="mod" style="margin-bottom:22px">
+      <div class="mod-head"><div><span class="kicker">In flight</span><h3 style="margin-top:10px">Active campaigns</h3></div><span class="mono">${A.campaigns.length} running · writes back to the dashboard</span></div>
+      <div class="camp-strip">${camps}</div>
+      <div class="mod-foot">Open any campaign to re-enter the loop at its current stage.</div>
+    </div>
+
+    <div class="mod">
+      <div class="mod-head"><div><span class="kicker">Start new · from a diagnosed gap</span><h3 style="margin-top:10px">Launch a campaign</h3></div><button class="why-btn" data-goto="diagnose">All gaps in Diagnose →</button></div>
+      <div class="gap-rows">${gaps}</div>
+    </div>`;
+
+  $$('#view-shape [data-open]').forEach(b=>b.addEventListener('click',()=>openShape(b.dataset.open, +b.dataset.stage||0)));
+  $$('#view-shape [data-goto]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.goto)));
+};
+
+
+/* ============================================================
+   G–H · SHAPE MODE — the execution loop
+   LISTEN → CREATE → REVIEW → PUBLISH → MEASURE
+   ============================================================ */
+const STAGES=['Listen','Create','Review','Publish','Measure'];
+let curGap=null, curStage=0, gateState={}, pubState={}, creativeEdits={}, published=false;
+
+const HEARD = {
+  service:[
+    { q:"VinFast service centre near me?", lang:"en" },
+    { q:"VinFast ka service network India mein kaisa hai?", lang:"Hinglish" },
+    { q:"Can I charge a VinFast on a Mumbai–Pune road trip?", lang:"en" },
+    { q:"VinFast roadside assistance milti hai kya?", lang:"Hinglish" }
+  ],
+  resale:[
+    { q:"VinFast resale value after 3 years in India?", lang:"en" },
+    { q:"VinFast lena safe hai ya resale problem hogi?", lang:"Hinglish" }
+  ],
+  price:[
+    { q:"VinFast VF7 on-road price in India 2026?", lang:"en" },
+    { q:"VF7 ki latest ex-showroom price kya hai?", lang:"Hinglish" }
+  ],
+  c_lease:[
+    { q:"Can I buy a VinFast outright in India or only lease?", lang:"en" }
+  ]
+};
+
 function buildSRail(){
   $('#srail').innerHTML = STAGES.map((s,i)=>`
     <button class="sstep ${i===curStage?'on':''} ${i<curStage?'done':''}" data-s="${i}">
@@ -273,20 +342,21 @@ function buildSRail(){
   $$('#srail .sstep').forEach(b=>b.addEventListener('click',()=>gotoStage(+b.dataset.s)));
 }
 function gotoStage(i){ curStage=i; buildSRail(); paintStage(); $('#shapeBody').scrollTo?.({top:0,behavior:'smooth'}); }
-function openShape(gapId){
+function openShape(gapId, startStage){
   curGap=A.gaps.find(g=>g.id===gapId)||A.gaps[0];
-  curStage=0; gateState={};
+  curStage=startStage||0; gateState={}; creativeEdits={}; published=false;
+  pubState={ owned:true, google:true, meta:true, earned:false };
   $('#shapeGap').textContent=curGap.title;
   buildSRail(); paintStage();
   $('#shape').classList.add('on'); document.body.style.overflow='hidden';
 }
 $('#shapeClose').addEventListener('click',()=>{ $('#shape').classList.remove('on'); document.body.style.overflow=''; });
 
-function navRow(){
+function navRow(extra){
   const prev = curStage>0 ? `<button class="btn-sm ghost" data-nav="prev">← ${STAGES[curStage-1]}</button>`:'<span></span>';
-  const next = curStage<STAGES.length-1 ? `<button class="btn-sm primary" data-nav="next">Continue · ${STAGES[curStage+1]} →</button>`:`<button class="btn-sm primary" data-nav="done">Back to dashboard →</button>`;
+  const next = curStage<STAGES.length-1 ? `<button class="btn-sm primary" data-nav="next">Continue · ${STAGES[curStage+1]} →</button>`:`<button class="btn-sm primary" data-nav="done">Open full attribution in Prove →</button>`;
   return `<div class="gate-actions" style="margin-top:30px;border-top:1px dashed var(--line);padding-top:22px">
-    <span class="gate-verdict">The loop is re-enterable — jump to any stage from the rail above.</span>
+    <span class="gate-verdict">${extra||'The loop is re-enterable — jump to any stage from the rail above.'}</span>
     <div class="gate-btns">${prev}${next}</div></div>`;
 }
 function wireNav(){
@@ -296,131 +366,243 @@ function wireNav(){
     else { $('#shape').classList.remove('on'); document.body.style.overflow=''; go('prove'); }
   }));
 }
-
 function paintStage(){
   const body=$('#shapeBody');
-  if(curStage===0) body.innerHTML=stageGap();
-  else if(curStage===1) body.innerHTML=stageAudience();
-  else if(curStage===2) body.innerHTML=stageBrief();
-  else if(curStage===3) body.innerHTML=stageReview();
-  else body.innerHTML=stageLive();
+  if(curStage===0) body.innerHTML=stageListen();
+  else if(curStage===1) body.innerHTML=stageCreate();
+  else if(curStage===2) body.innerHTML=stageReview();
+  else if(curStage===3) body.innerHTML=stagePublish();
+  else body.innerHTML=stageMeasure();
   postPaint();
   wireNav();
 }
 
-function ctxCards(){
-  return `<div class="ctx-cards">
-    <div class="ctx-card"><div class="k">Carried from diagnosis · gap node</div><div class="v"><b>${curGap.node}</b> · seen in ${curGap.engines.join(', ')}</div></div>
-    <div class="ctx-card"><div class="k">Carried from dashboard · audience</div><div class="v">${curGap.segment}</div></div>
-    <div class="ctx-card"><div class="k">Forecast · before spend</div><div class="v"><b>+${curGap.lift}pp</b> · ${curGap.conf} confidence</div></div>
-  </div>`;
+/* ---- shared creative helpers ---- */
+function adClass(v){ return v.format==='Display'?'display':(v.format==='Social'?'social':'story'); }
+function adImgSrc(v){ const I=window.ADIMG||{}; return (v.img||'').indexOf('vf6')>=0 ? I.vf6 : I.vf7; }
+function headlineOf(v){ return creativeEdits[v.id] != null ? creativeEdits[v.id] : v.headline; }
+function adInner(v, editable, withBody){
+  const body = (withBody===false) ? '' : `
+    <div class="ad-body">
+      <div class="ad-h"${editable?' contenteditable="true" spellcheck="false"':''} data-cr="${v.id}">${headlineOf(v)}</div>
+      <div class="ad-sub">${v.sub}</div>
+      <span class="ad-cta">${v.cta} →</span>
+    </div>`;
+  return `<div class="ad-img" style="background-image:url('${adImgSrc(v)}')"></div>
+    <div class="ad-scrim"></div>
+    <img class="ad-logo" src="${(window.ADIMG||{}).logo||''}" alt="VinFast">
+    <div class="ad-kick">${v.kicker}</div>${body}`;
 }
-function stageGap(){
-  return `<div class="shape-pane on">
-    <div class="spane-head"><div class="k">Stage 01 · the entry point is the gap</div>
-      <h2>${curGap.title}</h2>
-      <p>${curGap.detail}</p></div>
-    ${ctxCards()}
-    <div class="mod"><div class="mod-head"><div><span class="kicker">Why start here</span><h3 style="margin-top:10px">No blank page</h3></div></div>
-      <p style="color:var(--muted);font-size:14.5px;line-height:1.7;max-width:72ch">You did not start from "define an audience." You started from the highest-leverage perception gap, with the node, the audience and the forecast already loaded. Market = <b style="color:var(--ink)">${curGap.market}</b>. Buyers raise this in <b style="color:var(--ink)">${curGap.queryShare}</b> of VinFast queries.</p>
-    </div>
-    ${navRow()}
-  </div>`;
-}
-function stageAudience(){
+function variantById(id){ return A.creative.variants.find(v=>v.id===id); }
+
+/* ---- 01 LISTEN ---- */
+function stageListen(){
   const a=A.audience;
+  const heard=(HEARD[curGap.node]||HEARD.service).map(h=>`<div class="seg" style="padding:14px 16px">
+    <div class="seg-top"><div class="seg-name" style="font-family:var(--fontBody);font-weight:400;font-size:14.5px">"${h.q}"</div>
+    <span class="seg-meta" style="margin:0">${h.lang}</span></div></div>`).join('');
   const segs=a.segments.map((s,i)=>`<div class="seg ${s.on?'':'off'}" data-seg="${i}">
     <div class="seg-top"><div><div class="seg-name">${s.name}</div><div class="seg-meta">Reach ${s.reach} · fit ${s.fit}%</div></div>
       <button class="seg-tog">${s.on?'● Included':'Include'}</button></div>
     <div class="seg-note">${s.note}</div>
     <div class="seg-fit"><span class="fl">Segment fit</span><div class="bar" style="--w:${s.fit}%"></div><span class="fv">${s.fit}%</span></div>
   </div>`).join('');
-  const demo=a.demographics.map(d=>`<div class="ctx-card"><div class="k">${d.k}</div><div class="v">${d.v}</div></div>`).join('');
   return `<div class="shape-pane on">
-    <div class="spane-head"><div class="k">Stage 02 · audience carried in</div>
-      <h2>Target audience</h2>
-      <p>The persona model came in from the dashboard — you are tuning it, not defining it from scratch. Toggling a segment recomputes downstream reach and the held-out test design.</p></div>
-    <div class="ctx-cards" style="grid-template-columns:repeat(4,1fr)">${demo}</div>
-    <div class="mod"><div class="mod-head"><div><span class="kicker">Persona segments · India</span><h3 style="margin-top:10px">Who this campaign speaks to</h3></div><span class="mono" id="segReach">Reach · ${a.reach}</span></div>
-      <div class="seg-list">${segs}</div>
-      <div class="mod-foot">Segments modelled on Indian demographics + psychographics. Live capability.</div></div>
-    ${navRow()}
-  </div>`;
-}
-function stageBrief(){
-  return `<div class="shape-pane on">
-    <div class="spane-head"><div class="k">Stage 03 · the brief</div>
-      <h2>Campaign brief</h2>
-      <p>Generated from the gap and the graph node, editable by you. This brief drives every draft and is attached to the experiment and the system of record.</p></div>
-    <div class="brief-grid">
-      <div class="brief-field"><div class="bk">Objective</div><textarea rows="3">Close the ${curGap.node} gap: get ${curGap.engines.join(' & ')} and peers to describe VinFast's coverage accurately, grounded to our source of truth.</textarea></div>
-      <div class="brief-field"><div class="bk">Primary metric</div><div class="bv">Answer share on ${curGap.node} prompts</div>
-        <div class="bk" style="margin-top:16px">Forecast lift</div><div class="bv"><b style="font-family:var(--fontDisplay);font-size:20px">+${curGap.lift}pp</b> · ${curGap.conf} confidence</div></div>
-      <div class="brief-field"><div class="bk">Message · must stay on-brand</div><textarea rows="3">Confident, plain, no superlatives. Lead with verifiable coverage and access. Counter the "unproven / lease-only" framing with grounded facts, never spin.</textarea></div>
-      <div class="brief-field"><div class="bk">Tracks to draft</div><div class="bv">Owned page + schema · Earned placement · Generative creative <span class="pill road" style="margin-left:6px">Roadmap</span></div>
-        <div class="bk" style="margin-top:16px">Languages</div><div class="bv">English · Hindi · Tamil</div></div>
+    <div class="spane-head"><div class="k">Stage 01 · listen · the entry point is the gap</div>
+      <h2>${curGap.title}</h2>
+      <p>${curGap.detail} You did not start from a blank brief — the gap node, the audience and the forecast are carried in from the dashboard.</p></div>
+    <div class="ctx-cards">
+      <div class="ctx-card"><div class="k">Gap node · from the graph</div><div class="v"><b>${curGap.node}</b> · seen in ${curGap.engines.join(', ')}</div></div>
+      <div class="ctx-card"><div class="k">Audience · from the dashboard</div><div class="v">${curGap.segment}</div></div>
+      <div class="ctx-card"><div class="k">Forecast · before spend</div><div class="v"><b>+${curGap.lift}pp</b> · ${curGap.conf} confidence</div></div>
+    </div>
+    <div class="grid-2" style="margin-top:0">
+      <div class="mod"><div class="mod-head"><div><span class="kicker">What we heard</span><h3 style="margin-top:10px">Buyer questions feeding this gap</h3></div><span class="mono">${curGap.queryShare} of queries</span></div>
+        <div class="seg-list">${heard}</div>
+        <div class="mod-foot">Real buyer prompts across the seven engines — in the languages your market actually uses.</div></div>
+      <div class="mod"><div class="mod-head"><div><span class="kicker">Persona · carried in</span><h3 style="margin-top:10px">Who we speak to</h3></div><span class="mono">Reach ${a.reach}</span></div>
+        <div class="seg-list">${segs}</div>
+        <div class="mod-foot">Tune segments here — reach and the held-out test recompute downstream.</div></div>
     </div>
     ${navRow()}
   </div>`;
 }
+
+/* ---- 02 CREATE (the studio) ---- */
+function stageCreate(){
+  const c=A.creative;
+  const facts=c.brief.mustSay.map(f=>`<div class="sb-fact"><span class="gi">${CHECK}</span>${f}</div>`).join('');
+  const variants=c.variants.map(v=>{
+    const flagged=!!v.flag;
+    return `<div class="crc ${flagged?'flagged':''}">
+      <div class="crc-top"><span class="crc-fmt">${v.format} <span>· ${v.spec}</span></span><span class="crc-chan">${v.channel}</span></div>
+      <div class="ad ${adClass(v)}">${adInner(v, true, true)}</div>
+      <div class="crc-foot">
+        <span class="crc-chk ${v.onbrand?'ok':'no'}"><span class="d">${v.onbrand?CHECK:CROSS}</span>On-brand</span>
+        <span class="crc-chk ${v.grounded?'ok':'no'}"><span class="d">${v.grounded?CHECK:CROSS}</span>Grounded</span>
+        <span class="crc-edit">${v.lang} · headline editable ↑</span>
+      </div>
+      ${flagged?`<div class="crc-flag">⚠ ${v.flag}</div>`:''}
+    </div>`;
+  }).join('');
+  return `<div class="shape-pane on">
+    <div class="spane-head"><div class="k">Stage 02 · create · the creative studio</div>
+      <h2>Generate the creative</h2>
+      <p>Visual ads built against the brand kit and grounded to the gap — VinFast imagery, approved facts, in-language. Edit any headline inline. Nothing publishes from here; every asset routes through the review gate next.</p></div>
+    <div class="studio">
+      <div class="studio-brief">
+        <div class="sb-k">Generated from · grounded brief</div>
+        <div class="sb-obj">${c.brief.objective}</div>
+        <div class="sb-div"></div>
+        <div class="sb-k">Must say · from approved facts</div>
+        <div class="sb-facts">${facts}</div>
+        <div class="sb-div"></div>
+        <div class="sb-k">Brand kit</div>
+        <div class="sb-kit">${c.brief.kit}</div>
+        <button class="regen" id="regenBtn"><span class="sp"></span> Regenerate variants</button>
+      </div>
+      <div class="studio-variants">${variants}</div>
+    </div>
+    ${navRow('Three variants generated · 1 flagged for a claim that isn\u2019t grounded.')}
+  </div>`;
+}
+
+/* ---- 03 REVIEW (gate on the creatives) ---- */
 function stageReview(){
-  const drafts=A.drafts.map((d,i)=>{
-    const st=gateState[d.id]||'pending';
-    const checks=d.checks.map(c=>`<div class="gcheck ${c.ok?'ok':'no'}"><span class="gi">${c.ok?CHECK:CROSS}</span><span class="gk">${c.k}</span><span class="gn">${c.note}</span></div>`).join('');
-    const allOk=d.checks.every(c=>c.ok);
+  const cards=A.creative.variants.map((v,i)=>{
+    const st=gateState[v.id]||'pending';
+    const checks=[
+      { k:'On-brand voice', ok:v.onbrand, note:v.onbrand?'Matches approved tone and palette of claims.':'Headline uses a claim outside the approved library.' },
+      { k:'Grounded to graph', ok:v.grounded, note:'Every stated fact traces to the synced service-coverage source.' },
+      { k:'Format & spec', ok:true, note:`${v.format} · ${v.spec} · ${v.channel}.` }
+    ];
+    const allOk=checks.every(x=>x.ok);
     let actions;
-    if(st==='approved') actions=`<span class="draft-status">${CHECK} Approved · live next scan</span>`;
-    else if(st==='rejected') actions=`<span class="draft-status" style="color:var(--muted)">Rejected · returned to draft</span>`;
+    if(st==='approved') actions=`<span class="draft-status">${CHECK} Approved for publish</span>`;
+    else if(st==='rejected') actions=`<span class="draft-status" style="color:var(--muted)">Rejected · back to studio</span>`;
     else actions=`<div class="gate-btns">
-      <button class="btn-sm ghost" data-reject="${d.id}">Reject</button>
-      <button class="btn-sm primary" data-approve="${d.id}" ${allOk?'':'data-warn="1"'}>${allOk?'Approve & publish':'Approve with flag'}</button></div>`;
-    const verdict = allOk?'All checks pass — grounded and on-brand.':'One check failed — human decision required.';
-    return `<div class="draftc ${i===0?'hero':''} ${st==='approved'?'approved':''} ${st==='rejected'?'rejected':''}" data-draft="${d.id}">
-      <div class="draft-head"><div><div class="dt">${d.title}</div><div class="dc">${d.track} · ${d.channel}</div></div>
-        <span class="pill ${d.live?'live':'road'}">${d.live?'Live track':'Roadmap'}</span></div>
+      <button class="btn-sm ghost" data-reject="${v.id}">Reject</button>
+      <button class="btn-sm primary" data-approve="${v.id}">${allOk?'Approve creative':'Approve with flag'}</button></div>`;
+    return `<div class="draftc ${i===0?'hero':''} ${st==='approved'?'approved':''} ${st==='rejected'?'rejected':''}">
+      <div class="draft-head" style="align-items:center;gap:20px">
+        <div style="width:128px;flex:0 0 auto"><div class="ad ${adClass(v)}">${adInner(v,false,false)}</div></div>
+        <div style="flex:1;min-width:0"><div class="dt">${headlineOf(v).replace(/\n/g,' ')}</div><div class="dc">${v.format} · ${v.channel}</div></div>
+        <span class="pill ${v.flag?'road':'live'}">${v.flag?'Needs a call':'Clean'}</span>
+      </div>
       <div class="draft-body">
-        <p class="dbody">${d.body}</p>
         <div class="gate">
           <div class="gate-lab">Brand-guideline + graph-grounding review gate</div>
-          <div class="gate-checks">${checks}</div>
-          <div class="gate-actions"><span class="gate-verdict"><b>${verdict}</b> Grounds node · <b>${d.groundsNode}</b></span>${actions}</div>
+          <div class="gate-checks">${checks.map(x=>`<div class="gcheck ${x.ok?'ok':'no'}"><span class="gi">${x.ok?CHECK:CROSS}</span><span class="gk">${x.k}</span><span class="gn">${x.note}</span></div>`).join('')}</div>
+          <div class="gate-actions"><span class="gate-verdict"><b>${allOk?'All checks pass.':'One check needs a human decision.'}</b> Grounds node · <b>${v.groundsNode}</b></span>${actions}</div>
         </div>
       </div>
     </div>`;
   }).join('');
+  const nApproved=A.creative.variants.filter(v=>gateState[v.id]==='approved').length;
   return `<div class="shape-pane on">
-    <div class="spane-head"><div class="k">Stage 04 · the hero · human-in-the-loop</div>
+    <div class="spane-head"><div class="k">Stage 03 · review · the hero · human-in-the-loop</div>
       <h2>Review gate</h2>
-      <p>Nothing ships lights-out. Every draft — owned, earned, or generative — is checked for on-brand voice and grounding-to-graph, then a human approves or rejects. This controlled-quality gate is the differentiation, not the content generation.</p></div>
-    <div class="draft-list">${drafts}</div>
-    ${navRow()}
+      <p>Nothing ships lights-out. Each creative is checked for on-brand voice and grounding-to-graph, then a human approves or rejects. This controlled-quality, grounded gate is the differentiation — not the generation.</p></div>
+    <div class="draft-list">${cards}</div>
+    ${navRow(nApproved?`${nApproved} creative${nApproved>1?'s':''} approved — ready to publish.`:'Approve at least one creative to publish.')}
   </div>`;
 }
-function stageLive(){
-  const approved=A.drafts.filter(d=>gateState[d.id]==='approved');
-  const list = approved.length? approved.map(d=>`<div class="ctx-card"><div class="k">Shipped · grounds ${d.groundsNode}</div><div class="v"><b>${d.title}</b></div></div>`).join('')
-    : `<div class="ctx-card"><div class="k">Nothing approved yet</div><div class="v">Go back to the review gate and approve at least one draft to ship it.</div></div>`;
+
+/* ---- 04 PUBLISH ---- */
+function stagePublish(){
+  const approvedIds=A.creative.variants.filter(v=>gateState[v.id]==='approved').map(v=>v.id);
+  if(!approvedIds.length){
+    return `<div class="shape-pane on">
+      <div class="spane-head"><div class="k">Stage 04 · publish</div><h2>Publish approved creative</h2></div>
+      <div class="mod"><p style="color:var(--muted);font-size:14.5px;line-height:1.7">No creative is approved yet. Step back to the review gate and approve at least one creative — only approved, grounded assets can be published.</p></div>
+      ${navRow()}
+    </div>`;
+  }
+  const chans=A.channels.map(ch=>{
+    const hasCreative = !ch.creative || approvedIds.includes(ch.creative);
+    const on = ch.must || (pubState[ch.id] && hasCreative);
+    const cv = ch.creative ? variantById(ch.creative) : null;
+    const thumb = cv ? `style="background-image:url('${adImgSrc(cv)}')"` : '';
+    let right;
+    if(ch.must) right=`<span class="pub-locked">Always on</span>`;
+    else if(!hasCreative) right=`<span class="pub-tog" style="opacity:.5">Creative not approved</span>`;
+    else right=`<button class="pub-tog" data-pub="${ch.id}">${on?(ch.queued?'● Scheduled':'● Selected'):(ch.queued?'Queue':'Add')}</button>`;
+    return `<div class="pubc ${on?'':'off'} ${ch.must?'must':''}">
+      <div class="pub-thumb ${cv?'':'none'}" ${thumb}></div>
+      <div class="pub-main">
+        <div class="pub-name">${ch.name}</div>
+        <div class="pub-kind">${ch.kind}</div>
+        <div class="pub-note">${ch.note}</div>
+        <div class="pub-meta">${ch.reach!=='—'?`<span>Reach · <b>${ch.reach}</b></span>`:''}${ch.budget!=='—'?`<span>Budget · <b>${ch.budget}</b></span>`:''}<span>Creative · <b>${cv?cv.format:'partner-produced'}</b></span></div>
+      </div>
+      <div class="pub-right">${right}</div>
+    </div>`;
+  }).join('');
+  const liveCount = A.channels.filter(ch=>ch.must || (pubState[ch.id] && (!ch.creative||approvedIds.includes(ch.creative)))).length;
+  const totalBudget = A.channels.filter(ch=>!ch.must && pubState[ch.id] && ch.budget!=='—').reduce((s,ch)=>s+parseFloat(ch.budget.replace(/[^\d.]/g,'')),0);
+  const summary = published
+    ? `<div class="pub-summary"><span class="ps-l">${CHECK} <b>Published to ${liveCount} channels</b> · owned page re-grounds the model on the next scan · paid live in minutes</span><button class="btn-sm primary" data-nav="next">See the lift · Measure →</button></div>`
+    : `<div class="pub-summary"><span class="ps-l">Publishing to <b>${liveCount} channels</b> · paid budget <b>₹${totalBudget.toFixed(1)}L</b> · the owned + schema push is the grounding move</span><button class="btn-sm primary" id="publishBtn">Publish to ${liveCount} channels →</button></div>`;
   return `<div class="shape-pane on">
-    <div class="spane-head"><div class="k">Stage 05 · live</div>
-      <h2>Shipped to the answer layer</h2>
-      <p>Approved work goes live and is re-scanned across all seven engines. The result writes back to the dashboard and into the system of record — and a held-out experiment is already defined to attribute the lift.</p></div>
-    <div class="ctx-cards" style="grid-template-columns:1fr 1fr">${list}</div>
-    <div class="mod" style="margin-top:6px"><div class="mod-head"><div><span class="kicker">Next · Prove</span><h3 style="margin-top:10px">Attribution is already designed</h3></div></div>
-      <p style="color:var(--muted);font-size:14.5px;line-height:1.7;max-width:72ch">Because the experiment was defined before the spend, lift will be measured against a held-out control — not asserted. Continue to Prove to see the test and, once a cycle completes, predicted vs actual with confidence bands.</p></div>
+    <div class="spane-head"><div class="k">Stage 04 · publish · controlled distribution</div>
+      <h2>Publish to channels</h2>
+      <p>Approved creative is pushed where it works — owned, paid and earned. The owned page + FAQ schema is the grounding move that changes what the models say; paid and earned amplify it to your segments.</p></div>
+    <div class="pub-list">${chans}</div>
+    ${summary}
     ${navRow()}
   </div>`;
 }
+
+/* ---- 05 MEASURE (closes the loop inside Shape) ---- */
+function stageMeasure(){
+  const m=A.measure;
+  const chres=A.channelResult.map(c=>`<div class="cr"><div class="crn">${c.name}</div><div class="crv">${c.value}</div><div class="crm">${c.metric} · ${c.sub}</div></div>`).join('');
+  return `<div class="shape-pane on">
+    <div class="spane-head"><div class="k">Stage 05 · measure · the loop closes</div>
+      <h2>What it moved</h2>
+      <p>Re-scanned across seven engines and measured against the held-out control defined before launch. Predicted vs actual, with honest uncertainty — then it writes back to the dashboard and the system of record.</p></div>
+    <div class="meas-top">
+      <div class="mod">
+        <div class="mod-head"><div><span class="kicker">${m.headline.metric}</span><h3 style="margin-top:10px">Predicted vs actual</h3></div></div>
+        <div class="pva-big">
+          <div class="blk pred"><div class="k">Predicted</div><div class="v">+${m.headline.predicted}<small>${m.headline.unit}</small></div></div>
+          <div class="blk"><div class="k">Actual</div><div class="v">+${m.headline.actual}<small>${m.headline.unit}</small></div></div>
+          <div class="blk"><div class="k">Net vs control</div><div class="v">+${(m.tvc.treatment-m.tvc.control).toFixed(1)}<small>${m.headline.unit}</small></div></div>
+        </div>
+        <div class="pva-band" style="margin-top:14px">80% confidence band <b>+${m.headline.band[0]} to +${m.headline.band[1]}${m.headline.unit}</b> · ${m.tvc.note}</div>
+      </div>
+      <div class="mod">
+        <div class="mod-head"><div><span class="kicker">Per channel · delivery</span><h3 style="margin-top:10px">Where the lift came from</h3></div></div>
+        <div class="chres">${chres}</div>
+        <div class="mod-foot">Owned + schema re-grounded the node; paid amplified reach. Illustrative demo data.</div>
+      </div>
+    </div>
+    <div class="mod" style="margin-top:22px"><div class="mod-head"><div><span class="kicker">Writes back</span><h3 style="margin-top:10px">The loop is one system</h3></div></div>
+      <p style="color:var(--muted);font-size:14.5px;line-height:1.7;max-width:74ch">This result updates Share of Model on the dashboard, re-grounds the <b style="color:var(--ink)">${curGap.node}</b> node in the brand graph, and logs the full cycle — brief, creative, control, result — into the system of record so confidence rises next quarter.</p></div>
+    ${navRow('Listen → Create → Review → Publish → Measure — one re-enterable loop.')}
+  </div>`;
+}
+
 function postPaint(){
-  // audience toggles
-  $$('#shapeBody .seg').forEach(s=>{
-    s.querySelector('.seg-tog').addEventListener('click',()=>{
-      s.classList.toggle('off');
-      s.querySelector('.seg-tog').textContent = s.classList.contains('off')?'Include':'● Included';
-    });
+  // segment toggles
+  $$('#shapeBody .seg[data-seg]').forEach(s=>{
+    const t=s.querySelector('.seg-tog'); if(!t) return;
+    t.addEventListener('click',()=>{ s.classList.toggle('off'); t.textContent = s.classList.contains('off')?'Include':'● Included'; });
   });
-  // gate actions
+  // editable headlines
+  $$('#shapeBody .ad-h[contenteditable]').forEach(h=>{
+    h.addEventListener('input',()=>{ creativeEdits[h.dataset.cr] = h.innerText; });
+  });
+  // regenerate
+  const rb=$('#regenBtn');
+  if(rb) rb.addEventListener('click',()=>{ const o=rb.innerHTML; rb.innerHTML='<span class="sp"></span> Generating…'; rb.style.opacity='.6'; setTimeout(()=>{ rb.innerHTML=o; rb.style.opacity=''; },820); });
+  // review gate
   $$('#shapeBody [data-approve]').forEach(b=>b.addEventListener('click',()=>{ gateState[b.dataset.approve]='approved'; paintStage(); }));
   $$('#shapeBody [data-reject]').forEach(b=>b.addEventListener('click',()=>{ gateState[b.dataset.reject]='rejected'; paintStage(); }));
+  // publish toggles + publish
+  $$('#shapeBody [data-pub]').forEach(b=>b.addEventListener('click',()=>{ pubState[b.dataset.pub]=!pubState[b.dataset.pub]; paintStage(); }));
+  const pb=$('#publishBtn');
+  if(pb) pb.addEventListener('click',()=>{ published=true; paintStage(); });
 }
 
 /* ============================================================
