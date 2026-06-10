@@ -34,7 +34,7 @@
         </div>
         <div class="nav-actions">
           <a class="nav-link" href="login.html">Sign in</a>
-          <a class="btn ghost" href="onboarding.html">Enter</a>
+          <a class="btn ghost" href="onboarding.html">Get started</a>
           <span class="orb-small" aria-hidden="true"></span>
         </div>
       </nav>
