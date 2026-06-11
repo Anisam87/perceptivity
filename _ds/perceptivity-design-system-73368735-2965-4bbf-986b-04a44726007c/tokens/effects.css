@@ -1,0 +1,105 @@
+/* ============================================================
+   PERCEPTIVITY — EFFECTS & MOTION
+   The dot engine, the glow, motion easing & durations.
+   Depth is expressed through dot density — never shadow.
+   ============================================================ */
+
+:root {
+  /* --- The dot screen (page-wide overlay) --- */
+  --dot-size: 5px;                 /* grid pitch of the fine screen */
+  --dot-radius: 0.7px;             /* dot inner radius */
+  --dot-radius-out: 0.8px;         /* dot outer edge (anti-alias gap) */
+  --dot-screen-opacity: 0.22; /* @kind other */     /* overlay opacity */
+
+  /* --- Glow (used only on the kicker dot / tiny highlights) --- */
+  --glow-dot: 0 0 6px rgba(255, 255, 255, 0.85);
+  --glow-soft: 0 0 14px rgba(255, 255, 255, 0.35);
+
+  /* --- Motion --- */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1); /* @kind other */   /* the only easing */
+  --dur-reveal: 1.2s; /* @kind other */    /* section reveals (1–1.5s) */
+  --dur-reveal-lg: 1.5s; /* @kind other */
+  --dur-hover: 0.5s; /* @kind other */      /* hovers */
+  --dur-fast: 0.24s; /* @kind other */
+  --reveal-lift: 46px;    /* content lifts this far on reveal */
+  --hover-dim: 0.72; /* @kind other */      /* hover opacity for outline elements */
+}
+
+/* ---- The signature page-wide dot screen --------------------
+   Apply <div class="dot-screen"></div> as a fixed full-viewport
+   overlay (or add .has-dot-screen to a positioned container and
+   it gets a ::after). Uses screen blend so it only adds light. */
+.dot-screen,
+.has-dot-screen::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  pointer-events: none;
+  background-image: radial-gradient(var(--dot) var(--dot-radius), transparent var(--dot-radius-out));
+  background-size: var(--dot-size) var(--dot-size);
+  opacity: var(--dot-screen-opacity);
+  mix-blend-mode: screen;
+}
+
+/* Radial vignette companion — darkens the edges of the frame. */
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 8999;
+  pointer-events: none;
+  background: radial-gradient(120% 90% at 50% 42%, transparent 38%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+/* ---- Decorative masked dot fields --------------------------
+   Depth = density. These are radial-gradient dot textures faded
+   by a mask. Compose them as background layers on decorative els. */
+
+/* A dot "halo" ring — bright dots arranged on a soft ring. */
+.dotfield-halo {
+  background-image: radial-gradient(var(--dot-bright) 0.9px, transparent 1px);
+  background-size: 7px 7px;
+  -webkit-mask-image: radial-gradient(circle at center, transparent 36%, #000 46%, #000 60%, transparent 72%);
+          mask-image: radial-gradient(circle at center, transparent 36%, #000 46%, #000 60%, transparent 72%);
+}
+
+/* A solid dot disc — dense at the core, fading out. */
+.dotfield-core {
+  background-image: radial-gradient(var(--dot-bright) 0.9px, transparent 1px);
+  background-size: 6px 6px;
+  -webkit-mask-image: radial-gradient(circle at center, #000 0%, rgba(0,0,0,0.5) 45%, transparent 70%);
+          mask-image: radial-gradient(circle at center, #000 0%, rgba(0,0,0,0.5) 45%, transparent 70%);
+}
+
+/* Receding "terrain" — perspective dot plane fading to horizon. */
+.dotfield-terrain {
+  background-image: radial-gradient(var(--dot-bright) 0.8px, transparent 1px);
+  background-size: 9px 9px;
+  -webkit-mask-image: linear-gradient(to top, #000 0%, rgba(0,0,0,0.35) 40%, transparent 78%);
+          mask-image: linear-gradient(to top, #000 0%, rgba(0,0,0,0.35) 40%, transparent 78%);
+}
+
+/* A corner dot wash for "glass" panels & cards. */
+.dotfield-wash {
+  background-image: radial-gradient(var(--dot-bright) 0.8px, transparent 1px);
+  background-size: 7px 7px;
+  -webkit-mask-image: radial-gradient(120% 120% at 100% 0%, #000 0%, transparent 55%);
+          mask-image: radial-gradient(120% 120% at 100% 0%, #000 0%, transparent 55%);
+}
+
+/* ---- Motion-off contract ----------------------------------
+   When the user disables motion (either OS preference or the
+   "Animations off" switch -> [data-motion="off"] on a root),
+   snap everything to its visible end-state and hold still. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+[data-motion="off"] *, [data-motion="off"] *::before, [data-motion="off"] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}

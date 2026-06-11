@@ -1,0 +1,48 @@
+/* ============================================================
+   PERCEPTIVITY — COLOUR
+   Strictly monochrome. One material: white ink on pure black,
+   stepped ONLY by opacity. No fills, no gradients (except the
+   dot screen), no shadows. Colour is forbidden by default.
+   ============================================================ */
+
+:root {
+  /* --- Base surface --- */
+  --bg: #000000;              /* the only surface — panels stay transparent */
+  --bg-pure: #000000;
+
+  /* --- Ink (white, stepped by opacity) --- */
+  --ink: #ffffff;                          /* primary text */
+  --ink-strong: #ffffff;
+  --ink-muted: rgba(255, 255, 255, 0.68);  /* body copy — NEVER pure white */
+  --ink-muted-2: rgba(255, 255, 255, 0.60);
+  --ink-faint: rgba(255, 255, 255, 0.34);  /* captions, disabled, far dots */
+
+  /* --- Hairlines (borders only) --- */
+  --hairline: rgba(255, 255, 255, 0.12);
+  --hairline-strong: rgba(255, 255, 255, 0.26);
+
+  /* --- Dot ink (the one material) --- */
+  --dot: rgba(255, 255, 255, 0.10);        /* page-wide dot screen */
+  --dot-bright: rgba(255, 255, 255, 0.55); /* near / dense dot fields */
+
+  /* --- Optional accent — OFF by default. --------------------
+     Never use raw colour for type or fills. If introduced, it
+     touches only a kicker dot or a single emphasised word, at
+     matched lightness/chroma. Pick exactly one. */
+  --accent-amber: #e6a36b;
+  --accent-blue:  #6ba8e6;
+  --accent-green: #6be6a8;
+  --accent: var(--ink);   /* default: the accent IS white */
+
+  /* --- Semantic aliases --- */
+  --text-primary: var(--ink);
+  --text-body: var(--ink-muted);
+  --text-caption: var(--ink-faint);
+  --border: var(--hairline);
+  --border-strong: var(--hairline-strong);
+  --surface: transparent;
+  --surface-card: transparent;
+}
+
+::selection { background: #ffffff; color: #000000; }
+::-moz-selection { background: #ffffff; color: #000000; }

@@ -1,0 +1,49 @@
+/* ============================================================
+   PERCEPTIVITY — TYPOGRAPHY
+   Display: light grotesk, ALL CAPS, weight 300, wide tracking,
+            line-height ~1. Body: Inter 400, muted, airy leading.
+            Kicker/labels: mono, UPPERCASE, very wide tracking.
+   ============================================================ */
+
+:root {
+  /* --- Families --- */
+  --font-display: 'Space Grotesk', 'Neue Montreal', 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Space Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  /* --- Weights --- */
+  --weight-display: 300;   /* hero / headings stay light */
+  --weight-body: 400;
+  --weight-medium: 500;
+  --weight-kicker: 400;
+
+  /* --- Display scale (clamped, fluid) --- */
+  --text-hero: clamp(52px, 7.6vw, 116px);
+  --text-h1:   clamp(44px, 6.2vw, 92px);
+  --text-h2:   clamp(32px, 4.6vw, 68px);
+  --text-h3:   clamp(24px, 2.6vw, 38px);
+  --text-h4:   clamp(20px, 1.8vw, 26px);
+
+  /* --- Body scale --- */
+  --text-body-lg: 19px;
+  --text-body: 17px;
+  --text-body-sm: 15px;
+
+  /* --- Kicker / mono labels --- */
+  --text-kicker: 10.5px;     /* 9.5–11px */
+  --text-kicker-sm: 9.5px;
+  --text-index: 12px;        /* section indices */
+
+  /* --- Tracking (letter-spacing) --- */
+  --tracking-hero: 0.04em;
+  --tracking-display: 0.08em;   /* .06–.14em range */
+  --tracking-display-wide: 0.14em;
+  --tracking-kicker: 0.28em;    /* .24–.34em range */
+  --tracking-body: 0;
+
+  /* --- Leading (line-height) --- */
+  --leading-display: 1.02;      /* ~1 */
+  --leading-tight: 1.12;
+  --leading-body: 1.78;         /* 1.7–1.85 */
+  --leading-kicker: 1;
+}

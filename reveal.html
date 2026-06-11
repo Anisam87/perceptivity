@@ -121,6 +121,24 @@
   .cap-done p{color:var(--muted);font-size:13.5px;line-height:1.65;max-width:38ch}
   .capture.sent .cap-body{display:none}
 
+  /* category detection + suggested buyer questions */
+  .ask-detect{margin-top:18px;font-family:var(--fontMono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);display:flex;align-items:center;gap:9px}
+  .ask-detect .ddot{width:5px;height:5px;border-radius:50%;background:#fff;box-shadow:0 0 10px #fff;flex:0 0 auto}
+  .ask-detect b{color:var(--muted);font-weight:500;letter-spacing:.06em}
+  .ask-suggest{display:flex;flex-wrap:wrap;gap:8px;margin-top:13px}
+  .ask-suggest .sg{font-family:var(--fontBody);font-size:12.5px;letter-spacing:.005em;line-height:1.3;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:8px 14px;text-align:left;transition:border-color .3s,color .3s,background .3s}
+  .ask-suggest .sg:hover{border-color:var(--lineStrong);color:#fff}
+  .ask-suggest .sg.on{background:#fff;color:#000;border-color:#fff}
+
+  /* scanning state */
+  .scanning{display:none;flex-direction:column;gap:0}
+  .scanning.on{display:flex}
+  #scanRows{display:flex;flex-direction:column;gap:11px;margin-top:4px}
+  .scan-row{display:flex;align-items:center;gap:12px;font-family:var(--fontMono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);transition:color .4s}
+  .scan-row .sd{width:6px;height:6px;border-radius:50%;border:1px solid var(--lineStrong);flex:0 0 auto;transition:.4s}
+  .scan-row.done{color:var(--ink)}
+  .scan-row.done .sd{background:#fff;border-color:#fff;box-shadow:0 0 10px #fff}
+
   @media (max-width:520px){
     .rtop .skip{display:none}
     .ask-h{font-size:clamp(26px,8vw,34px)}
@@ -135,7 +153,7 @@
     <button data-f="mobile" class="on">Mobile</button>
     <button data-f="desktop">Desktop</button>
   </div>
-  <a class="skip" href="product.html">Open workspace →</a>
+  <a class="skip" href="onboarding.html">Skip to setup →</a>
 </div>
 
 <div class="singularity-bg"></div>
@@ -162,21 +180,27 @@
               <button data-l="en" class="on">English</button>
               <button data-l="hi">Hinglish</button>
             </div>
-            <div class="ask-meta"><span>India · Metros + Tier-1</span><span>7 answer engines</span></div>
+            <div class="ask-detect"><span class="ddot"></span>Category detected — <b id="detectCat">Electric vehicles</b> · India</div>
+            <div class="ask-suggest" id="askSuggest"></div>
+            <div class="ask-meta"><span>India · Metros + Tier-1</span><span>7 AI assistants</span></div>
             <button class="ask-cta" id="askCta">Show me the answer <span class="arrow">→</span></button>
           </div>
 
           <!-- B · REVEAL  +  C · CAPTURE -->
           <div class="reveal-side">
+            <div class="scanning" id="scanning">
+              <div class="rv-lead">Reading 7 AI assistants · live <span class="scanline"></span></div>
+              <div id="scanRows"></div>
+            </div>
             <div class="reveal-wrap" id="revealWrap">
-              <div class="rv-lead">The same question · every engine <span class="scanline"></span></div>
+              <div class="rv-lead">The same question · every AI assistant <span class="scanline"></span></div>
               <div id="ansList"></div>
               <p class="verdict" id="verdict"></p>
 
               <div class="capture" id="capture">
                 <div class="cap-body">
                   <div class="cap-h">See your full picture</div>
-                  <p class="cap-sub">We'll scan your category across all seven engines and show you where the answer goes wrong — and what moves it.</p>
+                  <p class="cap-sub">We'll scan your category across all seven AI assistants and show you where the answer goes wrong — and what moves it.</p>
                   <div class="cap-field"><label>Work email</label><input id="emailInput" type="email" placeholder="you@brand.com"></div>
                   <div class="cap-field"><label>Your three biggest rivals</label>
                     <div class="rivals" id="rivals"></div>
@@ -186,9 +210,9 @@
                 </div>
                 <div class="cap-done" id="capDone">
                   <div class="ok"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9.5l4 4 8-9" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                  <h3>Your scan is queued</h3>
-                  <p>We're reading your category across seven engines now. Open the workspace to see it live.</p>
-                  <a class="btn primary btn-lg" href="product.html">Open the workspace →</a>
+                  <h3>Your scan is saved</h3>
+                  <p>We've carried your brand, rivals and questions across. Finish setup and your live workspace opens with them already in place — no re-typing.</p>
+                  <a class="btn primary btn-lg" href="onboarding.html">Open my workspace →</a>
                 </div>
               </div>
             </div>
@@ -201,6 +225,7 @@
 </div>
 
 <script src="app-data.js"></script>
+<script src="demo-data.js"></script>
 <script>
 (function(){
   const A = window.APP;
@@ -229,14 +254,53 @@
     device.classList.toggle('desktop', b.dataset.f==='desktop');
   });
 
-  /* language toggle (English / Hinglish query) */
-  let lang='en';
+  /* ---- category detection + suggested buyer questions ---- */
+  const CATS = {
+    ev:{ label:'Electric vehicles',
+      q:['Best electric SUV under ₹25 lakh in India?','Which EV has the best charging & service network in India?','{brand} vs Tata vs Mahindra — which EV is better?'],
+      qHi:['₹25 lakh ke andar best electric SUV kaunsi hai?','India mein sabse accha service network kis EV ka hai?','{brand} ya Tata — konsi EV behtar hai?'] },
+    paint:{ label:'Decorative paints',
+      q:['Best paint for humid coastal walls in India?','Which paint brand lasts longest in Indian weather?','{brand} vs Asian Paints — which is better?'],
+      qHi:['Humid coastal walls ke liye sabse accha paint kaunsa hai?','India mein sabse zyada tikne wala paint kaunsa hai?','{brand} ya Asian Paints — kaunsa behtar hai?'] },
+    card:{ label:'Credit cards',
+      q:['Best no-fee credit card in India?','Which bank for a first credit card?','Best credit card for online shopping in India?'],
+      qHi:['India mein best no-fee credit card kaunsa hai?','Pehla credit card kis bank ka lena chahiye?','Online shopping ke liye best credit card kaunsa hai?'] },
+    skin:{ label:'Skincare',
+      q:['Best face cream for humid climate in India?','Which skincare brand is best for oily skin in India?','{brand} vs Mamaearth — which is better?'],
+      qHi:['Humid climate ke liye best face cream kaunsi hai?','Oily skin ke liye best skincare brand kaunsa hai?','{brand} ya Mamaearth — kaunsa behtar?'] },
+    generic:{ label:'Your category',
+      q:['Which {brand} should a buyer choose in India?','Best option in this category under budget in India?','{brand} vs its rivals — which is better?'],
+      qHi:['India mein {brand} mein se kya chunna chahiye?','Is category mein budget ke andar best kya hai?','{brand} ya iske rivals — kaunsa behtar?'] }
+  };
+  const BRANDMAP=[
+    [/vinfast|tata|mahindra|\bmg\b|hyundai|\bbyd\b|\bkia\b|maruti|nexon|curvv|creta|windsor|atto|\bev\b/,'ev'],
+    [/asian paints|berger|nerolac|dulux|indigo|\bpaint/,'paint'],
+    [/hdfc|sbi|icici|axis|kotak|amex|american express|credit card|\bcard\b|\bbank\b/,'card'],
+    [/lakm|mamaearth|nivea|\bcream|skincare|cosmetic|dabur|himalaya|loreal|ponds|garnier/,'skin']
+  ];
+  let lang='en', cat='ev';
+  function detect(brand){ const b=(brand||'').toLowerCase(); for(const [re,key] of BRANDMAP){ if(re.test(b)) return key; } return 'generic'; }
+  function fill(s){ return s.replace(/\{brand\}/g, ($('#brandInput').value||'your brand').trim()); }
+  function paintSuggest(){
+    const c=CATS[cat];
+    document.getElementById('detectCat').textContent = c.label;
+    const qs = (lang==='hi' ? c.qHi : c.q);
+    $('#askSuggest').innerHTML = qs.map((q,i)=>`<button class="sg ${i===0?'on':''}" data-q="${fill(q).replace(/"/g,'&quot;')}">${fill(q)}</button>`).join('');
+    $('#queryInput').value = fill(qs[0]);
+    $('#askSuggest').querySelectorAll('.sg').forEach(b=>b.addEventListener('click',()=>{
+      $('#askSuggest').querySelectorAll('.sg').forEach(x=>x.classList.toggle('on',x===b));
+      $('#queryInput').value = b.dataset.q;
+    }));
+  }
+  function reDetect(){ cat = detect($('#brandInput').value); paintSuggest(); }
+  $('#brandInput').addEventListener('input', reDetect);
   $('#langTog').addEventListener('click',e=>{
     const b=e.target.closest('button'); if(!b) return;
     document.querySelectorAll('#langTog button').forEach(x=>x.classList.toggle('on',x===b));
     lang=b.dataset.l;
-    $('#queryInput').value = lang==='hi' ? A.aha.hinglishQuery : A.aha.query;
+    paintSuggest();
   });
+  reDetect();
 
   /* rivals chips */
   const rivalOpts=['Tata Curvv EV','Mahindra BE 6','MG Windsor','Hyundai Creta EV','BYD Atto 3'];
@@ -252,40 +316,140 @@
   }
   paintRivals();
 
-  /* the reveal */
-  let revealed=false;
-  $('#askCta').addEventListener('click',()=>{
-    if(revealed){ $('#capture').scrollIntoView?.({behavior:'smooth'}); return; }
-    revealed=true;
-    const wrap=$('#revealWrap'); wrap.classList.add('on');
+  /* ---- scripted fallback (used only if the live read is unavailable) ---- */
+  function genericAnswers(brand, label){
+    const b = brand||'your brand', l = label.toLowerCase();
+    return {
+      answers:[
+        { engine:'ChatGPT', lang:'en', flags:['omits you'],
+          text:`For most buyers in ${l}, AI leads with two or three established names. <b>${b}</b> often isn't on that shortlist.` },
+        { engine:'Perplexity', lang:'en', flags:['outdated'],
+          text:`Competing brands are named first. <b>${b}</b> appears lower, sometimes with <b>outdated</b> details buyers act on.` },
+        { engine:'Meta AI', lang:'Hinglish', flags:[],
+          text:`AI usually do-teen bade brands recommend karta hai. <b>${b}</b> ka naam kam baar aata hai.`,
+          gloss:`AI usually recommends two or three big brands. ${b} comes up less often.` }
+      ],
+      verdict:`In the answer your buyers see, rivals are named first and your story reads thin or out of date. You never get a report. You just lose the sale.`
+    };
+  }
+  function scriptedData(){
+    const brand=$('#brandInput').value.trim();
+    if (cat==='ev' && /vinfast/i.test(brand)) {
+      const answers = A.aha.answers.map(a=>{
+        const flags=[];
+        if(a.omits) flags.push('omits you');
+        if(a.stale) flags.push('outdated');
+        if(a['false']) flags.push('false claim');
+        return { engine:a.engine, lang:a.lang, text:a.text, gloss:a.gloss, flags };
+      });
+      return { answers, verdict:A.aha.verdict };
+    }
+    return genericAnswers(brand, CATS[cat].label);
+  }
+
+  /* ---- live read via the model, JSON-shaped, with a hard fallback ---- */
+  async function liveData(brand, query, langName){
+    if (!(window.claude && window.claude.complete)) return null;
+    const prompt =
+`Simulate how AI assistants answer Indian buyers today.
+Brand: ${brand}
+Category: ${CATS[cat].label}
+Buyer question: "${query}" (language: ${langName})
+Write short realistic answers as 3 assistants would give in India: ChatGPT, Perplexity, Meta AI.
+- In at least one answer, name a real competing brand and do NOT mention ${brand} (it is left out).
+- In one answer include an outdated or plainly wrong claim about ${brand}.
+- Make the Meta AI answer Hinglish (Roman Hindi) and add an English "gloss".
+- Bold the named rival and any wrong claim with <b></b>. Under 40 words each. Indian context (₹, lakh).
+Then a 2-sentence verdict addressed to the brand's CMO.
+Return ONLY strict JSON, no markdown:
+{"answers":[{"engine":"","lang":"en|Hinglish","text":"","gloss":"","flags":["omits you|outdated|false claim"]}],"verdict":""}`;
+    try{
+      const raw = await window.claude.complete(prompt);
+      const s = raw.indexOf('{'), e = raw.lastIndexOf('}');
+      if (s<0||e<0) return null;
+      const data = JSON.parse(raw.slice(s, e+1));
+      if (!data || !Array.isArray(data.answers) || !data.answers.length) return null;
+      return data;
+    }catch(err){ return null; }
+  }
+
+  function emphasize(t){
+    const m = (t||'').match(/(.*[.!?])\s+([^.!?]+[.!?])\s*$/);
+    return m ? `${m[1]} <em>${m[2]}</em>` : (t||'');
+  }
+  function renderReveal(data){
+    $('#revealWrap').classList.add('on');
     const list=$('#ansList'); list.innerHTML='';
-    A.aha.answers.forEach((a,i)=>{
-      const flags=[];
-      if(a.omits) flags.push('omits you');
-      if(a.stale) flags.push('outdated');
-      if(a['false']) flags.push('false claim');
-      const card=document.createElement('div');
-      card.className='ans-card';
-      const indic = a.lang==='Tamil' ? 'tamil' : (a.lang==='Hinglish'?'':'');
+    data.answers.forEach((a,i)=>{
+      const flags = a.flags || [];
+      const card=document.createElement('div'); card.className='ans-card';
+      const indic = a.lang==='Tamil' ? 'tamil' : '';
+      const langTag = (a.lang && a.lang!=='en') ? ' · '+a.lang : '';
       card.innerHTML=`
         <div class="ans-top">
-          <span class="ans-engine"><span class="ed"></span>${a.engine}${a.lang!=='en'?' · '+a.lang:''}</span>
+          <span class="ans-engine"><span class="ed"></span>${a.engine}${langTag}</span>
           <span class="ans-flags">${flags.map(f=>`<span class="ans-flag">${f}</span>`).join('')}</span>
         </div>
         <div class="ans-text ${indic}">${a.text}</div>
         ${a.gloss?`<div class="ans-gloss">${a.gloss}</div>`:''}`;
       list.appendChild(card);
-      setTimeout(()=>card.classList.add('in'), 180 + i*420);
+      setTimeout(()=>card.classList.add('in'), 120 + i*360);
     });
-    const v=$('#verdict');
-    v.innerHTML = A.aha.verdict.replace('You never get a report. You just lose the deal.','<em>You never get a report. You just lose the deal.</em>');
-    setTimeout(()=>v.classList.add('in'), 180 + A.aha.answers.length*420 + 200);
-    setTimeout(()=>$('#capture').classList.add('in'), 180 + A.aha.answers.length*420 + 500);
+    const v=$('#verdict'); v.innerHTML = emphasize(data.verdict);
+    const n=data.answers.length;
+    setTimeout(()=>v.classList.add('in'), 120 + n*360 + 200);
+    setTimeout(()=>$('#capture').classList.add('in'), 120 + n*360 + 460);
+  }
+
+  const SCAN_ENGINES=['ChatGPT','Perplexity','Gemini','Meta AI','Copilot','Google AIO','Claude'];
+  function runScan(){
+    const box=$('#scanRows'); box.innerHTML='';
+    SCAN_ENGINES.forEach(e=>{ const r=document.createElement('div'); r.className='scan-row'; r.innerHTML=`<span class="sd"></span>${e}`; box.appendChild(r); });
+    [...box.children].forEach((r,i)=>setTimeout(()=>r.classList.add('done'), 150 + i*150));
+  }
+
+  /* map the scan's detected category to the workspace category id, and remember
+     everything the scan already knows so onboarding continues instead of restarting */
+  const REVEAL_CATMAP = { ev:'auto', paint:'home', card:'bfsi', skin:'beauty', generic:'auto' };
+  function persistScan(brand, query, langName){
+    if(!window.PCV) return;
+    const sgs = [...document.querySelectorAll('#askSuggest .sg')].map(b=>b.dataset.q);
+    PCV.set({
+      brand: (brand && brand!=='your brand') ? brand : (PCV.get().brand||''),
+      category: REVEAL_CATMAP[cat] || 'auto',
+      scanned: true,
+      scanQuery: query,
+      scanQuestions: sgs,
+      scanLang: langName
+    });
+  }
+
+  /* the reveal: scan → live read (fallback to scripted) → staged reveal */
+  let revealed=false;
+  $('#askCta').addEventListener('click', async ()=>{
+    if(revealed){ $('#capture').classList.add('in'); $('#capture').scrollIntoView?.({behavior:'smooth',block:'nearest'}); return; }
+    revealed=true;
+    $('#askCta').innerHTML='Reading the answer <span class="arrow">→</span>';
+    $('#scanning').classList.add('on');
+    runScan();
+    const brand=$('#brandInput').value.trim()||'your brand';
+    const query=$('#queryInput').value.trim();
+    const langName = lang==='hi' ? 'Hinglish' : 'English';
+    persistScan(brand, query, langName);
+    const [data] = await Promise.all([
+      (async()=> (await liveData(brand, query, langName)) || scriptedData())(),
+      new Promise(r=>setTimeout(r, 1700))
+    ]);
+    $('#scanning').classList.remove('on');
+    renderReveal(data);
     $('#askCta').innerHTML='Jump to my scan <span class="arrow">↓</span>';
   });
 
-  /* capture submit */
+  /* capture submit — save the email + rivals, then hand the whole context to onboarding */
   $('#capCta').addEventListener('click',()=>{
+    const email = ($('#emailInput') && $('#emailInput').value.trim()) || '';
+    const rivals = [...document.querySelectorAll('#rivals input')].map(i=>i.value.trim()).filter(Boolean);
+    if(window.PCV) PCV.set({ email, competitors: rivals, brand: ($('#brandInput').value.trim()||PCV.get().brand||'') });
     $('#capture').classList.add('sent');
     $('#capDone').classList.add('on');
   });

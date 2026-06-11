@@ -168,6 +168,14 @@
     font-family:var(--fontMono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);
   }
 
+  /* continuation banner — shown when the user arrives from a free scan */
+  .cont-banner{display:none;align-items:center;gap:14px;margin-bottom:28px;padding:14px 18px;border:1px solid var(--lineStrong);border-radius:2px;background:rgba(255,255,255,.04)}
+  .cont-banner .cb-dot{width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 12px #fff;flex:0 0 auto}
+  .cont-banner .cb-txt{font-size:14px;line-height:1.5;color:var(--ink)}
+  .cont-banner .cb-txt b{color:#fff;font-weight:600}
+  .cont-banner .cb-tag{margin-left:auto;font-family:var(--fontMono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+  @media (max-width:640px){ .cont-banner .cb-tag{display:none} }
+
   @media (max-width:640px){
     .ob-wrap{padding:100px 0 56px}
     .ob-console{padding:24px 18px 28px;border-radius:2px}
@@ -198,6 +206,12 @@
     <div class="glass ob-console reveal in">
       <div class="scan-line"></div>
 
+      <div class="cont-banner" id="contBanner">
+        <span class="cb-dot"></span>
+        <span class="cb-txt">Continuing your free scan for <b data-cb-brand>your brand</b> · <span data-cb-cat>your category</span>. Your details carried over — confirm and we'll open your live workspace.</span>
+        <span class="cb-tag">No re-typing</span>
+      </div>
+
       <div class="ob-progress">
         <span class="ob-step-num" id="stepNum">Step 01 / 05</span>
         <div class="ob-track"><div class="ob-track-fill" id="trackFill" style="width:20%"></div></div>
@@ -211,7 +225,7 @@
         <p class="lede">Your workspace is built from the buyer questions in your category. We've pre-filled the closest match.</p>
         <div class="cat-mini-grid" id="catMiniGrid"></div>
         <div class="ob-actions">
-          <a class="ob-back" href="index.html">← Back to home</a>
+          <a class="ob-back" href="reveal.html">← Back to scan</a>
           <button class="btn primary btn-lg" data-next>Continue <span class="arrow">→</span></button>
         </div>
       </div>
@@ -220,7 +234,7 @@
       <div class="ob-step" data-step="2">
         <span class="kicker">Step 02 · You</span>
         <h2 style="margin-top:18px">A few details, so we can set up your workspace.</h2>
-        <p class="lede">We'll email a shareable version of the dashboard you're about to see. No password, no spam.</p>
+        <p class="lede">We'll email a shareable link to the workspace you're about to see. No password, no spam.</p>
 
         <div class="form-grid">
           <div class="field">
@@ -244,7 +258,7 @@
           <div class="field full">
             <label>Work email</label>
             <input class="input" type="email" id="userEmail" placeholder="priya@brand.com" />
-            <span class="mono" style="margin-top:4px;color:var(--muted)">We'll send your dashboard link here. No marketing emails.</span>
+            <span class="mono" style="margin-top:4px;color:var(--muted)">We'll send your workspace link here. No marketing emails.</span>
           </div>
         </div>
 
@@ -335,7 +349,7 @@
           </div>
         </div>
 
-        <p class="demo-note">Opening your brand-specific dashboard automatically…</p>
+        <p class="demo-note">Opening your live workspace automatically…</p>
       </div>
 
     </div>
@@ -575,13 +589,36 @@
         if (lit === chips.length) {
           setTimeout(() => {
             statusEl.textContent = 'Perception mapped.';
-            // auto-advance straight to the brand-specific dashboard
-            setTimeout(() => { location.href = 'dashboard.html?personalized=1'; }, 1100);
+            // auto-advance straight into the live workspace (the product)
+            setTimeout(() => { location.href = 'product.html'; }, 1100);
           }, 500);
         }
       }, 400 + i * 580);
     });
   }
+
+  /* ---- continuation: if the user already ran a free scan, carry it in ---- */
+  (function continueFromScan(){
+    const p = PCV.get();
+    if (!p.scanned) return;
+    // category already detected during the scan
+    if (p.category){
+      chosenCat = p.category;
+      miniGrid.querySelectorAll('.cat-mini').forEach(x => x.classList.toggle('on', x.dataset.id === p.category));
+    }
+    // brand + rivals from the scan, not the category defaults
+    if (p.brand) document.getElementById('brandIn').value = p.brand;
+    if (Array.isArray(p.competitors) && p.competitors.length) renderRivals(p.competitors.slice(0,5));
+    if (p.email) document.getElementById('userEmail').value = p.email;
+    // banner
+    const meta = CATEGORIES.find(c => c.id === p.category) || CATEGORIES[0];
+    const banner = document.getElementById('contBanner');
+    banner.querySelector('[data-cb-brand]').textContent = p.brand || meta.brand || 'your brand';
+    banner.querySelector('[data-cb-cat]').textContent = meta.label;
+    banner.style.display = 'flex';
+    // skip the category-confirm step — it was detected in the scan
+    setStep(2);
+  })();
 </script>
 </body>
 </html>

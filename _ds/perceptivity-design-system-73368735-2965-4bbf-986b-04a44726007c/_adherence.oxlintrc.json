@@ -1,0 +1,271 @@
+{
+  "plugins": [
+    "react",
+    "import"
+  ],
+  "rules": {
+    "react/forbid-elements": [
+      "warn",
+      {
+        "forbid": []
+      }
+    ],
+    "no-restricted-imports": [
+      "warn",
+      {
+        "patterns": [
+          {
+            "group": [
+              "components/buttons/**",
+              "components/identity/**"
+            ],
+            "message": "Import design-system components from 'index.js', not component internals."
+          }
+        ]
+      }
+    ],
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "Literal[value=/#[0-9a-fA-F]{3,8}\\b/]",
+        "message": "Raw hex color — use a design-system color token via var()."
+      },
+      {
+        "selector": "Literal[value=/\\b\\d+px\\b/]",
+        "message": "Raw px value — use a design-system spacing token via var()."
+      },
+      {
+        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:Space Grotesk|Inter|Space Mono))/i]",
+        "message": "Font not provided by the design system. Available: Space Grotesk, Inter, Space Mono."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Button'] > JSXAttribute > JSXIdentifier[name!=/^(?:variant|size|arrow|href|disabled|className|children|key|ref|className|style|children)$/]",
+        "message": "<Button> doesn't accept that prop. Declared props: variant, size, arrow, href, disabled, className, children."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Button'] > JSXAttribute[name.name='variant'] > Literal[value!=/^(?:outline|primary|ghost)$/]",
+        "message": "<Button> variant must be one of 'outline' | 'primary' | 'ghost'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Button'] > JSXAttribute[name.name='size'] > Literal[value!=/^(?:sm|md|lg)$/]",
+        "message": "<Button> size must be one of 'sm' | 'md' | 'lg'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='IconButton'] > JSXAttribute > JSXIdentifier[name!=/^(?:size|shape|label|className|children|key|ref|className|style|children)$/]",
+        "message": "<IconButton> doesn't accept that prop. Declared props: size, shape, label, className, children."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='IconButton'] > JSXAttribute[name.name='size'] > Literal[value!=/^(?:sm|md|lg)$/]",
+        "message": "<IconButton> size must be one of 'sm' | 'md' | 'lg'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='IconButton'] > JSXAttribute[name.name='shape'] > Literal[value!=/^(?:circle|square)$/]",
+        "message": "<IconButton> shape must be one of 'circle' | 'square'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Kicker'] > JSXAttribute > JSXIdentifier[name!=/^(?:index|accent|className|children|key|ref|className|style|children)$/]",
+        "message": "<Kicker> doesn't accept that prop. Declared props: index, accent, className, children."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/index.js"
+      ],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    }
+  ],
+  "x-omelette": {
+    "components": {
+      "Button": {
+        "replaces": []
+      },
+      "IconButton": {
+        "replaces": []
+      },
+      "Kicker": {
+        "replaces": []
+      }
+    },
+    "tokens": [
+      "--accent",
+      "--accent-amber",
+      "--accent-blue",
+      "--accent-green",
+      "--bg",
+      "--bg-pure",
+      "--border",
+      "--border-hairline",
+      "--border-hairline-strong",
+      "--border-strong",
+      "--dot",
+      "--dot-bright",
+      "--dot-radius",
+      "--dot-radius-out",
+      "--dot-screen-opacity",
+      "--dot-size",
+      "--dur-fast",
+      "--dur-hover",
+      "--dur-reveal",
+      "--dur-reveal-lg",
+      "--ease",
+      "--font-body",
+      "--font-display",
+      "--font-mono",
+      "--glow-dot",
+      "--glow-soft",
+      "--gutter",
+      "--hairline",
+      "--hairline-strong",
+      "--hairline-w",
+      "--hover-dim",
+      "--ink",
+      "--ink-faint",
+      "--ink-muted",
+      "--ink-muted-2",
+      "--ink-strong",
+      "--leading-body",
+      "--leading-display",
+      "--leading-kicker",
+      "--leading-tight",
+      "--maxw",
+      "--maxw-text",
+      "--radius",
+      "--radius-circle",
+      "--radius-pill",
+      "--reveal-lift",
+      "--scene-split",
+      "--section-pad-y",
+      "--shadow-none",
+      "--space-1",
+      "--space-10",
+      "--space-11",
+      "--space-2",
+      "--space-3",
+      "--space-4",
+      "--space-5",
+      "--space-6",
+      "--space-7",
+      "--space-8",
+      "--space-9",
+      "--surface",
+      "--surface-card",
+      "--text-body",
+      "--text-body-lg",
+      "--text-body-sm",
+      "--text-caption",
+      "--text-h1",
+      "--text-h2",
+      "--text-h3",
+      "--text-h4",
+      "--text-hero",
+      "--text-index",
+      "--text-kicker",
+      "--text-kicker-sm",
+      "--text-primary",
+      "--tracking-body",
+      "--tracking-display",
+      "--tracking-display-wide",
+      "--tracking-hero",
+      "--tracking-kicker",
+      "--weight-body",
+      "--weight-display",
+      "--weight-kicker",
+      "--weight-medium"
+    ],
+    "tokenKinds": {
+      "--bg": "color",
+      "--bg-pure": "color",
+      "--ink": "color",
+      "--ink-strong": "color",
+      "--ink-muted": "color",
+      "--ink-muted-2": "color",
+      "--ink-faint": "color",
+      "--hairline": "color",
+      "--hairline-strong": "color",
+      "--dot": "color",
+      "--dot-bright": "color",
+      "--accent-amber": "color",
+      "--accent-blue": "color",
+      "--accent-green": "color",
+      "--accent": "color",
+      "--text-primary": "font",
+      "--text-body": "font",
+      "--text-caption": "font",
+      "--border": "color",
+      "--border-strong": "color",
+      "--surface": "color",
+      "--surface-card": "color",
+      "--font-display": "font",
+      "--font-body": "font",
+      "--font-mono": "font",
+      "--weight-display": "font",
+      "--weight-body": "font",
+      "--weight-medium": "font",
+      "--weight-kicker": "font",
+      "--text-hero": "font",
+      "--text-h1": "font",
+      "--text-h2": "font",
+      "--text-h3": "font",
+      "--text-h4": "font",
+      "--text-body-lg": "font",
+      "--text-body-sm": "font",
+      "--text-kicker": "font",
+      "--text-kicker-sm": "font",
+      "--text-index": "font",
+      "--tracking-hero": "font",
+      "--tracking-display": "font",
+      "--tracking-display-wide": "font",
+      "--tracking-kicker": "font",
+      "--tracking-body": "font",
+      "--leading-display": "font",
+      "--leading-tight": "font",
+      "--leading-body": "font",
+      "--leading-kicker": "font",
+      "--space-1": "spacing",
+      "--space-2": "spacing",
+      "--space-3": "spacing",
+      "--space-4": "spacing",
+      "--space-5": "spacing",
+      "--space-6": "spacing",
+      "--space-7": "spacing",
+      "--space-8": "spacing",
+      "--space-9": "spacing",
+      "--space-10": "spacing",
+      "--space-11": "spacing",
+      "--maxw": "spacing",
+      "--maxw-text": "font",
+      "--gutter": "spacing",
+      "--section-pad-y": "spacing",
+      "--scene-split": "other",
+      "--radius": "radius",
+      "--radius-pill": "radius",
+      "--radius-circle": "radius",
+      "--hairline-w": "spacing",
+      "--border-hairline": "color",
+      "--border-hairline-strong": "color",
+      "--shadow-none": "shadow",
+      "--dot-size": "spacing",
+      "--dot-radius": "radius",
+      "--dot-radius-out": "radius",
+      "--dot-screen-opacity": "other",
+      "--glow-dot": "shadow",
+      "--glow-soft": "shadow",
+      "--ease": "other",
+      "--dur-reveal": "other",
+      "--dur-reveal-lg": "other",
+      "--dur-hover": "other",
+      "--dur-fast": "other",
+      "--reveal-lift": "spacing",
+      "--hover-dim": "other"
+    },
+    "fontFamilies": [
+      "Inter",
+      "Space Grotesk",
+      "Space Mono"
+    ]
+  }
+}

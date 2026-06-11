@@ -1,0 +1,40 @@
+/* ============================================================
+   PERCEPTIVITY — SPACING, LAYOUT & GEOMETRY
+   Generous negative space. Hairline borders, never fills/shadows.
+   Radius is 2px on rectangles; only circles (50%) and pills (999px).
+   ============================================================ */
+
+:root {
+  /* --- Spacing scale (4px base) --- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 128px;
+  --space-11: 180px;
+
+  /* --- Layout --- */
+  --maxw: 1180px;
+  --maxw-text: 680px;                          /* readable prose column */
+  --gutter: clamp(20px, 5vw, 56px); /* @kind spacing */ /* page side padding */
+  --section-pad-y: clamp(96px, 14vw, 180px);   /* vertical section rhythm */
+  --scene-split: 0.9fr 1.1fr; /* @kind other */ /* two-column "scene" splits */
+
+  /* --- Geometry --- */
+  --radius: 2px;            /* rectangles */
+  --radius-pill: 999px;     /* buttons, tags */
+  --radius-circle: 50%;     /* dots, avatars */
+
+  /* --- Borders --- */
+  --hairline-w: 1px;
+  --border-hairline: 1px solid var(--hairline);
+  --border-hairline-strong: 1px solid var(--hairline-strong);
+
+  /* --- Hard rule: no shadows, ever --- */
+  --shadow-none: none;
+}

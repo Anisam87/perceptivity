@@ -449,6 +449,148 @@
     .brief{padding:78px 0}
     .brief-form .btn{width:100%}
   }
+
+  /* ---------- HERO note line ---------- */
+  .hero-note{margin-top:18px;font-family:var(--fontMono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+
+  /* ---------- 06 · THE COST OF WAITING (honest urgency) ---------- */
+  .cost{position:relative;padding:clamp(96px,13vw,176px) 0;border-top:1px solid rgba(255,255,255,.08);overflow:hidden}
+  .cost-head{display:grid;grid-template-columns:.9fr 1.1fr;gap:7vw;align-items:center}
+  .cost-head h2{font-family:var(--fontDisplay);font-weight:300;text-transform:uppercase;font-size:clamp(32px,4.6vw,68px);line-height:1.02;letter-spacing:.06em;text-wrap:balance}
+  .cost-head .body p{font-size:18px;line-height:1.75;color:rgba(255,255,255,.74)}
+  .cost-grid{display:grid;grid-template-columns:1fr;gap:1px;border:1px solid var(--line);margin-top:60px}
+  .expose,.seats{position:relative;padding:clamp(30px,3.4vw,40px);overflow:hidden}
+  .seats{box-shadow:-1px 0 0 var(--line);display:flex;flex-direction:column;justify-content:center}
+  .expose .edots,.seats .sdots2{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.8) .8px,transparent 1px);background-size:11px 11px;opacity:.14;-webkit-mask-image:linear-gradient(160deg,#000,transparent 64%);mask-image:linear-gradient(160deg,#000,transparent 64%)}
+  .seats .sdots2{-webkit-mask-image:radial-gradient(circle at 88% 14%,#000,transparent 66%);mask-image:radial-gradient(circle at 88% 14%,#000,transparent 66%)}
+  .ecap,.scap{position:relative;font-family:var(--fontMono);font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .esub{position:relative;font-family:var(--fontMono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);margin-bottom:28px}
+  .exrows{position:relative;display:flex;flex-direction:column;gap:20px}
+  .exrow{display:flex;flex-direction:column;gap:9px}
+  .exrow .ehd{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--fontMono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .exrow .ehd b{color:#fff;font-weight:500;letter-spacing:.02em}
+  .exrow .ehd .ev{color:#fff;font-variant-numeric:tabular-nums}
+  .exrow .etrack{height:10px;border:1px solid var(--line);border-radius:2px;position:relative;overflow:hidden;background:rgba(255,255,255,.04)}
+  .exrow .efill{position:absolute;left:0;top:0;bottom:0;width:var(--w,20%);background:rgba(255,255,255,.82);transition:width 1.4s var(--ease) .2s}
+  .exrow.you .efill{background:rgba(255,255,255,.32)}
+  .reveal:not(.in) .exrow .efill{width:0}
+  .expose-line{position:relative;margin-top:32px;font-family:var(--fontDisplay);font-weight:300;text-transform:uppercase;font-size:clamp(17px,1.9vw,23px);line-height:1.22;letter-spacing:.05em;color:rgba(255,255,255,.42);max-width:32ch;text-wrap:balance}
+  .expose-line em{font-style:normal;color:#fff}
+  .seatdots{position:relative;display:flex;gap:12px;margin-bottom:26px}
+  .seatdots .sd{width:15px;height:15px;border-radius:50%;border:1px solid var(--lineStrong)}
+  .seatdots .sd.filled{background:#fff;border-color:#fff}
+  .seatdots .sd.open{animation:seatpulse 3.4s ease-in-out infinite}
+  @keyframes seatpulse{0%,100%{box-shadow:0 0 0 1px rgba(255,255,255,.35)}50%{box-shadow:0 0 0 3px rgba(255,255,255,.12)}}
+  .seats .snum{position:relative;font-family:var(--fontDisplay);font-weight:300;text-transform:uppercase;font-size:clamp(30px,3.8vw,50px);line-height:1.06;letter-spacing:.03em}
+  .seats .snum em{font-style:normal;color:#fff}
+  .seats .sline{position:relative;color:rgba(255,255,255,.66);font-size:15px;line-height:1.7;max-width:36ch;margin-top:16px}
+  .seats .scta{position:relative;margin-top:28px}
+  @media (max-width:980px){
+    .cost-head{grid-template-columns:1fr;gap:24px}
+    .cost-grid{grid-template-columns:1fr}
+    .seats{box-shadow:0 -1px 0 var(--line)}
+  }
+  @media (max-width:560px){
+    .cost{padding:78px 0}
+    .cost-head h2{font-size:clamp(30px,8.4vw,40px);letter-spacing:.04em}
+  }
+
+  /* ---------- 05 · THE PRODUCT (flow) ---------- */
+  .pf{position:relative;padding:clamp(96px,13vw,180px) 0;border-top:1px solid rgba(255,255,255,.08)}
+  .pf-head{max-width:64ch;margin-bottom:24px}
+  .pf-head h2{font-family:var(--fontDisplay);font-weight:300;text-transform:uppercase;font-size:clamp(32px,4.6vw,68px);line-height:1.02;letter-spacing:.06em;text-wrap:balance}
+  .pf-head p{font-size:18px;line-height:1.75;color:rgba(255,255,255,.74);margin-top:22px;max-width:54ch}
+  .pf-row{display:grid;grid-template-columns:.82fr 1.18fr;gap:6vw;align-items:center;padding:clamp(46px,5.4vw,78px) 0;border-top:1px solid var(--line)}
+  .pf-row.flip .pf-copy{order:2}
+  .pf-row.flip .pf-demo{order:1}
+  .pf-copy .kicker{margin-bottom:18px}
+  .pf-copy h3{font-family:var(--fontDisplay);font-weight:300;text-transform:uppercase;font-size:clamp(26px,3vw,42px);line-height:1.04;letter-spacing:.04em;text-wrap:balance}
+  .pf-copy p{font-size:16px;line-height:1.7;color:rgba(255,255,255,.72);margin-top:18px;max-width:44ch}
+  .pf-feat{margin-top:26px;display:flex;flex-direction:column;gap:13px}
+  .pf-feat .ft{display:flex;gap:13px;font-size:14px;color:var(--muted);line-height:1.55;max-width:46ch}
+  .pf-feat .ft b{color:#fff;font-weight:500}
+  .pf-feat .ft .fd{width:5px;height:5px;border-radius:50%;background:var(--lineStrong);flex:0 0 auto;margin-top:7px}
+  .pf-illus{margin-top:14px;font-family:var(--fontMono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+
+  /* terminal card */
+  .term{border:1px solid var(--lineStrong);border-radius:4px;overflow:hidden;background:rgba(255,255,255,.015)}
+  .term-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px solid var(--line);font-family:var(--fontMono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+  .term-bar .ttl{display:flex;align-items:center;gap:9px;color:#fff}
+  .term-bar .ttl .d{width:6px;height:6px;border-radius:50%;background:#fff;box-shadow:0 0 8px #fff}
+  .term-body{padding:20px 22px}
+
+  /* sense bars */
+  .nbar{display:flex;align-items:center;gap:14px;padding:8px 0}
+  .nbar .nm{width:104px;font-size:13px;color:var(--muted);flex:0 0 auto}
+  .nbar .tk{flex:1;height:9px;border:1px solid var(--line);border-radius:2px;overflow:hidden;background:rgba(255,255,255,.03)}
+  .nbar .fl{display:block;height:100%;width:var(--w);background:rgba(255,255,255,.3)}
+  .reveal:not(.in) .nbar .fl{width:0}
+  .nbar .fl{transition:width 1.1s var(--ease)}
+  .nbar .vl{width:42px;text-align:right;font-family:var(--fontMono);font-size:11px;color:var(--muted);flex:0 0 auto;font-variant-numeric:tabular-nums}
+  .nbar.you .nm,.nbar.you .vl{color:#fff}
+  .nbar.you .fl{background:rgba(255,255,255,.85)}
+  .nbar.miss .fl{background:repeating-linear-gradient(45deg,rgba(255,255,255,.2),rgba(255,255,255,.2) 3px,transparent 3px,transparent 6px)}
+  .nbar.miss .nm,.nbar.miss .vl{color:var(--faint)}
+
+  /* simulate */
+  .sim-eng{display:flex;flex-direction:column;gap:6px;padding:9px 0}
+  .sim-eng .eh{display:flex;justify-content:space-between;font-family:var(--fontMono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .sim-eng .eh b{color:#fff;font-weight:500}
+  .sim-eng .pb{height:6px;border-radius:2px;overflow:hidden}
+  .sim-eng .pb.pred{border:1px dashed var(--lineStrong)}
+  .sim-eng .pb.pred i{display:block;height:100%;width:var(--w);background:rgba(255,255,255,.14)}
+  .sim-eng .pb.meas i{display:block;height:100%;width:var(--w);background:rgba(255,255,255,.82)}
+  .reveal:not(.in) .sim-eng .pb i{width:0}
+  .sim-eng .pb i{transition:width 1.1s var(--ease)}
+  .sim-legend{display:flex;gap:18px;margin-top:14px;font-family:var(--fontMono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .sim-legend span{display:flex;align-items:center;gap:7px}
+  .sim-legend i{width:14px;height:6px;border-radius:2px}
+  .sim-legend i.p{border:1px dashed var(--lineStrong)}
+  .sim-legend i.m{background:rgba(255,255,255,.82)}
+  .sim-res{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:3px;overflow:hidden;margin-top:18px}
+  .sim-cell{background:#000;padding:16px 14px}
+  .sim-cell .k{font-family:var(--fontMono);font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+  .sim-cell .v{font-family:var(--fontDisplay);font-weight:300;font-size:30px;letter-spacing:.01em;margin-top:8px;line-height:1}
+  .sim-cell .s{font-size:11px;color:var(--muted);margin-top:6px}
+
+  /* author */
+  .auth{display:grid;grid-template-columns:1fr 1.12fr;gap:1px;background:var(--line);border:1px solid var(--lineStrong);border-radius:4px;overflow:hidden}
+  .auth-l,.auth-r{background:#000;padding:20px 22px}
+  .auth-sub{display:flex;justify-content:space-between;font-family:var(--fontMono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .src{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-top:1px solid var(--line);cursor:pointer;user-select:none}
+  .src .sn{font-size:13.5px;color:#fff;transition:color .3s}
+  .src .sw{width:34px;height:18px;border-radius:999px;border:1px solid var(--lineStrong);position:relative;flex:0 0 auto;transition:background .3s}
+  .src .sw::after{content:"";position:absolute;top:1px;left:1px;width:14px;height:14px;border-radius:50%;background:#fff;transition:transform .3s,background .3s;transform:translateX(16px)}
+  .src.off .sn{color:var(--faint)}
+  .src.off .sw{background:transparent}
+  .src.off .sw::after{transform:translateX(0);background:var(--faint)}
+  .auth-hint{margin-top:16px;font-family:var(--fontMono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);line-height:1.7}
+  .auth-abar{display:flex;justify-content:space-between;align-items:center;gap:10px;font-family:var(--fontMono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+  .auth-abar .ae{display:flex;align-items:center;gap:8px}
+  .auth-abar .ae .d{width:6px;height:6px;border-radius:50%;background:#fff;box-shadow:0 0 8px #fff}
+  .auth-abar .acc{padding:4px 11px;border-radius:999px;border:1px solid var(--lineStrong);color:#fff;white-space:nowrap;transition:.3s}
+  .auth-abar .acc.bad{border-color:#fff;background:#fff;color:#000}
+  .auth-q{font-size:13px;color:var(--muted);font-style:italic;margin-bottom:14px;line-height:1.5}
+  .auth-a{font-size:15px;line-height:1.7;color:rgba(255,255,255,.9)}
+  .auth-a .ok{color:rgba(255,255,255,.9)}
+  .auth-a .err{color:#fff;border-bottom:1px solid #fff;padding-bottom:1px}
+  .auth-foot{display:flex;justify-content:space-between;margin-top:18px;padding-top:14px;border-top:1px solid var(--line);font-family:var(--fontMono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+  .auth-foot b{color:#fff}
+
+  .ws-cta{margin-top:52px;display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+  .ws-cta .note{font-family:var(--fontMono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+  @media (max-width:980px){
+    .pf-row{grid-template-columns:1fr;gap:32px}
+    .pf-row.flip .pf-copy{order:1}
+    .pf-row.flip .pf-demo{order:2}
+    .auth{grid-template-columns:1fr}
+  }
+  @media (max-width:560px){
+    .pf{padding:78px 0}
+    .pf-head h2{font-size:clamp(30px,8.4vw,40px);letter-spacing:.04em}
+    .sim-res{grid-template-columns:1fr}
+    .nbar .nm{width:80px}
+  }
 </style>
 </head>
 <body>
@@ -466,11 +608,12 @@
       </h1>
     </div>
     <div class="hero-copy">
-      <p>Your buyers ask AI which brand to choose. AI names <span class="stat">one</span>. <span class="stat">Perceptivity</span> shows you what AI says about your brand — and helps you change it.</p>
+      <p>Your buyers ask AI which paint, which car, which card. AI answers with <span class="stat">one</span> brand. <span class="stat">Perceptivity</span> shows you what AI says about yours — and gives you the system to change it.</p>
       <div class="hero-cta">
-        <a class="btn primary btn-lg" href="reveal.html">See your category <span class="arrow">→</span></a>
-        <a class="btn btn-lg" href="#how">How it works</a>
+        <a class="btn primary btn-lg" href="reveal.html">See what AI says <span class="arrow">→</span></a>
+        <a class="btn btn-lg" href="demo.html">Book a walkthrough</a>
       </div>
+      <p class="hero-note">Free · 60 seconds · your category, scanned live</p>
     </div>
     <div class="scrollcue" aria-hidden="true"><i></i><i></i><i></i></div>
   </section>
@@ -491,15 +634,15 @@
       <div class="shift-cards">
         <div class="shift-card reveal">
           <div class="dots"></div>
-          <div class="lab">The old funnel</div>
-          <h3>Ten blue links</h3>
-          <p>Buyers compared options themselves. Everything competed in plain sight. You optimised the page.</p>
+          <div class="lab">How buying used to work</div>
+          <h3>They compared</h3>
+          <p>Your buyer opened a dozen tabs, read the reviews, built a shortlist. You were in plain sight — and could earn your place.</p>
         </div>
         <div class="shift-card new reveal" data-delay="1">
           <div class="dots"></div>
-          <div class="lab">The new funnel</div>
-          <h3>One named brand</h3>
-          <p>AI reads the category and recommends one brand. Now you optimise the answer.</p>
+          <div class="lab">How buying works now</div>
+          <h3>AI decides</h3>
+          <p>Your buyer asks one question and trusts one answer. If it doesn't name you, you're off the list — and you never see it happen.</p>
         </div>
       </div>
 
@@ -750,12 +893,121 @@
     </div>
   </section>
 
-  <!-- ============ 05 · THE INDIA EDGE ============ -->
-  <section class="hiw" id="india" data-screen-label="05 India">
+  <!-- ============ 05 · THE PRODUCT (Sense / Simulate / Author) ============ -->
+  <section class="pf" id="product" data-screen-label="05 The Product">
+    <div class="container">
+      <div class="pf-head reveal">
+        <div class="kicker">05 / The product</div>
+        <h2>The loop, working.</h2>
+        <p>See the answer AI gives today. Forecast what a campaign will change before you spend a rupee. Then ground AI in your own truth, so it quotes you instead of guessing.</p>
+      </div>
+
+      <!-- SENSE -->
+      <div class="pf-row reveal">
+        <div class="pf-copy">
+          <div class="kicker">Sense</div>
+          <h3>See who AI names first.</h3>
+          <p>Every buyer question, every engine, every morning. You wake up to who got named, who got cited, and what changed overnight.</p>
+          <div class="pf-feat">
+            <div class="ft"><span class="fd"></span><span><b>Share of answer &amp; position</b> — who's named, who's cited, where you rank.</span></div>
+            <div class="ft"><span class="fd"></span><span><b>Languages &amp; surfaces</b> — Hinglish and regional, plus India's retail-AI assistants.</span></div>
+            <div class="ft"><span class="fd"></span><span><b>Overnight alerts</b> — the morning a rival takes your place, you see it.</span></div>
+          </div>
+        </div>
+        <div class="pf-demo">
+          <div class="term">
+            <div class="term-bar"><span class="ttl"><span class="d"></span>Who AI names first</span><span>7 engines · India</span></div>
+            <div class="term-body">
+              <div class="nbar"><span class="nm">Category leader</span><span class="tk"><span class="fl" style="--w:74%"></span></span><span class="vl">28%</span></div>
+              <div class="nbar"><span class="nm">Rival two</span><span class="tk"><span class="fl" style="--w:58%"></span></span><span class="vl">22%</span></div>
+              <div class="nbar you"><span class="nm">You</span><span class="tk"><span class="fl" style="--w:50%"></span></span><span class="vl">19%</span></div>
+              <div class="nbar"><span class="nm">Rival three</span><span class="tk"><span class="fl" style="--w:34%"></span></span><span class="vl">13%</span></div>
+              <div class="nbar miss"><span class="nm">Not named</span><span class="tk"><span class="fl" style="--w:46%"></span></span><span class="vl">18%</span></div>
+            </div>
+          </div>
+          <p class="pf-illus">Illustrative · your category · model outputs, not a live query</p>
+        </div>
+      </div>
+
+      <!-- SIMULATE -->
+      <div class="pf-row flip reveal">
+        <div class="pf-copy">
+          <div class="kicker">Simulate</div>
+          <h3>Know what works before you spend.</h3>
+          <p>Name the move — a comparison article, a PR placement, a pricing fix. We forecast the lift per engine before you commit budget, then measure predicted against actual. The model compounds.</p>
+          <div class="pf-feat">
+            <div class="ft"><span class="fd"></span><span><b>Per-engine forecast</b> — expected lift for each move, before you spend.</span></div>
+            <div class="ft"><span class="fd"></span><span><b>Predicted vs measured</b> — every cycle sharpens the next forecast.</span></div>
+          </div>
+        </div>
+        <div class="pf-demo">
+          <div class="term">
+            <div class="term-bar"><span class="ttl"><span class="d"></span>Predicted lift · per engine</span><span>Model output</span></div>
+            <div class="term-body">
+              <div class="sim-eng"><div class="eh"><b>ChatGPT</b><span>+3.4pp</span></div><div class="pb pred"><i style="--w:85%"></i></div><div class="pb meas"><i style="--w:78%"></i></div></div>
+              <div class="sim-eng"><div class="eh"><b>Perplexity</b><span>+2.8pp</span></div><div class="pb pred"><i style="--w:70%"></i></div><div class="pb meas"><i style="--w:66%"></i></div></div>
+              <div class="sim-eng"><div class="eh"><b>Gemini</b><span>+3.0pp</span></div><div class="pb pred"><i style="--w:75%"></i></div><div class="pb meas"><i style="--w:62%"></i></div></div>
+              <div class="sim-eng"><div class="eh"><b>Google AIO</b><span>+3.5pp</span></div><div class="pb pred"><i style="--w:88%"></i></div><div class="pb meas"><i style="--w:80%"></i></div></div>
+              <div class="sim-legend"><span><i class="p"></i>Predicted</span><span><i class="m"></i>Measured</span></div>
+            </div>
+          </div>
+          <div class="sim-res">
+            <div class="sim-cell"><div class="k">Predicted net</div><div class="v">+3.2pp</div><div class="s">answer share</div></div>
+            <div class="sim-cell"><div class="k">Measured net</div><div class="v">+2.9pp</div><div class="s">answer share</div></div>
+            <div class="sim-cell"><div class="k">Forecast error</div><div class="v">0.3pp</div><div class="s">within ±8% target</div></div>
+          </div>
+          <p class="pf-illus">Illustrative · your category · all figures are model outputs</p>
+        </div>
+      </div>
+
+      <!-- AUTHOR -->
+      <div class="pf-row reveal">
+        <div class="pf-copy">
+          <div class="kicker">Author</div>
+          <h3>Don't just watch the answer. Author it.</h3>
+          <p>Feed the engine your canonical truth — pricing, approved claims, spec sheets, positioning. It stops guessing and starts quoting you. Toggle a source off to watch the answer drift back to a rival's framing.</p>
+          <div class="pf-feat">
+            <div class="ft"><span class="fd"></span><span><b>Try it →</b> switch a source off on the right and watch the live answer drift.</span></div>
+          </div>
+        </div>
+        <div class="pf-demo">
+          <div class="auth">
+            <div class="auth-l">
+              <div class="auth-sub"><span>Your source of truth</span><span id="authCount">5 / 5 synced</span></div>
+              <div id="authSources">
+                <div class="src" data-k="price"><span class="sn">Current pricing</span><span class="sw"></span></div>
+                <div class="src" data-k="claims"><span class="sn">Approved claims</span><span class="sw"></span></div>
+                <div class="src" data-k="specs"><span class="sn">Product specs</span><span class="sw"></span></div>
+                <div class="src" data-k="support"><span class="sn">Service &amp; support</span><span class="sw"></span></div>
+                <div class="src" data-k="pos"><span class="sn">Positioning brief</span><span class="sw"></span></div>
+              </div>
+              <p class="auth-hint">↑ Toggle a source off to see what AI says when it can't read your truth.</p>
+            </div>
+            <div class="auth-r">
+              <div class="auth-abar"><span class="ae"><span class="d"></span>ChatGPT · live answer</span><span class="acc" id="authAcc">Accuracy 100%</span></div>
+              <div class="auth-q">"What should a buyer know about your brand — price, quality and support?"</div>
+              <div class="auth-a" id="authAnswer"></div>
+              <div class="auth-foot"><span id="authGround">Grounded in your truth</span><span><b id="authErr">0</b> errors</span></div>
+            </div>
+          </div>
+          <p class="pf-illus">Illustrative · grounding mechanic, not a live query</p>
+        </div>
+      </div>
+
+      <div class="ws-cta reveal" data-delay="1">
+        <a class="btn primary btn-lg" href="reveal.html">See your own read <span class="arrow">→</span></a>
+        <span class="note">Free · your category · no card</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ 06 · THE INDIA EDGE ============ -->
+  <section class="hiw" id="india" data-screen-label="06 India">
     <div class="container">
       <div class="india-head reveal">
         <div>
-          <div class="kicker">05 / India</div>
+          <div class="kicker">06 / India</div>
           <h2>Indian consumers don't ask in english</h2>
         </div>
         <div class="body">
@@ -808,12 +1060,46 @@
     </div>
   </section>
 
-  <!-- ============ 05 · THE TEAM / TRUST ============ -->
-  <section class="scene" id="team" data-screen-label="06 The Team">
+  <!-- ============ 07 · THE COST OF WAITING (honest urgency) ============ -->
+  <section class="cost" id="cost" data-screen-label="07 The Cost of Waiting">
+    <div class="container">
+      <div class="cost-head reveal">
+        <div>
+          <div class="kicker">07 / The cost of waiting</div>
+          <h2>Every quarter you wait, the gap is harder to close.</h2>
+        </div>
+        <div class="body">
+          <p>AI builds tomorrow's answers from the brands it already trusts today. The longer a rival owns the answer, the more it costs you to take it back.</p>
+        </div>
+      </div>
+
+      <div class="cost-grid reveal" data-delay="1">
+        <div class="expose">
+          <div class="edots"></div>
+          <div class="ecap">Who AI names in your category</div>
+          <div class="esub">Illustrative · Decorative paints, India · 10 buyer questions</div>
+          <div class="exrows">
+            <div class="exrow">
+              <div class="ehd"><b>The category leader</b><span class="ev">named in 6 of 10</span></div>
+              <div class="etrack"><span class="efill" style="--w:60%"></span></div>
+            </div>
+            <div class="exrow you">
+              <div class="ehd"><span>A brand that waited</span><span class="ev">named in 2 of 10</span></div>
+              <div class="etrack"><span class="efill" style="--w:20%"></span></div>
+            </div>
+          </div>
+          <p class="expose-line">The brand AI names today <em>becomes the brand AI quotes tomorrow.</em></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 08 · THE TEAM / TRUST ============ -->
+  <section class="scene" id="team" data-screen-label="08 The Team">
     <div class="container">
       <div class="trust-head reveal">
         <div>
-          <div class="kicker">06 / Who's behind it</div>
+          <div class="kicker">08 / Who's behind it</div>
           <h2>We've been on both sides of the answer.</h2>
         </div>
         <p>Built by marketers who've carried the number, and engineers from the search and recommendation teams that decide which brand gets named.</p>
@@ -850,12 +1136,12 @@
   </section>
 
   <!-- ============ 06 · THE BRIEF (newsletter) ============ -->
-  <section class="brief" id="brief" data-screen-label="07 The Brief">
+  <section class="brief" id="brief" data-screen-label="09 The Brief">
     <div class="container">
       <div class="brief-card reveal">
         <div class="bdots"></div>
         <div class="brief-l">
-          <div class="kicker">07 / The brief</div>
+          <div class="kicker">09 / The brief</div>
           <h2>Machine&nbsp;Readable</h2>
           <p class="lede">A weekly brief on what AI is saying about brands — and what to do about it. Five minutes, every Tuesday.</p>
           <form class="brief-form" id="briefForm" novalidate>
@@ -885,7 +1171,7 @@
   </section>
 
   <!-- ============ 07 · OWN THE ANSWER ============ -->
-  <section class="final" id="truth" data-screen-label="08 Own The Answer">
+  <section class="final" id="truth" data-screen-label="10 Own The Answer">
     <div class="final-halo" data-drift="0.06"></div>
     <div class="reveal">
       <span class="beyond">Beyond SEO · Beyond search · Beyond opinion</span>
@@ -1294,6 +1580,57 @@
     window.addEventListener('message', e=>{ const t=e&&e.data&&e.data.type; if(t==='__activate_edit_mode') open(); else if(t==='__deactivate_edit_mode') close(); });
     try{ window.parent.postMessage({type:'__edit_mode_available'},'*'); }catch(e){}
   })();
+</script>
+
+<!-- 05 · Author-the-answer grounding demo -->
+<script>
+(function(){
+  const sources = document.getElementById('authSources');
+  if(!sources) return;
+  // each source maps to one sentence: grounded (true) vs drifted (when the source is off)
+  const CLAIMS = {
+    price:   { ok:'Pricing is current and matches your latest list.', drift:'The price shown is nearly a year out of date.', wrong:true },
+    claims:  { ok:'Key benefits are described exactly as you approved them.', drift:'The benefits are vague and partly mis-stated.', wrong:true },
+    specs:   { ok:'The product details are complete and up to date.', drift:'A discontinued option is still listed as available.', wrong:true },
+    support: { ok:'Service and support coverage is well represented.', drift:'Support is described as thin outside the metros.', wrong:true },
+    pos:     { ok:'Positioned as a premium choice in its category.', drift:'Framed as a budget alternative to its rivals.', wrong:true }
+  };
+  const order = ['price','claims','specs','support','pos'];
+  const ansEl  = document.getElementById('authAnswer');
+  const accEl  = document.getElementById('authAcc');
+  const errEl  = document.getElementById('authErr');
+  const cntEl  = document.getElementById('authCount');
+  const grndEl = document.getElementById('authGround');
+  const state  = { price:true, claims:true, specs:true, support:true, pos:true };
+
+  function render(){
+    const on = order.filter(k=>state[k]);
+    const off = order.filter(k=>!state[k]);
+    // build the answer in reading order
+    ansEl.innerHTML = order.map(k=>{
+      const c = CLAIMS[k];
+      return state[k]
+        ? '<span class="ok">'+c.ok+'</span>'
+        : '<span class="err">'+c.drift+'</span>';
+    }).join(' ');
+    const acc = Math.round(on.length / order.length * 100);
+    accEl.textContent = 'Accuracy ' + acc + '%';
+    accEl.classList.toggle('bad', off.length>0);
+    errEl.textContent = off.length;
+    cntEl.textContent = on.length + ' / ' + order.length + ' synced';
+    grndEl.textContent = off.length ? 'Drifting to hallucination' : 'Grounded in your truth';
+  }
+
+  sources.querySelectorAll('.src').forEach(row=>{
+    row.addEventListener('click', ()=>{
+      const k = row.dataset.k;
+      state[k] = !state[k];
+      row.classList.toggle('off', !state[k]);
+      render();
+    });
+  });
+  render();
+})();
 </script>
 </body>
 </html>

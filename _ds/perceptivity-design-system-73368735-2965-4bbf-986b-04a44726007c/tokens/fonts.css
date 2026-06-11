@@ -1,0 +1,10 @@
+/* ============================================================
+   PERCEPTIVITY — WEBFONTS
+   Display:  Space Grotesk (light grotesk, ALL CAPS, weight 300)
+   Body:     Inter
+   Mono:     Space Mono (kickers, indices, captions)
+   Loaded from Google Fonts CDN. To vendor the binaries locally,
+   replace this @import with @font-face rules pointing at /assets/fonts.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap');
