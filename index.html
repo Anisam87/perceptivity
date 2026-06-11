@@ -5,6 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="description" content="Perceptivity shows you what AI says about your brand — and helps you change it." />
 <title>Perceptivity — Be the brand AI names</title>
+
+<!-- Identity / theme -->
+<meta name="theme-color" content="#000000" />
+<meta name="color-scheme" content="dark" />
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<link rel="icon" type="image/png" sizes="48x48" href="favicon-48.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+<!-- Social sharing -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Perceptivity" />
+<meta property="og:title" content="Perceptivity — Be the brand AI names" />
+<meta property="og:description" content="Your buyers ask AI which paint, which car, which card. Perceptivity shows you what AI says about your brand — and gives you the system to change it." />
+<meta property="og:image" content="og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Perceptivity — Be the brand AI names" />
+<meta name="twitter:description" content="See what AI says about your brand — and change it. Built for India's languages and voice search." />
+<meta name="twitter:image" content="og-image.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -99,8 +120,15 @@
   }
   .hero h1 .line{display:block;overflow:hidden}
   .hero h1 .line span{display:block}
+  /* line 2: answer-engine wordmark cycles in place of "AI" — width morphs per logo */
+  .hero h1 .line span.hl2{display:inline-flex;align-items:center;gap:.34em;white-space:nowrap}
+  .engslot{position:relative;display:inline-block;flex:0 0 auto;height:.72em;width:var(--ew,3.2em);margin:.04em 0;transition:width .55s var(--ease)}
+  .engslot img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:left center;opacity:0;filter:brightness(0) invert(1);transition:opacity .55s var(--ease);will-change:opacity}
+  .engslot img.on{opacity:1}
+  html[data-motion="off"] .engslot img{transition:none}
   .hero.lit h1 .line span{animation:rise 1.5s var(--ease) both}
   .hero.lit h1 .line:nth-child(2) span{animation-delay:.16s}
+  .hero.lit h1 .line:nth-child(3) span{animation-delay:.32s}
   @keyframes rise{from{transform:translateY(112%);opacity:0}to{transform:translateY(0);opacity:1}}
   .hero .kicker{margin-bottom:30px}
   .hero.lit .kicker{animation:fade 1.4s var(--ease) .2s both}
@@ -263,7 +291,7 @@
   .india-head h2{font-family:var(--fontDisplay);font-weight:300;text-transform:uppercase;font-size:clamp(32px,4.6vw,68px);line-height:1.02;letter-spacing:.06em;text-wrap:balance}
   .india-head .body p{font-size:18px;line-height:1.75;color:rgba(255,255,255,.74)}
   .india-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:1px;border:1px solid var(--line);margin-top:60px}
-  .india-points{display:grid;grid-template-rows:repeat(3,1fr)}
+  .india-points{display:grid;grid-template-rows:repeat(4,1fr)}
   .ipoint{position:relative;padding:30px 34px;display:flex;gap:22px;align-items:flex-start}
   .ipoint+.ipoint{box-shadow:0 -1px 0 var(--line)}
   .ipoint .ix{font-family:var(--fontMono);font-size:10px;letter-spacing:.2em;color:var(--faint);padding-top:5px;flex:0 0 24px}
@@ -273,6 +301,19 @@
   .langs{position:relative;box-shadow:-1px 0 0 var(--line);padding:34px;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
   .langs .ldots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.8) .8px,transparent 1px);background-size:11px 11px;opacity:.16;-webkit-mask-image:radial-gradient(circle at 70% 30%,#000,transparent 72%);mask-image:radial-gradient(circle at 70% 30%,#000,transparent 72%)}
   .langs .lcap{position:relative;font-family:var(--fontMono);font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted);margin-bottom:20px}
+  /* voice waveform — the buyer asks out loud */
+  .langs .vwave{position:relative;display:flex;align-items:center;gap:3px;height:20px;margin-bottom:18px}
+  .langs .vwave i{width:3px;border-radius:2px;background:rgba(255,255,255,.5);height:26%;transform-origin:center;animation:vwave 1.2s var(--ease) infinite}
+  .langs .vwave i:nth-child(2){animation-delay:.08s}
+  .langs .vwave i:nth-child(3){animation-delay:.16s}
+  .langs .vwave i:nth-child(4){animation-delay:.24s}
+  .langs .vwave i:nth-child(5){animation-delay:.32s}
+  .langs .vwave i:nth-child(6){animation-delay:.40s}
+  .langs .vwave i:nth-child(7){animation-delay:.48s}
+  .langs .vwave i:nth-child(8){animation-delay:.30s}
+  .langs .vwave i:nth-child(9){animation-delay:.14s}
+  .langs .vwave i:nth-child(10){animation-delay:.05s}
+  @keyframes vwave{0%,100%{height:22%;opacity:.45}50%{height:100%;opacity:1}}
   .lchips{position:relative;display:flex;flex-wrap:wrap;gap:10px}
   .lchip{font-family:var(--fontDisplay);font-size:19px;font-weight:400;letter-spacing:.02em;color:rgba(255,255,255,.32);padding:8px 15px;border:1px solid var(--line);border-radius:999px;transition:color .5s var(--ease),border-color .5s var(--ease),background .5s var(--ease)}
   .lchip.on{color:#000;background:#fff;border-color:#fff}
@@ -601,19 +642,20 @@
     <div class="singularity"></div>
     <div class="hero-terrain"><i></i><i class="t2"></i></div>
     <div class="hero-head">
-      <div class="kicker">The AI answer layer</div>
+      <div class="kicker">India's AI answer layer</div>
       <h1>
         <span class="line"><span>Be the brand</span></span>
-        <span class="line"><span>AI names</span></span>
+        <span class="line"><span class="engslot" id="engSlot" aria-label="ChatGPT, Gemini, Google AI Overviews, Claude, Perplexity and Grok"></span></span>
+        <span class="line"><span class="nm">names</span></span>
       </h1>
     </div>
     <div class="hero-copy">
-      <p>Your buyers ask AI which paint, which car, which card. AI answers with <span class="stat">one</span> brand. <span class="stat">Perceptivity</span> shows you what AI says about yours — and gives you the system to change it.</p>
+      <p>Your buyers ask AI — in Hindi, English, Hinglish. It names <span class="stat">one</span> brand. <span class="stat">Perceptivity</span> makes sure it's yours.</p>
       <div class="hero-cta">
         <a class="btn primary btn-lg" href="reveal.html">See what AI says <span class="arrow">→</span></a>
         <a class="btn btn-lg" href="demo.html">Book a walkthrough</a>
       </div>
-      <p class="hero-note">Free · 60 seconds · your category, scanned live</p>
+      <p class="hero-note">Free · 60 seconds · scanned across India's languages, live</p>
     </div>
     <div class="scrollcue" aria-hidden="true"><i></i><i></i><i></i></div>
   </section>
@@ -847,7 +889,7 @@
         <div class="feat-txt">
           <div class="kicker">Persona models</div>
           <h3>8,000+ personas, modelled on India.</h3>
-          <p>We simulate 8,000+ Indian consumer personas — age, income, language, region, values. So you measure the segment that actually buys from you, not a generic average.</p>
+          <p>We simulate 8,000+ Indian consumer personas — age, income, language, city tier, region, values. So you measure the segment that actually buys from you — vernacular-first, voice-first, price-sensitive — not a generic average.</p>
           <ul class="feat-list">
             <li>Measure perception segment by segment</li>
             <li>Plan against the personas that buy</li>
@@ -1011,7 +1053,7 @@
           <h2>Indian consumers don't ask in english</h2>
         </div>
         <div class="body">
-          <p>They ask in Hindi, Tamil, Hinglish — across a dozen languages. Most tools only watch the English web. We watch the answer in the languages your buyers actually use.</p>
+          <p>They ask in Hindi, Tamil, Hinglish — often out loud, by voice — across a dozen languages. Most tools only watch the English web. We watch the answer in every language and voice your buyers actually use.</p>
         </div>
       </div>
 
@@ -1020,28 +1062,36 @@
           <div class="ipoint">
             <span class="ix">i</span>
             <div>
-              <h4>See what your real market sees</h4>
-              <p>We read the AI answer in Hindi, Tamil, Bengali, Marathi, Telugu and Hinglish — not just English.</p>
+              <h4>Eleven languages, not one</h4>
+              <p>We read the AI answer in Hindi, Tamil, Bengali, Marathi, Telugu, Kannada and Hinglish — not the English web every other tool watches.</p>
             </div>
           </div>
           <div class="ipoint">
             <span class="ix">ii</span>
             <div>
-              <h4>This is where it gets you wrong</h4>
-              <p>Models know less about Indian brands and pricing — so this is where they misname, skip or mis-rank you.</p>
+              <h4>Most of India asks out loud</h4>
+              <p>Voice and spoken AI search lead in regional languages. We track the answer your buyers hear, not just the one they read.</p>
             </div>
           </div>
           <div class="ipoint">
             <span class="ix">iii</span>
             <div>
+              <h4>Modelled on how India buys</h4>
+              <p>Code-mixed queries, tier-2 and tier-3 search, price-first questions — measured the way your real buyer actually asks.</p>
+            </div>
+          </div>
+          <div class="ipoint">
+            <span class="ix">iv</span>
+            <div>
               <h4>Fix the sources India trusts</h4>
-              <p>We map the Indian publishers, reviews and creators the models cite — so you know exactly what to fix.</p>
+              <p>Models know Indian brands less well — so this is where they misname you. We map the publishers and creators they cite, so you know what to fix.</p>
             </div>
           </div>
         </div>
         <div class="langs">
           <div class="ldots"></div>
-          <div class="lcap">A buyer asks — in</div>
+          <div class="vwave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="lcap">A buyer asks — out loud, in</div>
           <div class="lchips" id="lchips">
             <span class="lchip">English</span>
             <span class="lchip">हिंदी</span>
@@ -1056,7 +1106,7 @@
         </div>
       </div>
 
-      <p class="india-moat reveal" data-scrub data-delay="1">Every global tool watches the English web. <em>We watch the languages your market buys in.</em></p>
+      <p class="india-moat reveal" data-scrub data-delay="1">Every global tool watches the English web. <em>We watch the languages, and voices, your market buys in.</em></p>
     </div>
   </section>
 
@@ -1317,6 +1367,46 @@
     requestAnimationFrame(()=>requestAnimationFrame(()=>hero.classList.add('lit')));
   })();
 
+  /* hero headline: cycle the answer-engine wordmark in place of "AI" */
+  (function(){
+    const slot = document.getElementById('engSlot');
+    if (!slot) return;
+    const ENG = [
+      ['chatgpt','ChatGPT'],
+      ['gemini','Gemini'],
+      ['google-ai-overviews','Google AI Overviews'],
+      ['claude','Claude'],
+      ['perplexity','Perplexity'],
+      ['grok','Grok'],
+    ];
+    const imgs = ENG.map(([f, alt], k)=>{
+      const im = document.createElement('img');
+      im.src = 'assets/logos/' + f + '.svg';
+      im.alt = alt; im.decoding = 'async'; im.draggable = false;
+      if (k === 0) im.classList.add('on');
+      slot.appendChild(im);
+      return im;
+    });
+    const setW = im => {
+      if (!im.naturalWidth || !im.naturalHeight) return;
+      const h = slot.getBoundingClientRect().height;
+      if (h) slot.style.setProperty('--ew', (h * im.naturalWidth / im.naturalHeight).toFixed(1) + 'px');
+    };
+    const whenReady = (im, cb) => { if (im.complete && im.naturalWidth) cb(); else im.addEventListener('load', cb, { once:true }); };
+    whenReady(imgs[0], ()=>setW(imgs[0]));
+    let i = 0;
+    function step(){
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (document.documentElement.dataset.motion === 'off') return;
+      const cur = imgs[i % imgs.length];
+      i++;
+      const nxt = imgs[i % imgs.length];
+      whenReady(nxt, ()=>{ cur.classList.remove('on'); nxt.classList.add('on'); setW(nxt); });
+    }
+    setInterval(step, 2300);
+    addEventListener('resize', ()=>setW(imgs[i % imgs.length]), { passive:true });
+  })();
+
   /* black box: buyer questions resolve into a single named answer */
   (function(){
     const QA = [
@@ -1387,14 +1477,14 @@
     if (!chips.length || !qEl) return;
     // romanised queries kept legible for any reader; one Devanagari example
     const Q = [
-      'EN — “Best EV to buy in India?”',
+      'EN — “Best EV to buy in India under 15 lakh?”',
       'HI — “सबसे अच्छी फैमिली SUV कौन सी है?”',
-      'TA — “Best phone under ₹20,000?”',
-      'BN — “Top health insurance plan?”',
-      'MR — “Best home loan rate?”',
-      'TE — “Which laptop for students?”',
-      'KN — “Safest small car?”',
-      'Hinglish — “Konsa credit card best hai?”',
+      'TA — “Best phone under ₹20,000 enna?”',
+      'BN — “Top health insurance plan ki?”',
+      'MR — “Best home loan rate konta?”',
+      'TE — “Students ki best laptop edi?”',
+      'KN — “Safest small car yavudu?”',
+      'Hinglish — “Konsa credit card sabse best hai?”',
     ];
     let i = 0;
     function tick(){
@@ -1426,9 +1516,8 @@
   /* ============ TWEAKS — vanilla panel speaking the host edit-mode protocol ============ */
   (function(){
     const DEFAULTS = /*EDITMODE-BEGIN*/{
-      "typeface": "Space Grotesk",
+      "typeface": "Rubik",
       "heroLine1": "Be the brand",
-      "heroLine2": "AI names",
       "indiaHeadline": "Indian consumers don't ask in english",
       "accent": "#ffffff",
       "dotField": 6,
@@ -1449,9 +1538,7 @@
     function apply(){
       applyFont();
       const l1 = document.querySelector('.hero h1 .line:nth-child(1) span');
-      const l2 = document.querySelector('.hero h1 .line:nth-child(2) span');
       if (l1) l1.textContent = T.heroLine1;
-      if (l2) l2.textContent = T.heroLine2;
       const ih = document.querySelector('#india .india-head h2');
       if (ih) ih.textContent = T.indiaHeadline;
       const rs = document.documentElement.style;
@@ -1557,7 +1644,7 @@
     }
 
     sec('Type');   selectRow('Typeface','typeface', FONTS);
-    sec('Copy');   textRow('Hero line 1','heroLine1'); textRow('Hero line 2','heroLine2'); textRow('India headline','indiaHeadline');
+    sec('Copy');   textRow('Hero line 1','heroLine1'); textRow('India headline','indiaHeadline');
     sec('Look');   colorRow('Accent','accent', ['#ffffff','#E6A36B','#6BA8E6','#6BE6A8']); sliderRow('Dot field','dotField',0,45,'%');
     sec('Motion'); toggleRow('Animations','motion');
 
