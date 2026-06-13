@@ -41,7 +41,7 @@
   .cat-mini-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:8px}
   @media (max-width:780px){ .cat-mini-grid{grid-template-columns:repeat(2,1fr)} }
   .cat-mini{
-    padding:16px 16px 18px;border-radius:2px;cursor:none;
+    padding:16px 16px 18px;border-radius:2px;cursor:pointer;
     background:transparent;border:1px solid var(--line);
     transition: border-color .3s var(--ease), background .3s var(--ease);
   }
@@ -83,7 +83,7 @@
   /* Step 4 — question picker */
   .qpicker{display:flex;flex-direction:column;gap:8px;margin-top:6px}
   .qoption{
-    padding:14px 16px;border-radius:2px;cursor:none;
+    padding:14px 16px;border-radius:2px;cursor:pointer;
     background:transparent;border:1px solid var(--line);
     display:flex;justify-content:space-between;align-items:center;gap:14px;
     transition:.3s;

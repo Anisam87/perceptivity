@@ -104,6 +104,25 @@
   .context-card p{color:var(--muted);font-size:15px;line-height:1.7}
   .context-card .mono{color:var(--muted)}
 
+  /* vision horizons — the arc */
+  .arc{padding:70px 0 6px}
+  .arc-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-bottom:36px}
+  .arc-head h2{font-family:var(--fontDisplay);font-size:clamp(30px,4vw,54px);font-weight:300;text-transform:uppercase;line-height:1.0;letter-spacing:.06em}
+  .arc-head p{max-width:40ch;color:var(--muted);font-size:16px;line-height:1.7}
+  .hz-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media (max-width:900px){ .hz-grid{grid-template-columns:1fr} }
+  .hz-card{position:relative;display:flex;flex-direction:column;gap:18px;padding:32px 30px 34px;border-radius:2px;min-height:320px}
+  .hz-card .hz-stage{font-family:var(--fontMono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;gap:14px;color:var(--muted)}
+  .hz-card .hz-stage .st{color:var(--faint)}
+  .hz-card .hz-stage .st.live{color:var(--ink)}
+  .hz-card h3{font-family:var(--fontDisplay);font-size:clamp(27px,2.7vw,34px);font-weight:300;text-transform:uppercase;letter-spacing:.07em;line-height:.98;color:var(--ink)}
+  .hz-card p{color:var(--muted);font-size:15.5px;line-height:1.72;margin-top:auto}
+  .arc-cap{margin-top:22px;font-family:var(--fontMono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+
+  /* method — rigor proof, reuses .beliefs rows */
+  .method{padding:64px 0 4px}
+  .method .arc-head{margin-bottom:6px}
+
   /* CTA */
   .cta-final{padding:54px 48px 60px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:18px;max-width:920px;margin:80px auto 0;border-radius:2px}
   .cta-final h2{font-family:var(--fontDisplay);font-size:clamp(34px,4.6vw,58px);font-weight:300;line-height:1.0;letter-spacing:.06em;max-width:20ch}
@@ -134,8 +153,8 @@
 <section class="container">
   <div class="page-head">
     <span class="kicker reveal">Company</span>
-    <h1 class="display-xl reveal" data-delay="1">We help brands get recommended by AI.</h1>
-    <p class="lede reveal" data-delay="2">Buyers in every category now ask AI before they buy. Perceptivity shows brands what AI says about them — and helps them change it.</p>
+    <h1 class="display-xl reveal" data-delay="1">Machines now decide what your brand means.</h1>
+    <p class="lede reveal" data-delay="2">Perceptivity is the perception engine for the AI era. See what AI believes about your brand, shape the sources it learns from, and increasingly generate the brand-true content it ingests — one engine for the identity machines now describe on your behalf.</p>
     <p class="escalation reveal" data-delay="3">Search engines <em>indexed</em> the web. Social platforms <em>amplified</em> it. AI now <em>interprets</em> it — and tells your buyers what to believe.</p>
   </div>
 
@@ -144,22 +163,48 @@
     <div class="glass mv-card glow-teal reveal">
       <div>
         <div class="label">·  Mission</div>
-        <h2 style="margin-top:18px">Give every brand the power to shape what AI says about it.</h2>
+        <h2 style="margin-top:18px">Give every brand command over how AI understands, represents, and recommends it.</h2>
       </div>
-      <p style="color:var(--ink);opacity:.82;font-size:16.5px;line-height:1.55">Marketers can see every channel they spend on — except the one that now matters most. We exist to fix that.</p>
+      <p style="color:var(--ink);opacity:.82;font-size:16.5px;line-height:1.55">Marketers can see every channel they spend on — except the one that increasingly decides the sale. We exist to close that gap.</p>
     </div>
 
     <div class="glass mv-card glow-amber reveal" data-delay="1">
       <div>
         <div class="label">·  Vision</div>
-        <h2 style="margin-top:18px">Every AI answer should reflect the truth your customers experience.</h2>
+        <h2 style="margin-top:18px">One engine to manage brand identity in the age of AI — from the answer today to the story, the image, and the creative tomorrow.</h2>
       </div>
-      <p style="color:var(--ink);opacity:.82;font-size:16.5px;line-height:1.55">Accurate, current, and faithful to what you actually deliver. Not a hallucination. Not last year's pricing. Not a rival's framing.</p>
+      <p style="color:var(--ink);opacity:.82;font-size:16.5px;line-height:1.55">As AI moves from answering questions to generating what people see, the brands that thrive will author their identity at the source. We're building the place they do it.</p>
     </div>
   </div>
 
   <!-- STATEMENT -->
   <p class="statement reveal">The next brand battlefield is not search. <em>It is perception.</em></p>
+
+  <!-- VISION ARC / HORIZONS -->
+  <div class="arc">
+    <div class="arc-head reveal">
+      <h2>What we're building.</h2>
+      <p>One loop today, a perception engine tomorrow. Three horizons — honestly staged.</p>
+    </div>
+    <div class="hz-grid">
+      <div class="glass hz-card glow-teal reveal">
+        <div class="hz-stage"><span>Horizon 01</span><span class="st live">Live today</span></div>
+        <h3>See</h3>
+        <p>Know what every AI engine believes about you — by engine, market, language, and the queries your buyers actually ask.</p>
+      </div>
+      <div class="glass hz-card glow-amber reveal" data-delay="1">
+        <div class="hz-stage"><span>Horizon 02</span><span class="st live">Shipping now</span></div>
+        <h3>Shape</h3>
+        <p>Author the machine-readable truth engines ingest, and model the highest-leverage move before you spend.</p>
+      </div>
+      <div class="glass hz-card glow-violet reveal" data-delay="2">
+        <div class="hz-stage"><span>Horizon 03</span><span class="st">The frontier</span></div>
+        <h3>Generate</h3>
+        <p>Produce brand-true creative and content — the claims, assets, and narratives AI learns from — so perception is managed at the source, not just monitored.</p>
+      </div>
+    </div>
+    <p class="arc-cap reveal">Horizons 01–02 are live with customers today · Horizon 03 is where we're heading</p>
+  </div>
 
 </section>
 
@@ -168,14 +213,14 @@
   <div class="container">
     <div class="ethos-head reveal">
       <h2>How we work.</h2>
-      <p>Five principles for the team and the product.</p>
+      <p>Six principles for the team and the product.</p>
     </div>
 
     <div class="principles">
       <div class="principle reveal">
         <span class="num">·  01</span>
-        <h3>Forecast before you spend.</h3>
-        <p>Every action comes with a forecast — expected lift, confidence, defensible math.</p>
+        <h3>Model the move, not a number.</h3>
+        <p>Every action comes with a modelled direction and relative magnitude — ranked by leverage, never dressed up as false precision.</p>
         <span class="tag">Product principle</span>
       </div>
 
@@ -215,11 +260,49 @@
       </div>
     </div>
 
+    <!-- METHOD / RIGOR -->
+    <div class="method">
+      <div class="arc-head reveal">
+        <h2>The method.</h2>
+        <p>How we earn the right to a finding — and why a sharp buyer can trust it.</p>
+      </div>
+      <div class="beliefs">
+        <div class="belief reveal">
+          <div class="b-num">·  01 / Query model</div>
+          <div>
+            <h3>We model how India actually asks.</h3>
+            <p>8,000+ India-tuned query profiles span language, city tier, income band, price sensitivity, and voice vs typed — so what we track is your buyer's real question, not a generic English prompt.</p>
+          </div>
+        </div>
+        <div class="belief reveal" data-delay="1">
+          <div class="b-num">·  02 / Multi-engine sampling</div>
+          <div>
+            <h3>We sample across engines, repeatedly.</h3>
+            <p>Answer share is tracked across 10+ AI engines and re-sampled over time, so a single lucky answer never becomes a finding and drift is caught as it happens.</p>
+          </div>
+        </div>
+        <div class="belief reveal" data-delay="2">
+          <div class="b-num">·  03 / Predicted vs measured</div>
+          <div>
+            <h3>The gap is the product.</h3>
+            <p>Every modelled move is logged against the outcome we measure. We never hide the miss — the difference is exactly what sharpens the next estimate.</p>
+          </div>
+        </div>
+        <div class="belief reveal" data-delay="3">
+          <div class="b-num">·  04 / Grounding, not gaming</div>
+          <div>
+            <h3>We move answers by changing the source.</h3>
+            <p>We publish structured, authoritative, machine-readable truth that engines ingest over weeks — never fake reviews, citation farms, or manufactured authority. If we wouldn't show it to a journalist, we don't ship it.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- MANIFESTO -->
     <div class="manifesto reveal" data-delay="2">
       <div class="label">·  Our manifesto</div>
       <h2>The funnel changed. The tools didn't. We built the missing layer.</h2>
-      <p>Marketing was built for buyers who compared ten links. Today's buyer asks, gets one answer, and decides. We make that answer faithful to what you actually are.</p>
+      <p>Marketing was built for buyers who compared ten links. Today's buyer asks once, gets one answer, and decides. Tomorrow's brand won't just optimize that answer — it will generate the world the answer is drawn from. We're building for both.</p>
     </div>
 
     <!-- ORIGIN / CONTEXT -->
@@ -227,19 +310,19 @@
       <div class="glass context-card glow-violet reveal">
         <span class="mono">·  Where we sit</span>
         <h3>Between brand reality and machine perception.</h3>
-        <p>AI describes what your brand appears to be. We close the gap with what it actually is — by changing what AI reads, not gaming what it returns.</p>
+        <p>AI describes what your brand appears to be. We close the gap with what it actually is — by changing what the machines read, not gaming what they return.</p>
       </div>
       <div class="glass context-card glow-teal reveal" data-delay="1">
         <span class="mono">·  Who we serve</span>
-        <h3>Brand and marketing leaders ready to take AI seriously.</h3>
-        <p>CMOs, brand heads, and marketing teams at consumer-facing brands — the people measured on category share.</p>
+        <h3>The leaders measured on category share.</h3>
+        <p>CMOs, brand heads, and insights teams at consumer-facing brands — and the procurement and data-science partners who pressure-test what we claim. We're built to survive that scrutiny.</p>
       </div>
     </div>
 
     <!-- CTA -->
     <div class="glass cta-final glow-amber reveal">
       <span class="kicker">Get started</span>
-      <h2 class="grad">Get your brand recommended.</h2>
+      <h2 class="grad">Take command of your AI perception.</h2>
       <p>Book a demo on your brand. We'll bring your category already scanned.</p>
       <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:14px">
         <a class="btn primary btn-lg" href="demo.html">Get a demo <span class="arrow">→</span></a>

@@ -594,6 +594,40 @@
   .sim-cell .v{font-family:var(--fontDisplay);font-weight:300;font-size:30px;letter-spacing:.01em;margin-top:8px;line-height:1}
   .sim-cell .s{font-size:11px;color:var(--muted);margin-top:6px}
 
+  /* simulate — beta tag + directional confidence bands */
+  .kbeta{display:inline-flex;align-items:center;margin-left:10px;padding:3px 9px 2px;border:1px solid var(--lineStrong);border-radius:999px;font-family:var(--fontMono);font-size:8px;font-weight:500;letter-spacing:.22em;color:#fff;line-height:1}
+  .cbands{display:flex;flex-direction:column;gap:20px;padding:8px 2px 2px}
+  .cband .ch{display:flex;justify-content:space-between;align-items:baseline;gap:14px;font-family:var(--fontMono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .cband .ch b{color:#fff;font-weight:500;letter-spacing:.04em}
+  .cband .ch .conf{color:var(--faint);white-space:nowrap}
+  .cband .ctrack{position:relative;height:11px;border-radius:999px;background:rgba(255,255,255,.045);border:1px solid var(--line)}
+  .cband .rng{position:absolute;top:-1px;bottom:-1px;left:var(--lo);width:var(--w);border-radius:999px;
+    background:linear-gradient(90deg,
+      color-mix(in srgb,var(--accent,#fff) 0%, transparent),
+      color-mix(in srgb,var(--accent,#fff) 60%, transparent) 28%,
+      color-mix(in srgb,var(--accent,#fff) 60%, transparent) 72%,
+      color-mix(in srgb,var(--accent,#fff) 0%, transparent));
+    transition:transform 1s var(--ease);transform-origin:left}
+  .cband.mod .rng{opacity:.5;
+    background:linear-gradient(90deg,
+      color-mix(in srgb,var(--accent,#fff) 0%, transparent),
+      color-mix(in srgb,var(--accent,#fff) 42%, transparent) 42%,
+      color-mix(in srgb,var(--accent,#fff) 42%, transparent) 58%,
+      color-mix(in srgb,var(--accent,#fff) 0%, transparent))}
+  .reveal:not(.in) .cband .rng{transform:scaleX(0)}
+  .cband .cf{display:flex;justify-content:space-between;margin-top:9px;font-family:var(--fontMono);font-size:9px;letter-spacing:.1em;color:var(--faint)}
+  .cband .cf b{color:rgba(255,255,255,.78);font-weight:500}
+  .cband-axis{display:flex;justify-content:space-between;margin-top:6px;padding-top:13px;border-top:1px solid var(--line);font-family:var(--fontMono);font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+
+  /* author — weeks-not-clicks timeline */
+  .auth-tl{margin-top:24px;display:flex;align-items:center;flex-wrap:wrap;gap:9px;font-family:var(--fontMono);font-size:9px;font-weight:500;letter-spacing:.16em;text-transform:uppercase}
+  .auth-tl .tstep{padding:7px 13px;border:1px solid var(--line);border-radius:999px;color:rgba(255,255,255,.82)}
+  .auth-tl .tarr{color:var(--faint)}
+  .auth-tl .tlcap{flex-basis:100%;margin-top:6px;color:var(--faint);letter-spacing:.2em}
+
+  /* engine coverage caption under the logo wall */
+  .engines .eng-note{margin-top:20px;font-family:var(--fontMono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);text-align:center}
+
   /* author */
   .auth{display:grid;grid-template-columns:1fr 1.12fr;gap:1px;background:var(--line);border:1px solid var(--lineStrong);border-radius:4px;overflow:hidden}
   .auth-l,.auth-r{background:#000;padding:20px 22px}
@@ -795,8 +829,8 @@
         <div class="step">
           <div class="sdots"></div>
           <div class="idx">Step 02 · Simulate</div>
-          <h4>Forecast the lift first</h4>
-          <p>Score each move for expected lift before you spend.</p>
+          <h4>Model the move first</h4>
+          <p>Rank each move by expected leverage before you spend.</p>
           <div class="viz">
             <div class="viz-bars">
               <div class="row"><span style="flex:1">Tier-1 citation</span><div class="bar" style="--w:78%"></div><span class="lift">+3.8</span></div>
@@ -841,7 +875,7 @@
         </div>
         <div class="stat">
           <div class="num">10+</div>
-          <div class="lab">answer engines<br>monitored continuously</div>
+          <div class="lab">answer engines<br>tracked</div>
         </div>
         <div class="stat">
           <div class="num">1</div>
@@ -864,6 +898,7 @@
           <div class="logo-cell"><img src="assets/logos/amazon-rufus.svg" alt="Amazon Rufus" loading="lazy"></div>
           <div class="logo-cell"><img src="assets/logos/deepseek.svg" alt="DeepSeek" loading="lazy"></div>
         </div>
+        <p class="eng-note">Coverage depth varies by engine · retail-AI surfaces in expanded rollout</p>
       </div>
     </div>
   </section>
@@ -876,7 +911,7 @@
           <div class="kicker">04 / The engine</div>
           <h2 id="models">Built on two engines.</h2>
         </div>
-        <p>A persona model tuned to India, and a living map of your brand's reputation in AI.</p>
+        <p>A query model tuned to how India asks, and a living map of your brand's reputation in AI.</p>
       </div>
 
       <!-- persona models -->
@@ -884,16 +919,16 @@
         <div class="feat-viz personas">
           <div class="pdots"></div>
           <div class="ptarget"></div>
-          <div class="pnum"><span class="big">8,000+</span><span class="cap">Indian consumer personas</span></div>
+          <div class="pnum"><span class="big">8,000+</span><span class="cap">India-tuned query profiles</span></div>
         </div>
         <div class="feat-txt">
-          <div class="kicker">Persona models</div>
-          <h3>8,000+ personas, modelled on India.</h3>
-          <p>We simulate 8,000+ Indian consumer personas — age, income, language, city tier, region, values. So you measure the segment that actually buys from you — vernacular-first, voice-first, price-sensitive — not a generic average.</p>
+          <div class="kicker">Query profiles</div>
+          <h3>8,000+ India-tuned query profiles.</h3>
+          <p>We model how India actually asks — by language, city tier, income band, price sensitivity, voice vs typed — so the answers we track reflect your real buyer's question, not a generic English prompt.</p>
           <ul class="feat-list">
-            <li>Measure perception segment by segment</li>
-            <li>Plan against the personas that buy</li>
-            <li>Act where it moves your target consumer</li>
+            <li>Track perception across the queries your segments ask</li>
+            <li>Plan against the question patterns that convert</li>
+            <li>Act where it moves your priority segment</li>
           </ul>
         </div>
       </div>
@@ -941,7 +976,7 @@
       <div class="pf-head reveal">
         <div class="kicker">05 / The product</div>
         <h2>The loop, working.</h2>
-        <p>See the answer AI gives today. Forecast what a campaign will change before you spend a rupee. Then ground AI in your own truth, so it quotes you instead of guessing.</p>
+        <p>See the answer AI gives today. Model what a campaign will change before you spend a rupee. Then ground AI in your own truth, so it quotes you instead of guessing.</p>
       </div>
 
       <!-- SENSE -->
@@ -971,34 +1006,42 @@
         </div>
       </div>
 
-      <!-- SIMULATE -->
+      <!-- SIMULATE · BETA -->
       <div class="pf-row flip reveal">
         <div class="pf-copy">
-          <div class="kicker">Simulate</div>
-          <h3>Know what works before you spend.</h3>
-          <p>Name the move — a comparison article, a PR placement, a pricing fix. We forecast the lift per engine before you commit budget, then measure predicted against actual. The model compounds.</p>
+          <div class="kicker">Simulate <span class="kbeta">Beta</span></div>
+          <h3>Model the move before you make it.</h3>
+          <p>Name the move — a comparison article, a PR placement, a pricing fix. We model its expected direction and relative magnitude per engine, so you spend on the highest-leverage action first. The model sharpens as your measured cycles accumulate.</p>
           <div class="pf-feat">
-            <div class="ft"><span class="fd"></span><span><b>Per-engine forecast</b> — expected lift for each move, before you spend.</span></div>
+            <div class="ft"><span class="fd"></span><span><b>Highest-leverage first</b> — rank candidate moves by direction and magnitude, not a single number.</span></div>
             <div class="ft"><span class="fd"></span><span><b>Predicted vs measured</b> — every cycle sharpens the next forecast.</span></div>
           </div>
         </div>
         <div class="pf-demo">
           <div class="term">
-            <div class="term-bar"><span class="ttl"><span class="d"></span>Predicted lift · per engine</span><span>Model output</span></div>
+            <div class="term-bar"><span class="ttl"><span class="d"></span>Candidate moves · expected leverage</span><span>Directional</span></div>
             <div class="term-body">
-              <div class="sim-eng"><div class="eh"><b>ChatGPT</b><span>+3.4pp</span></div><div class="pb pred"><i style="--w:85%"></i></div><div class="pb meas"><i style="--w:78%"></i></div></div>
-              <div class="sim-eng"><div class="eh"><b>Perplexity</b><span>+2.8pp</span></div><div class="pb pred"><i style="--w:70%"></i></div><div class="pb meas"><i style="--w:66%"></i></div></div>
-              <div class="sim-eng"><div class="eh"><b>Gemini</b><span>+3.0pp</span></div><div class="pb pred"><i style="--w:75%"></i></div><div class="pb meas"><i style="--w:62%"></i></div></div>
-              <div class="sim-eng"><div class="eh"><b>Google AIO</b><span>+3.5pp</span></div><div class="pb pred"><i style="--w:88%"></i></div><div class="pb meas"><i style="--w:80%"></i></div></div>
-              <div class="sim-legend"><span><i class="p"></i>Predicted</span><span><i class="m"></i>Measured</span></div>
+              <div class="cbands">
+                <div class="cband">
+                  <div class="ch"><b>Tier-1 citation</b><span class="conf">High confidence</span></div>
+                  <div class="ctrack"><i class="rng" style="--lo:50%;--w:50%"></i></div>
+                  <div class="cf"><span>answer share</span><span><b>+3 to +6pp</b></span></div>
+                </div>
+                <div class="cband">
+                  <div class="ch"><b>Comparison piece</b><span class="conf">High confidence</span></div>
+                  <div class="ctrack"><i class="rng" style="--lo:33.3%;--w:33.3%"></i></div>
+                  <div class="cf"><span>answer share</span><span><b>+2 to +4pp</b></span></div>
+                </div>
+                <div class="cband mod">
+                  <div class="ch"><b>Page refresh</b><span class="conf">Moderate confidence</span></div>
+                  <div class="ctrack"><i class="rng" style="--lo:8.3%;--w:16.7%"></i></div>
+                  <div class="cf"><span>answer share</span><span><b>+0.5 to +1.5pp</b></span></div>
+                </div>
+              </div>
+              <div class="cband-axis"><span>0</span><span>+3pp</span><span>+6pp</span></div>
             </div>
           </div>
-          <div class="sim-res">
-            <div class="sim-cell"><div class="k">Predicted net</div><div class="v">+3.2pp</div><div class="s">answer share</div></div>
-            <div class="sim-cell"><div class="k">Measured net</div><div class="v">+2.9pp</div><div class="s">answer share</div></div>
-            <div class="sim-cell"><div class="k">Forecast error</div><div class="v">0.3pp</div><div class="s">within ±8% target</div></div>
-          </div>
-          <p class="pf-illus">Illustrative · your category · all figures are model outputs</p>
+          <p class="pf-illus">Illustrative · directional estimates, refined against measured outcomes each cycle</p>
         </div>
       </div>
 
@@ -1007,9 +1050,15 @@
         <div class="pf-copy">
           <div class="kicker">Author</div>
           <h3>Don't just watch the answer. Author it.</h3>
-          <p>Feed the engine your canonical truth — pricing, approved claims, spec sheets, positioning. It stops guessing and starts quoting you. Toggle a source off to watch the answer drift back to a rival's framing.</p>
+          <p>We turn your canonical truth — pricing, approved claims, specs, positioning — into the machine-readable sources AI engines actually ingest: structured data, knowledge-graph corrections, authoritative placements. Engines stop guessing because the strongest source in the room is now yours.</p>
           <div class="pf-feat">
-            <div class="ft"><span class="fd"></span><span><b>Try it →</b> switch a source off on the right and watch the live answer drift.</span></div>
+            <div class="ft"><span class="fd"></span><span><b>Try it →</b> switch a source off on the right and see how the answer drifts when your truth isn't readable.</span></div>
+          </div>
+          <div class="auth-tl">
+            <span class="tstep">Publish</span><span class="tarr">→</span>
+            <span class="tstep">Engines re-crawl</span><span class="tarr">→</span>
+            <span class="tstep">Answers shift</span>
+            <span class="tlcap">Answers shift over weeks, not clicks · typically 2–8 weeks per engine</span>
           </div>
         </div>
         <div class="pf-demo">
@@ -1026,7 +1075,7 @@
               <p class="auth-hint">↑ Toggle a source off to see what AI says when it can't read your truth.</p>
             </div>
             <div class="auth-r">
-              <div class="auth-abar"><span class="ae"><span class="d"></span>ChatGPT · live answer</span><span class="acc" id="authAcc">Accuracy 100%</span></div>
+              <div class="auth-abar"><span class="ae"><span class="d"></span>Simulated answer · grounding mechanic</span><span class="acc" id="authAcc">Accuracy 100%</span></div>
               <div class="auth-q">"What should a buyer know about your brand — price, quality and support?"</div>
               <div class="auth-a" id="authAnswer"></div>
               <div class="auth-foot"><span id="authGround">Grounded in your truth</span><span><b id="authErr">0</b> errors</span></div>
@@ -1037,8 +1086,8 @@
       </div>
 
       <div class="ws-cta reveal" data-delay="1">
-        <a class="btn primary btn-lg" href="reveal.html">See your own read <span class="arrow">→</span></a>
-        <span class="note">Free · your category · no card</span>
+        <a class="btn primary btn-lg" href="reveal.html">See what AI says <span class="arrow">→</span></a>
+        <span class="note">Free · 60 seconds · your category</span>
       </div>
     </div>
   </section>

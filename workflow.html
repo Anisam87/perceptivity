@@ -92,15 +92,15 @@
   .psy-row .psy-lbl{font-size:14.5px;color:var(--ink);letter-spacing:.01em}
   .psy-row .psy-note{font-family:var(--fontMono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
   .psy-row .psy-val{font-family:var(--fontMono);font-size:12px;color:var(--ink);letter-spacing:.04em}
-  .range{-webkit-appearance:none;appearance:none;width:100%;height:2px;background:var(--lineStrong);border-radius:2px;cursor:none;outline:none}
-  .range::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:#fff;border:none;box-shadow:0 0 0 4px rgba(0,0,0,.6),0 0 14px rgba(255,255,255,.5);cursor:none}
+  .range{-webkit-appearance:none;appearance:none;width:100%;height:2px;background:var(--lineStrong);border-radius:2px;cursor:pointer;outline:none}
+  .range::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:#fff;border:none;box-shadow:0 0 0 4px rgba(0,0,0,.6),0 0 14px rgba(255,255,255,.5);cursor:pointer}
   .range::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#fff;border:none;box-shadow:0 0 0 4px rgba(0,0,0,.6)}
 
   .reach-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:6px}
   .reach-num{font-family:var(--fontDisplay);font-size:64px;font-weight:600;letter-spacing:-0.05em;line-height:.9;color:var(--ink)}
   .reach-num small{font-size:.28em;color:var(--muted);font-weight:500;letter-spacing:.02em;margin-left:6px}
   .seg-list{display:flex;flex-direction:column;gap:10px;margin-top:18px}
-  .seg{padding:16px 18px;border:1px solid var(--line);border-radius:2px;transition:border-color .3s,opacity .3s;cursor:none}
+  .seg{padding:16px 18px;border:1px solid var(--line);border-radius:2px;transition:border-color .3s,opacity .3s;cursor:pointer}
   .seg:hover{border-color:var(--lineStrong)}
   .seg.off{opacity:.4}
   .seg-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
@@ -131,7 +131,7 @@
   .kg-legend i.x{background:transparent;border:1px dashed rgba(255,255,255,.5)}
   .edge{stroke:rgba(255,255,255,.16);stroke-width:1}
   .edge.hot{stroke:rgba(255,255,255,.7)}
-  .node{cursor:none}
+  .node{cursor:pointer}
   .node .ring{fill:#000;stroke:rgba(255,255,255,.3);stroke-width:1}
   .node.grounded .ring{fill:#000;stroke:#fff;stroke-width:1.6}
   .node.grounded .core{fill:#fff}

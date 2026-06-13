@@ -55,28 +55,49 @@
     </footer>`;
   document.body.insertAdjacentHTML('beforeend', foot);
 
-  // ---- custom cursor: tiny dot + slow perception ring (inertia) ----
+  // ---- pointer-reactive dot field: a slow focus that glides across the terrain ----
   (function(){
     if (matchMedia('(hover:none)').matches) return;
-    const dot = document.createElement('div'); dot.className = 'cursor-dot';
-    const ring = document.createElement('div'); ring.className = 'cursor-ring';
-    document.body.append(dot, ring);
-    let mx = innerWidth/2, my = innerHeight/2, rx = mx, ry = my, shown = false;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const focus = document.createElement('div'); focus.className = 'atmos-focus';
+    document.body.insertAdjacentElement('afterbegin', focus);
+    let mx = innerWidth/2, my = innerHeight*0.38, fx = mx, fy = my, shown = false;
     addEventListener('mousemove', e => {
       mx = e.clientX; my = e.clientY;
-      dot.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
-      if (!shown){ shown = true; dot.style.opacity = ring.style.opacity = 1; }
+      if (!shown){ shown = true; focus.style.opacity = 1; }
     }, {passive:true});
-    addEventListener('mouseleave', () => { dot.style.opacity = ring.style.opacity = 0; shown = false; });
-    function follow(){
-      rx += (mx - rx) * 0.14; ry += (my - ry) * 0.14;   // inertia
-      ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
-      requestAnimationFrame(follow);
+    addEventListener('mouseleave', () => { focus.style.opacity = 0; shown = false; });
+    function glide(){
+      fx += (mx - fx) * 0.06; fy += (my - fy) * 0.06;   // slow inertia
+      focus.style.setProperty('--fx', fx + 'px');
+      focus.style.setProperty('--fy', fy + 'px');
+      requestAnimationFrame(glide);
     }
-    follow();
-    const hot = 'a,button,.btn,.chip,input,textarea,select,[role=button],label';
-    addEventListener('mouseover', e => { if (e.target.closest(hot)) ring.classList.add('hot'); });
-    addEventListener('mouseout',  e => { if (e.target.closest(hot)) ring.classList.remove('hot'); });
+    glide();
+  })();
+
+  // ---- cinematic page transitions on internal navigation (gentle cross-fade) ----
+  (function(){
+    const internal = a => {
+      const href = a.getAttribute('href') || '';
+      if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return false;
+      if (a.target && a.target !== '_self') return false;
+      if (a.hasAttribute('download')) return false;
+      let url; try { url = new URL(a.href, location.href); } catch(_) { return false; }
+      if (url.origin !== location.origin) return false;
+      if (url.pathname === location.pathname && url.hash) return false; // same-page anchor
+      return true;
+    };
+    document.addEventListener('click', e => {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const a = e.target.closest('a');
+      if (!a || !internal(a)) return;
+      e.preventDefault();
+      const href = a.href;
+      document.body.classList.add('is-leaving');
+      setTimeout(() => { location.href = href; }, 240);
+    });
+    addEventListener('pageshow', () => document.body.classList.remove('is-leaving'));
   })();
 
   // ---- reveal observer (+ rect fallback so content never stays hidden) ----

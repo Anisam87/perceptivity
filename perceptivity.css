@@ -65,10 +65,9 @@ body{
   -moz-osx-font-smoothing:grayscale;
   overflow-x:hidden;
   position:relative;
-  cursor:none;
 }
 a{color:inherit;text-decoration:none}
-button{font:inherit;cursor:none;border:none;background:none;color:inherit}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
 input,textarea,select{font:inherit;color:inherit;background:none;border:none;outline:none}
 ul,ol{list-style:none}
 img,svg{display:block;max-width:100%}
@@ -118,6 +117,20 @@ body::after{
   mask-image:linear-gradient(180deg, #000 0%, #000 55%, transparent 100%);
 }
 .atmos-grain{display:none}
+
+/* pointer-reactive focus — the dot field brightens softly where you look */
+.atmos-focus{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  opacity:0;transition:opacity 1.4s var(--ease);
+  --fx:50%;--fy:38%;
+  background-image:
+    radial-gradient(1px 1px at 50% 50%, rgba(255,255,255,.95) 0, transparent 60%),
+    radial-gradient(1px 1px at 50% 50%, rgba(255,255,255,.6) 0, transparent 60%);
+  background-size:140px 140px, 210px 210px;
+  background-position:0 0, 70px 100px;
+  -webkit-mask-image:radial-gradient(200px 200px at var(--fx) var(--fy), #000 0%, rgba(0,0,0,.45) 38%, transparent 72%);
+  mask-image:radial-gradient(200px 200px at var(--fx) var(--fy), #000 0%, rgba(0,0,0,.45) 38%, transparent 72%);
+}
 
 /* ============================================================
    TYPOGRAPHY — ALL CAPS, wide tracking, light weight
@@ -356,7 +369,7 @@ body::after{
   background:transparent;
   border:1px solid var(--line);
   font-family:var(--fontMono);font-size:9.5px;text-transform:uppercase;letter-spacing:.24em;color:var(--muted);
-  cursor:none;
+  cursor:pointer;
   transition:border-color .4s var(--ease), color .4s var(--ease), opacity .4s var(--ease);
 }
 .chip:hover{color:#fff;border-color:var(--lineStrong)}
@@ -383,16 +396,24 @@ body::after{
 .dot{display:inline-block;width:5px;height:5px;border-radius:50%;background:#fff;box-shadow:0 0 10px rgba(255,255,255,.8)}
 
 /* ============================================================
-   CUSTOM CURSOR — tiny white dot + slow perception ring
+   CURSOR — native cursor restored; legacy overlay neutralised
    ============================================================ */
-.cursor-dot,.cursor-ring{position:fixed;top:0;left:0;pointer-events:none;z-index:2000;border-radius:50%;mix-blend-mode:difference}
-.cursor-dot{width:6px;height:6px;background:#fff;transform:translate(-50%,-50%)}
-.cursor-ring{width:30px;height:30px;border:1px solid rgba(255,255,255,.6);transform:translate(-50%,-50%);transition:width .3s var(--ease),height .3s var(--ease),opacity .3s var(--ease)}
-.cursor-ring.hot{width:46px;height:46px;opacity:.5}
-@media (hover:none){ .cursor-dot,.cursor-ring{display:none} body,button,.chip{cursor:auto} }
+.cursor-dot,.cursor-ring{display:none !important}
+
+/* ============================================================
+   CINEMATIC PAGE MOTION — restrained load + transition layer
+   ============================================================ */
+html{scroll-behavior:smooth}
+@keyframes page-in{from{opacity:0}to{opacity:1}}
+body{opacity:0;animation:page-in .8s var(--ease) .04s forwards}
+body.is-leaving{opacity:0 !important;transition:opacity .26s var(--ease)}
+@keyframes nav-in{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
+.nav-wrap{animation:nav-in .9s var(--ease) .12s both}
 
 /* reduced motion */
 @media (prefers-reduced-motion: reduce){
+  body{opacity:1 !important;animation:none !important}
+  .nav-wrap{animation:none !important}
   *,*::before,*::after{
     animation-duration:.001ms !important;animation-iteration-count:1 !important;
     transition-duration:.001ms !important;transition-delay:0ms !important;
